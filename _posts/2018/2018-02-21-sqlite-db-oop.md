@@ -10,11 +10,11 @@ redirect_from:
 
 ## 前情提要
 
-        大部分应用都是由程序和数据两个部分构成的，而数据除了少部分是通过配置等写死的外，大部分总是都是通过特殊格式的文件（xml、access或sqlite）或独立的系统（oracle、mysql、sql server或elasticsearch、mongodb等）承载的。因此，程序和数据的无缝联结，对应用的扩展和迭代尤为重要，对程序的高可用和可维护性非常关键。故今天需要讨论的是对数据，主要是对数据库的封装，而习惯OOP的个人，则是对数据库的面向对象的封装。
+大部分应用都是由程序和数据两个部分构成的，而数据除了少部分是通过配置等写死的外，大部分总是都是通过特殊格式的文件（xml、access或sqlite）或独立的系统（oracle、mysql、sql server或elasticsearch、mongodb等）承载的。因此，程序和数据的无缝联结，对应用的扩展和迭代尤为重要，对程序的高可用和可维护性非常关键。故今天需要讨论的是对数据，主要是对数据库的封装，而习惯OOP的个人，则是对数据库的面向对象的封装。
 
 ## 我的思路
 
-        众所周知，我们与数据库沟通用的是数据库的语言SQL，就像我们编程的语言是Java、C#、JavaScript一样，不同的语言是不能直接沟通的，需要一个翻译层，所以这一层就是面向数据库封装，而这一层jdk里面早就实现了（jdbc），本文个人以最接近的实际数据库的文件数据库sqlite（org.sqlite.JDBC）来做代码实验。
+众所周知，我们与数据库沟通用的是数据库的语言SQL，就像我们编程的语言是Java、C#、JavaScript一样，不同的语言是不能直接沟通的，需要一个翻译层，所以这一层就是面向数据库封装，而这一层jdk里面早就实现了（jdbc），本文个人以最接近的实际数据库的文件数据库sqlite（org.sqlite.JDBC）来做代码实验。
 
 ```java
 import java.sql.Connection;
@@ -40,7 +40,7 @@ import java.sql.Statement;
 [oracle语法]：select * from table where 1=1 and column1=? and column2>? or column3 like '%'||?||'%' 
 ```
 
-        当前的很多框架已经完美的封装了数据库，mybatis、hibernate这些对数据库的语言做了非常灵活的处理，也有一套各自自己的语法。但是，个人认为xml文件还是属于配置文件，如果能实现零配置的面向对象封装就好了。面向对象封装需要达到的程度就是通过一个对象的信息可以直接自动的产生数据库相关的sql，然后将对象的变量属性值对应sql的占位符，并且在基类上实现基本的功能。
+当前的很多框架已经完美的封装了数据库，mybatis、hibernate这些对数据库的语言做了非常灵活的处理，也有一套各自自己的语法。但是，个人认为xml文件还是属于配置文件，如果能实现零配置的面向对象封装就好了。面向对象封装需要达到的程度就是通过一个对象的信息可以直接自动的产生数据库相关的sql，然后将对象的变量属性值对应sql的占位符，并且在基类上实现基本的功能。
 
 ```java
 public abstract class SqliteBaseDao<T extends SqliteBaseEntity> {
@@ -65,13 +65,13 @@ public abstract class SqliteBaseDao<T extends SqliteBaseEntity> {
 
 ### 一个类信息收集器
 
-        想要做到面向对象的数据库封装，就要把数据的最小单元和程序的最小单元关联起来，这两个单元都是独立的整体，再分割就会出现信息失真或不对称的情况。数据的最小单元就是表的单行记录，程序最小单元是实体类的单个对象，但是数据不一定有，对象需要实例化，需要运行起来才能提供信息。因此，这个最小单元要静态化，那就是数据库的表结构和实体类的信息关联起来。
+想要做到面向对象的数据库封装，就要把数据的最小单元和程序的最小单元关联起来，这两个单元都是独立的整体，再分割就会出现信息失真或不对称的情况。数据的最小单元就是表的单行记录，程序最小单元是实体类的单个对象，但是数据不一定有，对象需要实例化，需要运行起来才能提供信息。因此，这个最小单元要静态化，那就是数据库的表结构和实体类的信息关联起来。
 
-        表结构能提供的信息有表名、表列名、列属性（类型、是否为空、默认值），实体类能提供的信息有类名、类变量名、类变量名属性（变量类型），似乎大部分都能对应上，但是属性部分还不能对应上，比如是否为空、默认值，而且为了良好的Java编码规范，有些东西和数据库的一些信息是不能完全对应的，比如通常java的命名规范一般不允许带下划线，而是用驼峰命名，而数据库的表和字段确经常用下划线分割单词（主要由于很多数据库不区分表名和字段名的大小写，甚至有些数据库不支持表名和字段名的大写）这就非常尴尬了，所以，这种差异化的对应就需要配置。并且，为了增加扩展性，程序单元的实体类的信息往往要比数据单元的表结构信息多一些，比如可能会有非表字段的属性（占位符中非表字段的传入属性和结果集中非表字段的接收属性），
+表结构能提供的信息有表名、表列名、列属性（类型、是否为空、默认值），实体类能提供的信息有类名、类变量名、类变量名属性（变量类型），似乎大部分都能对应上，但是属性部分还不能对应上，比如是否为空、默认值，而且为了良好的Java编码规范，有些东西和数据库的一些信息是不能完全对应的，比如通常java的命名规范一般不允许带下划线，而是用驼峰命名，而数据库的表和字段确经常用下划线分割单词（主要由于很多数据库不区分表名和字段名的大小写，甚至有些数据库不支持表名和字段名的大写）这就非常尴尬了，所以，这种差异化的对应就需要配置。并且，为了增加扩展性，程序单元的实体类的信息往往要比数据单元的表结构信息多一些，比如可能会有非表字段的属性（占位符中非表字段的传入属性和结果集中非表字段的接收属性），
 
-        ibatis、hibernate就用到了这些，但是用的是xml文件，而且一旦配置出错还非常容易影响编译，并且不容易定位问题。mybatis+spring的xml和java注解让系统变得非常灵活，但是依然不能彻底的去掉xml文件，而且xml中如果出现一个小小的分号或空格都有可能引发问题，要是只用java注解就能解决掉的话就完美了。
+ibatis、hibernate就用到了这些，但是用的是xml文件，而且一旦配置出错还非常容易影响编译，并且不容易定位问题。mybatis+spring的xml和java注解让系统变得非常灵活，但是依然不能彻底的去掉xml文件，而且xml中如果出现一个小小的分号或空格都有可能引发问题，要是只用java注解就能解决掉的话就完美了。
     
-        综上，想要实现这些适配，需要几个基础的注解：表名注解、主键注解、表字段注解、非表字段标识注解、自定义SQL注解（多种）。
+综上，想要实现这些适配，需要几个基础的注解：表名注解、主键注解、表字段注解、非表字段标识注解、自定义SQL注解（多种）。
 
 ```java
 /**
@@ -85,6 +85,7 @@ public @interface SqliteTable {
     String name() default "";
 }
 ```
+
 ```java
 /**
  * Sqlite的ID注解类
@@ -102,6 +103,7 @@ public @interface SqliteID {
     boolean autoincrement() default true;
 }
 ```
+
 ```java
 /**
  * Sqlite的表(列）字段注解类
@@ -119,6 +121,7 @@ public @interface SqliteColumn {
     boolean notNull() default true;
 }
 ```
+
 ```java
 /**
  * 非表字段注解
@@ -129,6 +132,7 @@ public @interface SqliteColumn {
 public @interface SqliteTransient {
 }
 ```
+
 ```java
 /**
  * 自定义SQL注解类
@@ -143,7 +147,9 @@ public @interface SqliteSql {
     String[] params() default "";
 }
 ```
-        在上述的这些注解中，主键注解、表字段注解、非表字段标识注解其实都可以归为表字段注解，只要稍微添加某些属性就可以实现其他两个注解的功能，但是为了使用的方便性和程序的可读性，我牺牲了顶层代码的简易性，对这三个注解都做了区分和处理。而自定义SQL注解应该类似于mybatis里面的xml标签，@SqliteSql这个注解类只是实现了基本的（<select>、<insert>、<delete>、<update>）标签，搭配SqliteBaseDao里面的基本方法就可以轻松实现简单的mapper功能，而那些复杂的if else、choose when标签则需要例外些其他的辅助标签搭配使用，比如需求最多的动态where，可以定义类似于@SqliteSqlWhereIf，这样就可以简单的实现if标签，并且通过testId和parentTestId还可以实现if标签的嵌套功能，然后利用java8的新特性@Repeatable实现重复注解，或者直接定义一个集合注解（这个看着不是特别美观）就可轻松的实现判断条件非嵌套动态生成各种sql。
+
+在上述的这些注解中，主键注解、表字段注解、非表字段标识注解其实都可以归为表字段注解，只要稍微添加某些属性就可以实现其他两个注解的功能，但是为了使用的方便性和程序的可读性，我牺牲了顶层代码的简易性，对这三个注解都做了区分和处理。而自定义SQL注解应该类似于mybatis里面的xml标签，@SqliteSql这个注解类只是实现了基本的（<select>、<insert>、<delete>、<update>）标签，搭配SqliteBaseDao里面的基本方法就可以轻松实现简单的mapper功能，而那些复杂的if else、choose when标签则需要例外些其他的辅助标签搭配使用，比如需求最多的动态where，可以定义类似于@SqliteSqlWhereIf，这样就可以简单的实现if标签，并且通过testId和parentTestId还可以实现if标签的嵌套功能，然后利用java8的新特性@Repeatable实现重复注解，或者直接定义一个集合注解（这个看着不是特别美观）就可轻松的实现判断条件非嵌套动态生成各种sql。
+
 ```java
 public abstract class SqliteBaseDao<T extends SqliteBaseEntity> {
     ...
@@ -154,6 +160,7 @@ public abstract class SqliteBaseDao<T extends SqliteBaseEntity> {
     public int excute(Object... params) {...}   //对应insert、update、delete标签
 }
 ```
+
 ```java
 /**
  * 自定义SQL注解类，实现SqliteSqlWhereIf的重复注解
@@ -196,7 +203,7 @@ public @interface SqliteSqlWhereIf {
 public List<XXX> method1(XXX entity){ return super.excuteQuery(entity); }
 ```
 
-        于是，类信息收集器能做成静态的吗，不能。因为每个表的信息不同，就会对应不同的类信息，如果我们做成静态的，那么就会产生很多无意义的重复代码，我们要用对象存储他，并且是一个表用一个对象去存储。这样，我们就可以准确定义一个类信息收集器的收集内容了，如下所示：
+于是，类信息收集器能做成静态的吗，不能。因为每个表的信息不同，就会对应不同的类信息，如果我们做成静态的，那么就会产生很多无意义的重复代码，我们要用对象存储他，并且是一个表用一个对象去存储。这样，我们就可以准确定义一个类信息收集器的收集内容了，如下所示：
 
 ```java
 /**
@@ -230,7 +237,8 @@ public class SqliteSqlHelper<T extends SqliteBaseEntity> {
 
 ### 一个SQL生成器
 
-        和数据库沟通就需要使用相应的SQL语言，而通用的关系型数据库（oracle、mysql、sql server等），甚至是非关系型的数据库NOSQL（elasticsearch、mongodb等），绝大部分交互无非就是增删查改，而SQL的增删查改语言几乎是通用的。
+和数据库沟通就需要使用相应的SQL语言，而通用的关系型数据库（oracle、mysql、sql server等），甚至是非关系型的数据库NOSQL（elasticsearch、mongodb等），绝大部分交互无非就是增删查改，而SQL的增删查改语言几乎是通用的。
+
 ```sql
 # 建表
     create table t_test_table(
@@ -253,9 +261,11 @@ public class SqliteSqlHelper<T extends SqliteBaseEntity> {
 # 删除
     delete from t_test_table where id = 1;
 ```
-        这里多了个建表SQL，这里是为了实现自动化部署数据库用的，相当于程序驱动数据，让更多主动层面转移到程序代码这一层。当我们为我们的业务新增一个数据实体时候，程序就能自动的去生成规范的数据库，免去了繁琐的手动创建以及容易弄错的字段类型方面的细节，如果封装的好的话，迭代更新就能免去SQL脚本了。扩展一下的话，在表名注解里面添加数据库的链接属性还可以实现平滑分库的功能（这个可以，对于sqlite这种小型数据库，如果能实现分库的话，那就不再是小型数据库了，当然本文的例子还是以单数据库为例）。
+
+这里多了个建表SQL，这里是为了实现自动化部署数据库用的，相当于程序驱动数据，让更多主动层面转移到程序代码这一层。当我们为我们的业务新增一个数据实体时候，程序就能自动的去生成规范的数据库，免去了繁琐的手动创建以及容易弄错的字段类型方面的细节，如果封装的好的话，迭代更新就能免去SQL脚本了。扩展一下的话，在表名注解里面添加数据库的链接属性还可以实现平滑分库的功能（这个可以，对于sqlite这种小型数据库，如果能实现分库的话，那就不再是小型数据库了，当然本文的例子还是以单数据库为例）。
         
-        而且建表的sql生成比较简单，只要单独的根据实体类的信息就能直接生成，如下：
+而且建表的sql生成比较简单，只要单独的根据实体类的信息就能直接生成，如下：
+
 ```java
 # SqliteSqlHelper.java
 public class SqliteSqlHelper<T extends SqliteBaseEntity> {
@@ -321,7 +331,9 @@ public abstract class SqliteBaseDao<T extends SqliteBaseEntity> {
     ...
 }
 ```
-        同理，增删查改，也是通过类的信息进行sql的组装，但是却依赖调用入参实现动态sql生成。就以查询为例，默认的动态sql生成，基于传入的实体类对象里面的值，一般为空的不做处理，不为空的条件用and做连接起来形成动态的查询SQL。
+
+同理，增删查改，也是通过类的信息进行sql的组装，但是却依赖调用入参实现动态sql生成。就以查询为例，默认的动态sql生成，基于传入的实体类对象里面的值，一般为空的不做处理，不为空的条件用and做连接起来形成动态的查询SQL。
+
 ```java
 # SqliteSqlHelper.java
 public class SqliteSqlHelper<T extends SqliteBaseEntity> {
@@ -372,11 +384,13 @@ public class SqliteSqlHelper<T extends SqliteBaseEntity> {
     ...
 }
 ```
-        对于自定义SQL的获取和动态组装生成，它相对其他类的SQL就要复杂一些，因为这个注解不是在实体类中，而是在Dao类中，而且是一种用于方法的注解。想要知道如何获取这类注解的信息，就需要了解java程序的一些运行原理。
+
+对于自定义SQL的获取和动态组装生成，它相对其他类的SQL就要复杂一些，因为这个注解不是在实体类中，而是在Dao类中，而且是一种用于方法的注解。想要知道如何获取这类注解的信息，就需要了解java程序的一些运行原理。
 
 > 线程栈区的方法栈：简而言之，就是每个运行中的程序会有一个线程，而调用的方法、调用方法调用的方法、调用方法调用的方法调用的方法...他们会形成该线程的方法栈，进行中的方法都会放入这个栈中，这样我们就可以在运行时候获取到对应的方法了。
 
-        然而，我们要使得注解和编码更加简洁易懂，我们需要把这部分获取的代码放到Dao类继承的基类（SqliteBaseDao）中，通过基类获取子类的某个方法的注解信息。虽然基类获取子类方法信息与常规程序设计有较大差异，但是只有这样才能实现优美的封装。下面为自定义查询部分代码（增删改同理）：
+然而，我们要使得注解和编码更加简洁易懂，我们需要把这部分获取的代码放到Dao类继承的基类（SqliteBaseDao）中，通过基类获取子类的某个方法的注解信息。虽然基类获取子类方法信息与常规程序设计有较大差异，但是只有这样才能实现优美的封装。下面为自定义查询部分代码（增删改同理）：
+
 ```java
 # SqliteSqlHelper.java
 public class SqliteSqlHelper<T extends SqliteBaseEntity> {
@@ -503,12 +517,13 @@ public class TestTableDao extends SqliteBaseDao<TestTable> {
     ...
 }
 ```
-        另外，自定义SQL注解对于像oracle这样的存储过程和函数占比较大的数据库，调用存储过程可是无往不利，不过就不知道占位符返回集合的存储过程或函数，方不方便数据的填充组装（TODO）。
+
+另外，自定义SQL注解对于像oracle这样的存储过程和函数占比较大的数据库，调用存储过程可是无往不利，不过就不知道占位符返回集合的存储过程或函数，方不方便数据的填充组装（TODO）。
 
 
 ### 一个数据组装器
 
-        上面说到数据的组装，这也是比较关键的一个环节，只有这一步OK了，这个封装才算OK。总所周知，数据库表字段类型五花八门，想要很好的和java的类型对应上，确实要花费一点精力。这里为了节省时间和篇幅，个人取了个巧，将数据统一转化为JSON，然后统一通过json转对象。从代码上省去了复杂的类型对应，也摒弃了一个个取值，然后通过反射对应写值到对象属性里面的不安全操作及不确定异常，然而代价可能会对转化效率有影响。所以，关键就是需要一种不影响速度的json转化，fastjson基本满足条件。
+上面说到数据的组装，这也是比较关键的一个环节，只有这一步OK了，这个封装才算OK。总所周知，数据库表字段类型五花八门，想要很好的和java的类型对应上，确实要花费一点精力。这里为了节省时间和篇幅，个人取了个巧，将数据统一转化为JSON，然后统一通过json转对象。从代码上省去了复杂的类型对应，也摒弃了一个个取值，然后通过反射对应写值到对象属性里面的不安全操作及不确定异常，然而代价可能会对转化效率有影响。所以，关键就是需要一种不影响速度的json转化，fastjson基本满足条件。
 
 ```java
 # SqliteHelper.java
@@ -537,6 +552,7 @@ public static String getDataJson(ResultSet rs, Map<String, String> columnMap) th
     return dataStr;
 }
 ```
+
 ```java
 # SqliteUtils.java
 /**
@@ -796,4 +812,4 @@ public void test4() {
 * Git地址：[https://github.com/petterobam/my-sqlite](https://github.com/petterobam/my-sqlite)
 * Git-wiki：[https://github.com/petterobam/my-sqlite/wiki/](https://github.com/petterobam/my-sqlite/wiki/)
 * Git检出地址：https://github.com/petterobam/my-sqlite.git
-* 源码下载：[点击下载](/upload/2018/02/rpdd0gs1vkhrvr3rlhh4khq8i6.rar)
+* 源码下载：[点击下载](http://www.oyjie.cn/upload/2018/02/rpdd0gs1vkhrvr3rlhh4khq8i6.rar)
