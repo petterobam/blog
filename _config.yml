@@ -48,7 +48,7 @@ author:
     - name: vk
       url:
 home:
-  section1: <h1>petterobam</h1>
+  section1: <h1>petter&nbsp;obam</h1>
   section2: <h2>一段代码，一个故事</h2>
   section3: <div class="social-links"><a class="ico-github btn" href="https://github.com/petterobam" title="查看 GitHub"></a></div>
 blog:
