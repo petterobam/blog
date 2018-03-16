@@ -148,7 +148,7 @@ public @interface SqliteSql {
 }
 ```
 
-在上述的这些注解中，主键注解、表字段注解、非表字段标识注解其实都可以归为表字段注解，只要稍微添加某些属性就可以实现其他两个注解的功能，但是为了使用的方便性和程序的可读性，我牺牲了顶层代码的简易性，对这三个注解都做了区分和处理。而自定义SQL注解应该类似于mybatis里面的xml标签，@SqliteSql这个注解类只是实现了基本的（<select>、<insert>、<delete>、<update>）标签，搭配SqliteBaseDao里面的基本方法就可以轻松实现简单的mapper功能，而那些复杂的if else、choose when标签则需要例外些其他的辅助标签搭配使用，比如需求最多的动态where，可以定义类似于@SqliteSqlWhereIf，这样就可以简单的实现if标签，并且通过testId和parentTestId还可以实现if标签的嵌套功能，然后利用java8的新特性@Repeatable实现重复注解，或者直接定义一个集合注解（这个看着不是特别美观）就可轻松的实现判断条件非嵌套动态生成各种sql。
+在上述的这些注解中，主键注解、表字段注解、非表字段标识注解其实都可以归为表字段注解，只要稍微添加某些属性就可以实现其他两个注解的功能，但是为了使用的方便性和程序的可读性，我牺牲了顶层代码的简易性，对这三个注解都做了区分和处理。而自定义SQL注解应该类似于mybatis里面的xml标签，@SqliteSql这个注解类只是实现了基本的（select、insert、delete、update）标签，搭配SqliteBaseDao里面的基本方法就可以轻松实现简单的mapper功能，而那些复杂的if else、choose when标签则需要例外些其他的辅助标签搭配使用，比如需求最多的动态where，可以定义类似于@SqliteSqlWhereIf，这样就可以简单的实现if标签，并且通过testId和parentTestId还可以实现if标签的嵌套功能，然后利用java8的新特性@Repeatable实现重复注解，或者直接定义一个集合注解（这个看着不是特别美观）就可轻松的实现判断条件非嵌套动态生成各种sql。
 
 ```java
 public abstract class SqliteBaseDao<T extends SqliteBaseEntity> {
