@@ -38,7 +38,7 @@ redirect_from:
 
 为了便于管理，需要在容纳原生连接对象的同时记录连接建立时的一些额外信息，以便于连接的管理。至于为什么不用继承，那是为了后期扩展能够更方便、灵活。连接池的实现可以想象成连接对象的生产和消费的市场，每个连接像是一个产品，预先生产出来后，用于应用中不同的地方去消费。而市场的良好状态就是供需平衡，不能频繁出现供不应求和供应过剩的情况。
 
-```
+```java
 /**
  * Sqlite连接自定义封装类
  * @author 欧阳洁
@@ -118,7 +118,7 @@ public class SqliteBaseConnection {
 
 连接工厂用于提供连接池连接的生产、质检、发放的功能，让连接池公司能够正常的运作的功能车间组。
 
-```
+```java
 /**
  * Sqlite连接工厂
  * @author 欧阳洁
@@ -336,7 +336,7 @@ public class SqliteBaseConnectionFactory {
 
 此前连接池的基本解决方案就是预先建好一堆连接屯在那里，等到想用的时候拿一个出来直接用。因此这个预先不能在主进程里面去干。当然，上面功能车间已经有了，我们只需要在每个这间里安排相应的员工就行，每个员工负责自己的那部分，工厂就能按部就班的运作了。而这些员工的特性就像一个个线程，各尽其责，互不干扰。
 
-```
+```java
 /**
  * 池回收线程
  *
@@ -505,7 +505,7 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
 
 ### 默认配置
 
-```
+```java
 # 自定义属性配置
 # 默认路径从class路径，此时sqlite.uri可以写相对路径
 sqlite.path.classpath=true
@@ -541,7 +541,7 @@ sqlite.config.enable=false
 
 数据库的增、删、改语句都是独立的句子，每个句子都能独立的表达各自的意思，而不会因为上一句没有，下一句不能独立执行。JDBC 默认执行每个非查询SQL语句都会自动提交，完成一个原子操作。然而，每次提交就意味着一次对库的修改操作，这对于常规沟通是没有问题的，也是值得肯定的，但是如果是一个批量修改，一个个提交就太耗时了，而且提交还可能导致连接关闭。所以像这种作文题要把所有的句子组成文章才能交卷，否则时间不够只能交白卷了。
 
-```
+```java
 /**
  * 非查询语句批量执行Sql语句
  * @param sqlList
@@ -666,7 +666,7 @@ public int batchExecute(List<T> sqlWithParamList, int batchCount) {
 
 ### 连接池测试
 
-```
+```java
 /**
  * Sqlite线程连接池测试
  * @author 欧阳洁
@@ -753,7 +753,7 @@ public class SqliteConnectionPoolTest {
 
 ### 批量操作测试
 
-```
+```java
 /**
  * Sqlite批量操作测试
  * @author 欧阳洁
