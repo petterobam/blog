@@ -703,52 +703,52 @@ public class SqliteConnectionPoolTest {
 
 测试结果：
 
->[sqlite-oop]-[info]-[Fri May 18 22:15:00 CST 2018]-[池检查刷新闲置连接对象的 线程运行中...当前该类线程数量：1]
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池监控并适时生产新连接对象的 线程运行中...当前该类线程数量：1]
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池回收无效或久置超时的连接对象的 线程运行中...当前该类线程数量：1]
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：1]
-[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:1]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:1]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：1]
-[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:3]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：3]
-[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池监控并适时生产新连接对象的 线程结束...当前该类线程数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数:5]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池回收无效或久置超时的连接对象的 线程结束...当前该类线程数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数:5]，[已用连接数:0]]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池检查刷新闲置连接对象的 线程结束...当前该类线程数量：0]
+>[sqlite-oop]-[info]-[Fri May 18 22:15:00 CST 2018]-[池检查刷新闲置连接对象的 线程运行中...当前该类线程数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池监控并适时生产新连接对象的 线程运行中...当前该类线程数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池回收无效或久置超时的连接对象的 线程运行中...当前该类线程数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:1]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:1]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:3]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：3]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池监控并适时生产新连接对象的 线程结束...当前该类线程数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数:5]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池回收无效或久置超时的连接对象的 线程结束...当前该类线程数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数:5]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池检查刷新闲置连接对象的 线程结束...当前该类线程数量：0]<br/>
 
 
 ### 批量操作测试
@@ -822,27 +822,27 @@ public class SqliteBatchTest {
 
 测试结果：
 
->[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句==> create table if not exists t_test_table(id integer  primary key autoincrement not null,name char(100)  not null,author char(20)  not null,article text ,create_time char(20)  not null)]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句影响行数==> 0]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句==> delete from t_test_table]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句影响行数==> 0]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：0]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--开始执行批量插入操作！]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--结束执行批量插入操作！]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：3]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT * FROM t_test_table WHERE 1=1 ]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句结果==> [{"id":1,"name":"test1","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":2,"name":"test2","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":3,"name":"title4","author":"bob","article":"article2","createTime":"2018-05-18 22:08:10"}]]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--开始执行批量修改操作！]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--结束执行批量修改操作！]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：3]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT * FROM t_test_table WHERE 1=1 ]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句结果==> [{"id":1,"name":"test1","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":2,"name":"Update","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":3,"name":"Update","author":"bob","article":"article2","createTime":"2018-05-18 22:08:10"}]]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--开始执行批量删除操作！]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--结束执行批量删除操作！]
-[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]
+>[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句==> create table if not exists t_test_table(id integer  primary key autoincrement not null,name char(100)  not null,author char(20)  not null,article text ,create_time char(20)  not null)]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句影响行数==> 0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句==> delete from t_test_table]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行非查询语句影响行数==> 0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--开始执行批量插入操作！]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--结束执行批量插入操作！]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：3]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT * FROM t_test_table WHERE 1=1 ]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句结果==> [{"id":1,"name":"test1","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":2,"name":"test2","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":3,"name":"title4","author":"bob","article":"article2","createTime":"2018-05-18 22:08:10"}]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--开始执行批量修改操作！]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--结束执行批量修改操作！]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：3]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT * FROM t_test_table WHERE 1=1 ]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句结果==> [{"id":1,"name":"test1","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":2,"name":"Update","author":"petter","article":"article1","createTime":"2018-05-18 22:08:10"},{"id":3,"name":"Update","author":"bob","article":"article2","createTime":"2018-05-18 22:08:10"}]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--开始执行批量删除操作！]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[--结束执行批量删除操作！]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[执行查询语句==> SELECT COUNT(1) FROM t_test_table WHERE 1=1 ]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:08:10 CST 2018]-[===数据总条数：1]
 
 ## 后记
