@@ -2,11 +2,12 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    z-index: 1;
+    z-index: 9999;
     font-size: 0;
     transition: all .3s ease-in-out;
     -webkit-transform: translateY(3px);
     transform: translateY(3px);
+    cursor: pointer;
 }
 .waifu:hover {
     -webkit-transform: translateY(0);
