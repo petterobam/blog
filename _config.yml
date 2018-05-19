@@ -44,7 +44,7 @@ author:
     - name: stackoverflow
       url:
     - name: twitter
-      url: 
+      url:
     - name: vk
       url:
 home:
@@ -53,22 +53,24 @@ home:
   section3: <div class="social-links"><a class="ico-github btn" href="https://github.com/petterobam" title="查看 GitHub"></a></div>
 blog:
   cc_license: http://creativecommons.org/licenses/by-sa/4.0/ # CC License.
-  cc_license_image: /assets/images/theme/cc-by-sa.png # CC License. 
+  cc_license_image: /assets/images/theme/cc-by-sa.png # CC License.
   footer_content: github <a href="http://jekyllrb.com/">Jekyll</a> theme.
 
 disqus:
   shortname: # e.g. petterobam
   public_key: # e.g. ULZ0b9TFefCUJHKQd4JCKv2v3u27YoG7YG8zXPewkWrT333Z0Se9YnxLzoV6VM8W
   google_analytics: # e.g. 'UA-42456515-5'
-  addthis_public_id: # AddThis sharing plugin. See http://www.addthis.com/. E.g. ra-53329e27694534j5 
+  addthis_public_id: # AddThis sharing plugin. See http://www.addthis.com/. E.g. ra-53329e27694534j5
 
 gitment:
   owner: petterobam
   repo: my-blog
   oauth_client_id: 7d522d338b8d88e40446
   oauth_client_secret: be5aca84a4c6640f52c48ec546717bcdf297914f
-  
+
 directory: true
+
+live2dgirl: true
 
 paths:
   home: /
