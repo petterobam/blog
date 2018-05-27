@@ -1,4 +1,6 @@
 en: &en
+  my_reader: 'ReadThinking'
+  my_learner: 'LearningNote'
   about: 'About'
   articles: 'Articles'
   back_to_top: 'Back to Top'
@@ -38,6 +40,8 @@ en-ca:
 en-nz:
   <<: *en
 zh: &zh
+  my_reader: '我的阅读'
+  my_learner: '学习笔记'
   about: '关于'
   articles: '文章列表'
   back_to_top: '返回顶部'

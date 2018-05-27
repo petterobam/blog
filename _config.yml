@@ -77,3 +77,5 @@ paths:
   blog: /blog/
   categories: /blog/categories/
   tags: /blog/tags/
+  my_reader: /reader/index.html
+  my_learner: /learner/index.html

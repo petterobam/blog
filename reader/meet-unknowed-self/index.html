@@ -224,7 +224,7 @@
             nav {
                 position: fixed;
                 top: 0;
-                overflow-y: hidden; 
+                overflow-y: hidden;
                 width: 100%;
                 height: 48px;
             }
@@ -734,6 +734,12 @@
                     return levelArr;
                 })(article, contentArr, titleId);
                 currentList = root = document.createElement('ul');
+                li = document.createElement('li');
+                link = document.createElement('a');
+                link.href = '../index.html';
+                link.innerHTML = '<< 返回';
+                li.appendChild(link);
+                currentList.appendChild(li);
                 dirNum = [0];
                 for (i = 0, len = levelArr.length; i < len; i++) {
                     level = levelArr[i];
