@@ -40,7 +40,7 @@ en-ca:
 en-nz:
   <<: *en
 zh: &zh
-  my_reader: '我的阅读'
+  my_reader: '读书手札'
   my_learner: '学习笔记'
   about: '关于'
   articles: '文章列表'
