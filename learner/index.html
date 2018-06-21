@@ -292,7 +292,7 @@
     <h1 id="big-title">我的学习笔记</h1>
 </header>
 <nav>
-    <div class="menubar">
+    <div id="menubarDiv" class="menubar">
         <a class="button" id="mediaMenubar">&#9776;&nbsp;目录索引</a><span class="small-title">我的学习笔记</span>
     </div>
     <div id="java-nav-directory"></div>
@@ -381,6 +381,7 @@ gem -v
 <p>这个东西不强求，但是会在浏览器地址栏有个绿色的小锁（逼格.png）</p>
 <p><a href="https://jingyan.baidu.com/article/f79b7cb3309be79144023ea4.html">https://jingyan.baidu.com/article/f79b7cb3309be79144023ea4.html</a></p>
 <p>或者用 cloudflare 加持 https：https://www.cloudflare.com/</p><h1><a href="#jvm工具学习笔记" name="jvm工具学习笔记"></a>JVM工具学习笔记</h1>
+<h2><a href="#原生工具" name="原生工具"></a>原生工具</h2>
 <ol>
   <li>
     <p>
@@ -462,7 +463,7 @@ jcmd 31275 PerfCounter.print #查看性能统计
 <h2><a href="#nexus安装" name="nexus安装"></a>Nexus安装</h2>
 <p>解压 <a href="https://www.sonatype.com/download-oss-sonatype">https://www.sonatype.com/download-oss-sonatype</a> <code>2.XX</code> 版本<br/>编辑环境变量 <code>Path</code> ，追加 <code>解压根目录\nexus-版本\bin\</code></p>
 <p>命令提示符下：</p>
-<pre><code>nexus
+<pre><code>nexus    
 nexus { console : start : stop : restart : install : uninstall }
 
 nexus install （可能会报错）
@@ -533,7 +534,499 @@ nexus console （也可以启动）
 </ol>
 <p>安装命令实例：</p>
 <pre><code>mvn install:install-file -DgroupId=com.baidu -DartifactId=ueditor -Dversion=1.0.0 -Dpackaging=jar -Dfile=ueditor-1.1.2.jar
-</code></pre><h1><a href="#git学习笔记" name="git学习笔记"></a>Git学习笔记</h1>
+</code></pre><h1><a href="#springboot学习笔记" name="springboot学习笔记"></a>SpringBoot学习笔记</h1>
+<h2><a href="#环境支持" name="环境支持"></a>环境支持</h2>
+<blockquote>
+  <p>JDK8+</p>
+</blockquote>
+<h2><a href="#学习基础" name="学习基础"></a>学习基础</h2>
+<blockquote>
+  <p>Spring MVC<br/>Maven</p>
+</blockquote>
+<h2><a href="#部署springboot" name="部署springboot"></a>部署SpringBoot</h2>
+<h3><a href="#springboot支持" name="springboot支持"></a>SpringBoot支持</h3>
+<pre><code>&lt;parent&gt;
+	&lt;groupld&gt;org.springframework.boot&lt;/groupld&gt;
+	&lt;artifactld&gt;spring-boot-starter-parent&lt;/artifactld&gt;
+	&lt;version&gt;1.5.9.RELEASE&lt;/version&gt;
+&lt;/parent&gt;
+</code></pre>
+<h3><a href="#增加web支持" name="增加web支持"></a>增加Web支持</h3>
+<pre><code>&lt;dependency&gt;
+	&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+	&lt;artifactid&gt;spring-boot-starter-web&lt;/artifactid&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3><a href="#热部署支持" name="热部署支持"></a>热部署支持</h3>
+<pre><code>&lt;dependency&gt;
+	&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+	&lt;artifactid&gt;spring-boot-devtools&lt;/artifactid&gt;
+	&lt;optional&gt;true&lt;/optional&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3><a href="#restful支持" name="restful支持"></a>RESTFul支持</h3>
+<pre><code>@RestController
+</code></pre>
+<h3><a href="#服务器配置" name="服务器配置"></a>服务器配置</h3>
+<table>
+  <thead>
+    <tr>
+      <th>属性</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>server.address </td>
+      <td>服务器E 绑定地址，如果你的主机上有多个网卡，可以绑定一个IP 地址</td>
+    </tr>
+    <tr>
+      <td>server.session.timeout </td>
+      <td>会话过期时间，以秒为单位</td>
+    </tr>
+    <tr>
+      <td>server.eηor.path </td>
+      <td>服务器出错后的处理路径le盯or ，我们在第4 章己经介绍过如何处理异常</td>
+    </tr>
+    <tr>
+      <td>server.servlet.contextpath </td>
+      <td>Spring Boot 应用的上下文</td>
+    </tr>
+    <tr>
+      <td>server.port Spring Boot </td>
+      <td>应用监听端口</td>
+    </tr>
+  </tbody>
+</table>
+<h3><a href="#配置启动信息" name="配置启动信息"></a>配置启动信息</h3>
+<p>resources目录下新建一个 banner.txt ，启动时候会输出 banner.txt 里面的内容。</p>
+<p>浏览器显示的 logo 小图标 ，可以在顶层布局页面里添加:</p>
+<pre><code class="html">&lt;link rel=&quot;shortcut icon&quot; href=&quot;图片地址&quot;/&gt;
+</code></pre>
+<p>或在 resources/static 目录下添加 favicon.ico 图标文件，默认也会覆盖 spring boot 的默认图标</p>
+<h2><a href="#日志配置" name="日志配置"></a>日志配置</h2>
+<p>application.properties 中加入以下代码：</p>
+<pre><code>logging.level.root=info
+# org 包下的日志级别 指定默认的级别是 info ，但包名是 org 开头的类，日志级别是 warn 。 org 包名的类大多是第三方依赖库， 有时候没有必要显示 INFO 级别， com.xxx 开头的类使用 debug 。
+logging.level.org=warn
+logging.level.com.xxx=debug
+# Spring Boot 默认井未输出日志到文件，可以指定日志输出
+logging.file=my.log
+# 日志输出到 my.log 中，位于 Spring Boot 应用运行的当前目录，比如项目工程目录下，也
+可以指定日志存放的路径
+logging.path=e:/temp/log
+# Spring Boot 支持对控制台日志输出和文件输出进行格式控制，代码如下（仅使用内置的 logback )
+logging.pattern.console=%level %date{HH:mm : ss} %logger{20}. %M %L:%m%n
+logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
+
+• %level ， 表示输出日志级别。
+• %date ，表示日志发生时的时间， HH:mm：“输出时分秒，比较合适用于控制台查看，IS08601 则是标准日期输出 ，相当于 yyyy-MM-dd HH:mm:ss.SSS 。
+• %logger ， 用于输出Logger 的名字，包名＋类名，{n} 限定了输出长度，如果输出长度不够，尽可能显示类名、压缩包名。
+• %thread ，当前线程名。
+• %L ，日志调用所在代码行，线上运行时不建议使用此参数，因为获取代码行对性能有消耗。
+• %p ， 输出日志信息的优先级，即DEBUG，INFO，WARN，ERROR，FATAL。
+• %d ， 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，如 ， %d{yyyy/MM/ddHH:mm:ss,SSS}。
+• %r ， 输出自应用程序启动到输出该log信息耗费的毫秒数。
+• %t ， 输出产生该日志事件的线程名。
+• %l ， 输出日志事件的发生位置，相当于%c.%M(%F:%L)的组合，包括类全名、方法、文件名以及在代码中的行数。例如 ， test.TestLog4j.main(TestLog4j.java:10)。
+• %c ， 输出日志信息所属的类目，通常就是所在类的全名。
+• %M ， 输出产生日志信息的方法名。
+• %F ， 输出日志消息产生时所在的文件名称。
+• %m: ， 输出代码中指定的具体日志信息。
+• %n ， 输出一个回车换行符，Windows平台为&quot;\r\n&quot;，Unix平台为&quot;\n&quot;。
+• %x ， 输出和当前线程相关联的NDC(嵌套诊断环境)，尤其用到像 java servlets 这样的多客户多线程的应用中。
+• %% ， 输出一个&quot;%&quot;字符。
+• 另外，还可以在%与格式字符之间加上修饰符来控制其最小长度、最大长度、和文本的对齐方式。如 ，
+	1) c ， 指定输出category的名称，最小的长度是20，如果category的名称长度小于20的话，默认的情况下右对齐。
+	2)%-20c ， &quot;-&quot;号表示左对齐。
+	3)%.30c ， 指定输出category的名称，最大的长度是30，如果category的名称长度大于30的话，就会将左边多出的字符截掉，但小于30的话也不会补空格。
+</code></pre>
+<p>也可以通过在 resources 目录下使用 logback.xml 或者 logback-spring.xml 来对 Logback 进行更详细的配置。</p>
+<ul>
+  <li>org.apache.log4j.ConsoleAppender（控制台）</li>
+  <li>org.apache.log4j.FileAppender（文件）</li>
+  <li>org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件）</li>
+  <li>org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）</li>
+  <li>org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</li>
+</ul>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;included&gt;
+    &lt;include resource=&quot;org/springframework/boot/logging/logback/defaults.xml&quot;/&gt;
+    ​
+    &lt;springProperty scope=&quot;context&quot; name=&quot;springAppName&quot; source=&quot;spring.application.name&quot;/&gt;
+    &lt;springProperty scope=&quot;context&quot; name=&quot;destination&quot; source=&quot;logstash.destination&quot;/&gt;
+    &lt;springProperty scope=&quot;context&quot; name=&quot;kafkadestination&quot; source=&quot;kafka.destination&quot;/&gt;
+    &lt;conversionRule conversionWord=&quot;ip&quot; converterClass=&quot;cn.xxx.IPLogConfig&quot; /&gt;
+    &lt;!-- Example for logging into the build folder of your project --&gt;
+    &lt;property name=&quot;LOG_FILE&quot; value=&quot;${log_file_path:-build}/logs/${springAppName}/${hostname}/${springAppName}&quot;/&gt;​
+
+    &lt;!-- You can override this to have a custom pattern --&gt;
+    &lt;property name=&quot;CONSOLE_LOG_PATTERN&quot;
+              value=&quot;%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}&quot;/&gt;
+
+    &lt;!-- Appender to log to console --&gt;
+    &lt;appender name=&quot;console&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+        &lt;filter class=&quot;ch.qos.logback.classic.filter.ThresholdFilter&quot;&gt;
+            &lt;!-- Minimum logging level to be presented in the console logs--&gt;
+            &lt;level&gt;DEBUG&lt;/level&gt;
+        &lt;/filter&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;${CONSOLE_LOG_PATTERN}&lt;/pattern&gt;
+            &lt;charset&gt;utf8&lt;/charset&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;!-- Appender to log to file --&gt;​
+    &lt;appender name=&quot;flatfile&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+        &lt;file&gt;${LOG_FILE}&lt;/file&gt;
+        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
+            &lt;fileNamePattern&gt;${LOG_FILE}.%d{yyyy-MM-dd}.gz&lt;/fileNamePattern&gt;
+            &lt;maxHistory&gt;7&lt;/maxHistory&gt;
+        &lt;/rollingPolicy&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;${CONSOLE_LOG_PATTERN}&lt;/pattern&gt;
+            &lt;charset&gt;utf8&lt;/charset&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;!-- Appender to log to file in a JSON format --&gt;
+    &lt;appender name=&quot;logstashFile&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+        &lt;file&gt;${LOG_FILE}.json&lt;/file&gt;
+        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.TimeBasedRollingPolicy&quot;&gt;
+            &lt;fileNamePattern&gt;${LOG_FILE}.json.%d{yyyy-MM-dd}.gz&lt;/fileNamePattern&gt;
+            &lt;maxHistory&gt;7&lt;/maxHistory&gt;
+        &lt;/rollingPolicy&gt;
+        &lt;encoder class=&quot;net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder&quot; charset=&quot;UTF-8&quot;&gt;
+            &lt;!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 --&gt;
+            &lt;jsonFactoryDecorator class=&quot;org.xxx.MyJsonFactoryDecorator&quot;/&gt;
+            &lt;providers&gt;
+                &lt;timestamp&gt;
+                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;
+                &lt;/timestamp&gt;
+                &lt;pattern&gt;
+                    &lt;pattern&gt;
+                        {
+                        &quot;createTime&quot;: &quot;%d{yyyy-MM-dd HH:mm:ss.SSS}&quot;,
+                        &quot;severity&quot;: &quot;%level&quot;,
+                        &quot;service&quot;: &quot;${springAppName:-}&quot;,
+                        &quot;trace&quot;: &quot;%X{X-B3-TraceId:-}&quot;,
+                        &quot;span&quot;: &quot;%X{X-B3-SpanId:-}&quot;,
+                        &quot;parent&quot;: &quot;%X{X-B3-ParentSpanId:-}&quot;,
+                        &quot;exportable&quot;: &quot;%X{X-Span-Export:-}&quot;,
+                        &quot;pid&quot;: &quot;${PID:-}&quot;,
+                        &quot;restUrl&quot;:&quot;%X{restUrl}&quot;,
+                        &quot;thread&quot;: &quot;%thread&quot;,
+                        &quot;class&quot;: &quot;%logger{40}&quot;,
+                        &quot;line_number&quot;: &quot;%line&quot;,
+                        &quot;info&quot;: &quot;%message&quot;,
+                        &quot;stack_trace&quot;: &quot;%exception{5}&quot;,
+                        &quot;host&quot;:&quot;%ip&quot;
+                        }
+                    &lt;/pattern&gt;
+                &lt;/pattern&gt;
+                &lt;stackTrace&gt;
+                    &lt;throwableConverter class=&quot;net.logstash.logback.stacktrace.ShortenedThrowableConverter&quot;&gt;
+                        &lt;maxDepthPerThrowable&gt;2&lt;/maxDepthPerThrowable&gt;
+                        &lt;maxLength&gt;2048&lt;/maxLength&gt;
+                        &lt;rootCauseFirst&gt;true&lt;/rootCauseFirst&gt;
+                    &lt;/throwableConverter&gt;
+                &lt;/stackTrace&gt;
+            &lt;/providers&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;!-- Appender to log to file in a JSON format --&gt;
+    &lt;appender name=&quot;logstash&quot; class=&quot;net.logstash.logback.appender.LogstashTcpSocketAppender&quot;&gt;
+        &lt;destination&gt;${destination}&lt;/destination&gt;
+        &lt;encoder class=&quot;net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder&quot; charset=&quot;UTF-8&quot;&gt;
+            &amp;lt;!&amp;ndash; 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 &amp;ndash;&amp;gt;
+            &lt;jsonFactoryDecorator class=&quot;org.xxx.MyJsonFactoryDecorator&quot;/&gt;
+            &lt;providers&gt;
+                &lt;timestamp&gt;
+                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;
+                &lt;/timestamp&gt;
+                &lt;pattern&gt;
+                    &lt;pattern&gt;
+                        {
+                        &quot;createTime&quot;: &quot;%d{yyyy-MM-dd HH:mm:ss.SSS}&quot;,
+                        &quot;severity&quot;: &quot;%level&quot;,
+                        &quot;service&quot;: &quot;${springAppName:-}&quot;,
+                        &quot;trace&quot;: &quot;%X{X-B3-TraceId:-}&quot;,
+                        &quot;span&quot;: &quot;%X{X-B3-SpanId:-}&quot;,
+                        &quot;parent&quot;: &quot;%X{X-B3-ParentSpanId:-}&quot;,
+                        &quot;exportable&quot;: &quot;%X{X-Span-Export:-}&quot;,
+                        &quot;pid&quot;: &quot;${PID:-}&quot;,
+                        &quot;restUrl&quot;:&quot;%X{restUrl}&quot;,
+                        &quot;thread&quot;: &quot;%thread&quot;,
+                        &quot;clazz&quot;: &quot;%logger{40}&quot;,
+                        &quot;linenumber&quot;: &quot;%line&quot;,
+                        &quot;info&quot;: &quot;%message&quot;,
+                        &quot;stacktrace&quot;: &quot;%exception{5}&quot;,
+                        &quot;host&quot;:&quot;%ip&quot;
+                        }
+                    &lt;/pattern&gt;
+                &lt;/pattern&gt;
+            &lt;/providers&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;!-- This is the kafkaAppender --&gt;
+    &lt;appender name=&quot;kafkaAppender&quot; class=&quot;com.github.danielwegener.logback.kafka.KafkaAppender&quot;&gt;
+        &lt;encoder class=&quot;net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder&quot; charset=&quot;UTF-8&quot;&gt;
+            &lt;!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 --&gt;
+            &lt;jsonFactoryDecorator class=&quot;org.xxx.MyJsonFactoryDecorator&quot;/&gt;
+            &lt;providers&gt;
+                &lt;timestamp&gt;
+                    &lt;timeZone&gt;UTC&lt;/timeZone&gt;
+                &lt;/timestamp&gt;
+                &lt;pattern&gt;
+                    &lt;pattern&gt;
+                        {
+                        &quot;createTime&quot;: &quot;%d{yyyy-MM-dd HH:mm:ss.SSS}&quot;,
+                        &quot;severity&quot;: &quot;%level&quot;,
+                        &quot;service&quot;: &quot;${springAppName:-}&quot;,
+                        &quot;trace&quot;: &quot;%X{X-B3-TraceId:-}&quot;,
+                        &quot;span&quot;: &quot;%X{X-B3-SpanId:-}&quot;,
+                        &quot;parent&quot;: &quot;%X{X-B3-ParentSpanId:-}&quot;,
+                        &quot;exportable&quot;: &quot;%X{X-Span-Export:-}&quot;,
+                        &quot;pid&quot;: &quot;${PID:-}&quot;,
+                        &quot;restUrl&quot;:&quot;%X{restUrl}&quot;,
+                        &quot;thread&quot;: &quot;%thread&quot;,
+                        &quot;clazz&quot;: &quot;%logger{40}&quot;,
+                        &quot;linenumber&quot;: &quot;%line&quot;,
+                        &quot;info&quot;: &quot;%message&quot;,
+                        &quot;stacktrace&quot;: &quot;%exception{5}&quot;,
+                        &quot;host&quot;:&quot;%ip&quot;
+                        }
+                    &lt;/pattern&gt;
+                &lt;/pattern&gt;
+            &lt;/providers&gt;
+        &lt;/encoder&gt;
+        &lt;topic&gt;logs&lt;/topic&gt;
+        &lt;keyingStrategy class=&quot;com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy&quot;/&gt;
+        &lt;deliveryStrategy class=&quot;com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy&quot;/&gt;
+
+        &lt;!-- Optional parameter to use a fixed partition --&gt;
+        &lt;!-- &lt;partition&gt;0&lt;/partition&gt; --&gt;
+
+        &lt;!-- Optional parameter to include log timestamps into the kafka message --&gt;
+        &lt;!-- &lt;appendTimestamp&gt;true&lt;/appendTimestamp&gt; --&gt;
+
+        &lt;!-- each &lt;producerConfig&gt; translates to regular kafka-client config (format: key=value) --&gt;
+        &lt;!-- producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs --&gt;
+        &lt;!-- bootstrap.servers is the only mandatory producerConfig --&gt;
+        &lt;producerConfig&gt;bootstrap.servers=${kafkadestination}&lt;/producerConfig&gt;
+
+        &lt;!-- this is the fallback appender if kafka is not available. --&gt;
+        &lt;appender-ref ref=&quot;flatfile&quot;/&gt;
+    &lt;/appender&gt;
+
+    &lt;appender name=&quot;ASYNC&quot; class=&quot;ch.qos.logback.classic.AsyncAppender&quot;&gt;
+        &lt;appender-ref ref=&quot;kafkaAppender&quot; /&gt;
+    &lt;/appender&gt;
+
+    &lt;!--生产环境--&gt;
+    &lt;logger name=&quot;druid.sql.Statement&quot; level=&quot;DEBUG&quot;/&gt;
+    &lt;root level=&quot;INFO&quot;&gt;
+        &lt;appender-ref ref=&quot;console&quot;/&gt;
+        &lt;appender-ref ref=&quot;ASYNC&quot;/&gt;
+    &lt;/root&gt;
+    &lt;jmxConfigurator/&gt;
+&lt;/included&gt;
+</code></pre>
+<h2><a href="#打包配置" name="打包配置"></a>打包配置</h2>
+<p>1.以 jar 文件运行</p>
+<pre><code>&lt;build&gt;
+	&lt;plugins&gt;
+		&lt;plugin&gt;
+		&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+		&lt;artifactid&gt;spring-boot-maven-plugin&lt;/artifactid&gt;
+		&lt;configuration&gt;
+			&lt;executable&gt;true&lt;/executable&gt;
+		&lt;/configuration&gt;
+		&lt;/plugin&gt;
+	&lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<p>2.以 war 方式部署</p>
+<pre><code>&lt;project ...&gt;
+	&lt;artifactid&gt;ch8.deploy&lt;/artifactid&gt;
+	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+	&lt;packaging&gt;war&lt;/packaging&gt;
+&lt;/project&gt;
+
+&lt;dependencies &gt;
+	&lt; !--…--&gt;
+	&lt;dependency&gt;
+		&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
+		&lt;artifactid&gt;spring-boot-starter-tomcat&lt;/artifactid&gt;
+		&lt;scope&gt;provided&lt;/scope&gt;
+	&lt;/dependency&gt;
+	&lt;!--...--&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>另外 启动类还要实现 SpringBootServletinitializer</p>
+<pre><code class="java">@SpringBootApplication
+public class Ch8Application extends SpringBootServletinitializer {
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(Ch8Application.class) ;
+	}
+	public static void main(String[] args) {
+		SpringApplication.run(Ch8Application.class, args) ;
+	}
+}
+</code></pre>
+<h2><a href="#多环境部署" name="多环境部署"></a>多环境部署</h2>
+<p>需要在 resource 下创建 application-{profile}.properties 的配置文件， 其中 profile 可以是任意名字，比如：</p>
+<ul>
+  <li>test ， 表示测试环境</li>
+  <li>prod ，表示线上环境</li>
+  <li>pre-prod ， 预发布环境</li>
+  <li>demo1.0 ， 1.0 版本演示环境</li>
+</ul>
+<p>在环境变量中， spring.profiles.active 指定使用哪个profile ， 比如：</p>
+<blockquote>
+  <p>java -jar -Dspring.profiles.active=prod target/ch8.deploy-0.0.1-SNAPSHOT.jar</p>
+</blockquote>
+<p>以上配置启动后， Spring Boot 将读取 resources/application-prod.properties 配置文件，覆盖默认的application. properties 选项。application. properties 的内容如下：</p>
+<blockquote>
+  <p>server . port=8080</p>
+</blockquote>
+<p>application-prod.properties 的内容如下：</p>
+<blockquote>
+  <p>server.port=9000</p>
+</blockquote>
+<p>如果使用war 方式部署， 添加系统属性是比较好的方式，下面以Tomcat 为例进行说明。编辑 catalina . sh ， 在sh 文件的开头部分添加如下内容：</p>
+<blockquote>
+  <p>JAVA_OPTS =&ldquo;-Dspring.profiles.active=prod&rdquo;</p>
+</blockquote>
+<p>在多环境部署中，通常 resources 目录下可能没有目标环境的配置文件 ，这主要是为了安全考虑，开发环境不应该有线上环境的各种配置信息。可以将配置文件放到特定的目录中，并用 spring.config.location 指定配置文件的目录：</p>
+<blockquote>
+  <p>java -jar -Dspring.config.location=file:env/ -Dspring.profiles.active=test target/ch8.deploy-0.0.1-SNAPSHOT.jar</p>
+</blockquote>
+<p>@Profile 搭配 @Bean 、@Configuration 等自动执行配置可以定义在不同环境下是否生效，例如：</p>
+<ul>
+  <li>@Profile({&ldquo;test&rdquo;, &ldquo;prod&rdquo;}) ，测试环境和线上环境生效</li>
+  <li>@Profile({&ldquo;test&rdquo;, &ldquo;!prod&rdquo;}) ，测试环境和非线上环境生效</li>
+</ul>
+<h2><a href="#测试用例" name="测试用例"></a>测试用例</h2>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<pre><code class="java">@RunWith(SpringRunner.class)
+// 需要测试的Controller
+@WebMvcTest(UserController.class)
+public class UserControllerTest{
+	@Autowired
+	private MockMvc mvc ;
+	@MockBean
+	UserService userService ;
+	@Test
+	public void testMvc() throws Exception {
+		int userid = 10 ;
+		int expectedCredit = 100 ;
+		// 模拟userService
+		given(this.userService.getCredit(userid)).wil1Return(l00);
+		// mvc 调用
+		mvc.perform(get(&quot;user/{Id}&quot;, userid)).andExpect(content().string(String.valueOf(expectedCredi t)));
+	}
+}
+</code></pre>
+<h3><a href="#mockmvc模拟请求" name="mockmvc模拟请求"></a>mockMvc模拟请求</h3>
+<p>1.模拟－个Post请求：</p>
+<pre><code class="java">mockMvc.perform(get(&quot;/hotels?foo={foo}&quot;,&quot;bar&quot;));
+</code></pre>
+<p>2.模拟－个Post请求：</p>
+<pre><code class="java">mockMvc.perform(post(&quot;/hotels/{id}&quot;, 42) ;
+</code></pre>
+<p>3.模拟文件上传：</p>
+<pre><code class="java">mockMvc.perform(multipart(&quot;/doc&quot;).file(&quot;file&quot;,&quot;文件内容&quot;.getBytes(&quot;UTF-8&quot;)));
+</code></pre>
+<p>4.模拟请求参数：</p>
+<pre><code class="java">//模拟提交message 参数
+mvc.perform(get(&quot;/user/{id}/{name}&quot;, userid, name).param(&quot;message&quot;,&quot;hello&quot;));
+//模拟一个checkbox提交
+mvc.perform(get(&quot;/user/{id}/{name}&quot;,userid,name).param(&quot;job&quot;，&quot;IT&quot;，&quot;gov&quot;).param(...));
+//直接使用MultiValueMap 构造参数
+LinkedMul ti ValueMap pa rams = new LinkedMul ti ValueMap () ;
+pararns.put(&quot;message&quot;,&quot;hello&quot;);
+pararns.put(&quot;job&quot;,&quot;IT&quot;);
+pararns.put(&quot;job&quot;,&quot;gov&quot;);
+mvc.perforrn(get(&quot;/user/{id)/{narne}&quot;,user!d,name).param(params));
+</code></pre>
+<p>5.模拟Session和Cookie:</p>
+<pre><code class="java">mvc.perforrn(get(&quot;/user.html&quot;).sessionAttr(name,value));
+mvc.perforrn(get(&quot;/user.html&quot;).cookie(new Cookie(name, value))) ;
+</code></pre>
+<p>6.设置HTTP Body 内容，比如提交的JSON:</p>
+<pre><code class="java">String json = mvc.perforrn(get(&quot;/user.html&quot;).content(json));
+</code></pre>
+<p>7.设置HTTP Header:</p>
+<pre><code class="java">mvc.perforrn(get(&quot;/user/{id}/{narne}&quot;,userid,narne)
+	.contentType(&quot;application/x-www-forrn-urlencoded&quot;)//HTTP提交内容
+	.accept(&quot;application/json&quot;)//期望返回内容
+	.header(headerl,valuel)) //设直HTTP头
+</code></pre>
+<h3><a href="#mockito模拟数据" name="mockito模拟数据"></a>Mockito模拟数据</h3>
+<pre><code class="java">@RunWith(MockitoJUnitRunner.class)
+public class CreditServiceMockTest{
+	@Test
+	public void test(){
+		int userid = 10;
+		//创建Mock 对象
+		CreditSystemService creditService= mock(CreditSystemService.class);
+		//模拟Mock 对象调用，传入任何 int 位都将返回1000 积分
+		when(creditServrice.getUserCredit(anyInt())).thenReturn(1000);
+		//when(creditService.getUserCredit(any(int.class))).thenReturn(lOOO);
+		//实际调用
+		int ret = creditService . getUserCredit(lO);
+		// 比较期望值和返回佳
+		assertEquals(1000 , ret);
+	}
+}
+</code></pre>
+<h2><a href="#集成swagger" name="集成swagger"></a>集成Swagger</h2>
+<h3><a href="#swagger2" name="swagger2"></a>Swagger2</h3>
+<p>1.Maven依赖添加</p>
+<pre><code>&lt;dependency&gt;
+	&lt;groupId&gt;io.springfox&lt;/groupId&gt;
+	&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
+	&lt;version&gt;2.6.1&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+	&lt;groupId&gt;io.springfox&lt;/groupId&gt;
+	&lt;artifactId&gt;springfox-swagger-ui&lt;/artifactId&gt;
+	&lt;version&gt;2.6.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>2.配置添加</p>
+<pre><code>@Configuration
+@EnableSwagger2
+public class Swagger2 {
+    @Bean
+    public Docket createRestApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .select()
+                .apis(RequestHandlerSelectors.basePackage(&quot;com.forezp.controller&quot;))
+                .paths(PathSelectors.any())
+                .build();
+    }
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(&quot;SpringBoot利用Swagger构建Api文档&quot;)
+                .description(&quot;简单优雅的Restfun风格，http://blog.csdn.net/forezp&quot;)
+                .termsOfServiceUrl(&quot;http://blog.csdn.net/forezp&quot;)
+                .version(&quot;1.0&quot;)
+                .build();
+    }
+}
+</code></pre>
+<p>3.添加文档描述<br/>- @Api：修饰整个类，描述Controller的作用<br/>- @ApiOperation：描述一个类的一个方法，或者说一个接口<br/>- @ApiParam：单个参数描述<br/>- @ApiModel：用对象来接收参数<br/>- @ApiProperty：用对象接收参数时，描述对象的一个字段<br/>- @ApiResponse：HTTP响应其中1个描述<br/>- @ApiResponses：HTTP响应整体描述<br/>- @ApiIgnore：使用该注解忽略这个API<br/>- @ApiError ：发生错误返回的信息<br/>- @ApiParamImplicitL：一个请求参数<br/>- @ApiParamsImplicit 多个请求参数</p><h1><a href="#git学习笔记" name="git学习笔记"></a>Git学习笔记</h1>
 <pre><code>git clone https://github.com/petterobam/my-sqlite.git
 cd my-sqlite/
 git status
@@ -1088,6 +1581,7 @@ $ git rebase master server
 </code></pre>
 <h2><a href="#官方文档" name="官方文档"></a>官方文档</h2>
 <p><a href="https://git-scm.com/book/zh/v2">https://git-scm.com/book/zh/v2</a></p><h1><a href="#thymeleaf学习笔记" name="thymeleaf学习笔记"></a>thymeleaf学习笔记</h1>
+<h2><a href="#基础认识" name="基础认识"></a>基础认识</h2>
 <ol>
   <li>
     <p>
@@ -1147,7 +1641,7 @@ th:attr		th:attr=&quot;src=@{/image/aa.jpg},title=#{logo}&quot;，此标签不�
 	&quot;name&quot;: &quot;grunt-test&quot;,
 	&quot;version&quot;: &quot;1.0.0&quot;,
 	&quot;devDependencies&quot;: {
-
+		
 	}
 }
 </code></pre>
@@ -1335,8 +1829,8 @@ docker pull nginx
                 levelArr = (function (article, contentArr, titleId) {
                     var titleElem = articleChildren(article.childNodes, /^h\d$/),
                         levelArr = [],
-                        lastNum = 1,
-                        lastRevNum = 1,
+                        lastNum = 0,
+                        lastRevNum = 0,
                         count = 0,
                         guid = 1,
                         id = 'directory' + (Math.random() + '').replace(/\D/, ''),
@@ -1361,7 +1855,7 @@ docker pull nginx
                         elem.id = elem.id || (id + guid++);
                         titleId.push(elem.id);
                     }
-                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+                    //if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
 
                     return levelArr;
                 })(article, contentArr, titleId);
@@ -1372,7 +1866,7 @@ docker pull nginx
                 link.innerHTML = '<< 返回';
                 li.appendChild(link);
                 currentList.appendChild(li);
-                dirNum = [0];
+                dirNum = [];
                 for (i = 0, len = levelArr.length; i < len; i++) {
                     level = levelArr[i];
                     if (level === 1) {
@@ -1403,42 +1897,58 @@ docker pull nginx
                 }
                 directory.appendChild(root);
             };
-        createPostDirectory(document.getElementById('article-content'), document.getElementById('js-nav-directory'), true);
-        var flodDirArr = document.getElementsByClassName("flodDir");
-        for(var i = 0;i < flodDirArr.length;i++) {
-            flodDirArr[i].ondblclick = function() {
-                var _this = this;
-                if(_this.nextSibling.style.height == "10px") {
-                    _this.nextSibling.style.height = "auto";
-                    _this.parentNode.style.border = "0";
-                    _this.parentNode.onclick = null;
-                    _this.parentNode.onmouseover = null;
-                    _this.parentNode.onmouseout = null;
-                } else {
-                    _this.nextSibling.style.height = "10px";
-                    _this.nextSibling.style.overflow = "hidden";
-                    _this.parentNode.style.border = "1px solid gray";
-                    _this.parentNode.onclick = function(){
-                        _this.nextSibling.style.height = "auto";
-                        _this.parentNode.style.border = "0";
-                        _this.parentNode.onclick = null;
-                        _this.parentNode.onmouseover = null;
-                        _this.parentNode.onmouseout = null;
-                    };
-                    _this.parentNode.onmouseover = function(){
-                        if(_this.nextSibling.style.height == "10px"){
-                            _this.parentNode.style.border = "1px solid red";
-                        }
-                    };
-                    _this.parentNode.onmouseout = function(){
-                        if(_this.nextSibling.style.height == "10px"){
-                            _this.parentNode.style.border = "1px solid gray";
-                        }
+
+        var upFlodDir = function(linkDomObj) {
+            if(!linkDomObj.nextSibling){
+                return;
+            }
+            if(linkDomObj.nextSibling.style.height == "10px") {
+                linkDomObj.nextSibling.style.height = "auto";
+                linkDomObj.parentNode.style.border = "0";
+                linkDomObj.parentNode.onclick = null;
+                linkDomObj.parentNode.onmouseover = null;
+                linkDomObj.parentNode.onmouseout = null;
+            } else {
+                linkDomObj.nextSibling.style.height = "10px";
+                linkDomObj.nextSibling.style.overflow = "hidden";
+                linkDomObj.parentNode.style.border = "1px solid gray";
+                linkDomObj.parentNode.onclick = function(){
+                    linkDomObj.nextSibling.style.height = "auto";
+                    linkDomObj.parentNode.style.border = "0";
+                    linkDomObj.parentNode.onclick = null;
+                    linkDomObj.parentNode.onmouseover = null;
+                    linkDomObj.parentNode.onmouseout = null;
+                };
+                linkDomObj.parentNode.onmouseover = function(){
+                    if(linkDomObj.nextSibling.style.height == "10px"){
+                        linkDomObj.parentNode.style.border = "1px solid red";
+                    }
+                };
+                linkDomObj.parentNode.onmouseout = function(){
+                    if(linkDomObj.nextSibling.style.height == "10px"){
+                        linkDomObj.parentNode.style.border = "1px solid gray";
                     }
                 }
+            }
+        };
+        createPostDirectory(document.getElementById('article-content'), document.getElementById('js-nav-directory'), true);
+        var flodDirArr = document.getElementsByClassName("flodDir");
+        var menubarDiv = document.getElementById("menubarDiv");
+        var style = window.getComputedStyle(menubarDiv);
+        var isUpFlodDir = false;
+        if(style.display == "none"){
+            isUpFlodDir = true;
+        }
+        for(var i = 0;i < flodDirArr.length;i++) {
+            flodDirArr[i].ondblclick = function() {
+                upFlodDir(this);
             };
+            if(isUpFlodDir){
+                upFlodDir(flodDirArr[i]);
+            }
         }
     };
+
     /*初始化加载js-dir*/
     var dirEle = document.getElementById('java-nav-directory');
     if (null == dirEle || dirEle.innerHTML == "") {

@@ -292,7 +292,7 @@
     <h1 id="big-title">##page.title##</h1>
 </header>
 <nav>
-    <div class="menubar">
+    <div id="menubarDiv" class="menubar">
         <a class="button" id="mediaMenubar">&#9776;&nbsp;目录索引</a><span class="small-title">##page.title##</span>
     </div>
     <div id="java-nav-directory">##page.nav##</div>
@@ -347,8 +347,8 @@
                 levelArr = (function (article, contentArr, titleId) {
                     var titleElem = articleChildren(article.childNodes, /^h\d$/),
                         levelArr = [],
-                        lastNum = 1,
-                        lastRevNum = 1,
+                        lastNum = 0,
+                        lastRevNum = 0,
                         count = 0,
                         guid = 1,
                         id = 'directory' + (Math.random() + '').replace(/\D/, ''),
@@ -373,7 +373,7 @@
                         elem.id = elem.id || (id + guid++);
                         titleId.push(elem.id);
                     }
-                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+                    //if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
 
                     return levelArr;
                 })(article, contentArr, titleId);
@@ -384,7 +384,7 @@
                 link.innerHTML = '<< 返回';
                 li.appendChild(link);
                 currentList.appendChild(li);
-                dirNum = [0];
+                dirNum = [];
                 for (i = 0, len = levelArr.length; i < len; i++) {
                     level = levelArr[i];
                     if (level === 1) {
@@ -415,42 +415,58 @@
                 }
                 directory.appendChild(root);
             };
-        createPostDirectory(document.getElementById('article-content'), document.getElementById('js-nav-directory'), true);
-        var flodDirArr = document.getElementsByClassName("flodDir");
-        for(var i = 0;i < flodDirArr.length;i++) {
-            flodDirArr[i].ondblclick = function() {
-                var _this = this;
-                if(_this.nextSibling.style.height == "10px") {
-                    _this.nextSibling.style.height = "auto";
-                    _this.parentNode.style.border = "0";
-                    _this.parentNode.onclick = null;
-                    _this.parentNode.onmouseover = null;
-                    _this.parentNode.onmouseout = null;
-                } else {
-                    _this.nextSibling.style.height = "10px";
-                    _this.nextSibling.style.overflow = "hidden";
-                    _this.parentNode.style.border = "1px solid gray";
-                    _this.parentNode.onclick = function(){
-                        _this.nextSibling.style.height = "auto";
-                        _this.parentNode.style.border = "0";
-                        _this.parentNode.onclick = null;
-                        _this.parentNode.onmouseover = null;
-                        _this.parentNode.onmouseout = null;
-                    };
-                    _this.parentNode.onmouseover = function(){
-                        if(_this.nextSibling.style.height == "10px"){
-                            _this.parentNode.style.border = "1px solid red";
-                        }
-                    };
-                    _this.parentNode.onmouseout = function(){
-                        if(_this.nextSibling.style.height == "10px"){
-                            _this.parentNode.style.border = "1px solid gray";
-                        }
+
+        var upFlodDir = function(linkDomObj) {
+            if(!linkDomObj.nextSibling){
+                return;
+            }
+            if(linkDomObj.nextSibling.style.height == "10px") {
+                linkDomObj.nextSibling.style.height = "auto";
+                linkDomObj.parentNode.style.border = "0";
+                linkDomObj.parentNode.onclick = null;
+                linkDomObj.parentNode.onmouseover = null;
+                linkDomObj.parentNode.onmouseout = null;
+            } else {
+                linkDomObj.nextSibling.style.height = "10px";
+                linkDomObj.nextSibling.style.overflow = "hidden";
+                linkDomObj.parentNode.style.border = "1px solid gray";
+                linkDomObj.parentNode.onclick = function(){
+                    linkDomObj.nextSibling.style.height = "auto";
+                    linkDomObj.parentNode.style.border = "0";
+                    linkDomObj.parentNode.onclick = null;
+                    linkDomObj.parentNode.onmouseover = null;
+                    linkDomObj.parentNode.onmouseout = null;
+                };
+                linkDomObj.parentNode.onmouseover = function(){
+                    if(linkDomObj.nextSibling.style.height == "10px"){
+                        linkDomObj.parentNode.style.border = "1px solid red";
+                    }
+                };
+                linkDomObj.parentNode.onmouseout = function(){
+                    if(linkDomObj.nextSibling.style.height == "10px"){
+                        linkDomObj.parentNode.style.border = "1px solid gray";
                     }
                 }
+            }
+        };
+        createPostDirectory(document.getElementById('article-content'), document.getElementById('js-nav-directory'), true);
+        var flodDirArr = document.getElementsByClassName("flodDir");
+        var menubarDiv = document.getElementById("menubarDiv");
+        var style = window.getComputedStyle(menubarDiv);
+        var isUpFlodDir = false;
+        if(style.display == "none"){
+            isUpFlodDir = true;
+        }
+        for(var i = 0;i < flodDirArr.length;i++) {
+            flodDirArr[i].ondblclick = function() {
+                upFlodDir(this);
             };
+            if(isUpFlodDir){
+                upFlodDir(flodDirArr[i]);
+            }
         }
     };
+
     /*初始化加载js-dir*/
     var dirEle = document.getElementById('java-nav-directory');
     if (null == dirEle || dirEle.innerHTML == "") {

@@ -1,6 +1,8 @@
 JVM工具学习笔记
 =================================
 
+## 原生工具
+
 1. Cmd控制台： ```jconsole``` 回车，可以直接打开 java 监视管理控制台
 
 	![jconsole监控](jvm-debug/1.png)
@@ -26,11 +28,11 @@ JVM工具学习笔记
 
 	- Cmd控制台:  ```jmap -dump:live,file=xxx.map [正在运行java的进程PID]```，可以导出进程JAVA相关信息，例如：```jmap -dump:live,file=visa-asms-link.map 16664```
 	- Cmd控制台: ```jhat -J-Xmx512m -port 7000 visa-asms-link.map``` ，可以启动简单预览的WEB服务
-	
+
 	http://localhost:7000/  这里看到所有的类；
 	进入oql查询界面   http://localhost:7000/oql/；
 	具体OQL用法可见：http://localhost:7000/oqlhelp/
-		
+
 	![jmap&jhat](jvm-debug/5.png)
 
 	```

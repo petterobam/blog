@@ -1,6 +1,8 @@
 thymeleaf学习笔记
 =================
 
+## 基础认识
+
 1. thymeleaf 为 ```*.html```文档
 
 	[源码地址](https://github.com/thymeleaf)
@@ -30,7 +32,7 @@ thymeleaf学习笔记
 	th:switch	多路选择 配合th:case 使用	<div th:switch="${user.role}">
 	th:case		th:switch的一个分支	<p th:case="'admin'">User is an administrator</p>
 	th:fragment	布局标签，定义代码片段，方便其它地方引用	<div th:fragment="alert">
-	th:include	布局标签，替换内容到引入的文件	<head th:include="layout :: htmlhead" th:with="title='xx'"></head> 
+	th:include	布局标签，替换内容到引入的文件	<head th:include="layout :: htmlhead" th:with="title='xx'"></head>
 	th:replace	布局标签，替换整个标签到引入的文件	<div th:replace="fragments/header :: title"></div>
 	th:selected	selected选择框 选中	th:selected="(${xxx.id} == ${configObj.dd})"
 	th:src		图片类地址引入	<img th:src="@{/img/logo.png}" />
