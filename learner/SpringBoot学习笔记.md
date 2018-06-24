@@ -111,196 +111,196 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 
 也可以通过在 resources 目录下使用 logback.xml 或者 logback-spring.xml 来对 Logback 进行更详细的配置。
 
-- org.apache.log4j.ConsoleAppender（控制台）
-- org.apache.log4j.FileAppender（文件）
-- org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件）
-- org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）
-- org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
+* org.apache.log4j.ConsoleAppender（控制台）
+* org.apache.log4j.FileAppender（文件）
+* org.apache.log4j.DailyRollingFileAppender（每天产生一个日志文件）
+* org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）
+* org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <included>
-    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
-    ​
-    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
-    <springProperty scope="context" name="destination" source="logstash.destination"/>
-    <springProperty scope="context" name="kafkadestination" source="kafka.destination"/>
-    <conversionRule conversionWord="ip" converterClass="cn.xxx.IPLogConfig" />
-    <!-- Example for logging into the build folder of your project -->
-    <property name="LOG_FILE" value="${log_file_path:-build}/logs/${springAppName}/${hostname}/${springAppName}"/>​
+	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+	​
+	<springProperty scope="context" name="springAppName" source="spring.application.name"/>
+	<springProperty scope="context" name="destination" source="logstash.destination"/>
+	<springProperty scope="context" name="kafkadestination" source="kafka.destination"/>
+	<conversionRule conversionWord="ip" converterClass="cn.xxx.IPLogConfig" />
+	<!-- Example for logging into the build folder of your project -->
+	<property name="LOG_FILE" value="${log_file_path:-build}/logs/${springAppName}/${hostname}/${springAppName}"/>​
 
-    <!-- You can override this to have a custom pattern -->
-    <property name="CONSOLE_LOG_PATTERN"
-              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+	<!-- You can override this to have a custom pattern -->
+	<property name="CONSOLE_LOG_PATTERN"
+				value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
 
-    <!-- Appender to log to console -->
-    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <!-- Minimum logging level to be presented in the console logs-->
-            <level>DEBUG</level>
-        </filter>
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
+	<!-- Appender to log to console -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<!-- Minimum logging level to be presented in the console logs-->
+			<level>DEBUG</level>
+		</filter>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
 
-    <!-- Appender to log to file -->​
-    <appender name="flatfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder>
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
-            <charset>utf8</charset>
-        </encoder>
-    </appender>
+	<!-- Appender to log to file -->​
+	<appender name="flatfile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
 
-    <!-- Appender to log to file in a JSON format -->
-    <appender name="logstashFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FILE}.json</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE}.json.%d{yyyy-MM-dd}.gz</fileNamePattern>
-            <maxHistory>7</maxHistory>
-        </rollingPolicy>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
-            <!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 -->
-            <jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
-                        "severity": "%level",
-                        "service": "${springAppName:-}",
-                        "trace": "%X{X-B3-TraceId:-}",
-                        "span": "%X{X-B3-SpanId:-}",
-                        "parent": "%X{X-B3-ParentSpanId:-}",
-                        "exportable": "%X{X-Span-Export:-}",
-                        "pid": "${PID:-}",
-                        "restUrl":"%X{restUrl}",
-                        "thread": "%thread",
-                        "class": "%logger{40}",
-                        "line_number": "%line",
-                        "info": "%message",
-                        "stack_trace": "%exception{5}",
-                        "host":"%ip"
-                        }
-                    </pattern>
-                </pattern>
-                <stackTrace>
-                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
-                        <maxDepthPerThrowable>2</maxDepthPerThrowable>
-                        <maxLength>2048</maxLength>
-                        <rootCauseFirst>true</rootCauseFirst>
-                    </throwableConverter>
-                </stackTrace>
-            </providers>
-        </encoder>
-    </appender>
+	<!-- Appender to log to file in a JSON format -->
+	<appender name="logstashFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_FILE}.json</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_FILE}.json.%d{yyyy-MM-dd}.gz</fileNamePattern>
+			<maxHistory>7</maxHistory>
+		</rollingPolicy>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
+			<!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 -->
+			<jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<pattern>
+					<pattern>
+						{
+						"createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+						"severity": "%level",
+						"service": "${springAppName:-}",
+						"trace": "%X{X-B3-TraceId:-}",
+						"span": "%X{X-B3-SpanId:-}",
+						"parent": "%X{X-B3-ParentSpanId:-}",
+						"exportable": "%X{X-Span-Export:-}",
+						"pid": "${PID:-}",
+						"restUrl":"%X{restUrl}",
+						"thread": "%thread",
+						"class": "%logger{40}",
+						"line_number": "%line",
+						"info": "%message",
+						"stack_trace": "%exception{5}",
+						"host":"%ip"
+						}
+					</pattern>
+				</pattern>
+				<stackTrace>
+					<throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+						<maxDepthPerThrowable>2</maxDepthPerThrowable>
+						<maxLength>2048</maxLength>
+						<rootCauseFirst>true</rootCauseFirst>
+					</throwableConverter>
+				</stackTrace>
+			</providers>
+		</encoder>
+	</appender>
 
-    <!-- Appender to log to file in a JSON format -->
-    <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${destination}</destination>
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
-            &lt;!&ndash; 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 &ndash;&gt;
-            <jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
-                        "severity": "%level",
-                        "service": "${springAppName:-}",
-                        "trace": "%X{X-B3-TraceId:-}",
-                        "span": "%X{X-B3-SpanId:-}",
-                        "parent": "%X{X-B3-ParentSpanId:-}",
-                        "exportable": "%X{X-Span-Export:-}",
-                        "pid": "${PID:-}",
-                        "restUrl":"%X{restUrl}",
-                        "thread": "%thread",
-                        "clazz": "%logger{40}",
-                        "linenumber": "%line",
-                        "info": "%message",
-                        "stacktrace": "%exception{5}",
-                        "host":"%ip"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
+	<!-- Appender to log to file in a JSON format -->
+	<appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>${destination}</destination>
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
+			&lt;!&ndash; 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 &ndash;&gt;
+			<jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<pattern>
+					<pattern>
+						{
+						"createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+						"severity": "%level",
+						"service": "${springAppName:-}",
+						"trace": "%X{X-B3-TraceId:-}",
+						"span": "%X{X-B3-SpanId:-}",
+						"parent": "%X{X-B3-ParentSpanId:-}",
+						"exportable": "%X{X-Span-Export:-}",
+						"pid": "${PID:-}",
+						"restUrl":"%X{restUrl}",
+						"thread": "%thread",
+						"clazz": "%logger{40}",
+						"linenumber": "%line",
+						"info": "%message",
+						"stacktrace": "%exception{5}",
+						"host":"%ip"
+						}
+					</pattern>
+				</pattern>
+			</providers>
+		</encoder>
+	</appender>
 
-    <!-- This is the kafkaAppender -->
-    <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
-        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
-            <!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 -->
-            <jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                        "createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
-                        "severity": "%level",
-                        "service": "${springAppName:-}",
-                        "trace": "%X{X-B3-TraceId:-}",
-                        "span": "%X{X-B3-SpanId:-}",
-                        "parent": "%X{X-B3-ParentSpanId:-}",
-                        "exportable": "%X{X-Span-Export:-}",
-                        "pid": "${PID:-}",
-                        "restUrl":"%X{restUrl}",
-                        "thread": "%thread",
-                        "clazz": "%logger{40}",
-                        "linenumber": "%line",
-                        "info": "%message",
-                        "stacktrace": "%exception{5}",
-                        "host":"%ip"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-        <topic>logs</topic>
-        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
-        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+	<!-- This is the kafkaAppender -->
+	<appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
+			<!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 -->
+			<jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
+			<providers>
+				<timestamp>
+					<timeZone>UTC</timeZone>
+				</timestamp>
+				<pattern>
+					<pattern>
+						{
+						"createTime": "%d{yyyy-MM-dd HH:mm:ss.SSS}",
+						"severity": "%level",
+						"service": "${springAppName:-}",
+						"trace": "%X{X-B3-TraceId:-}",
+						"span": "%X{X-B3-SpanId:-}",
+						"parent": "%X{X-B3-ParentSpanId:-}",
+						"exportable": "%X{X-Span-Export:-}",
+						"pid": "${PID:-}",
+						"restUrl":"%X{restUrl}",
+						"thread": "%thread",
+						"clazz": "%logger{40}",
+						"linenumber": "%line",
+						"info": "%message",
+						"stacktrace": "%exception{5}",
+						"host":"%ip"
+						}
+					</pattern>
+				</pattern>
+			</providers>
+		</encoder>
+		<topic>logs</topic>
+		<keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+		<deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
 
-        <!-- Optional parameter to use a fixed partition -->
-        <!-- <partition>0</partition> -->
+		<!-- Optional parameter to use a fixed partition -->
+		<!-- <partition>0</partition> -->
 
-        <!-- Optional parameter to include log timestamps into the kafka message -->
-        <!-- <appendTimestamp>true</appendTimestamp> -->
+		<!-- Optional parameter to include log timestamps into the kafka message -->
+		<!-- <appendTimestamp>true</appendTimestamp> -->
 
-        <!-- each <producerConfig> translates to regular kafka-client config (format: key=value) -->
-        <!-- producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs -->
-        <!-- bootstrap.servers is the only mandatory producerConfig -->
-        <producerConfig>bootstrap.servers=${kafkadestination}</producerConfig>
+		<!-- each <producerConfig> translates to regular kafka-client config (format: key=value) -->
+		<!-- producer configs are documented here: https://kafka.apache.org/documentation.html#newproducerconfigs -->
+		<!-- bootstrap.servers is the only mandatory producerConfig -->
+		<producerConfig>bootstrap.servers=${kafkadestination}</producerConfig>
 
-        <!-- this is the fallback appender if kafka is not available. -->
-        <appender-ref ref="flatfile"/>
-    </appender>
+		<!-- this is the fallback appender if kafka is not available. -->
+		<appender-ref ref="flatfile"/>
+	</appender>
 
-    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="kafkaAppender" />
-    </appender>
+	<appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="kafkaAppender" />
+	</appender>
 
-    <!--生产环境-->
-    <logger name="druid.sql.Statement" level="DEBUG"/>
-    <root level="INFO">
-        <appender-ref ref="console"/>
-        <appender-ref ref="ASYNC"/>
-    </root>
-    <jmxConfigurator/>
+	<!--生产环境-->
+	<logger name="druid.sql.Statement" level="DEBUG"/>
+	<root level="INFO">
+		<appender-ref ref="console"/>
+		<appender-ref ref="ASYNC"/>
+	</root>
+	<jmxConfigurator/>
 </included>
 ```
 
@@ -349,10 +349,10 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 public class Ch8Application extends SpringBootServletinitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Ch8Application.class) ;
+	return application.sources(Ch8Application.class) ;
 	}
 	public static void main(String[] args) {
-		SpringApplication.run(Ch8Application.class, args) ;
+	SpringApplication.run(Ch8Application.class, args) ;
 	}
 }
 ```
@@ -389,8 +389,8 @@ application-prod.properties 的内容如下：
 
 @Profile 搭配 @Bean 、@Configuration 等自动执行配置可以定义在不同环境下是否生效，例如：
 
-- @Profile({"test", "prod"}) ，测试环境和线上环境生效
-- @Profile({"test", "!prod"}) ，测试环境和非线上环境生效
+* @Profile({"test", "prod"}) ，测试环境和线上环境生效
+* @Profile({"test", "!prod"}) ，测试环境和非线上环境生效
 
 ## 测试用例
 
@@ -423,12 +423,12 @@ public class UserControllerTest{
 ```
 
 ### mockMvc模拟请求
-1.模拟－个Post请求：
+1.模拟一个Post请求：
 ```java
 mockMvc.perform(get("/hotels?foo={foo}","bar"));
 ```
 
-2.模拟－个Post请求：
+2.模拟一个Post请求：
 ```java
 mockMvc.perform(post("/hotels/{id}", 42) ;
 ```
@@ -515,34 +515,374 @@ public class CreditServiceMockTest{
 @Configuration
 @EnableSwagger2
 public class Swagger2 {
-    @Bean
-    public Docket createRestApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.basePackage("com.forezp.controller"))
-                .paths(PathSelectors.any())
-                .build();
-    }
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("SpringBoot利用Swagger构建Api文档")
-                .description("简单优雅的Restfun风格，http://blog.csdn.net/forezp")
-                .termsOfServiceUrl("http://blog.csdn.net/forezp")
-                .version("1.0")
-                .build();
-    }
+	@Bean
+	public Docket createRestApi() {
+		return new Docket(DocumentationType.SWAGGER_2)
+				.apiInfo(apiInfo())
+				.select()
+				.apis(RequestHandlerSelectors.basePackage("com.forezp.controller"))
+				.paths(PathSelectors.any())
+				.build();
+	}
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder()
+				.title("SpringBoot利用Swagger构建Api文档")
+				.description("简单优雅的Restfun风格，http://blog.csdn.net/forezp")
+				.termsOfServiceUrl("http://blog.csdn.net/forezp")
+				.version("1.0")
+				.build();
+	}
 }
 ```
 3.添加文档描述
-- @Api：修饰整个类，描述Controller的作用
-- @ApiOperation：描述一个类的一个方法，或者说一个接口
-- @ApiParam：单个参数描述
-- @ApiModel：用对象来接收参数
-- @ApiProperty：用对象接收参数时，描述对象的一个字段
-- @ApiResponse：HTTP响应其中1个描述
-- @ApiResponses：HTTP响应整体描述
-- @ApiIgnore：使用该注解忽略这个API
-- @ApiError ：发生错误返回的信息
-- @ApiParamImplicitL：一个请求参数
-- @ApiParamsImplicit 多个请求参数
+* @Api：修饰整个类，描述Controller的作用
+* @ApiOperation：描述一个类的一个方法，或者说一个接口
+* @ApiParam：单个参数描述
+* @ApiModel：用对象来接收参数
+* @ApiProperty：用对象接收参数时，描述对象的一个字段
+* @ApiResponse：HTTP响应其中1个描述
+* @ApiResponses：HTTP响应整体描述
+* @ApiIgnore：使用该注解忽略这个API
+* @ApiError ：发生错误返回的信息
+* @ApiParamImplicitL：一个请求参数
+* @ApiParamsImplicit 多个请求参数
+
+### Swagger3
+
+[了解学习](https://swagger.io/blog/news/announcing-openapi-3-0/)
+
+## 集成 MongoDB
+
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+```
+
+还需要在配置文件 application.properties 中配置：
+
+```
+spring.data.mongodb.uri=mongodb://127.0.0.1:27017/baike
+#若开启了登陆功能，test是内置数据库名，123%abc!是密码，% 字符在 URI 中使用 %25
+spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
+```
+
+## 集成 Redis
+
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
+
+还需要在配置文件 application.properties 中配置：
+
+```
+spring.redis.host=127.0.0.1
+spring.redis.password=Redis!l23
+spring.redis.port=6379
+#最大连接数
+spring.redis.pool.max-active=8
+```
+
+```java
+@Autowired
+private StringRedisTemplate redisClient;
+
+redisClient.opsForValue().set("key1", value1);
+String str = red工sClient.opsForValue().get("key1");
+```
+
+```java
+@Autowired
+@Qualifier("redisTernplate")
+private RedisTernplate redisClient;
+
+redisClient.opsForValue().set ("key1", User.getSampleUser());
+User uer = (User)redisClient.opsForValue().get("key1");
+```
+
+## 集成 Elasticsearch
+
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+</dependency>
+```
+
+还需要在配置文件 application.properties 中配置：
+```
+spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
+```
+
+使用方法详细参考：
+* https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#repositories.query-methods
+* https://www.cnblogs.com/Alandre/p/7055838.html
+
+## 集成 Spring Cache
+
+1.添加 Maven 依赖
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-cache</artifactId>
+</dependency>
+```
+
+2.还需要在配置文件 application.properties 中配置：
+
+```
+#使用 Spring Boot 自带的缓存
+spring . cache.type=Simple
+
+• Simple，基于 ConcurrentHashMap 实现的缓存，适合单体应用或者开发环境使用
+• none，关闭缓存，比如开发阶段为了确保功能正确，可以先禁止使用缓存
+• redis，使用 Redis 作为缓存，还需要在 porn 中增加 Redis 依赖
+• Generic，用户自定义缓存实现，用户需要实现一个 org.springframework.cache.CacheManager 的实现
+• 其他还有 JCache、 EhCache 2.x, Hazelcast 等
+```
+
+3.要在启动类上添加 @EnableCaching 注解，打开缓存功能
+
+4.注解驱动
+
+* @Cacheable，作用在方法上，触发缓存读取操作
+* @CacheEvict，作用在方法上，触发缓存失效操作
+* @CachePut，作用在方法上，触发缓存更新操作
+* @Cache，作用在方法上，综合上面的各种操作，在有些场景下，调用业务会触发多种缓存操作
+* @CacheConfig，在类上设置当前缓存的一些公共设置
+
+### 集成 Redis 缓存
+
+```
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
+
+还需要在配置文件 application.properties 中配置：
+
+```
+spring.cache.type=Redis
+spring.redis.host=127.0.0.1
+spring.redis.password=Redis!l23
+spring.redis.port=6379
+```
+
+用法与自带缓存一致，注解驱动
+
+###	Redis 两级缓存
+
+由于网络访问 Redis 效率可能还比自带的缓存要低，RedisCacheManager 和 RedisCache 在访 问 Redis 之前，先访问一个 ConcurrentHashMap 实现的简单一级缓存，如果有缓存项，则返回 给应用，如果没有，再从 Redis 中取得，并将缓存对象放到一级缓存中。实现方法：扩展 RedisCacheManager 并且实现 Cache 接口，自 @Configuration 注入 @Bean 实现 CacheManager 服务，具体自行实验。
+
+如今比较流行的做法是将 SpringBoot + Mybatis + Redis 二级缓存，在对应的 Mapper.xml 中注入你扩展实现 Cache 的类：
+
+```xml
+<cache type="com.xxx.MybatisRedisCache"/>
+```
+
+## 水平扩展
+
+一般情况下，SpringBoot 的同一个服务会部署多套，这样保证了：
+
+* 单个应用者机不会停止服务，升级应用可以逐个升级而不必停止服务
+* 提高了应用整体的吞吐量
+
+### 配置 Nginx
+
+```
+http {
+	include mime.types;
+	default type application/octet-stream;
+	sendfile on;
+	keepalive timeout 65;
+	upstream backend {
+		server 127.0.0.1:9000;
+		server 127.0.0.1:9001;
+	}
+	server {
+		listen 80 ;
+		server name localhost;
+		location / {
+			proxy pass http://backend;
+		}
+	}
+}
+```
+
+## Spring Session
+
+```
+spring.session.store-type=Redis|JDBC|Hazelcast|none
+```
+
+* Redis, Session 数据存放 Redis 中，通常使用该方式存储 SESSION
+* JDBC， 会话数据存放在数据库中，默认情况下 SPRING_SESSION 表存放 Session 基 本信息 ，如 sessionld 、创建时间、 最后一次访问时间等 ， SPING_SESSION ATTIBUTES 存放了 session 数据， ATTIBUTE_NAME 列保存了 Session 的 Key, ATTIBUTE_BYTES 列以字节形式保存了 Session 的 Value, Spring Session 会自动创 建这两张表
+* Hazelcast, Session 数据存放到 Hazeleast
+* None，禁用 Spring Session 功能
+
+Redis 里面查看 Session：
+
+```
+>keys spring:session:*
+
+>hgetall "spring:session:sessions:863c7e73-8249-4780-a08e-Off2bdddda86"
+
+>HMGET "spring:session:sessions:863c7e73-8249-4780-a08e一O ff2bdddda86"
+```
+
+Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis 后，即使一台服务器挂了，对应用户的 Session 也不会丢失，不需要重新登录等等。
+
+## 集成 ZooKeeper
+
+• 自动重连，无须开发人员关心
+• 提供简单的 API 来操作 zk 节点，还有 zk 事件， API 是链式操作风格
+• Curator 实现了 ZooKeeper 提供的所有应用场景（除了两阶段提交〉，有以下实现
+		。 领导节点选取
+		。 分布式锁
+		。 分布式读写锁
+		。 共享信号量
+		。 栅栏和双重 Double Barrier
+		。 分布式计数器，支持 integer 和 long
+		。 分布式队列和分布式优先级队列
+		。 服务注册和发现
+
+```
+<dependency>
+	<groupId>org.apache.curator</groupId>
+	<artifactId>curator-recipes</artifactId>
+	<version>2.12.0</version>
+</dependency>
+```
+
+```
+zk.url=l27.0.0.1:2181
+```
+
+```java
+@Configuration
+public class ZookeeperConf {
+	@Value ("${ zk. url } ")
+	private String zkUrl;
+	@Bean
+	public CuratorFramework getCuratorFramework() {
+		RetryPolicy retryPolicy =new ExponentialBackoffRetry(lOOO, 3);
+		CuratorFramework client= CuratorFrameworkFactory.newClient(zkUrl, retryPolicy) ;
+		client.getCuratorListenable().addListener(new CuratorListener() {
+			public void eventReceived(CuratorFramework client, CuratorEvent event) throws Exception {
+				CuratorEventType type= event.getType();
+				if (type == CuratorEventType.WATCHED) {
+					WatchedEvent we = event.getWatchedEvent();
+					EventType et = we.getType();
+					client.checkExists().watched().forPath(we.getPath());
+				}
+			}
+		});
+		client.start() ;
+		return client;
+	}
+}
+```
+
+### 分布式锁使用
+
+```java
+@Autowired
+CuratorFramework zkClient;
+
+publiC void makeOrderType(String type) {
+	String path = "/lock/order/" + type;
+	try{
+		InterProcessMutex lock= new InterProcessMutex(zkClient, path) ;
+		if (lock.acquire(10, TimeUnit.HOURS)) {
+			try {
+				// 模拟耗时 5 秒
+				Thread.sleep(1000*5);
+				// 即使获得分布式锁，在实际业务处理过程中，也应该检查数据是否已经被处理
+			} finally {
+				lock.release();
+			}
+		}
+	}catch(Exception ex) { // zk 异常
+		ex.printStackTrace();
+	}
+}
+```
+
+也可以通过注解来定义：
+
+```java
+@ClusterLock ("/lock/order")
+publiC void makeOrderType(String type) {
+	try {
+		// 模拟耗时 5 秒
+		Thread.sleep(1000*5);
+		// 即使获得分布式锁，在实际业务处理过程中，也应该检查数据是否已经被处理
+	} finally {
+		lock.release();
+	}
+}
+```
+
+### 服务注册
+
+```
+<dependency>
+	<groupId>org.apache.curator</groupId>
+	<artifactId>curator-x-discovery</artifactId>
+	<version>2.12.0</version>
+</dependency>
+```
+
+```java
+protected void registerSerivce (CuratorFramework client) throws Exception {
+	// 构造一个服务描述
+	ServiceinstanceBuilder<Map> service =ServiceInstance.builder();
+	service.address("192.168.1.1o。"）；
+	service.port(8080);
+	service.name("book");
+	Map config =new HashMap();
+	config.put("url","/api/v3/book");
+	service.payload(config);
+	Serviceinstance<Map> instance = service.build();
+	ServiceDiscovery<Map> serviceDiscovery = ServiceDiscoveryBuilder.builder(Map.class).client(client)
+		.serializer(new JsoninstanceSerial工zer<Map>(Map.class)).basePath("/service").build();//服务注册
+	serviceDiscovery.registerService(instance);
+	serviceDiscovery.start();
+}
+```
+
+## 应用监控
+
+```
+<dependency>
+	<groupId>org.apache.curator</groupId>
+	<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+```
+
+配置文件添加如下配置：
+
+```
+endpoints.default.web.enabled=true
+#设置系统监控的访问端口
+management.port=8081
+#所有的监控都在 /application 下，你可以更改配置，修改成你想要的路径
+#management.context-path=/manage
+```
+
+* Http监控查看URL：http://localhost:8081/application/trace
+* 日志查看URL：http://localhost:8081/application/loggers
+	* 如果定义了日志文件，还可以查看日志文件：http://localhost:8081/application/logfile
+* 线程核信息URL：http://localhost:8081/application/dump
+* 内存信息URL：http://localhost:8081/application/heapdump
+* 其他的有 mappings 、beans 监控映射和Bean
+* health： 查看所在应用的健康状态， 如磁盘、数据源、 Redis、 Elasticsearch
+* metrics： 显示 Spring Boot 的性能指标，如己有内存、未占用内存、垃圾回收次数、类 信息等
+* env： 显示 Spring Boot 环境变量，如使用的 JDK 版本、加载的 jar 包、配置文件信息、 日志文件信息
+* configprops： 所有＠ConfigurationProperties 注解的配置信息，如文件上传的最大允许 配置等
+* autoconfig：显示所有自动装配类的报告，以及是什么原因导致自动装配成功或者不成功
