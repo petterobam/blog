@@ -305,7 +305,7 @@
 <h2><a href="#安装ruby" name="安装ruby"></a>安装ruby</h2>
 <p>下载地址：https://rubyinstaller.org/downloads</p>
 <p><img src="github-blog/1.png" alt="ruby下载" /></p>
-<p>Ruby安装完，cmd命令 </p>
+<p>Ruby安装完，cmd命令</p>
 <pre><code>ruby -v
 gem -v
 </code></pre>
@@ -364,11 +364,15 @@ gem -v
 </ol>
 <p><img src="github-blog/18.png" alt="Travis-ci配置" /></p>
 <ol>
-  <li>
-  <p>[可选]在你的电脑上安装travis，并生成travis-encrypt<br/><code>gem install travis</code></p>
-  <pre><code class="travis encrypt <api-token>```">其中 ```&lt;api-token&gt;``` 就是你在travis定义的额外属性，形如：
-</code></pre>然后这个 <code>travis-encrypt</code> 用在 <code>.travis.yml</code> 文件中，形如：</li>
+  <li>[可选]在你的电脑上安装travis，并生成travis-encrypt</li>
 </ol>
+<pre><code>gem install travis
+travis encrypt &lt;api-token&gt;
+</code></pre>
+<p>其中 <code>&lt;api-token&gt;</code> 就是你在travis定义的额外属性，形如：</p>
+<pre><code>&#39;GIT_NAME=&quot;YOUR_USERNAME&quot; GIT_EMAIL=&quot;YOUR_EMAIL&quot; GH_TOKEN=YOUR_TOKEN&#39;
+</code></pre>
+<p>然后这个 <code>travis-encrypt</code> 用在 <code>.travis.yml</code> 文件中，形如：</p>
 <p><img src="github-blog/19.png" alt="Travis-ci配置" /></p>
 <ol>
   <li>更多详细信息请参见 jekyll-travis：https://github.com/mfenner/jekyll-travis</li>
@@ -1905,24 +1909,24 @@ th:attr		th:attr=&quot;src=@{/image/aa.jpg},title=#{logo}&quot;，此标签不�
 <pre><code>/package.json    #必备，可以通过npm init 创建
 /Gruntfile.js     #必备，可以参照https://github.com/gruntjs/grunt-init-gruntfile
 </code></pre>
-<pre><code class="package.json``` 初始内容如下："><br/>```json
-{
+<p><code>package.json</code> 初始内容如下：</p>
+<pre><code class="javascript">{
 	&quot;name&quot;: &quot;grunt-test&quot;,
 	&quot;version&quot;: &quot;1.0.0&quot;,
 	&quot;devDependencies&quot;: {
-		
+
 	}
 }
 </code></pre>
-<pre><code class="Gruntfile.js``` 初始内容如下："><br/>```
-module.exports = function(grunt) {
-//任务配置
-grunt.initConfig({
-//获取package.json信息
-    pkg: grunt.file.readJSON(&#39;package.json&#39;)
-});
-//输入grunt默认执行什么
-grunt.registerTask(‘default’,[]);
+<p><code>Gruntfile.js</code> 初始内容如下：</p>
+<pre><code class="javascript">module.exports = function(grunt) {
+	//任务配置
+	grunt.initConfig({
+	//获取package.json信息
+	    pkg: grunt.file.readJSON(&#39;package.json&#39;)
+	});
+	//输入grunt默认执行什么
+	grunt.registerTask(‘default’,[]);
 };
 </code></pre>
 <h2><a href="#插件安装" name="插件安装"></a>插件安装</h2>
@@ -2032,25 +2036,18 @@ docker pull nginx
 <h2><a href="#选中模式" name="选中模式"></a>选中模式</h2>
 <p><img src="3d-max/5.png" alt="选中模式" /></p>
 <p>自定义 - 首选项 - 按方向交叉/窗口选择</p>
-<p>Ctrl + 鼠标 累加选择<br/>Alt + 鼠标 减选</p>
+<p><code>Ctrl</code> + 鼠标 累加选择<br/><code>Alt</code> + 鼠标 减选</p>
 <h2><a href="#隐藏" name="隐藏"></a>隐藏</h2>
-<pre><code class="Shift``` + 物体类型字母"><br/>![隐藏](3d-max/6.png)
-
-## 自动栅格
-
-在某平面上创建基本体：勾选自动栅格
-
-![自动栅格](3d-max/7.png)
-
-## 选择并移动
-
-选择并移动：```W```
-
-参照物：世界坐标、局部坐标
-
-## 复制
-
-</code></pre>
+<p>Shift + 物体类型字母</p>
+<p><img src="3d-max/6.png" alt="隐藏" /></p>
+<h2><a href="#自动栅格" name="自动栅格"></a>自动栅格</h2>
+<p>在某平面上创建基本体：勾选自动栅格</p>
+<p><img src="3d-max/7.png" alt="自动栅格" /></p>
+<h2><a href="#选择并移动" name="选择并移动"></a>选择并移动</h2>
+<p>选择并移动：<code>W</code></p>
+<p>参照物：世界坐标、局部坐标</p>
+<h2><a href="#复制" name="复制"></a>复制</h2>
+<p><code>Shift</code> + 鼠标拖动</p>
 </article>
 <footer>
     <p>© 2018 petterObam, Inc.</p>

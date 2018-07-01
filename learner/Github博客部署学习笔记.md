@@ -7,7 +7,7 @@ Github个人博客部署
 
 ![ruby下载](github-blog/1.png)
 
-Ruby安装完，cmd命令 
+Ruby安装完，cmd命令
 ```
 ruby -v
 gem -v
@@ -19,7 +19,7 @@ DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe运行，解压目录如下
 
 ![DevKit解压](github-blog/3.png)
 
-## 安装 msys2 
+## 安装 msys2
 
 下载地址：http://sourceforge.net/projects/msys2
 
@@ -102,7 +102,7 @@ https://github.com/yizeng/jekyll-theme-simple-texture/tree/master/starter-kit
 
 ## 额外情况
 
-https://github.com/jekyller/jasper2 
+https://github.com/jekyller/jasper2
 如果是非标准的jekyll主题，还需要travis-ci辅助编译，并将静态页面发布到 对应github项目的 gh-pages 分支
 
 具体细节需要注意的有：
@@ -119,11 +119,19 @@ https://github.com/settings/tokens
 
 ![Travis-ci配置](github-blog/18.png)
 
-3. [可选]在你的电脑上安装travis，并生成travis-encrypt 
-    ```gem install travis```
-    ```travis encrypt <api-token>```
+3. [可选]在你的电脑上安装travis，并生成travis-encrypt
+
+```
+gem install travis
+travis encrypt <api-token>
+```
+
 其中 ```<api-token>``` 就是你在travis定义的额外属性，形如：
-```'GIT_NAME="YOUR_USERNAME" GIT_EMAIL="YOUR_EMAIL" GH_TOKEN=YOUR_TOKEN'```
+
+```
+'GIT_NAME="YOUR_USERNAME" GIT_EMAIL="YOUR_EMAIL" GH_TOKEN=YOUR_TOKEN'
+```
+
 然后这个 ```travis-encrypt``` 用在 ```.travis.yml``` 文件中，形如：
 
 ![Travis-ci配置](github-blog/19.png)
@@ -134,7 +142,7 @@ https://github.com/settings/tokens
 
 ![额外情况博客部署效果图](github-blog/20.png)
 
-## 集成博客评论系统 
+## 集成博客评论系统
 基于 ```github issue```
 https://github.com/settings/applications/new
 

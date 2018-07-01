@@ -18,35 +18,35 @@ Grunt学习笔记
 /Gruntfile.js     #必备，可以参照https://github.com/gruntjs/grunt-init-gruntfile
 ```
 
-```package.json``` 初始内容如下：
+`package.json` 初始内容如下：
 
-```json
+```javascript
 {
 	"name": "grunt-test",
 	"version": "1.0.0",
 	"devDependencies": {
-		
+
 	}
 }
 ```
 
-```Gruntfile.js``` 初始内容如下：
+`Gruntfile.js` 初始内容如下：
 
-```
+```javascript
 module.exports = function(grunt) {
-//任务配置
-grunt.initConfig({
-//获取package.json信息
-    pkg: grunt.file.readJSON('package.json')
-});
-//输入grunt默认执行什么
-grunt.registerTask(‘default’,[]);
+	//任务配置
+	grunt.initConfig({
+	//获取package.json信息
+	    pkg: grunt.file.readJSON('package.json')
+	});
+	//输入grunt默认执行什么
+	grunt.registerTask(‘default’,[]);
 };
 ```
 
 ## 插件安装
 
-1. 通过 npm install -g grunt-init 命令安装 grunt-init 
+1. 通过 npm install -g grunt-init 命令安装 grunt-init
 2. 通过 git clone git://github.com/gruntjs/grunt-init-gruntplugin.git ~/.grunt-init/gruntplugin 命令安装grunt插件模版。
 3. 在一个空的目录中执行 grunt-init gruntplugin 。
 4. 执行 npm install 命令以准备开发环境。
