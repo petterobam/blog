@@ -168,6 +168,7 @@
         article p code {
             background: #eee;
             border: 1px solid #ccc;
+            padding: 5px;
         }
 
         article p strong {
@@ -277,6 +278,7 @@
 
         }
     </style>
+    <link rel="stylesheet" href="static/css/prism.css"/>
     <script>
         (function (tags) {
             var i = 0, len = tags.length;
@@ -541,24 +543,26 @@ nexus console （也可以启动）
 </blockquote>
 <h2><a href="#学习基础" name="学习基础"></a>学习基础</h2>
 <blockquote>
-  <p>Spring MVC<br/>Maven</p>
+  <p>Spring MVC</p>
+  <p>Maven</p>
+  <p>装软件</p>
 </blockquote>
 <h2><a href="#部署springboot" name="部署springboot"></a>部署SpringBoot</h2>
 <h3><a href="#springboot支持" name="springboot支持"></a>SpringBoot支持</h3>
-<pre><code>&lt;parent&gt;
+<pre><code class="xml">&lt;parent&gt;
 	&lt;groupld&gt;org.springframework.boot&lt;/groupld&gt;
 	&lt;artifactld&gt;spring-boot-starter-parent&lt;/artifactld&gt;
 	&lt;version&gt;1.5.9.RELEASE&lt;/version&gt;
 &lt;/parent&gt;
 </code></pre>
 <h3><a href="#增加web支持" name="增加web支持"></a>增加Web支持</h3>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
 	&lt;artifactid&gt;spring-boot-starter-web&lt;/artifactid&gt;
 &lt;/dependency&gt;
 </code></pre>
 <h3><a href="#热部署支持" name="热部署支持"></a>热部署支持</h3>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
 	&lt;artifactid&gt;spring-boot-devtools&lt;/artifactid&gt;
 	&lt;optional&gt;true&lt;/optional&gt;
@@ -585,16 +589,16 @@ nexus console （也可以启动）
       <td>会话过期时间，以秒为单位</td>
     </tr>
     <tr>
-      <td>server.eηor.path </td>
-      <td>服务器出错后的处理路径le盯or ，我们在第4 章己经介绍过如何处理异常</td>
+      <td>server.error.path </td>
+      <td>服务器出错后的处理路径 /error</td>
     </tr>
     <tr>
       <td>server.servlet.contextpath </td>
       <td>Spring Boot 应用的上下文</td>
     </tr>
     <tr>
-      <td>server.port Spring Boot </td>
-      <td>应用监听端口</td>
+      <td>server.port </td>
+      <td>Spring Boot应用监听端口</td>
     </tr>
   </tbody>
 </table>
@@ -606,7 +610,7 @@ nexus console （也可以启动）
 <p>或在 resources/static 目录下添加 favicon.ico 图标文件，默认也会覆盖 spring boot 的默认图标</p>
 <h2><a href="#日志配置" name="日志配置"></a>日志配置</h2>
 <p>application.properties 中加入以下代码：</p>
-<pre><code>logging.level.root=info
+<pre><code class="properties">logging.level.root=info
 # org 包下的日志级别 指定默认的级别是 info ，但包名是 org 开头的类，日志级别是 warn 。 org 包名的类大多是第三方依赖库， 有时候没有必要显示 INFO 级别， com.xxx 开头的类使用 debug 。
 logging.level.org=warn
 logging.level.com.xxx=debug
@@ -649,10 +653,10 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
   <li>org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）</li>
   <li>org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</li>
 </ul>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;included&gt;
 	&lt;include resource=&quot;org/springframework/boot/logging/logback/defaults.xml&quot;/&gt;
-	​
+
 	&lt;springProperty scope=&quot;context&quot; name=&quot;springAppName&quot; source=&quot;spring.application.name&quot;/&gt;
 	&lt;springProperty scope=&quot;context&quot; name=&quot;destination&quot; source=&quot;logstash.destination&quot;/&gt;
 	&lt;springProperty scope=&quot;context&quot; name=&quot;kafkadestination&quot; source=&quot;kafka.destination&quot;/&gt;
@@ -739,7 +743,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 	&lt;appender name=&quot;logstash&quot; class=&quot;net.logstash.logback.appender.LogstashTcpSocketAppender&quot;&gt;
 		&lt;destination&gt;${destination}&lt;/destination&gt;
 		&lt;encoder class=&quot;net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder&quot; charset=&quot;UTF-8&quot;&gt;
-			&amp;lt;!&amp;ndash; 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 &amp;ndash;&amp;gt;
+			&lt;!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 --&gt;
 			&lt;jsonFactoryDecorator class=&quot;org.xxx.MyJsonFactoryDecorator&quot;/&gt;
 			&lt;providers&gt;
 				&lt;timestamp&gt;
@@ -836,7 +840,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 </code></pre>
 <h2><a href="#打包配置" name="打包配置"></a>打包配置</h2>
 <p>1.以 jar 文件运行</p>
-<pre><code>&lt;build&gt;
+<pre><code class="xml">&lt;build&gt;
 	&lt;plugins&gt;
 		&lt;plugin&gt;
 		&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
@@ -849,13 +853,13 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 &lt;/build&gt;
 </code></pre>
 <p>2.以 war 方式部署</p>
-<pre><code>&lt;project ...&gt;
+<pre><code class="xml">&lt;project ...&gt;
 	&lt;artifactid&gt;ch8.deploy&lt;/artifactid&gt;
 	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
 	&lt;packaging&gt;war&lt;/packaging&gt;
 &lt;/project&gt;
 
-&lt;dependencies &gt;
+&lt;dependencies&gt;
 	&lt; !--…--&gt;
 	&lt;dependency&gt;
 		&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
@@ -911,7 +915,7 @@ public class Ch8Application extends SpringBootServletinitializer {
   <li>@Profile({&ldquo;test&rdquo;, &ldquo;!prod&rdquo;}) ，测试环境和非线上环境生效</li>
 </ul>
 <h2><a href="#测试用例" name="测试用例"></a>测试用例</h2>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
 &lt;/dependency&gt;
@@ -991,7 +995,7 @@ public class CreditServiceMockTest{
 <h2><a href="#集成swagger" name="集成swagger"></a>集成Swagger</h2>
 <h3><a href="#swagger2" name="swagger2"></a>Swagger2</h3>
 <p>1.Maven依赖添加</p>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;io.springfox&lt;/groupId&gt;
 	&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
 	&lt;version&gt;2.6.1&lt;/version&gt;
@@ -1004,7 +1008,7 @@ public class CreditServiceMockTest{
 &lt;/dependency&gt;
 </code></pre>
 <p>2.配置添加</p>
-<pre><code>@Configuration
+<pre><code class="java">@Configuration
 @EnableSwagger2
 public class Swagger2 {
 	@Bean
@@ -1030,24 +1034,24 @@ public class Swagger2 {
 <h3><a href="#swagger3" name="swagger3"></a>Swagger3</h3>
 <p><a href="https://swagger.io/blog/news/announcing-openapi-3-0/">了解学习</a></p>
 <h2><a href="#集成-mongodb" name="集成-mongodb"></a>集成 MongoDB</h2>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>还需要在配置文件 application.properties 中配置：</p>
-<pre><code>spring.data.mongodb.uri=mongodb://127.0.0.1:27017/baike
+<pre><code class="properties">spring.data.mongodb.uri=mongodb://127.0.0.1:27017/baike
 #若开启了登陆功能，test是内置数据库名，123%abc!是密码，% 字符在 URI 中使用 %25
 spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
 </code></pre>
 <h2><a href="#集成-redis" name="集成-redis"></a>集成 Redis</h2>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>还需要在配置文件 application.properties 中配置：</p>
-<pre><code>spring.redis.host=127.0.0.1
+<pre><code class="properties">spring.redis.host=127.0.0.1
 spring.redis.password=Redis!l23
 spring.redis.port=6379
 #最大连接数
@@ -1067,25 +1071,25 @@ redisClient.opsForValue().set (&quot;key1&quot;, User.getSampleUser());
 User uer = (User)redisClient.opsForValue().get(&quot;key1&quot;);
 </code></pre>
 <h2><a href="#集成-elasticsearch" name="集成-elasticsearch"></a>集成 Elasticsearch</h2>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-elasticsearch&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>还需要在配置文件 application.properties 中配置：</p>
-<pre><code>spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
+<pre><code class="properties">spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
 </code></pre>
 <p>使用方法详细参考：<br/>* <a href="https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#repositories.query-methods">https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#repositories.query-methods</a><br/>* <a href="https://www.cnblogs.com/Alandre/p/7055838.html">https://www.cnblogs.com/Alandre/p/7055838.html</a></p>
 <h2><a href="#集成-spring-cache" name="集成-spring-cache"></a>集成 Spring Cache</h2>
 <p>1.添加 Maven 依赖</p>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-cache&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>2.还需要在配置文件 application.properties 中配置：</p>
-<pre><code>#使用 Spring Boot 自带的缓存
-spring . cache.type=Simple
+<pre><code class="properties">#使用 Spring Boot 自带的缓存
+spring.cache.type=Simple
 
 • Simple，基于 ConcurrentHashMap 实现的缓存，适合单体应用或者开发环境使用
 • none，关闭缓存，比如开发阶段为了确保功能正确，可以先禁止使用缓存
@@ -1103,13 +1107,13 @@ spring . cache.type=Simple
   <li>@CacheConfig，在类上设置当前缓存的一些公共设置</li>
 </ul>
 <h3><a href="#集成-redis-缓存" name="集成-redis-缓存"></a>集成 Redis 缓存</h3>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>还需要在配置文件 application.properties 中配置：</p>
-<pre><code>spring.cache.type=Redis
+<pre><code class="properties">spring.cache.type=Redis
 spring.redis.host=127.0.0.1
 spring.redis.password=Redis!l23
 spring.redis.port=6379
@@ -1127,7 +1131,7 @@ spring.redis.port=6379
   <li>提高了应用整体的吞吐量</li>
 </ul>
 <h3><a href="#配置-nginx" name="配置-nginx"></a>配置 Nginx</h3>
-<pre><code>http {
+<pre><code class="json">http {
 	include mime.types;
 	default type application/octet-stream;
 	sendfile on;
@@ -1146,7 +1150,7 @@ spring.redis.port=6379
 }
 </code></pre>
 <h2><a href="#spring-session" name="spring-session"></a>Spring Session</h2>
-<pre><code>spring.session.store-type=Redis|JDBC|Hazelcast|none
+<pre><code class="properties">spring.session.store-type=Redis|JDBC|Hazelcast|none
 </code></pre>
 <ul>
   <li>Redis, Session 数据存放 Redis 中，通常使用该方式存储 SESSION</li>
@@ -1163,18 +1167,29 @@ spring.redis.port=6379
 </code></pre>
 <p>Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis 后，即使一台服务器挂了，对应用户的 Session 也不会丢失，不需要重新登录等等。</p>
 <h2><a href="#集成-zookeeper" name="集成-zookeeper"></a>集成 ZooKeeper</h2>
-<p>• 自动重连，无须开发人员关心<br/>• 提供简单的 API 来操作 zk 节点，还有 zk 事件， API 是链式操作风格<br/>• Curator 实现了 ZooKeeper 提供的所有应用场景（除了两阶段提交〉，有以下实现<br/> 。 领导节点选取<br/> 。 分布式锁<br/> 。 分布式读写锁<br/> 。 共享信号量<br/> 。 栅栏和双重 Double Barrier<br/> 。 分布式计数器，支持 integer 和 long<br/> 。 分布式队列和分布式优先级队列<br/> 。 服务注册和发现</p>
-<pre><code>&lt;dependency&gt;
+<pre><code>• 自动重连，无须开发人员关心
+• 提供简单的 API 来操作 zk 节点，还有 zk 事件， API 是链式操作风格
+• Curator 实现了 ZooKeeper 提供的所有应用场景（除了两阶段提交〉，有以下实现
+    。 领导节点选取
+    。 分布式锁
+    。 分布式读写锁
+    。 共享信号量
+    。 栅栏和双重 Double Barrier
+    。 分布式计数器，支持 integer 和 long
+    。 分布式队列和分布式优先级队列
+    。 服务注册和发现
+</code></pre>
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
 	&lt;artifactId&gt;curator-recipes&lt;/artifactId&gt;
 	&lt;version&gt;2.12.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-<pre><code>zk.url=l27.0.0.1:2181
+<pre><code class="properties">zk.url=l27.0.0.1:2181
 </code></pre>
 <pre><code class="java">@Configuration
 public class ZookeeperConf {
-	@Value (&quot;${ zk. url } &quot;)
+	@Value (&quot;${zk.url}&quot;)
 	private String zkUrl;
 	@Bean
 	public CuratorFramework getCuratorFramework() {
@@ -1230,7 +1245,7 @@ publiC void makeOrderType(String type) {
 }
 </code></pre>
 <h3><a href="#服务注册" name="服务注册"></a>服务注册</h3>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
 	&lt;artifactId&gt;curator-x-discovery&lt;/artifactId&gt;
 	&lt;version&gt;2.12.0&lt;/version&gt;
@@ -1239,7 +1254,7 @@ publiC void makeOrderType(String type) {
 <pre><code class="java">protected void registerSerivce (CuratorFramework client) throws Exception {
 	// 构造一个服务描述
 	ServiceinstanceBuilder&lt;Map&gt; service =ServiceInstance.builder();
-	service.address(&quot;192.168.1.1o。&quot;）；
+	service.address(&quot;192.168.1.100&quot;）；
 	service.port(8080);
 	service.name(&quot;book&quot;);
 	Map config =new HashMap();
@@ -1247,19 +1262,19 @@ publiC void makeOrderType(String type) {
 	service.payload(config);
 	Serviceinstance&lt;Map&gt; instance = service.build();
 	ServiceDiscovery&lt;Map&gt; serviceDiscovery = ServiceDiscoveryBuilder.builder(Map.class).client(client)
-		.serializer(new JsoninstanceSerial工zer&lt;Map&gt;(Map.class)).basePath(&quot;/service&quot;).build();//服务注册
+		.serializer(new JsoninstanceSerializer&lt;Map&gt;(Map.class)).basePath(&quot;/service&quot;).build();//服务注册
 	serviceDiscovery.registerService(instance);
 	serviceDiscovery.start();
 }
 </code></pre>
 <h2><a href="#应用监控" name="应用监控"></a>应用监控</h2>
-<pre><code>&lt;dependency&gt;
+<pre><code class="xml">&lt;dependency&gt;
 	&lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>配置文件添加如下配置：</p>
-<pre><code>endpoints.default.web.enabled=true
+<pre><code class="properties">endpoints.default.web.enabled=true
 #设置系统监控的访问端口
 management.port=8081
 #所有的监控都在 /application 下，你可以更改配置，修改成你想要的路径
@@ -2238,6 +2253,16 @@ docker pull nginx
         };
     }
 </script>
+<script>
+var codeEles = document.getElementsByTagName("code");
+for (var i = 0; i < codeEles.length; i++) {
+  if(codeEles[i].className != null && codeEles[i].className != ""){
+    codeEles[i].className = "language-" + codeEles[i].className;
+    codeEles[i].parentNode.className = codeEles[i].className;
+  }
+}
+</script>
+<script src="static/js/prism.js"></script>
 </body>
 </html>
                                        

@@ -8,13 +8,16 @@ SpringBoot学习笔记
 ## 学习基础
 
 >Spring MVC
+
 >Maven
+
+>装软件
 
 ## 部署SpringBoot
 
 ### SpringBoot支持
 
-```
+```xml
 <parent>
 	<groupld>org.springframework.boot</groupld>
 	<artifactld>spring-boot-starter-parent</artifactld>
@@ -24,7 +27,7 @@ SpringBoot学习笔记
 
 ### 增加Web支持
 
-```
+```xml
 <dependency>
 	<groupid>org.springframework.boot</groupid>
 	<artifactid>spring-boot-starter-web</artifactid>
@@ -33,7 +36,7 @@ SpringBoot学习笔记
 
 ### 热部署支持
 
-```
+```xml
 <dependency>
 	<groupid>org.springframework.boot</groupid>
 	<artifactid>spring-boot-devtools</artifactid>
@@ -53,9 +56,9 @@ SpringBoot学习笔记
 |----|----|
 |server.address |服务器E 绑定地址，如果你的主机上有多个网卡，可以绑定一个IP 地址|
 |server.session.timeout |会话过期时间，以秒为单位|
-|server.eηor.path |服务器出错后的处理路径le盯or ，我们在第4 章己经介绍过如何处理异常|
+|server.error.path |服务器出错后的处理路径 /error|
 |server.servlet.contextpath |Spring Boot 应用的上下文|
-|server.port Spring Boot |应用监听端口|
+|server.port |Spring Boot应用监听端口|
 
 ### 配置启动信息
 
@@ -72,7 +75,7 @@ resources目录下新建一个 banner.txt ，启动时候会输出 banner.txt �
 ## 日志配置
 
 application.properties 中加入以下代码：
-```
+```properties
 logging.level.root=info
 # org 包下的日志级别 指定默认的级别是 info ，但包名是 org 开头的类，日志级别是 warn 。 org 包名的类大多是第三方依赖库， 有时候没有必要显示 INFO 级别， com.xxx 开头的类使用 debug 。
 logging.level.org=warn
@@ -117,11 +120,11 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 * org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）
 * org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <included>
 	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
-	​
+
 	<springProperty scope="context" name="springAppName" source="spring.application.name"/>
 	<springProperty scope="context" name="destination" source="logstash.destination"/>
 	<springProperty scope="context" name="kafkadestination" source="kafka.destination"/>
@@ -208,7 +211,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 	<appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 		<destination>${destination}</destination>
 		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder" charset="UTF-8">
-			&lt;!&ndash; 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 &ndash;&gt;
+			<!-- 使用自定义的JsonFactory的装饰器,禁用jackson对非ascii码字符进行escape编码 -->
 			<jsonFactoryDecorator class="org.xxx.MyJsonFactoryDecorator"/>
 			<providers>
 				<timestamp>
@@ -308,7 +311,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 
 1.以 jar 文件运行
 
-```
+```xml
 <build>
 	<plugins>
 		<plugin>
@@ -324,14 +327,14 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 
 2.以 war 方式部署
 
-```
+```xml
 <project ...>
 	<artifactid>ch8.deploy</artifactid>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 </project>
 
-<dependencies >
+<dependencies>
 	< !--…-->
 	<dependency>
 		<groupid>org.springframework.boot</groupid>
@@ -394,7 +397,7 @@ application-prod.properties 的内容如下：
 
 ## 测试用例
 
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-test</artifactId>
@@ -497,7 +500,7 @@ public class CreditServiceMockTest{
 ### Swagger2
 
 1.Maven依赖添加
-```
+```xml
 <dependency>
 	<groupId>io.springfox</groupId>
 	<artifactId>springfox-swagger2</artifactId>
@@ -511,7 +514,7 @@ public class CreditServiceMockTest{
 </dependency>
 ```
 2.配置添加
-```
+```java
 @Configuration
 @EnableSwagger2
 public class Swagger2 {
@@ -553,7 +556,7 @@ public class Swagger2 {
 
 ## 集成 MongoDB
 
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -562,7 +565,7 @@ public class Swagger2 {
 
 还需要在配置文件 application.properties 中配置：
 
-```
+```properties
 spring.data.mongodb.uri=mongodb://127.0.0.1:27017/baike
 #若开启了登陆功能，test是内置数据库名，123%abc!是密码，% 字符在 URI 中使用 %25
 spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
@@ -570,7 +573,7 @@ spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
 
 ## 集成 Redis
 
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -579,7 +582,7 @@ spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
 
 还需要在配置文件 application.properties 中配置：
 
-```
+```properties
 spring.redis.host=127.0.0.1
 spring.redis.password=Redis!l23
 spring.redis.port=6379
@@ -606,7 +609,7 @@ User uer = (User)redisClient.opsForValue().get("key1");
 
 ## 集成 Elasticsearch
 
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -614,7 +617,7 @@ User uer = (User)redisClient.opsForValue().get("key1");
 ```
 
 还需要在配置文件 application.properties 中配置：
-```
+```properties
 spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
 ```
 
@@ -625,7 +628,7 @@ spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
 ## 集成 Spring Cache
 
 1.添加 Maven 依赖
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-cache</artifactId>
@@ -634,9 +637,9 @@ spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
 
 2.还需要在配置文件 application.properties 中配置：
 
-```
+```properties
 #使用 Spring Boot 自带的缓存
-spring . cache.type=Simple
+spring.cache.type=Simple
 
 • Simple，基于 ConcurrentHashMap 实现的缓存，适合单体应用或者开发环境使用
 • none，关闭缓存，比如开发阶段为了确保功能正确，可以先禁止使用缓存
@@ -657,7 +660,7 @@ spring . cache.type=Simple
 
 ### 集成 Redis 缓存
 
-```
+```xml
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -666,7 +669,7 @@ spring . cache.type=Simple
 
 还需要在配置文件 application.properties 中配置：
 
-```
+```properties
 spring.cache.type=Redis
 spring.redis.host=127.0.0.1
 spring.redis.password=Redis!l23
@@ -694,7 +697,7 @@ spring.redis.port=6379
 
 ### 配置 Nginx
 
-```
+```json
 http {
 	include mime.types;
 	default type application/octet-stream;
@@ -716,7 +719,7 @@ http {
 
 ## Spring Session
 
-```
+```properties
 spring.session.store-type=Redis|JDBC|Hazelcast|none
 ```
 
@@ -739,19 +742,21 @@ Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis
 
 ## 集成 ZooKeeper
 
+```
 • 自动重连，无须开发人员关心
 • 提供简单的 API 来操作 zk 节点，还有 zk 事件， API 是链式操作风格
 • Curator 实现了 ZooKeeper 提供的所有应用场景（除了两阶段提交〉，有以下实现
-		。 领导节点选取
-		。 分布式锁
-		。 分布式读写锁
-		。 共享信号量
-		。 栅栏和双重 Double Barrier
-		。 分布式计数器，支持 integer 和 long
-		。 分布式队列和分布式优先级队列
-		。 服务注册和发现
-
+    。 领导节点选取
+    。 分布式锁
+    。 分布式读写锁
+    。 共享信号量
+    。 栅栏和双重 Double Barrier
+    。 分布式计数器，支持 integer 和 long
+    。 分布式队列和分布式优先级队列
+    。 服务注册和发现
 ```
+
+```xml
 <dependency>
 	<groupId>org.apache.curator</groupId>
 	<artifactId>curator-recipes</artifactId>
@@ -759,14 +764,14 @@ Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis
 </dependency>
 ```
 
-```
+```properties
 zk.url=l27.0.0.1:2181
 ```
 
 ```java
 @Configuration
 public class ZookeeperConf {
-	@Value ("${ zk. url } ")
+	@Value ("${zk.url}")
 	private String zkUrl;
 	@Bean
 	public CuratorFramework getCuratorFramework() {
@@ -830,7 +835,7 @@ publiC void makeOrderType(String type) {
 
 ### 服务注册
 
-```
+```xml
 <dependency>
 	<groupId>org.apache.curator</groupId>
 	<artifactId>curator-x-discovery</artifactId>
@@ -842,7 +847,7 @@ publiC void makeOrderType(String type) {
 protected void registerSerivce (CuratorFramework client) throws Exception {
 	// 构造一个服务描述
 	ServiceinstanceBuilder<Map> service =ServiceInstance.builder();
-	service.address("192.168.1.1o。"）；
+	service.address("192.168.1.100"）；
 	service.port(8080);
 	service.name("book");
 	Map config =new HashMap();
@@ -850,7 +855,7 @@ protected void registerSerivce (CuratorFramework client) throws Exception {
 	service.payload(config);
 	Serviceinstance<Map> instance = service.build();
 	ServiceDiscovery<Map> serviceDiscovery = ServiceDiscoveryBuilder.builder(Map.class).client(client)
-		.serializer(new JsoninstanceSerial工zer<Map>(Map.class)).basePath("/service").build();//服务注册
+		.serializer(new JsoninstanceSerializer<Map>(Map.class)).basePath("/service").build();//服务注册
 	serviceDiscovery.registerService(instance);
 	serviceDiscovery.start();
 }
@@ -858,7 +863,7 @@ protected void registerSerivce (CuratorFramework client) throws Exception {
 
 ## 应用监控
 
-```
+```xml
 <dependency>
 	<groupId>org.apache.curator</groupId>
 	<artifactId>spring-boot-starter-actuator</artifactId>
@@ -867,7 +872,7 @@ protected void registerSerivce (CuratorFramework client) throws Exception {
 
 配置文件添加如下配置：
 
-```
+```properties
 endpoints.default.web.enabled=true
 #设置系统监控的访问端口
 management.port=8081

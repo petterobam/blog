@@ -168,6 +168,7 @@
         article p code {
             background: #eee;
             border: 1px solid #ccc;
+            padding: 5px;
         }
 
         article p strong {
@@ -277,6 +278,7 @@
 
         }
     </style>
+    <link rel="stylesheet" href="static/css/prism.css"/>
     <script>
         (function (tags) {
             var i = 0, len = tags.length;
@@ -502,6 +504,16 @@
         };
     }
 </script>
+<script>
+var codeEles = document.getElementsByTagName("code");
+for (var i = 0; i < codeEles.length; i++) {
+  if(codeEles[i].className != null && codeEles[i].className != ""){
+    codeEles[i].className = "language-" + codeEles[i].className;
+    codeEles[i].parentNode.className = codeEles[i].className;
+  }
+}
+</script>
+<script src="static/js/prism.js"></script>
 </body>
 </html>
                                        
