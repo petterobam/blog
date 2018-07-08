@@ -277,6 +277,34 @@
             }
 
         }
+        img {
+          max-width: 100%;
+        }
+        table {
+        	font-family: verdana,arial,sans-serif;
+        	font-size:11px;
+        	color:#333333;
+        	border-width: 1px;
+        	border-color: #666666;
+        	border-collapse: collapse;
+        }
+        table th {
+        	border-width: 1px;
+        	padding: 8px;
+        	border-style: solid;
+        	border-color: #666666;
+        	background-color: #a9c7af;
+        }
+        table td {
+        	border-width: 1px;
+        	padding: 8px;
+        	border-style: solid;
+        	border-color: #666666;
+        	background-color: #ffffff;
+        }
+        table tr:hover > td {
+          background-color: #d4e3e5;
+        }
     </style>
     <link rel="stylesheet" href="static/css/prism.css"/>
     <script>
@@ -306,7 +334,7 @@
 <p>下载地址：https://rubyinstaller.org/downloads</p>
 <p><img src="github-blog/1.png" alt="ruby下载" /></p>
 <p>Ruby安装完，cmd命令</p>
-<pre><code>ruby -v
+<pre><code class="cmd">ruby -v
 gem -v
 </code></pre>
 <p><img src="github-blog/2.png" alt="DevKit下载" /></p>
@@ -315,13 +343,13 @@ gem -v
 <h2><a href="#安装-msys2" name="安装-msys2"></a>安装 msys2</h2>
 <p>下载地址：http://sourceforge.net/projects/msys2</p>
 <h2><a href="#安装-jeky-bundler" name="安装-jeky-bundler"></a>安装 jeky、bundler</h2>
-<pre><code>gem install jekyll bundler
+<pre><code class="cmd">gem install jekyll bundler
 </code></pre>
 <p>如果出错，尝试 <code>gem install jekyll -v 3.3</code> 或 <code>gem update</code></p>
 <h2><a href="#新建jekyll博客" name="新建jekyll博客"></a>新建jekyll博客</h2>
-<pre><code>jekyll new my-blog
+<pre><code class="cmd">jekyll new my-blog
 </code></pre>
-<pre><code>cd my-blog
+<pre><code class="cmd">cd my-blog
 </code></pre>
 <p>删除默认md文件、Gemfile.lock和_XX目录</p>
 <h2><a href="#采用主题" name="采用主题"></a>采用主题</h2>
@@ -366,7 +394,7 @@ gem -v
 <ol>
   <li>[可选]在你的电脑上安装travis，并生成travis-encrypt</li>
 </ol>
-<pre><code>gem install travis
+<pre><code class="cmd">gem install travis
 travis encrypt &lt;api-token&gt;
 </code></pre>
 <p>其中 <code>&lt;api-token&gt;</code> 就是你在travis定义的额外属性，形如：</p>
@@ -398,7 +426,7 @@ travis encrypt &lt;api-token&gt;
     <p>Cmd控制台 <code>jsp</code> ，查看运行中的java进程pid</p>
     <p><img src="jvm-debug/2.png" alt="jsp命令" /></p>
     <p><img src="jvm-debug/3.png" alt="jsp help" /></p>
-    <pre><code>-q 不输出类名、Jar名和传入main方法的参数
+    <pre><code class="cmd line-numbers">-q 不输出类名、Jar名和传入main方法的参数
 -m 输出传入main方法的参数
 -l 输出main类或Jar的全限名
 -v 输出传入JVM的参数
@@ -416,7 +444,7 @@ travis encrypt &lt;api-token&gt;
     </ul>
     <p><a href="http://localhost:7000/  这里看到所有的类；">http://localhost:7000/  这里看到所有的类；</a><br/>进入oql查询界面   http://localhost:7000/oql/；<br/>具体OQL用法可见：http://localhost:7000/oqlhelp/</p>
     <p><img src="jvm-debug/5.png" alt="jmap&amp;jhat" /></p>
-    <pre><code>B  byte
+    <pre><code class="cmd line-numbers">B  byte
 C  char
 D  double
 F  float
@@ -434,7 +462,7 @@ Z  boolean
     <p>Cmd命令: <code>jstat</code>（JVM统计监测工具）</p>
     <p><img src="jvm-debug/7.png" alt="jstat1" /></p>
     <p><img src="jvm-debug/8.png" alt="jstat2" /></p>
-    <pre><code>S0C、S1C、S0U、S1U：Survivor 0/1区容量（Capacity）和使用量（Used）
+    <pre><code class="cmd line-numbers">S0C、S1C、S0U、S1U：Survivor 0/1区容量（Capacity）和使用量（Used）
 EC、EU：Eden区容量和使用量
 OC、OU：年老代容量和使用量
 PC、PU：永久代容量和使用量
@@ -446,7 +474,7 @@ GCT：GC总耗时
   <li>
     <p>Cmd命令：<code>jcmd</code></p>
     <p><img src="jvm-debug/9.png" alt="jcmd" /></p>
-    <pre><code>jcmd 31275 Thread.print -l # 打印线程栈
+    <pre><code class="cmd line-numbers">jcmd 31275 Thread.print -l # 打印线程栈
 jcmd 31275 VM.command_line # 打印启动命令及参数
 jcmd 31275 GC.heap_dump /data/31275.dump # dump heap
 jcmd 31275 GC.class_histogram #查看类的统计信息
@@ -458,22 +486,21 @@ jcmd 31275 PerfCounter.print #查看性能统计
 </ol><h1><a href="#maven学习笔记" name="maven学习笔记"></a>Maven学习笔记</h1>
 <h2><a href="#maven安装" name="maven安装"></a>Maven安装</h2>
 <p>解压 <a href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a> 最新版<br/>配置 <code>MAVEN_HOME</code> 解压根目录，编辑环境变量 <code>Path</code>，追加 <code>%MAVEN_HOME%\bin\</code><br/>命令提示符下：</p>
-<pre><code>mvn -v
+<pre><code class="cmd">mvn -v
 </code></pre>
 <p>配置 <code>\conf\settings.xml</code> 文件，查找下面这行代码：</p>
-<pre><code>&lt;localRepository&gt;本地仓库路径&lt;/localRepository&gt;
+<pre><code class="cmd">&lt;localRepository&gt;本地仓库路径&lt;/localRepository&gt;
 </code></pre>
 <p>命令提示符下：</p>
-<pre><code>mvn help:system
+<pre><code class="cmd">mvn help:system
 </code></pre>
 <h2><a href="#nexus安装" name="nexus安装"></a>Nexus安装</h2>
 <p>解压 <a href="https://www.sonatype.com/download-oss-sonatype">https://www.sonatype.com/download-oss-sonatype</a> <code>2.XX</code> 版本<br/>编辑环境变量 <code>Path</code> ，追加 <code>解压根目录\nexus-版本\bin\</code></p>
 <p>命令提示符下：</p>
-<pre><code>nexus    
+<pre><code class="cmd">nexus    
 nexus { console : start : stop : restart : install : uninstall }
 
 nexus install （可能会报错）
-
 nexus console （也可以启动）
 </code></pre>
 <h2><a href="#创建私有nexus" name="创建私有nexus"></a>创建私有nexus</h2>
@@ -500,7 +527,7 @@ nexus console （也可以启动）
 </ol>
 <h2><a href="#发布项目到私有nexus" name="发布项目到私有nexus"></a>发布项目到私有nexus</h2>
 <p>maven仓库的 <code>setting.xml</code> 里面配置</p>
-<pre><code>&lt;servers&gt;
+<pre><code class="xml line-numbers">&lt;servers&gt;
 	&lt;server&gt;
 		&lt;id&gt;my-nexus-snapshots&lt;/id&gt;
 		&lt;username&gt;my-nexus&lt;/username&gt;
@@ -514,7 +541,7 @@ nexus console （也可以启动）
 &lt;/servers&gt;
 </code></pre>
 <p>要发布的maven项目里面的pom.xml 文件配置</p>
-<pre><code>&lt;distributionManagement&gt;
+<pre><code class="xml line-numbers">&lt;distributionManagement&gt;
     &lt;snapshotRepository&gt;
         &lt;id&gt;my-nexus-snapshots&lt;/id&gt;
         &lt;name&gt;User Porject Snapshot&lt;/name&gt;
@@ -539,7 +566,7 @@ nexus console （也可以启动）
   <li><code>-Dfile=&lt;myfile.jar&gt;</code>: 指定jar文件路径与文件名(同目录只需文件名)</li>
 </ol>
 <p>安装命令实例：</p>
-<pre><code>mvn install:install-file -DgroupId=com.baidu -DartifactId=ueditor -Dversion=1.0.0 -Dpackaging=jar -Dfile=ueditor-1.1.2.jar
+<pre><code class="cmd">mvn install:install-file -DgroupId=com.baidu -DartifactId=ueditor -Dversion=1.0.0 -Dpackaging=jar -Dfile=ueditor-1.1.2.jar
 </code></pre><h1><a href="#springboot学习笔记" name="springboot学习笔记"></a>SpringBoot学习笔记</h1>
 <h2><a href="#环境支持" name="环境支持"></a>环境支持</h2>
 <blockquote>
@@ -553,20 +580,20 @@ nexus console （也可以启动）
 </blockquote>
 <h2><a href="#部署springboot" name="部署springboot"></a>部署SpringBoot</h2>
 <h3><a href="#springboot支持" name="springboot支持"></a>SpringBoot支持</h3>
-<pre><code class="xml">&lt;parent&gt;
+<pre><code class="xml line-numbers">&lt;parent&gt;
 	&lt;groupld&gt;org.springframework.boot&lt;/groupld&gt;
 	&lt;artifactld&gt;spring-boot-starter-parent&lt;/artifactld&gt;
 	&lt;version&gt;1.5.9.RELEASE&lt;/version&gt;
 &lt;/parent&gt;
 </code></pre>
 <h3><a href="#增加web支持" name="增加web支持"></a>增加Web支持</h3>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
 	&lt;artifactid&gt;spring-boot-starter-web&lt;/artifactid&gt;
 &lt;/dependency&gt;
 </code></pre>
 <h3><a href="#热部署支持" name="热部署支持"></a>热部署支持</h3>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
 	&lt;artifactid&gt;spring-boot-devtools&lt;/artifactid&gt;
 	&lt;optional&gt;true&lt;/optional&gt;
@@ -614,7 +641,7 @@ nexus console （也可以启动）
 <p>或在 resources/static 目录下添加 favicon.ico 图标文件，默认也会覆盖 spring boot 的默认图标</p>
 <h2><a href="#日志配置" name="日志配置"></a>日志配置</h2>
 <p>application.properties 中加入以下代码：</p>
-<pre><code class="properties">logging.level.root=info
+<pre><code class="properties line-numbers">logging.level.root=info
 # org 包下的日志级别 指定默认的级别是 info ，但包名是 org 开头的类，日志级别是 warn 。 org 包名的类大多是第三方依赖库， 有时候没有必要显示 INFO 级别， com.xxx 开头的类使用 debug 。
 logging.level.org=warn
 logging.level.com.xxx=debug
@@ -657,7 +684,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
   <li>org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）</li>
   <li>org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）</li>
 </ul>
-<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+<pre><code class="xml line-numbers">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;included&gt;
 	&lt;include resource=&quot;org/springframework/boot/logging/logback/defaults.xml&quot;/&gt;
 
@@ -844,7 +871,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 </code></pre>
 <h2><a href="#打包配置" name="打包配置"></a>打包配置</h2>
 <p>1.以 jar 文件运行</p>
-<pre><code class="xml">&lt;build&gt;
+<pre><code class="xml line-numbers">&lt;build&gt;
 	&lt;plugins&gt;
 		&lt;plugin&gt;
 		&lt;groupid&gt;org.springframework.boot&lt;/groupid&gt;
@@ -857,7 +884,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 &lt;/build&gt;
 </code></pre>
 <p>2.以 war 方式部署</p>
-<pre><code class="xml">&lt;project ...&gt;
+<pre><code class="xml line-numbers">&lt;project ...&gt;
 	&lt;artifactid&gt;ch8.deploy&lt;/artifactid&gt;
 	&lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
 	&lt;packaging&gt;war&lt;/packaging&gt;
@@ -874,7 +901,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 &lt;/dependencies&gt;
 </code></pre>
 <p>另外 启动类还要实现 SpringBootServletinitializer</p>
-<pre><code class="java">@SpringBootApplication
+<pre><code class="java line-numbers">@SpringBootApplication
 public class Ch8Application extends SpringBootServletinitializer {
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
@@ -919,12 +946,12 @@ public class Ch8Application extends SpringBootServletinitializer {
   <li>@Profile({&ldquo;test&rdquo;, &ldquo;!prod&rdquo;}) ，测试环境和非线上环境生效</li>
 </ul>
 <h2><a href="#测试用例" name="测试用例"></a>测试用例</h2>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
-<pre><code class="java">@RunWith(SpringRunner.class)
+<pre><code class="java line-numbers">@RunWith(SpringRunner.class)
 // 需要测试的Controller
 @WebMvcTest(UserController.class)
 public class UserControllerTest{
@@ -954,7 +981,7 @@ public class UserControllerTest{
 <pre><code class="java">mockMvc.perform(multipart(&quot;/doc&quot;).file(&quot;file&quot;,&quot;文件内容&quot;.getBytes(&quot;UTF-8&quot;)));
 </code></pre>
 <p>4.模拟请求参数：</p>
-<pre><code class="java">//模拟提交message 参数
+<pre><code class="java line-numbers">//模拟提交message 参数
 mvc.perform(get(&quot;/user/{id}/{name}&quot;, userid, name).param(&quot;message&quot;,&quot;hello&quot;));
 //模拟一个checkbox提交
 mvc.perform(get(&quot;/user/{id}/{name}&quot;,userid,name).param(&quot;job&quot;，&quot;IT&quot;，&quot;gov&quot;).param(...));
@@ -979,7 +1006,7 @@ mvc.perforrn(get(&quot;/user.html&quot;).cookie(new Cookie(name, value))) ;
 	.header(headerl,valuel)) //设直HTTP头
 </code></pre>
 <h3><a href="#mockito模拟数据" name="mockito模拟数据"></a>Mockito模拟数据</h3>
-<pre><code class="java">@RunWith(MockitoJUnitRunner.class)
+<pre><code class="java line-numbers">@RunWith(MockitoJUnitRunner.class)
 public class CreditServiceMockTest{
 	@Test
 	public void test(){
@@ -999,7 +1026,7 @@ public class CreditServiceMockTest{
 <h2><a href="#集成swagger" name="集成swagger"></a>集成Swagger</h2>
 <h3><a href="#swagger2" name="swagger2"></a>Swagger2</h3>
 <p>1.Maven依赖添加</p>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;io.springfox&lt;/groupId&gt;
 	&lt;artifactId&gt;springfox-swagger2&lt;/artifactId&gt;
 	&lt;version&gt;2.6.1&lt;/version&gt;
@@ -1012,7 +1039,7 @@ public class CreditServiceMockTest{
 &lt;/dependency&gt;
 </code></pre>
 <p>2.配置添加</p>
-<pre><code class="java">@Configuration
+<pre><code class="java line-numbers">@Configuration
 @EnableSwagger2
 public class Swagger2 {
 	@Bean
@@ -1038,7 +1065,7 @@ public class Swagger2 {
 <h3><a href="#swagger3" name="swagger3"></a>Swagger3</h3>
 <p><a href="https://swagger.io/blog/news/announcing-openapi-3-0/">了解学习</a></p>
 <h2><a href="#集成-mongodb" name="集成-mongodb"></a>集成 MongoDB</h2>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-mongodb&lt;/artifactId&gt;
 &lt;/dependency&gt;
@@ -1049,7 +1076,7 @@ public class Swagger2 {
 spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
 </code></pre>
 <h2><a href="#集成-redis" name="集成-redis"></a>集成 Redis</h2>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;
@@ -1061,13 +1088,13 @@ spring.redis.port=6379
 #最大连接数
 spring.redis.pool.max-active=8
 </code></pre>
-<pre><code class="java">@Autowired
+<pre><code class="java line-numbers">@Autowired
 private StringRedisTemplate redisClient;
 
 redisClient.opsForValue().set(&quot;key1&quot;, value1);
 String str = red工sClient.opsForValue().get(&quot;key1&quot;);
 </code></pre>
-<pre><code class="java">@Autowired
+<pre><code class="java line-numbers">@Autowired
 @Qualifier(&quot;redisTernplate&quot;)
 private RedisTernplate redisClient;
 
@@ -1075,7 +1102,7 @@ redisClient.opsForValue().set (&quot;key1&quot;, User.getSampleUser());
 User uer = (User)redisClient.opsForValue().get(&quot;key1&quot;);
 </code></pre>
 <h2><a href="#集成-elasticsearch" name="集成-elasticsearch"></a>集成 Elasticsearch</h2>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-elasticsearch&lt;/artifactId&gt;
 &lt;/dependency&gt;
@@ -1086,7 +1113,7 @@ User uer = (User)redisClient.opsForValue().get(&quot;key1&quot;);
 <p>使用方法详细参考：<br/>* <a href="https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#repositories.query-methods">https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#repositories.query-methods</a><br/>* <a href="https://www.cnblogs.com/Alandre/p/7055838.html">https://www.cnblogs.com/Alandre/p/7055838.html</a></p>
 <h2><a href="#集成-spring-cache" name="集成-spring-cache"></a>集成 Spring Cache</h2>
 <p>1.添加 Maven 依赖</p>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-cache&lt;/artifactId&gt;
 &lt;/dependency&gt;
@@ -1111,13 +1138,13 @@ spring.cache.type=Simple
   <li>@CacheConfig，在类上设置当前缓存的一些公共设置</li>
 </ul>
 <h3><a href="#集成-redis-缓存" name="集成-redis-缓存"></a>集成 Redis 缓存</h3>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-data-redis&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>还需要在配置文件 application.properties 中配置：</p>
-<pre><code class="properties">spring.cache.type=Redis
+<pre><code class="properties line-numbers">spring.cache.type=Redis
 spring.redis.host=127.0.0.1
 spring.redis.password=Redis!l23
 spring.redis.port=6379
@@ -1126,7 +1153,7 @@ spring.redis.port=6379
 <h3><a href="#redis-两级缓存" name="redis-两级缓存"></a>Redis 两级缓存</h3>
 <p>由于网络访问 Redis 效率可能还比自带的缓存要低，RedisCacheManager 和 RedisCache 在访 问 Redis 之前，先访问一个 ConcurrentHashMap 实现的简单一级缓存，如果有缓存项，则返回 给应用，如果没有，再从 Redis 中取得，并将缓存对象放到一级缓存中。实现方法：扩展 RedisCacheManager 并且实现 Cache 接口，自 @Configuration 注入 @Bean 实现 CacheManager 服务，具体自行实验。</p>
 <p>如今比较流行的做法是将 SpringBoot + Mybatis + Redis 二级缓存，在对应的 Mapper.xml 中注入你扩展实现 Cache 的类：</p>
-<pre><code class="xml">&lt;cache type=&quot;com.xxx.MybatisRedisCache&quot;/&gt;
+<pre><code class="xml line-numbers">&lt;cache type=&quot;com.xxx.MybatisRedisCache&quot;/&gt;
 </code></pre>
 <h2><a href="#水平扩展" name="水平扩展"></a>水平扩展</h2>
 <p>一般情况下，SpringBoot 的同一个服务会部署多套，这样保证了：</p>
@@ -1135,7 +1162,7 @@ spring.redis.port=6379
   <li>提高了应用整体的吞吐量</li>
 </ul>
 <h3><a href="#配置-nginx" name="配置-nginx"></a>配置 Nginx</h3>
-<pre><code class="json">http {
+<pre><code class="json line-numbers">http {
 	include mime.types;
 	default type application/octet-stream;
 	sendfile on;
@@ -1183,7 +1210,7 @@ spring.redis.port=6379
     。 分布式队列和分布式优先级队列
     。 服务注册和发现
 </code></pre>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
 	&lt;artifactId&gt;curator-recipes&lt;/artifactId&gt;
 	&lt;version&gt;2.12.0&lt;/version&gt;
@@ -1191,7 +1218,7 @@ spring.redis.port=6379
 </code></pre>
 <pre><code class="properties">zk.url=l27.0.0.1:2181
 </code></pre>
-<pre><code class="java">@Configuration
+<pre><code class="java line-numbers">@Configuration
 public class ZookeeperConf {
 	@Value (&quot;${zk.url}&quot;)
 	private String zkUrl;
@@ -1215,7 +1242,7 @@ public class ZookeeperConf {
 }
 </code></pre>
 <h3><a href="#分布式锁使用" name="分布式锁使用"></a>分布式锁使用</h3>
-<pre><code class="java">@Autowired
+<pre><code class="java line-numbers">@Autowired
 CuratorFramework zkClient;
 
 publiC void makeOrderType(String type) {
@@ -1237,7 +1264,7 @@ publiC void makeOrderType(String type) {
 }
 </code></pre>
 <p>也可以通过注解来定义：</p>
-<pre><code class="java">@ClusterLock (&quot;/lock/order&quot;)
+<pre><code class="java line-numbers">@ClusterLock (&quot;/lock/order&quot;)
 publiC void makeOrderType(String type) {
 	try {
 		// 模拟耗时 5 秒
@@ -1249,13 +1276,13 @@ publiC void makeOrderType(String type) {
 }
 </code></pre>
 <h3><a href="#服务注册" name="服务注册"></a>服务注册</h3>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
 	&lt;artifactId&gt;curator-x-discovery&lt;/artifactId&gt;
 	&lt;version&gt;2.12.0&lt;/version&gt;
 &lt;/dependency&gt;
 </code></pre>
-<pre><code class="java">protected void registerSerivce (CuratorFramework client) throws Exception {
+<pre><code class="java line-numbers">protected void registerSerivce (CuratorFramework client) throws Exception {
 	// 构造一个服务描述
 	ServiceinstanceBuilder&lt;Map&gt; service =ServiceInstance.builder();
 	service.address(&quot;192.168.1.100&quot;）；
@@ -1272,13 +1299,13 @@ publiC void makeOrderType(String type) {
 }
 </code></pre>
 <h2><a href="#应用监控" name="应用监控"></a>应用监控</h2>
-<pre><code class="xml">&lt;dependency&gt;
+<pre><code class="xml line-numbers">&lt;dependency&gt;
 	&lt;groupId&gt;org.apache.curator&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>配置文件添加如下配置：</p>
-<pre><code class="properties">endpoints.default.web.enabled=true
+<pre><code class="properties line-numbers">endpoints.default.web.enabled=true
 #设置系统监控的访问端口
 management.port=8081
 #所有的监控都在 /application 下，你可以更改配置，修改成你想要的路径
@@ -1300,7 +1327,7 @@ management.port=8081
   <li>configprops： 所有＠ConfigurationProperties 注解的配置信息，如文件上传的最大允许 配置等</li>
   <li>autoconfig：显示所有自动装配类的报告，以及是什么原因导致自动装配成功或者不成功</li>
 </ul><h1><a href="#git学习笔记" name="git学习笔记"></a>Git学习笔记</h1>
-<pre><code>git clone https://github.com/petterobam/my-sqlite.git
+<pre><code class="git">git clone https://github.com/petterobam/my-sqlite.git
 cd my-sqlite/
 git status
 git add .
@@ -1323,14 +1350,14 @@ git reset HEAD
 git reset HEAD 文件名
 </code></pre>
 <h2><a href="#设置全局用户" name="设置全局用户"></a>设置全局用户</h2>
-<pre><code>$ git config --global user.name &quot;John Doe&quot;
+<pre><code class="git">$ git config --global user.name &quot;John Doe&quot;
 $ git config --global user.email johndoe@example.com
 </code></pre>
 <h2><a href="#自定义全局编辑器" name="自定义全局编辑器"></a>自定义全局编辑器</h2>
-<pre><code>$ git config --global core.editor emacs
+<pre><code class="git">$ git config --global core.editor emacs
 </code></pre>
 <h2><a href="#查看git配置信息" name="查看git配置信息"></a>查看git配置信息</h2>
-<pre><code>$ git config --list
+<pre><code class="git">$ git config --list
 user.name=John Doe
 user.email=johndoe@example.com
 color.status=auto
@@ -1340,34 +1367,34 @@ color.diff=auto
 ...
 </code></pre>
 <h2><a href="#检查git某一项配置" name="检查git某一项配置"></a>检查git某一项配置</h2>
-<pre><code>$ git config user.name
+<pre><code class="git">$ git config user.name
 John Doe
 </code></pre>
 <h2><a href="#获取命令帮助说明" name="获取命令帮助说明"></a>获取命令帮助说明</h2>
-<pre><code>- $ git help &lt;verb&gt;
-- $ git &lt;verb&gt; --help
-- $ man git-&lt;verb&gt;
+<pre><code class="git line-numbers">$ git help &lt;verb&gt;
+$ git &lt;verb&gt; --help
+$ man git-&lt;verb&gt;
 </code></pre>
-<pre><code>$ git help config
+<pre><code class="git">$ git help config
 </code></pre>
 <h2><a href="#已有项目中初始化仓库" name="已有项目中初始化仓库"></a>已有项目中初始化仓库</h2>
-<pre><code>$ git init
+<pre><code class="git">$ git init
 </code></pre>
 <h2><a href="#添加提交" name="添加提交"></a>添加提交</h2>
-<pre><code>$ git add *.c
+<pre><code class="git">$ git add *.c
 $ git add LICENSE
 $ git commit -m &#39;initial project version&#39;
 </code></pre>
 <h2><a href="#克隆现有项目" name="克隆现有项目"></a>克隆现有项目</h2>
-<pre><code>$ git clone https://github.com/libgit2/libgit2
+<pre><code class="git">$ git clone https://github.com/libgit2/libgit2
 $ git clone user@server:path/to/repo.git
 </code></pre>
 <h2><a href="#检查当前文件状态" name="检查当前文件状态"></a>检查当前文件状态</h2>
-<pre><code>$ git status
+<pre><code class="git">$ git status
 On branch master
 nothing to commit, working directory clean
 </code></pre>
-<pre><code>$ git status
+<pre><code class="git">$ git status
 On branch master
 Untracked files:
   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
@@ -1376,7 +1403,7 @@ Untracked files:
 
 nothing added to commit but untracked files present (use &quot;git add&quot; to track)
 </code></pre>
-<pre><code>$ git status
+<pre><code class="git">$ git status
 On branch master
 Changes to be committed:
   (use &quot;git reset HEAD &lt;file&gt;...&quot; to unstage)
@@ -1384,7 +1411,7 @@ Changes to be committed:
     new file:   README.md
 </code></pre>
 <h2><a href="#状态概览" name="状态概览"></a>状态概览</h2>
-<pre><code>$ git status -s
+<pre><code class="git">$ git status -s
  M README
 MM Rakefile
 A  lib/git.rb
@@ -1392,7 +1419,7 @@ M  lib/simplegit.rb
 ?? LICENSE.txt
 </code></pre>
 <h2><a href="#查看改变的部分" name="查看改变的部分"></a>查看改变的部分</h2>
-<pre><code>$ git diff
+<pre><code class="git">$ git diff
 diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
 index 8ebb991..643e24f 100644
 --- a/CONTRIBUTING.md
@@ -1409,7 +1436,7 @@ index 8ebb991..643e24f 100644
  that highlights your work in progress (and note in the PR title that it&#39;s
 </code></pre>
 <h2><a href="#list查看改变的部分" name="list查看改变的部分"></a>list查看改变的部分</h2>
-<pre><code>$ git diff --cached
+<pre><code class="git">$ git diff --cached
 diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
 index 8ebb991..643e24f 100644
 --- a/CONTRIBUTING.md
@@ -1436,25 +1463,25 @@ index 8ebb991..643e24f 100644
 	+My Project
 </code></pre>
 <h2><a href="#代码提交" name="代码提交"></a>代码提交</h2>
-<pre><code>$ git commit
+<pre><code class="git">$ git commit
 </code></pre>
 <h2><a href="#提交带上备注" name="提交带上备注"></a>提交带上备注</h2>
-<pre><code>$ git commit -m &quot;Story 182: Fix benchmarks for speed&quot;
+<pre><code class="git">$ git commit -m &quot;Story 182: Fix benchmarks for speed&quot;
 </code></pre>
 <h2><a href="#直接提交-含git-add-" name="直接提交-含git-add-"></a>直接提交(含git add)</h2>
-<pre><code>跳过缓存区，不用git add命令，直接提交
+<pre><code class="git">跳过缓存区，不用git add命令，直接提交
 $ git commit -a -m &#39;added new benchmarks&#39;
 </code></pre>
 <h2><a href="#将文件移出版本管理" name="将文件移出版本管理"></a>将文件移出版本管理</h2>
-<pre><code>$ git rm README.md
+<pre><code class="git">$ git rm README.md
 $ git rm --cached README.md
 $ git rm log/\*.log
 </code></pre>
 <h2><a href="#移动文件-重命名某个文件" name="移动文件-重命名某个文件"></a>移动文件，重命名某个文件</h2>
-<pre><code>$ git mv file_from file_to
+<pre><code class="git">$ git mv file_from file_to
 </code></pre>
 <h2><a href="#查看提交日志" name="查看提交日志"></a>查看提交日志</h2>
-<pre><code>$ git log
+<pre><code class="git">$ git log
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
 Date:   Mon Mar 17 21:52:11 2008 -0700
@@ -1474,7 +1501,7 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
     first commit
 </code></pre>
 <h2><a href="#显示详细提交记录数量" name="显示详细提交记录数量"></a>显示详细提交记录数量</h2>
-<pre><code>$ git log -p -2
+<pre><code class="git">$ git log -p -2
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
 Date:   Mon Mar 17 21:52:11 2008 -0700
@@ -1516,7 +1543,7 @@ index a0a60ae..47c6340 100644
 -end
 </code></pre>
 <h2><a href="#提交日志统计信息" name="提交日志统计信息"></a>提交日志统计信息</h2>
-<pre><code>$ git log --stat
+<pre><code class="git">$ git log --stat
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
 Date:   Mon Mar 17 21:52:11 2008 -0700
@@ -1547,13 +1574,13 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
  3 files changed, 54 insertions(+)
 </code></pre>
 <h2><a href="#提交日志每次记录一行展示" name="提交日志每次记录一行展示"></a>提交日志每次记录一行展示</h2>
-<pre><code>$ git log --pretty=oneline
+<pre><code class="git">$ git log --pretty=oneline
 ca82a6dff817ec66f44342007202690a93763949 changed the version number
 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
 a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
 </code></pre>
 <h2><a href="#定义日志浏览输出格式" name="定义日志浏览输出格式"></a>定义日志浏览输出格式</h2>
-<pre><code>$ git log --pretty=format:&quot;%h - %an, %ar : %s&quot;
+<pre><code class="git">$ git log --pretty=format:&quot;%h - %an, %ar : %s&quot;
 ca82a6d - Scott Chacon, 6 years ago : changed the version number
 085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
 a11bef0 - Scott Chacon, 6 years ago : first commit
@@ -1576,12 +1603,12 @@ a11bef0 - Scott Chacon, 6 years ago : first commit
 -------------------------------------------------
 </code></pre>
 <h2><a href="#日志浏览截止时间或范围" name="日志浏览截止时间或范围"></a>日志浏览截止时间或范围</h2>
-<pre><code>$ git log --since=2.weeks
+<pre><code class="git">$ git log --since=2.weeks
 </code></pre>
 <h2><a href="#日志浏览根据作者筛选" name="日志浏览根据作者筛选"></a>日志浏览根据作者筛选</h2>
-<pre><code>$ git log --author=bob
+<pre><code class="git">$ git log --author=bob
 </code></pre>
-<pre><code>-------------------------------------------------
+<pre><code class="git line-numbers">-------------------------------------------------
 -(n)	仅显示最近的 n 条提交
 --since, --after	仅显示指定时间之后的提交。
 --until, --before	仅显示指定时间之前的提交。
@@ -1592,25 +1619,25 @@ a11bef0 - Scott Chacon, 6 years ago : first commit
 -------------------------------------------------
 </code></pre>
 <h2><a href="#尝试重提" name="尝试重提"></a>尝试重提</h2>
-<pre><code>尝试重提上一个还未push的提交
+<pre><code class="git">尝试重提上一个还未push的提交
 $ git commit --amend
 然后可以git add或git commit 重新写注释
 </code></pre>
 <h2><a href="#撤销git-add" name="撤销git-add"></a>撤销git add</h2>
-<pre><code>$ git reset HEAD CONTRIBUTING.md
+<pre><code class="git">$ git reset HEAD CONTRIBUTING.md
 </code></pre>
 <h2><a href="#还原某个文件到上一个版本" name="还原某个文件到上一个版本"></a>还原某个文件到上一个版本</h2>
-<pre><code>$ git checkout -- CONTRIBUTING.md
+<pre><code class="git">$ git checkout -- CONTRIBUTING.md
 </code></pre>
 <h2><a href="#查看远程仓库信息" name="查看远程仓库信息"></a>查看远程仓库信息</h2>
-<pre><code>$ git clone https://github.com/schacon/ticgit
+<pre><code class="git">$ git clone https://github.com/schacon/ticgit
 $ cd ticgit
 $ git remote -v
 origin    git@github.com:mojombo/grit.git (fetch)
 origin    git@github.com:mojombo/grit.git (push)
 </code></pre>
 <h2><a href="#添加远程仓库版本" name="添加远程仓库版本"></a>添加远程仓库版本</h2>
-<pre><code>$ git remote add pb https://github.com/paulboone/ticgit
+<pre><code class="git">$ git remote add pb https://github.com/paulboone/ticgit
 $ git remote -v
 origin	https://github.com/schacon/ticgit (fetch)
 origin	https://github.com/schacon/ticgit (push)
@@ -1618,7 +1645,7 @@ pb	https://github.com/paulboone/ticgit (fetch)
 pb	https://github.com/paulboone/ticgit (push)
 </code></pre>
 <h2><a href="#拉取分支但本地没有的信息" name="拉取分支但本地没有的信息"></a>拉取分支但本地没有的信息</h2>
-<pre><code>$ git fetch pb
+<pre><code class="git">$ git fetch pb
 remote: Counting objects: 43, done.
 remote: Compressing objects: 100% (36/36), done.
 remote: Total 43 (delta 10), reused 31 (delta 5)
@@ -1628,11 +1655,11 @@ From https://github.com/paulboone/ticgit
  * [new branch]      ticgit     -&gt; pb/ticgit
 </code></pre>
 <h2><a href="#将内容提交到远程仓库" name="将内容提交到远程仓库"></a>将内容提交到远程仓库</h2>
-<pre><code>git push [remote-name] [branch-name]
+<pre><code class="git">git push [remote-name] [branch-name]
 $ git push origin master
 </code></pre>
 <h2><a href="#查看远程仓库" name="查看远程仓库"></a>查看远程仓库</h2>
-<pre><code>$ git remote show origin
+<pre><code class="git">$ git remote show origin
 $ git remote show origin
 * remote origin
   Fetch URL: https://github.com/schacon/ticgit
@@ -1647,18 +1674,18 @@ $ git remote show origin
     master pushes to master (up to date)
 </code></pre>
 <h2><a href="#远程仓库重命名" name="远程仓库重命名"></a>远程仓库重命名</h2>
-<pre><code>$ git remote rename pb paul
+<pre><code class="git">$ git remote rename pb paul
 $ git remote
 origin
 paul
 </code></pre>
 <h2><a href="#远程仓库删除" name="远程仓库删除"></a>远程仓库删除</h2>
-<pre><code>$ git remote rm paul
+<pre><code class="git">$ git remote rm paul
 $ git remote
 origin
 </code></pre>
 <h2><a href="#列出已有标签" name="列出已有标签"></a>列出已有标签</h2>
-<pre><code>$ git tag
+<pre><code class="git">$ git tag
 v0.1
 v1.3
 
@@ -1675,13 +1702,13 @@ v1.8.5.4
 v1.8.5.5
 </code></pre>
 <h2><a href="#创建附注标签" name="创建附注标签"></a>创建附注标签</h2>
-<pre><code>$ git tag -a v1.4 -m &#39;my version 1.4&#39;
+<pre><code class="git">$ git tag -a v1.4 -m &#39;my version 1.4&#39;
 $ git tag
 v0.1
 v1.3
 v1.4
 </code></pre>
-<pre><code>$ git show v1.4
+<pre><code class="git">$ git show v1.4
 tag v1.4
 Tagger: Ben Straub &lt;ben@straub.cc&gt;
 Date:   Sat May 3 20:19:12 2014 -0700
@@ -1695,7 +1722,7 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 </code></pre>
 <h2><a href="#创建轻量标签" name="创建轻量标签"></a>创建轻量标签</h2>
-<pre><code>$ git tag v1.4-lw
+<pre><code class="git">$ git tag v1.4-lw
 $ git tag
 v0.1
 v1.3
@@ -1703,7 +1730,7 @@ v1.4
 v1.4-lw
 v1.5
 </code></pre>
-<pre><code>$ git show v1.4-lw
+<pre><code class="git">$ git show v1.4-lw
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
 Date:   Mon Mar 17 21:52:11 2008 -0700
@@ -1711,7 +1738,7 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 </code></pre>
 <h2><a href="#给某次提交记录打标签" name="给某次提交记录打标签"></a>给某次提交记录打标签</h2>
-<pre><code>$ git tag -a v1.2 9fceb02
+<pre><code class="git">$ git tag -a v1.2 9fceb02
 $ git show v1.2
 tag v1.2
 Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;
@@ -1726,17 +1753,17 @@ Date:   Sun Apr 27 20:43:35 2008 -0700
 ...
 </code></pre>
 <h2><a href="#共享标签到远程仓库" name="共享标签到远程仓库"></a>共享标签到远程仓库</h2>
-<pre><code>$ git push origin v1.5
+<pre><code class="git">$ git push origin v1.5
 </code></pre>
-<pre><code>$ git push origin --tags
+<pre><code class="git">$ git push origin --tags
 </code></pre>
 <h2><a href="#检出标签" name="检出标签"></a>检出标签</h2>
-<pre><code>git checkout -b [branchname] [tagname]
+<pre><code class="git">git checkout -b [branchname] [tagname]
 $ git checkout -b version2 v2.0.0
 Switched to a new branch &#39;version2&#39;
 </code></pre>
 <h2><a href="#为git命令设置别名" name="为git命令设置别名"></a>为git命令设置别名</h2>
-<pre><code>$ git config --global alias.co checkout
+<pre><code class="git">$ git config --global alias.co checkout
 $ git config --global alias.br branch
 $ git config --global alias.ci commit
 $ git config --global alias.st status
@@ -1759,10 +1786,10 @@ $ git config --global alias.visual &#39;!gitk&#39;
 git config --global gui.encoding utf-8
 </code></pre>
 <h2><a href="#切换分支" name="切换分支"></a>切换分支</h2>
-<pre><code>$ git checkout [barcher-name]
+<pre><code class="git">$ git checkout [barcher-name]
 </code></pre>
 <h2><a href="#在某个问题上建立一个分支" name="在某个问题上建立一个分支"></a>在某个问题上建立一个分支</h2>
-<pre><code>比如：问题##53
+<pre><code class="git">比如：问题##53
 $ git checkout -b iss53
 或者
 $ git branch iss53
@@ -1772,11 +1799,11 @@ $ git checkout iss53
 $ git checkout -b hotfix
 </code></pre>
 <h2><a href="#将紧急分支merge到主干" name="将紧急分支merge到主干"></a>将紧急分支merge到主干</h2>
-<pre><code>$ git checkout master
+<pre><code class="git">$ git checkout master
 $ git merge hotfix
 </code></pre>
 <h2><a href="#紧急分支切换回来继续工作" name="紧急分支切换回来继续工作"></a>紧急分支切换回来继续工作</h2>
-<pre><code>解决问题后删除紧急分支，然后切换回来继续解决原来问题
+<pre><code class="git">解决问题后删除紧急分支，然后切换回来继续解决原来问题
 $ git branch -d hotfix
 $ git checkout iss53
 $ git checkout master
@@ -1788,11 +1815,11 @@ index.html |    1 +
 $ git branch -d iss53
 </code></pre>
 <h2><a href="#merge冲突解决" name="merge冲突解决"></a>merge冲突解决</h2>
-<pre><code>图形化界面
+<pre><code class="git">图形化界面
 $ git mergetool
 </code></pre>
 <h2><a href="#分支管理" name="分支管理"></a>分支管理</h2>
-<pre><code>$ git branch
+<pre><code class="git">$ git branch
   iss53
 * master
   testing
@@ -1810,7 +1837,7 @@ $ git branch --no-merged
 查看未合并过的分支
 </code></pre>
 <h2><a href="#远程分支" name="远程分支"></a>远程分支</h2>
-<pre><code>“origin” 并无特殊含义
+<pre><code class="git">“origin” 并无特殊含义
 远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。 同时 “master” 是当你运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用，“origin” 是当你运行 git clone 时默认的远程仓库名字。 如果你运行 git clone -o booyah，那么你默认的远程分支名字将会是 booyah/master。
 
 $ git push origin serverfix
@@ -1828,19 +1855,19 @@ From https://github.com/schacon/simplegit
 $ git checkout -b serverfix origin/serverfix
 </code></pre>
 <h2><a href="#跟踪分支" name="跟踪分支"></a>跟踪分支</h2>
-<pre><code>$ git checkout --track origin/serverfix
+<pre><code class="git">$ git checkout --track origin/serverfix
 如果想要将本地分支与远程分支设置为不同名字，你可以轻松地增加一个不同名字的本地分支的上一个命令：
 $ git checkout -b sf origin/serverfix
 </code></pre>
 <h2><a href="#拉取分支" name="拉取分支"></a>拉取分支</h2>
-<pre><code>git pull 的魔法经常令人困惑所以通常单独显式地使用 fetch 与 merge
+<pre><code class="git">git pull 的魔法经常令人困惑所以通常单独显式地使用 fetch 与 merge
 </code></pre>
 <h2><a href="#删除远程分支" name="删除远程分支"></a>删除远程分支</h2>
-<pre><code>假设你已经通过远程分支做完所有的工作了 - 也就是说你和你的协作者已经完成了一个特性并且将其合并到了远程仓库的 master 分支（或任何其他稳定代码分支）。 可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。 如果想要从服务器上删除 serverfix 分支，运行下面的命令：
+<pre><code class="git">假设你已经通过远程分支做完所有的工作了 - 也就是说你和你的协作者已经完成了一个特性并且将其合并到了远程仓库的 master 分支（或任何其他稳定代码分支）。 可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。 如果想要从服务器上删除 serverfix 分支，运行下面的命令：
 $ git push origin --delete serverfix
 </code></pre>
 <h2><a href="#变基" name="变基"></a>变基</h2>
-<pre><code>你可以使用 rebase 命令将提交到某一分支上的所有修改都移至另一分支上，就好像“重新播放”一样。
+<pre><code class="git">你可以使用 rebase 命令将提交到某一分支上的所有修改都移至另一分支上，就好像“重新播放”一样。
 
 $ git checkout experiment
 $ git rebase master
@@ -1863,12 +1890,12 @@ $ git rebase master server
   </li>
   <li>
     <p>定义为thymeleaf文档时候，html标签上添加如下自定义属性：</p>
-    <pre><code>&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
+    <pre><code class="html">&lt;html xmlns:th=&quot;http://www.thymeleaf.org&quot;&gt;
 </code></pre>
   </li>
   <li>
     <p>如上，我们定义 <code>xmlns:th</code>，下面就可以用 <code>th</code> 作为 thymeleaf 的标识属性 <code>th</code> 标签主要有：</p>
-    <pre><code>th:id		替换id	&lt;input th:id=&quot;&#39;xxx&#39; + ${collect.id}&quot;/&gt;
+    <pre><code class="html line-numbers">th:id		替换id	&lt;input th:id=&quot;&#39;xxx&#39; + ${collect.id}&quot;/&gt;
 th:text		文本替换	&lt;p th:text=&quot;${collect.description}&quot;&gt;description&lt;/p&gt;
 th:utext	支持html的文本替换	&lt;p th:utext=&quot;${htmlcontent}&quot;&gt;conten&lt;/p&gt;
 th:object	替换对象	&lt;div th:object=&quot;${session.user}&quot;&gt;
@@ -1942,7 +1969,7 @@ th:attr		th:attr=&quot;src=@{/image/aa.jpg},title=#{logo}&quot;，此标签不�
 <p><a href="http://www.gruntjs.net/getting-started">http://www.gruntjs.net/getting-started</a></p><h1><a href="#docker学习笔记" name="docker学习笔记"></a>Docker学习笔记</h1>
 <h2><a href="#docker安装" name="docker安装"></a>Docker安装</h2>
 <p>官网下载安装</p>
-<pre><code>docker version
+<pre><code class="cmd">docker version
 
 Client:
  Version:      18.03.1-ce
@@ -1965,7 +1992,7 @@ Server:
   Experimental: false
 </code></pre>
 <h2><a href="#docker部署mysql" name="docker部署mysql"></a>Docker部署MySQL</h2>
-<pre><code>docker pull mysql
+<pre><code class="cmd">docker pull mysql
 
 docker images
 

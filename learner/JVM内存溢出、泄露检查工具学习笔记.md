@@ -13,7 +13,7 @@ JVM工具学习笔记
 
 	![jsp help](jvm-debug/3.png)
 
-	```
+	```cmd line-numbers
 	-q 不输出类名、Jar名和传入main方法的参数
 	-m 输出传入main方法的参数
 	-l 输出main类或Jar的全限名
@@ -26,8 +26,8 @@ JVM工具学习笔记
 
 4. jmap&jhat
 
-	- Cmd控制台:  ```jmap -dump:live,file=xxx.map [正在运行java的进程PID]```，可以导出进程JAVA相关信息，例如：```jmap -dump:live,file=visa-asms-link.map 16664```
-	- Cmd控制台: ```jhat -J-Xmx512m -port 7000 visa-asms-link.map``` ，可以启动简单预览的WEB服务
+	- Cmd控制台: `jmap -dump:live,file=xxx.map [正在运行java的进程PID]`，可以导出进程JAVA相关信息，例如：`jmap -dump:live,file=visa-asms-link.map 16664`
+	- Cmd控制台: `jhat -J-Xmx512m -port 7000 visa-asms-link.map` ，可以启动简单预览的WEB服务
 
 	http://localhost:7000/  这里看到所有的类；
 	进入oql查询界面   http://localhost:7000/oql/；
@@ -35,7 +35,7 @@ JVM工具学习笔记
 
 	![jmap&jhat](jvm-debug/5.png)
 
-	```
+	```cmd line-numbers
 	B  byte
 	C  char
 	D  double
@@ -59,7 +59,7 @@ JVM工具学习笔记
 
 	![jstat2](jvm-debug/8.png)
 
-	```
+	```cmd line-numbers
 	S0C、S1C、S0U、S1U：Survivor 0/1区容量（Capacity）和使用量（Used）
 	EC、EU：Eden区容量和使用量
 	OC、OU：年老代容量和使用量
@@ -73,7 +73,7 @@ JVM工具学习笔记
 
 	![jcmd](jvm-debug/9.png)
 
-	```
+	```cmd line-numbers
 	jcmd 31275 Thread.print -l # 打印线程栈
 	jcmd 31275 VM.command_line # 打印启动命令及参数
 	jcmd 31275 GC.heap_dump /data/31275.dump # dump heap

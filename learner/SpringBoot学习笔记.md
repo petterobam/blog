@@ -17,7 +17,7 @@ SpringBoot学习笔记
 
 ### SpringBoot支持
 
-```xml
+```xml line-numbers
 <parent>
 	<groupld>org.springframework.boot</groupld>
 	<artifactld>spring-boot-starter-parent</artifactld>
@@ -27,7 +27,7 @@ SpringBoot学习笔记
 
 ### 增加Web支持
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupid>org.springframework.boot</groupid>
 	<artifactid>spring-boot-starter-web</artifactid>
@@ -36,7 +36,7 @@ SpringBoot学习笔记
 
 ### 热部署支持
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupid>org.springframework.boot</groupid>
 	<artifactid>spring-boot-devtools</artifactid>
@@ -75,7 +75,7 @@ resources目录下新建一个 banner.txt ，启动时候会输出 banner.txt �
 ## 日志配置
 
 application.properties 中加入以下代码：
-```properties
+```properties line-numbers
 logging.level.root=info
 # org 包下的日志级别 指定默认的级别是 info ，但包名是 org 开头的类，日志级别是 warn 。 org 包名的类大多是第三方依赖库， 有时候没有必要显示 INFO 级别， com.xxx 开头的类使用 debug 。
 logging.level.org=warn
@@ -120,7 +120,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 * org.apache.log4j.RollingFileAppender（文件大小到达指定尺寸的时候产生一个新的文件）
 * org.apache.log4j.WriterAppender（将日志信息以流格式发送到任意指定的地方）
 
-```xml
+```xml line-numbers
 <?xml version="1.0" encoding="UTF-8"?>
 <included>
 	<include resource="org/springframework/boot/logging/logback/defaults.xml"/>
@@ -311,7 +311,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 
 1.以 jar 文件运行
 
-```xml
+```xml line-numbers
 <build>
 	<plugins>
 		<plugin>
@@ -327,7 +327,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 
 2.以 war 方式部署
 
-```xml
+```xml line-numbers
 <project ...>
 	<artifactid>ch8.deploy</artifactid>
 	<version>0.0.1-SNAPSHOT</version>
@@ -347,7 +347,7 @@ logging.pattern.file=%level %date{IS08601} [%thread]%logger {20}.%M %L:%m%n
 
 另外 启动类还要实现 SpringBootServletinitializer
 
-```java
+```java line-numbers
 @SpringBootApplication
 public class Ch8Application extends SpringBootServletinitializer {
 	@Override
@@ -397,14 +397,14 @@ application-prod.properties 的内容如下：
 
 ## 测试用例
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-test</artifactId>
 </dependency>
 ```
 
-```java
+```java line-numbers
 @RunWith(SpringRunner.class)
 // 需要测试的Controller
 @WebMvcTest(UserController.class)
@@ -442,7 +442,7 @@ mockMvc.perform(multipart("/doc").file("file","文件内容".getBytes("UTF-8")))
 ```
 
 4.模拟请求参数：
-```java
+```java line-numbers
 //模拟提交message 参数
 mvc.perform(get("/user/{id}/{name}", userid, name).param("message","hello"));
 //模拟一个checkbox提交
@@ -476,7 +476,7 @@ mvc.perforrn(get("/user/{id}/{narne}",userid,narne)
 
 ### Mockito模拟数据
 
-```java
+```java line-numbers
 @RunWith(MockitoJUnitRunner.class)
 public class CreditServiceMockTest{
 	@Test
@@ -500,7 +500,7 @@ public class CreditServiceMockTest{
 ### Swagger2
 
 1.Maven依赖添加
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>io.springfox</groupId>
 	<artifactId>springfox-swagger2</artifactId>
@@ -514,7 +514,7 @@ public class CreditServiceMockTest{
 </dependency>
 ```
 2.配置添加
-```java
+```java line-numbers
 @Configuration
 @EnableSwagger2
 public class Swagger2 {
@@ -556,7 +556,7 @@ public class Swagger2 {
 
 ## 集成 MongoDB
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -573,7 +573,7 @@ spring.data.mongodb.uri=mongodb ://test:123%25abc!@127.0.0.1:27017/baike
 
 ## 集成 Redis
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -590,7 +590,7 @@ spring.redis.port=6379
 spring.redis.pool.max-active=8
 ```
 
-```java
+```java line-numbers
 @Autowired
 private StringRedisTemplate redisClient;
 
@@ -598,7 +598,7 @@ redisClient.opsForValue().set("key1", value1);
 String str = red工sClient.opsForValue().get("key1");
 ```
 
-```java
+```java line-numbers
 @Autowired
 @Qualifier("redisTernplate")
 private RedisTernplate redisClient;
@@ -609,7 +609,7 @@ User uer = (User)redisClient.opsForValue().get("key1");
 
 ## 集成 Elasticsearch
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -628,7 +628,7 @@ spring.data.elasticsearch.cluster-nodes=127.0.0.1:9300
 ## 集成 Spring Cache
 
 1.添加 Maven 依赖
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-cache</artifactId>
@@ -660,7 +660,7 @@ spring.cache.type=Simple
 
 ### 集成 Redis 缓存
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-starter-data-redis</artifactId>
@@ -669,7 +669,7 @@ spring.cache.type=Simple
 
 还需要在配置文件 application.properties 中配置：
 
-```properties
+```properties line-numbers
 spring.cache.type=Redis
 spring.redis.host=127.0.0.1
 spring.redis.password=Redis!l23
@@ -684,7 +684,7 @@ spring.redis.port=6379
 
 如今比较流行的做法是将 SpringBoot + Mybatis + Redis 二级缓存，在对应的 Mapper.xml 中注入你扩展实现 Cache 的类：
 
-```xml
+```xml line-numbers
 <cache type="com.xxx.MybatisRedisCache"/>
 ```
 
@@ -697,7 +697,7 @@ spring.redis.port=6379
 
 ### 配置 Nginx
 
-```json
+```json line-numbers
 http {
 	include mime.types;
 	default type application/octet-stream;
@@ -756,7 +756,7 @@ Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis
     。 服务注册和发现
 ```
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.apache.curator</groupId>
 	<artifactId>curator-recipes</artifactId>
@@ -768,7 +768,7 @@ Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis
 zk.url=l27.0.0.1:2181
 ```
 
-```java
+```java line-numbers
 @Configuration
 public class ZookeeperConf {
 	@Value ("${zk.url}")
@@ -795,7 +795,7 @@ public class ZookeeperConf {
 
 ### 分布式锁使用
 
-```java
+```java line-numbers
 @Autowired
 CuratorFramework zkClient;
 
@@ -820,7 +820,7 @@ publiC void makeOrderType(String type) {
 
 也可以通过注解来定义：
 
-```java
+```java line-numbers
 @ClusterLock ("/lock/order")
 publiC void makeOrderType(String type) {
 	try {
@@ -835,7 +835,7 @@ publiC void makeOrderType(String type) {
 
 ### 服务注册
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.apache.curator</groupId>
 	<artifactId>curator-x-discovery</artifactId>
@@ -843,7 +843,7 @@ publiC void makeOrderType(String type) {
 </dependency>
 ```
 
-```java
+```java line-numbers
 protected void registerSerivce (CuratorFramework client) throws Exception {
 	// 构造一个服务描述
 	ServiceinstanceBuilder<Map> service =ServiceInstance.builder();
@@ -863,7 +863,7 @@ protected void registerSerivce (CuratorFramework client) throws Exception {
 
 ## 应用监控
 
-```xml
+```xml line-numbers
 <dependency>
 	<groupId>org.apache.curator</groupId>
 	<artifactId>spring-boot-starter-actuator</artifactId>
@@ -872,7 +872,7 @@ protected void registerSerivce (CuratorFramework client) throws Exception {
 
 配置文件添加如下配置：
 
-```properties
+```properties line-numbers
 endpoints.default.web.enabled=true
 #设置系统监控的访问端口
 management.port=8081

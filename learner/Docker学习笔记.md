@@ -5,7 +5,7 @@ Docker学习笔记
 
 官网下载安装
 
-```
+```cmd
 docker version
 
 Client:
@@ -31,7 +31,7 @@ Server:
 
 ## Docker部署MySQL
 
-```
+```cmd
 docker pull mysql
 
 docker images

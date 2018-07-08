@@ -8,7 +8,7 @@ Github个人博客部署
 ![ruby下载](github-blog/1.png)
 
 Ruby安装完，cmd命令
-```
+```cmd
 ruby -v
 gem -v
 ```
@@ -25,7 +25,7 @@ DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe运行，解压目录如下
 
 ## 安装 jeky、bundler
 
-```
+```cmd
 gem install jekyll bundler
 ```
 
@@ -33,11 +33,11 @@ gem install jekyll bundler
 
 ## 新建jekyll博客
 
-```
+```cmd
 jekyll new my-blog
 ```
 
-```
+```cmd
 cd my-blog
 ```
 
@@ -121,7 +121,7 @@ https://github.com/settings/tokens
 
 3. [可选]在你的电脑上安装travis，并生成travis-encrypt
 
-```
+```cmd
 gem install travis
 travis encrypt <api-token>
 ```

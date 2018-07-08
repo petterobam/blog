@@ -1,7 +1,7 @@
 Git学习笔记
 ===========
 
-```
+```git
 git clone https://github.com/petterobam/my-sqlite.git
 cd my-sqlite/
 git status
@@ -26,18 +26,18 @@ git reset HEAD 文件名
 ```
 
 ## 设置全局用户
-```
+```git
 $ git config --global user.name "John Doe"
 $ git config --global user.email johndoe@example.com
 ```
 
 ## 自定义全局编辑器
-```
+```git
 $ git config --global core.editor emacs
 ```
 
 ## 查看git配置信息
-```
+```git
 $ git config --list
 user.name=John Doe
 user.email=johndoe@example.com
@@ -49,45 +49,48 @@ color.diff=auto
 ```
 
 ## 检查git某一项配置
-```
+```git
 $ git config user.name
 John Doe
 ```
 
 ## 获取命令帮助说明
-	- $ git help <verb>
-	- $ git <verb> --help
-	- $ man git-<verb>
+```git line-numbers
+$ git help <verb>
+$ git <verb> --help
+$ man git-<verb>
 ```
+
+```git
 $ git help config
 ```
 
 ## 已有项目中初始化仓库
-```
+```git
 $ git init
 ```
 
 ## 添加提交
-```
+```git
 $ git add *.c
 $ git add LICENSE
 $ git commit -m 'initial project version'
 ```
 
 ## 克隆现有项目
-```
+```git
 $ git clone https://github.com/libgit2/libgit2
 $ git clone user@server:path/to/repo.git
 ```
 
 ## 检查当前文件状态
-```
+```git
 $ git status
 On branch master
 nothing to commit, working directory clean
 ```
 
-```
+```git
 $ git status
 On branch master
 Untracked files:
@@ -98,7 +101,7 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-```
+```git
 $ git status
 On branch master
 Changes to be committed:
@@ -108,7 +111,7 @@ Changes to be committed:
 ```
 
 ## 状态概览
-```
+```git
 $ git status -s
  M README
 MM Rakefile
@@ -118,7 +121,7 @@ M  lib/simplegit.rb
 ```
 
 ## 查看改变的部分
-```
+```git
 $ git diff
 diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
 index 8ebb991..643e24f 100644
@@ -138,7 +141,7 @@ index 8ebb991..643e24f 100644
 
 ## list查看改变的部分
 
-```
+```git
 $ git diff --cached
 diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
 index 8ebb991..643e24f 100644
@@ -167,35 +170,35 @@ index 8ebb991..643e24f 100644
 ```
 
 ## 代码提交
-```
+```git
 $ git commit
 ```
 
 ## 提交带上备注
-```
+```git
 $ git commit -m "Story 182: Fix benchmarks for speed"
 ```
 
 ## 直接提交(含git add)
-```
+```git
 跳过缓存区，不用git add命令，直接提交
 $ git commit -a -m 'added new benchmarks'
 ```
 
 ## 将文件移出版本管理
-```
+```git
 $ git rm README.md
 $ git rm --cached README.md
 $ git rm log/\*.log
 ```
 
 ## 移动文件，重命名某个文件
-```
+```git
 $ git mv file_from file_to
 ```
 
 ## 查看提交日志
-```
+```git
 $ git log
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -218,7 +221,7 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
 
 ## 显示详细提交记录数量
 
-```
+```git
 $ git log -p -2
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -262,7 +265,7 @@ index a0a60ae..47c6340 100644
 ```
 
 ## 提交日志统计信息
-```
+```git
 $ git log --stat
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -295,7 +298,7 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
 ```
 
 ## 提交日志每次记录一行展示
-```
+```git
 $ git log --pretty=oneline
 ca82a6dff817ec66f44342007202690a93763949 changed the version number
 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
@@ -303,7 +306,7 @@ a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
 ```
 
 ## 定义日志浏览输出格式
-```
+```git
 $ git log --pretty=format:"%h - %an, %ar : %s"
 ca82a6d - Scott Chacon, 6 years ago : changed the version number
 085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
@@ -328,16 +331,16 @@ a11bef0 - Scott Chacon, 6 years ago : first commit
 ```
 
 ## 日志浏览截止时间或范围
-```
+```git
 $ git log --since=2.weeks
 ```
 
 ## 日志浏览根据作者筛选
-```
+```git
 $ git log --author=bob
 ```
 
-```
+```git line-numbers
 -------------------------------------------------
 -(n)	仅显示最近的 n 条提交
 --since, --after	仅显示指定时间之后的提交。
@@ -350,24 +353,24 @@ $ git log --author=bob
 ```
 
 ## 尝试重提
-```
+```git
 尝试重提上一个还未push的提交
 $ git commit --amend
 然后可以git add或git commit 重新写注释
 ```
 
 ## 撤销git add
-```
+```git
 $ git reset HEAD CONTRIBUTING.md
 ```
 
 ## 还原某个文件到上一个版本
-```
+```git
 $ git checkout -- CONTRIBUTING.md
 ```
 
 ## 查看远程仓库信息
-```
+```git
 $ git clone https://github.com/schacon/ticgit
 $ cd ticgit
 $ git remote -v
@@ -376,7 +379,7 @@ origin    git@github.com:mojombo/grit.git (push)
 ```
 
 ## 添加远程仓库版本
-```
+```git
 $ git remote add pb https://github.com/paulboone/ticgit
 $ git remote -v
 origin	https://github.com/schacon/ticgit (fetch)
@@ -386,7 +389,7 @@ pb	https://github.com/paulboone/ticgit (push)
 ```
 
 ## 拉取分支但本地没有的信息
-```
+```git
 $ git fetch pb
 remote: Counting objects: 43, done.
 remote: Compressing objects: 100% (36/36), done.
@@ -398,13 +401,13 @@ From https://github.com/paulboone/ticgit
 ```
 
 ## 将内容提交到远程仓库
-```
+```git
 git push [remote-name] [branch-name]
 $ git push origin master
 ```
 
 ## 查看远程仓库
-```
+```git
 $ git remote show origin
 $ git remote show origin
 * remote origin
@@ -421,7 +424,7 @@ $ git remote show origin
 ```
 
 ## 远程仓库重命名
-```
+```git
 $ git remote rename pb paul
 $ git remote
 origin
@@ -429,14 +432,14 @@ paul
 ```
 
 ## 远程仓库删除
-```
+```git
 $ git remote rm paul
 $ git remote
 origin
 ```
 
 ## 列出已有标签
-```
+```git
 $ git tag
 v0.1
 v1.3
@@ -455,7 +458,7 @@ v1.8.5.5
 ```
 
 ## 创建附注标签
-```
+```git
 $ git tag -a v1.4 -m 'my version 1.4'
 $ git tag
 v0.1
@@ -463,7 +466,7 @@ v1.3
 v1.4
 ```
 
-```
+```git
 $ git show v1.4
 tag v1.4
 Tagger: Ben Straub <ben@straub.cc>
@@ -479,7 +482,7 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
 ```
 
 ## 创建轻量标签
-```
+```git
 $ git tag v1.4-lw
 $ git tag
 v0.1
@@ -489,7 +492,7 @@ v1.4-lw
 v1.5
 ```
 
-```
+```git
 $ git show v1.4-lw
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -499,7 +502,7 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
 ```
 
 ## 给某次提交记录打标签
-```
+```git
 $ git tag -a v1.2 9fceb02
 $ git show v1.2
 tag v1.2
@@ -516,23 +519,23 @@ Date:   Sun Apr 27 20:43:35 2008 -0700
 ```
 
 ## 共享标签到远程仓库
-```
+```git
 $ git push origin v1.5
 ```
 
-```
+```git
 $ git push origin --tags
 ```
 
 ## 检出标签
-```
+```git
 git checkout -b [branchname] [tagname]
 $ git checkout -b version2 v2.0.0
 Switched to a new branch 'version2'
 ```
 
 ## 为git命令设置别名
-```
+```git
 $ git config --global alias.co checkout
 $ git config --global alias.br branch
 $ git config --global alias.ci commit
@@ -557,12 +560,12 @@ git config --global gui.encoding utf-8
 ```
 
 ## 切换分支
-```
+```git
 $ git checkout [barcher-name]
 ```
 
 ## 在某个问题上建立一个分支
-```
+```git
 比如：问题##53
 $ git checkout -b iss53
 或者
@@ -574,13 +577,13 @@ $ git checkout -b hotfix
 ```
 
 ## 将紧急分支merge到主干
-```
+```git
 $ git checkout master
 $ git merge hotfix
 ```
 
 ## 紧急分支切换回来继续工作
-```
+```git
 解决问题后删除紧急分支，然后切换回来继续解决原来问题
 $ git branch -d hotfix
 $ git checkout iss53
@@ -594,13 +597,13 @@ $ git branch -d iss53
 ```
 
 ## merge冲突解决
-```
+```git
 图形化界面
 $ git mergetool
 ```
 
 ## 分支管理
-```
+```git
 $ git branch
   iss53
 * master
@@ -620,7 +623,7 @@ $ git branch --no-merged
 ```
 
 ## 远程分支
-```
+```git
 “origin” 并无特殊含义
 远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。 同时 “master” 是当你运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用，“origin” 是当你运行 git clone 时默认的远程仓库名字。 如果你运行 git clone -o booyah，那么你默认的远程分支名字将会是 booyah/master。
 
@@ -640,25 +643,25 @@ $ git checkout -b serverfix origin/serverfix
 ```
 
 ## 跟踪分支
-```
+```git
 $ git checkout --track origin/serverfix
 如果想要将本地分支与远程分支设置为不同名字，你可以轻松地增加一个不同名字的本地分支的上一个命令：
 $ git checkout -b sf origin/serverfix
 ```
 
 ## 拉取分支
-```
+```git
 git pull 的魔法经常令人困惑所以通常单独显式地使用 fetch 与 merge
 ```
 
 ## 删除远程分支
-```
+```git
 假设你已经通过远程分支做完所有的工作了 - 也就是说你和你的协作者已经完成了一个特性并且将其合并到了远程仓库的 master 分支（或任何其他稳定代码分支）。 可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。 如果想要从服务器上删除 serverfix 分支，运行下面的命令：
 $ git push origin --delete serverfix
 ```
 
 ## 变基
-```
+```git
 你可以使用 rebase 命令将提交到某一分支上的所有修改都移至另一分支上，就好像“重新播放”一样。
 
 $ git checkout experiment

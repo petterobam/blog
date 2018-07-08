@@ -7,19 +7,19 @@ Maven学习笔记
 配置 ```MAVEN_HOME``` 解压根目录，编辑环境变量 ```Path```，追加 ```%MAVEN_HOME%\bin\```
 命令提示符下：
 
-```
+```cmd
 mvn -v
 ```
 
 配置 ```\conf\settings.xml``` 文件，查找下面这行代码：
 
-```
+```cmd
 <localRepository>本地仓库路径</localRepository>
 ```
 
 命令提示符下：
 
-```
+```cmd
 mvn help:system
 ```
 
@@ -29,12 +29,11 @@ mvn help:system
 
 命令提示符下：
 
-```
+```cmd
 nexus    
 nexus { console : start : stop : restart : install : uninstall }
 
 nexus install （可能会报错）
-
 nexus console （也可以启动）
 ```
 
@@ -64,7 +63,7 @@ http://localhost:8081/nexus
 
 maven仓库的 ```setting.xml``` 里面配置
 
-```
+```xml line-numbers
 <servers>
 	<server>
 		<id>my-nexus-snapshots</id>
@@ -81,7 +80,7 @@ maven仓库的 ```setting.xml``` 里面配置
 
 要发布的maven项目里面的pom.xml 文件配置
 
-```
+```xml line-numbers
 <distributionManagement>
     <snapshotRepository>
         <id>my-nexus-snapshots</id>
@@ -112,8 +111,6 @@ maven仓库的 ```setting.xml``` 里面配置
 
 安装命令实例：
 
-```
+```cmd
 mvn install:install-file -DgroupId=com.baidu -DartifactId=ueditor -Dversion=1.0.0 -Dpackaging=jar -Dfile=ueditor-1.1.2.jar
 ```
-
-

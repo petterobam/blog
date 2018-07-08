@@ -10,13 +10,13 @@ thymeleaf学习笔记
 
 2. 定义为thymeleaf文档时候，html标签上添加如下自定义属性：
 
-	```
+	```html
 	<html xmlns:th="http://www.thymeleaf.org">
 	```
 
 3. 如上，我们定义 ```xmlns:th```，下面就可以用 ```th``` 作为 thymeleaf 的标识属性 ```th``` 标签主要有：
 
-	```
+	```html line-numbers
 	th:id		替换id	<input th:id="'xxx' + ${collect.id}"/>
 	th:text		文本替换	<p th:text="${collect.description}">description</p>
 	th:utext	支持html的文本替换	<p th:utext="${htmlcontent}">conten</p>

@@ -53,7 +53,6 @@ module.exports = function(grunt) {
 5. 为你的插件（任务）书写代码。
 6. 执行 npm publish 命令将你创建的 Grunt 插件（任务）发布到npm！
 
-
 ## 文档
 
 [http://www.gruntjs.net/getting-started](http://www.gruntjs.net/getting-started)
