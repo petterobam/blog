@@ -371,24 +371,30 @@ public class Ch8Application extends SpringBootServletinitializer {
 
 
 在环境变量中， spring.profiles.active 指定使用哪个profile ， 比如：
-
->java -jar -Dspring.profiles.active=prod target/ch8.deploy-0.0.1-SNAPSHOT.jar
+```cmd
+java -jar -Dspring.profiles.active=prod target/ch8.deploy-0.0.1-SNAPSHOT.jar
+```
 
 以上配置启动后， Spring Boot 将读取 resources/application-prod.properties 配置文件，覆盖默认的application. properties 选项。application. properties 的内容如下：
 
->server . port=8080
+```properties
+server.port=8080
+```
 
 application-prod.properties 的内容如下：
+```properties
+server.port=9000
+```
 
->server.port=9000
-
-如果使用war 方式部署， 添加系统属性是比较好的方式，下面以Tomcat 为例进行说明。编辑 catalina . sh ， 在sh 文件的开头部分添加如下内容：
-
->JAVA_OPTS ="-Dspring.profiles.active=prod"
+如果使用 war 方式部署， 添加系统属性是比较好的方式，下面以 Tomcat 为例进行说明。编辑 catalina.sh ， 在sh 文件的开头部分添加如下内容：
+```shell
+JAVA_OPTS ="-Dspring.profiles.active=prod"
+```
 
 在多环境部署中，通常 resources 目录下可能没有目标环境的配置文件 ，这主要是为了安全考虑，开发环境不应该有线上环境的各种配置信息。可以将配置文件放到特定的目录中，并用 spring.config.location 指定配置文件的目录：
-
->java -jar -Dspring.config.location=file:env/ -Dspring.profiles.active=test target/ch8.deploy-0.0.1-SNAPSHOT.jar
+```cmd
+java -jar -Dspring.config.location=file:env/ -Dspring.profiles.active=test target/ch8.deploy-0.0.1-SNAPSHOT.jar
+```
 
 @Profile 搭配 @Bean 、@Configuration 等自动执行配置可以定义在不同环境下是否生效，例如：
 
@@ -410,17 +416,17 @@ application-prod.properties 的内容如下：
 @WebMvcTest(UserController.class)
 public class UserControllerTest{
 	@Autowired
-	private MockMvc mvc ;
+	private MockMvc mvc;
 	@MockBean
-	UserService userService ;
+	UserService userService;
 	@Test
 	public void testMvc() throws Exception {
 		int userid = 10 ;
 		int expectedCredit = 100 ;
 		// 模拟userService
-		given(this.userService.getCredit(userid)).wil1Return(l00);
+		given(this.userService.getCredit(userid)).willReturn(l00);
 		// mvc 调用
-		mvc.perform(get("user/{Id}", userid)).andExpect(content().string(String.valueOf(expectedCredi t)));
+		mvc.perform(get("user/{Id}", userid)).andExpect(content().string(String.valueOf(expectedCredit)));
 	}
 }
 ```
@@ -433,7 +439,7 @@ mockMvc.perform(get("/hotels?foo={foo}","bar"));
 
 2.模拟一个Post请求：
 ```java
-mockMvc.perform(post("/hotels/{id}", 42) ;
+mockMvc.perform(post("/hotels/{id}", 42);
 ```
 
 3.模拟文件上传：
@@ -446,19 +452,19 @@ mockMvc.perform(multipart("/doc").file("file","文件内容".getBytes("UTF-8")))
 //模拟提交message 参数
 mvc.perform(get("/user/{id}/{name}", userid, name).param("message","hello"));
 //模拟一个checkbox提交
-mvc.perform(get("/user/{id}/{name}",userid,name).param("job"，"IT"，"gov").param(...));
+mvc.perform(get("/user/{id}/{name}",userid,name).param("job","IT","gov").param(...));
 //直接使用MultiValueMap 构造参数
-LinkedMul ti ValueMap pa rams = new LinkedMul ti ValueMap () ;
+LinkedMultiValueMap params = new LinkedMultiValueMap () ;
 pararns.put("message","hello");
 pararns.put("job","IT");
 pararns.put("job","gov");
-mvc.perforrn(get("/user/{id)/{narne}",user!d,name).param(params));
+mvc.perform(get("/user/{id)/{narne}",userid,name).param(params));
 ```
 
 5.模拟Session和Cookie:
 ```java
-mvc.perforrn(get("/user.html").sessionAttr(name,value));
-mvc.perforrn(get("/user.html").cookie(new Cookie(name, value))) ;
+mvc.perform(get("/user.html").sessionAttr(name,value));
+mvc.perform(get("/user.html").cookie(new Cookie(name, value))) ;
 ```
 
 6.设置HTTP Body 内容，比如提交的JSON:
@@ -468,10 +474,10 @@ String json = mvc.perforrn(get("/user.html").content(json));
 
 7.设置HTTP Header:
 ```java
-mvc.perforrn(get("/user/{id}/{narne}",userid,narne)
+mvc.perform(get("/user/{id}/{narne}",userid,narne)
 	.contentType("application/x-www-forrn-urlencoded")//HTTP提交内容
 	.accept("application/json")//期望返回内容
-	.header(headerl,valuel)) //设直HTTP头
+	.header(headerl,valuel)); //设直HTTP头
 ```
 
 ### Mockito模拟数据
@@ -486,9 +492,9 @@ public class CreditServiceMockTest{
 		CreditSystemService creditService= mock(CreditSystemService.class);
 		//模拟Mock 对象调用，传入任何 int 位都将返回1000 积分
 		when(creditServrice.getUserCredit(anyInt())).thenReturn(1000);
-		//when(creditService.getUserCredit(any(int.class))).thenReturn(lOOO);
+		//when(creditService.getUserCredit(any(int.class))).thenReturn(1OOO);
 		//实际调用
-		int ret = creditService . getUserCredit(lO);
+		int ret = creditService.getUserCredit(lO);
 		// 比较期望值和返回佳
 		assertEquals(1000 , ret);
 	}
@@ -523,15 +529,15 @@ public class Swagger2 {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.forezp.controller"))
+				.apis(RequestHandlerSelectors.basePackage("com.test.controller"))
 				.paths(PathSelectors.any())
 				.build();
 	}
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				.title("SpringBoot利用Swagger构建Api文档")
-				.description("简单优雅的Restfun风格，http://blog.csdn.net/forezp")
-				.termsOfServiceUrl("http://blog.csdn.net/forezp")
+				.description("简单优雅的Restfun风格，http://localhost:8000/swagger-ui.html")
+				.termsOfServiceUrl("http://localhost:8000/swagger-ui.html")
 				.version("1.0")
 				.build();
 	}
@@ -595,12 +601,12 @@ spring.redis.pool.max-active=8
 private StringRedisTemplate redisClient;
 
 redisClient.opsForValue().set("key1", value1);
-String str = red工sClient.opsForValue().get("key1");
+String str = redisClient.opsForValue().get("key1");
 ```
 
 ```java line-numbers
 @Autowired
-@Qualifier("redisTernplate")
+@Qualifier("redisTemplate")
 private RedisTernplate redisClient;
 
 redisClient.opsForValue().set ("key1", User.getSampleUser());
@@ -735,7 +741,7 @@ Redis 里面查看 Session：
 
 >hgetall "spring:session:sessions:863c7e73-8249-4780-a08e-Off2bdddda86"
 
->HMGET "spring:session:sessions:863c7e73-8249-4780-a08e一O ff2bdddda86"
+>HMGET "spring:session:sessions:863c7e73-8249-4780-a08e-Off2bdddda86"
 ```
 
 Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis 后，即使一台服务器挂了，对应用户的 Session 也不会丢失，不需要重新登录等等。
@@ -847,7 +853,7 @@ publiC void makeOrderType(String type) {
 protected void registerSerivce (CuratorFramework client) throws Exception {
 	// 构造一个服务描述
 	ServiceinstanceBuilder<Map> service =ServiceInstance.builder();
-	service.address("192.168.1.100"）；
+	service.address("192.168.1.100");
 	service.port(8080);
 	service.name("book");
 	Map config =new HashMap();
