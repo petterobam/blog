@@ -1,4 +1,4 @@
-# my-blog
+# blog
 我的GitHub博客，链接：http://www.petterobam.cn
 
 # 使用主题
