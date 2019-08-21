@@ -5,3 +5,6 @@ _site
 *.log
 ITStory/install-index.bat
 ITStory/install-index/
+vendor/**
+.bundle/*
+*.out

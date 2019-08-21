@@ -567,7 +567,10 @@ nexus console （也可以启动）
 </ol>
 <p>安装命令实例：</p>
 <pre><code class="cmd">mvn install:install-file -DgroupId=com.baidu -DartifactId=ueditor -Dversion=1.0.0 -Dpackaging=jar -Dfile=ueditor-1.1.2.jar
-</code></pre><h1><a href="#springboot学习笔记" name="springboot学习笔记"></a>SpringBoot学习笔记</h1>
+</code></pre>
+<h2><a href="#扩展脑图" name="扩展脑图"></a>扩展脑图</h2>
+<p>最近系统研究了下 maven，不详细整理了，给张全栈知识相关脑图</p>
+<p><img src="maven/xmind.png" alt="maven-xmind" /></p><h1><a href="#springboot学习笔记" name="springboot学习笔记"></a>SpringBoot学习笔记</h1>
 <h2><a href="#环境支持" name="环境支持"></a>环境支持</h2>
 <blockquote>
   <p>JDK8+</p>
@@ -921,25 +924,20 @@ public class Ch8Application extends SpringBootServletinitializer {
   <li>demo1.0 ， 1.0 版本演示环境</li>
 </ul>
 <p>在环境变量中， spring.profiles.active 指定使用哪个profile ， 比如：</p>
-<blockquote>
-  <p>java -jar -Dspring.profiles.active=prod target/ch8.deploy-0.0.1-SNAPSHOT.jar</p>
-</blockquote>
+<pre><code class="cmd">java -jar -Dspring.profiles.active=prod target/ch8.deploy-0.0.1-SNAPSHOT.jar
+</code></pre>
 <p>以上配置启动后， Spring Boot 将读取 resources/application-prod.properties 配置文件，覆盖默认的application. properties 选项。application. properties 的内容如下：</p>
-<blockquote>
-  <p>server . port=8080</p>
-</blockquote>
+<pre><code class="properties">server.port=8080
+</code></pre>
 <p>application-prod.properties 的内容如下：</p>
-<blockquote>
-  <p>server.port=9000</p>
-</blockquote>
-<p>如果使用war 方式部署， 添加系统属性是比较好的方式，下面以Tomcat 为例进行说明。编辑 catalina . sh ， 在sh 文件的开头部分添加如下内容：</p>
-<blockquote>
-  <p>JAVA_OPTS =&ldquo;-Dspring.profiles.active=prod&rdquo;</p>
-</blockquote>
+<pre><code class="properties">server.port=9000
+</code></pre>
+<p>如果使用 war 方式部署， 添加系统属性是比较好的方式，下面以 Tomcat 为例进行说明。编辑 catalina.sh ， 在sh 文件的开头部分添加如下内容：</p>
+<pre><code class="shell">JAVA_OPTS =&quot;-Dspring.profiles.active=prod&quot;
+</code></pre>
 <p>在多环境部署中，通常 resources 目录下可能没有目标环境的配置文件 ，这主要是为了安全考虑，开发环境不应该有线上环境的各种配置信息。可以将配置文件放到特定的目录中，并用 spring.config.location 指定配置文件的目录：</p>
-<blockquote>
-  <p>java -jar -Dspring.config.location=file:env/ -Dspring.profiles.active=test target/ch8.deploy-0.0.1-SNAPSHOT.jar</p>
-</blockquote>
+<pre><code class="cmd">java -jar -Dspring.config.location=file:env/ -Dspring.profiles.active=test target/ch8.deploy-0.0.1-SNAPSHOT.jar
+</code></pre>
 <p>@Profile 搭配 @Bean 、@Configuration 等自动执行配置可以定义在不同环境下是否生效，例如：</p>
 <ul>
   <li>@Profile({&ldquo;test&rdquo;, &ldquo;prod&rdquo;}) ，测试环境和线上环境生效</li>
@@ -956,17 +954,17 @@ public class Ch8Application extends SpringBootServletinitializer {
 @WebMvcTest(UserController.class)
 public class UserControllerTest{
 	@Autowired
-	private MockMvc mvc ;
+	private MockMvc mvc;
 	@MockBean
-	UserService userService ;
+	UserService userService;
 	@Test
 	public void testMvc() throws Exception {
 		int userid = 10 ;
 		int expectedCredit = 100 ;
 		// 模拟userService
-		given(this.userService.getCredit(userid)).wil1Return(l00);
+		given(this.userService.getCredit(userid)).willReturn(l00);
 		// mvc 调用
-		mvc.perform(get(&quot;user/{Id}&quot;, userid)).andExpect(content().string(String.valueOf(expectedCredi t)));
+		mvc.perform(get(&quot;user/{Id}&quot;, userid)).andExpect(content().string(String.valueOf(expectedCredit)));
 	}
 }
 </code></pre>
@@ -975,7 +973,7 @@ public class UserControllerTest{
 <pre><code class="java">mockMvc.perform(get(&quot;/hotels?foo={foo}&quot;,&quot;bar&quot;));
 </code></pre>
 <p>2.模拟一个Post请求：</p>
-<pre><code class="java">mockMvc.perform(post(&quot;/hotels/{id}&quot;, 42) ;
+<pre><code class="java">mockMvc.perform(post(&quot;/hotels/{id}&quot;, 42);
 </code></pre>
 <p>3.模拟文件上传：</p>
 <pre><code class="java">mockMvc.perform(multipart(&quot;/doc&quot;).file(&quot;file&quot;,&quot;文件内容&quot;.getBytes(&quot;UTF-8&quot;)));
@@ -984,26 +982,26 @@ public class UserControllerTest{
 <pre><code class="java line-numbers">//模拟提交message 参数
 mvc.perform(get(&quot;/user/{id}/{name}&quot;, userid, name).param(&quot;message&quot;,&quot;hello&quot;));
 //模拟一个checkbox提交
-mvc.perform(get(&quot;/user/{id}/{name}&quot;,userid,name).param(&quot;job&quot;，&quot;IT&quot;，&quot;gov&quot;).param(...));
+mvc.perform(get(&quot;/user/{id}/{name}&quot;,userid,name).param(&quot;job&quot;,&quot;IT&quot;,&quot;gov&quot;).param(...));
 //直接使用MultiValueMap 构造参数
-LinkedMul ti ValueMap pa rams = new LinkedMul ti ValueMap () ;
+LinkedMultiValueMap params = new LinkedMultiValueMap () ;
 pararns.put(&quot;message&quot;,&quot;hello&quot;);
 pararns.put(&quot;job&quot;,&quot;IT&quot;);
 pararns.put(&quot;job&quot;,&quot;gov&quot;);
-mvc.perforrn(get(&quot;/user/{id)/{narne}&quot;,user!d,name).param(params));
+mvc.perform(get(&quot;/user/{id)/{narne}&quot;,userid,name).param(params));
 </code></pre>
 <p>5.模拟Session和Cookie:</p>
-<pre><code class="java">mvc.perforrn(get(&quot;/user.html&quot;).sessionAttr(name,value));
-mvc.perforrn(get(&quot;/user.html&quot;).cookie(new Cookie(name, value))) ;
+<pre><code class="java">mvc.perform(get(&quot;/user.html&quot;).sessionAttr(name,value));
+mvc.perform(get(&quot;/user.html&quot;).cookie(new Cookie(name, value))) ;
 </code></pre>
 <p>6.设置HTTP Body 内容，比如提交的JSON:</p>
 <pre><code class="java">String json = mvc.perforrn(get(&quot;/user.html&quot;).content(json));
 </code></pre>
 <p>7.设置HTTP Header:</p>
-<pre><code class="java">mvc.perforrn(get(&quot;/user/{id}/{narne}&quot;,userid,narne)
+<pre><code class="java">mvc.perform(get(&quot;/user/{id}/{narne}&quot;,userid,narne)
 	.contentType(&quot;application/x-www-forrn-urlencoded&quot;)//HTTP提交内容
 	.accept(&quot;application/json&quot;)//期望返回内容
-	.header(headerl,valuel)) //设直HTTP头
+	.header(headerl,valuel)); //设直HTTP头
 </code></pre>
 <h3><a href="#mockito模拟数据" name="mockito模拟数据"></a>Mockito模拟数据</h3>
 <pre><code class="java line-numbers">@RunWith(MockitoJUnitRunner.class)
@@ -1015,9 +1013,9 @@ public class CreditServiceMockTest{
 		CreditSystemService creditService= mock(CreditSystemService.class);
 		//模拟Mock 对象调用，传入任何 int 位都将返回1000 积分
 		when(creditServrice.getUserCredit(anyInt())).thenReturn(1000);
-		//when(creditService.getUserCredit(any(int.class))).thenReturn(lOOO);
+		//when(creditService.getUserCredit(any(int.class))).thenReturn(1OOO);
 		//实际调用
-		int ret = creditService . getUserCredit(lO);
+		int ret = creditService.getUserCredit(lO);
 		// 比较期望值和返回佳
 		assertEquals(1000 , ret);
 	}
@@ -1047,15 +1045,15 @@ public class Swagger2 {
 		return new Docket(DocumentationType.SWAGGER_2)
 				.apiInfo(apiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage(&quot;com.forezp.controller&quot;))
+				.apis(RequestHandlerSelectors.basePackage(&quot;com.test.controller&quot;))
 				.paths(PathSelectors.any())
 				.build();
 	}
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
 				.title(&quot;SpringBoot利用Swagger构建Api文档&quot;)
-				.description(&quot;简单优雅的Restfun风格，http://blog.csdn.net/forezp&quot;)
-				.termsOfServiceUrl(&quot;http://blog.csdn.net/forezp&quot;)
+				.description(&quot;简单优雅的Restfun风格，http://localhost:8000/swagger-ui.html&quot;)
+				.termsOfServiceUrl(&quot;http://localhost:8000/swagger-ui.html&quot;)
 				.version(&quot;1.0&quot;)
 				.build();
 	}
@@ -1092,10 +1090,10 @@ spring.redis.pool.max-active=8
 private StringRedisTemplate redisClient;
 
 redisClient.opsForValue().set(&quot;key1&quot;, value1);
-String str = red工sClient.opsForValue().get(&quot;key1&quot;);
+String str = redisClient.opsForValue().get(&quot;key1&quot;);
 </code></pre>
 <pre><code class="java line-numbers">@Autowired
-@Qualifier(&quot;redisTernplate&quot;)
+@Qualifier(&quot;redisTemplate&quot;)
 private RedisTernplate redisClient;
 
 redisClient.opsForValue().set (&quot;key1&quot;, User.getSampleUser());
@@ -1194,7 +1192,7 @@ spring.redis.port=6379
 
 &gt;hgetall &quot;spring:session:sessions:863c7e73-8249-4780-a08e-Off2bdddda86&quot;
 
-&gt;HMGET &quot;spring:session:sessions:863c7e73-8249-4780-a08e一O ff2bdddda86&quot;
+&gt;HMGET &quot;spring:session:sessions:863c7e73-8249-4780-a08e-Off2bdddda86&quot;
 </code></pre>
 <p>Nginx + Redis ，水平扩展的 SpringBoot 服务，将 Session 存储在 Redis 后，即使一台服务器挂了，对应用户的 Session 也不会丢失，不需要重新登录等等。</p>
 <h2><a href="#集成-zookeeper" name="集成-zookeeper"></a>集成 ZooKeeper</h2>
@@ -1285,7 +1283,7 @@ publiC void makeOrderType(String type) {
 <pre><code class="java line-numbers">protected void registerSerivce (CuratorFramework client) throws Exception {
 	// 构造一个服务描述
 	ServiceinstanceBuilder&lt;Map&gt; service =ServiceInstance.builder();
-	service.address(&quot;192.168.1.100&quot;）；
+	service.address(&quot;192.168.1.100&quot;);
 	service.port(8080);
 	service.name(&quot;book&quot;);
 	Map config =new HashMap();
@@ -2289,4 +2287,3 @@ for (var i = 0; i < codeEles.length; i++) {
 <script src="static/js/prism.js"></script>
 </body>
 </html>
-                                       

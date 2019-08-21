@@ -63,10 +63,16 @@ disqus:
   addthis_public_id: # AddThis sharing plugin. See http://www.addthis.com/. E.g. ra-53329e27694534j5
 
 gitment:
-  owner: petterobam
-  repo: my-blog
-  oauth_client_id: 7d522d338b8d88e40446
-  oauth_client_secret: be5aca84a4c6640f52c48ec546717bcdf297914f
+  owner: # petterobam
+  repo: # blog
+  oauth_client_id: # 7d522d338b8d88e40446
+  oauth_client_secret: # be5aca84a4c6640f52c48ec546717bcdf297914f
+
+utterances:
+  enable: true
+  repo: petterobam/blog # owner/repo
+  issue_term: pathname # pathname, url, title, og:title [ISSUE NUMBER] or [SPECIFIC TERM]
+  theme: # github-light or github-dark
 
 directory: true
 

@@ -114,3 +114,9 @@ maven仓库的 ```setting.xml``` 里面配置
 ```cmd
 mvn install:install-file -DgroupId=com.baidu -DartifactId=ueditor -Dversion=1.0.0 -Dpackaging=jar -Dfile=ueditor-1.1.2.jar
 ```
+
+## 扩展脑图
+
+最近系统研究了下 maven，不详细整理了，给张全栈知识相关脑图
+
+![maven-xmind](maven/xmind.png)
