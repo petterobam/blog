@@ -2,16 +2,17 @@ page:
   title: 我的学习笔记
   inc: 2018 petterObam
   useArgsPathForJar: false  # 如果设置该配置false，jar文件将完全按照配置文件执行，此时mdBasePath、tplPath、indexPath必填
-  mdBasePath:  /Users/ouyangjie/WorkSpace/other/blog/learner/  # markdown文件的目录，默认为 classpath:markdowns/
-  tplPath: /Users/ouyangjie/WorkSpace/other/blog/learner/install-index/template/index.html   # index模板文件的路径，默认为 classpath:template/index.html
+  mdBasePath:  /home/oyjie/WorkSpace/Java/blog/learner/  # markdown文件的目录，默认为 classpath:markdowns/
+  tplPath: /home/oyjie/WorkSpace/Java/blog/learner/install-index/template/index.html   # index模板文件的路径，默认为 classpath:template/index.html
   markdowns:
     - Github博客部署学习笔记.md
     - JVM内存溢出、泄露检查工具学习笔记.md
     - Maven学习笔记.md
     - SpringBoot学习笔记.md
+    - ApachePoiWord入门示例教程.md
     - Git学习笔记.md
     - thymeleaf学习笔记.md
     - grunt学习笔记.md
     - Docker学习笔记.md
     - 3DMax学习笔记.md
-  indexPath: /Users/ouyangjie/WorkSpace/other/blog/learner/index.html # 生成的index文件输出路径，默认 classpath:output/index.html
+  indexPath: /home/oyjie/WorkSpace/Java/blog/learner/index.html # 生成的index文件输出路径，默认 classpath:output/index.html

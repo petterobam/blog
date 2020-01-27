@@ -1324,7 +1324,182 @@ management.port=8081
   <li>env： 显示 Spring Boot 环境变量，如使用的 JDK 版本、加载的 jar 包、配置文件信息、 日志文件信息</li>
   <li>configprops： 所有＠ConfigurationProperties 注解的配置信息，如文件上传的最大允许 配置等</li>
   <li>autoconfig：显示所有自动装配类的报告，以及是什么原因导致自动装配成功或者不成功</li>
-</ul><h1><a href="#git学习笔记" name="git学习笔记"></a>Git学习笔记</h1>
+</ul><h1><a href="#apache-poi-word-学习笔记" name="apache-poi-word-学习笔记"></a>Apache Poi Word 学习笔记</h1>
+<p>本章节出自<a href="http://deepoove.com/poi-tl/apache-poi-guide.html">【Apache POI Word(docx) 入门示例教程】</a></p>
+<h2><a href="#文档xwpfdocument" name="文档xwpfdocument"></a>文档XWPFDocument</h2>
+<p>XWPFDocument是对 .docx 文档操作的高级封装API。</p>
+<h3><a href="#创建新文档" name="创建新文档"></a>创建新文档</h3>
+<pre><code class="java">XWPFDocument doc = new XWPFDocument();
+</code></pre>
+<h3><a href="#读取已有文档-段落-表格-图片" name="读取已有文档-段落-表格-图片"></a>读取已有文档：段落、表格、图片</h3>
+<pre><code class="java">XWPFDocument doc = new XWPFDocument(new FileInputStream(&quot;./deepoove.docx&quot;));
+</code></pre>
+<p>接下来我们就可以读取文档内容，包括段落、表格、图片等：</p>
+<pre><code class="java">// 段落
+List&lt;XWPFParagraph&gt; paragraphs = doc.getParagraphs();
+// 表格
+List&lt;XWPFTable&gt; tables = doc.getTables();
+// 图片
+List&lt;XWPFPictureData&gt; allPictures = doc.getAllPictures();
+// 页眉
+List&lt;XWPFHeader&gt; headerList = doc.getHeaderList();
+// 页脚
+List&lt;XWPFFooter&gt; footerList = doc.getFooterList();
+</code></pre>
+<h3><a href="#生成文档" name="生成文档"></a>生成文档</h3>
+<p>通过传入一个OutStream，将文档写入流：</p>
+<pre><code class="java">try (FileOutputStream out = new FileOutputStream(&quot;simple.docx&quot;)) {
+    doc.write(out);
+}
+</code></pre>
+<h2><a href="#段落xwpfparagraph" name="段落xwpfparagraph"></a>段落XWPFParagraph</h2>
+<p>段落是构成Word文档的一个基本单元。</p>
+<h3><a href="#创建新段落" name="创建新段落"></a>创建新段落</h3>
+<pre><code class="java">XWPFParagraph p1 = doc.createParagraph();
+</code></pre>
+<h3><a href="#设置段落格式" name="设置段落格式"></a>设置段落格式</h3>
+<pre><code class="java">// 对齐方式
+p1.setAlignment(ParagraphAlignment.CENTER);
+// 边框
+p1.setBorderBottom(Borders.DOUBLE);
+p1.setBorderTop(Borders.DOUBLE);
+p1.setBorderRight(Borders.DOUBLE);
+p1.setBorderLeft(Borders.DOUBLE);
+p1.setBorderBetween(Borders.SINGLE);
+</code></pre>
+<h3><a href="#基本元素xwpfrun" name="基本元素xwpfrun"></a>基本元素XWPFRun</h3>
+<p>创建好段落后，我们就可以通过相关API处理段落内的文本和图片了。XWPFRun是段落的基本组成单元，它可以是一个文本，也可以是一张图片。</p>
+<h3><a href="#段落文本" name="段落文本"></a>段落文本</h3>
+<h4><a href="#读取段落内容" name="读取段落内容"></a>读取段落内容</h4>
+<pre><code class="java">// 获取文字
+String text = paragraph.getText();
+
+// 获取段落内所有XWPFRun
+List&lt;XWPFRun&gt; runs = paragraph.getRuns();
+</code></pre>
+<h4><a href="#创建xwpfrun文本" name="创建xwpfrun文本"></a>创建XWPFRun文本</h4>
+<pre><code class="java">// 段落末尾创建XWPFRun
+XWPFRun run = paragraph.createRun();
+run.setText(&quot;为这个段落追加文本&quot;);
+</code></pre>
+<h4><a href="#插入xwpfrun文本" name="插入xwpfrun文本"></a>插入XWPFRun文本</h4>
+<pre><code class="java">// 段落起始插入XWPFRun
+XWPFRun insertNewRun = paragraph.insertNewRun(0);
+insertNewRun.setText(&quot;在段落起始位置插入这段文本&quot;);
+</code></pre>
+<h4><a href="#修改xwpfrun文本" name="修改xwpfrun文本"></a>修改XWPFRun文本</h4>
+<pre><code class="java">List&lt;XWPFRun&gt; runs = paragraph.getRuns();
+// setText默认为追加文本，参数0表示设置第0个位置的文本，覆盖上一次设置
+runs.get(0).setText(&quot;追加文本&quot;, 0);
+runs.get(0).setText(&quot;修改文本&quot;, 0);
+</code></pre>
+<h4><a href="#样式-颜色-字体" name="样式-颜色-字体"></a>样式：颜色、字体</h4>
+<pre><code class="java">// 颜色
+run.setColor(&quot;00ff00&quot;);
+// 斜体
+run.setItalic(true);
+// 粗体
+run.setBold(true);
+// 字体
+run.setFontFamily(&quot;Courier&quot;);
+// 下划线
+run.setUnderline(UnderlinePatterns.DOT_DOT_DASH);
+</code></pre>
+<h4><a href="#文本换行" name="文本换行"></a>文本换行</h4>
+<pre><code class="java">run.addCarriageReturn();
+</code></pre>
+<h3><a href="#段落图片" name="段落图片"></a>段落图片</h3>
+<h4><a href="#提取图片xwpfpicture" name="提取图片xwpfpicture"></a>提取图片XWPFPicture</h4>
+<pre><code class="java">List&lt;XWPFPictureData&gt; allPictures = doc.getAllPictures();
+XWPFPicture pciture = allPictures.get(0);
+byte[] data = pciture.getPictureData().getData();
+// 接下来就可以将图片字节数组写入输出流
+</code></pre>
+<h4><a href="#创建xwpfrun图片" name="创建xwpfrun图片"></a>创建XWPFRun图片</h4>
+<pre><code class="java">import org.apache.poi.util.Units;
+
+InputStream stream = new FileInputStream(&quot;./sayi.png&quot;);
+XWPFRun run = paragraph.createRun();
+run.addPicture(stream, XWPFDocument.PICTURE_TYPE_PNG, &quot;Generated&quot;, Units.toEMU(256), Units.toEMU(256));
+</code></pre>
+<h2><a href="#表格xwpftable" name="表格xwpftable"></a>表格XWPFTable</h2>
+<p>表格是构成Word文档的另一个重要基本元素。</p>
+<h3><a href="#创建新表格" name="创建新表格"></a>创建新表格</h3>
+<p>创建一个三行三列的表格：</p>
+<pre><code class="java">XWPFTable table = doc.createTable(3, 3);
+</code></pre>
+<h3><a href="#设置单元格文本" name="设置单元格文本"></a>设置单元格文本</h3>
+<p>表格是由表格行XWPFRow构成，每行是由单元格XWPFCell构成，每个单元格内部又是由许多XWPFParagraph段落构成。</p>
+<pre><code class="java">table.getRow(1).getCell(1).setText(&quot;EXAMPLE OF TABLE&quot;);
+</code></pre>
+<p>上面这一段代码和下面这一段代码是等价的：</p>
+<pre><code class="java">XWPFParagraph p1 = table.getRow(0).getCell(0).addParagraph();
+XWPFRun r1 = p1.createRun();
+r1.setText(&quot;EXAMPLE OF TABLE&quot;);
+</code></pre>
+<h3><a href="#设置单元格图片" name="设置单元格图片"></a>设置单元格图片</h3>
+<p>图片操作其实就是获取段落，然后等同操作段落中的图片。</p>
+<pre><code class="java">XWPFParagraph p1 = table.getRow(0).getCell(0).addParagraph();
+XWPFRun r1 = p1.createRun();
+// 同段落图片
+</code></pre>
+<h3><a href="#设置单元格样式-背景色-对齐方式" name="设置单元格样式-背景色-对齐方式"></a>设置单元格样式：背景色、对齐方式</h3>
+<pre><code class="java">// 背景色
+cell.setColor(cellStyle.getBackgroundColor());
+
+// 获取单元格段落后设置对齐方式
+XWPFParagraph addParagraph = cell.addParagraph();
+addParagraph.setAlignment(ParagraphAlignment.CENTER);
+</code></pre>
+<h2><a href="#poi-tl-word模板引擎" name="poi-tl-word模板引擎"></a>poi-tl：Word模板引擎</h2>
+<p>poi-tl（poi template language）是基于Apache POI的Word模板引擎，完整的文档参见poi-tl官方文档，本小节不打算介绍模板引擎，主要讲解如何使用poi-tl里面对poi的增强API。</p>
+<h3><a href="#tabletools" name="tabletools"></a>TableTools</h3>
+<p>TableTools 提供了若干操作表格的方法。</p>
+<h4><a href="#同一行单元格合并某几列" name="同一行单元格合并某几列"></a>同一行单元格合并某几列</h4>
+<pre><code class="java">// 合并第一行的第0列到第8列单元格
+TableTools.mergeCellsHorizonal(table, 1, 0, 8);
+</code></pre>
+<h4><a href="#同一列单元格合并某几行" name="同一列单元格合并某几行"></a>同一列单元格合并某几行</h4>
+<pre><code class="java">// 合并第0列的第一行到第九行的单元格
+TableTools.mergeCellsVertically(table, 0, 1, 9);
+</code></pre>
+<h4><a href="#表格宽度" name="表格宽度"></a>表格宽度</h4>
+<pre><code class="java">// 设置表格宽度为A4纸最大宽度
+TableTools.widthTable(table, MiniTableRenderData.WIDTH_A4_FULL, 10);
+</code></pre>
+<h4><a href="#表格样式" name="表格样式"></a>表格样式</h4>
+<pre><code class="java">// 设置表格居中
+TableStyle style = new TableStyle();
+style.setAlign(STJc.CENTER);
+TableTools.styleTable(table, style);
+</code></pre>
+<h3><a href="#nicexwpfdocument" name="nicexwpfdocument"></a>NiceXWPFDocument</h3>
+<p>NiceXWPFDocument 是对原生 XWPFDocument 的增强。</p>
+<h4><a href="#某个位置插入表格" name="某个位置插入表格"></a>某个位置插入表格</h4>
+<p>NiceXWPFDocument doc = new NiceXWPFDocument(new FileInputStream(&ldquo;./deepoove.docx&rdquo;));</p>
+<pre><code class="java">// 在某个run位置插入10行10列的表格
+// XWPFRun run = ...
+XWPFTable table = doc.insertNewTable(run, 10, 10);
+</code></pre>
+<h4><a href="#某个位置插入段落" name="某个位置插入段落"></a>某个位置插入段落</h4>
+<pre><code class="java">// 在某个run位置插入段落
+// XWPFRun run = ...
+doc.insertNewParagraph(run);
+</code></pre>
+<h4><a href="#word合并" name="word合并"></a>Word合并</h4>
+<pre><code class="java">NiceXWPFDocument main = new NiceXWPFDocument(new FileInputStream(&quot;main.docx&quot;));
+
+NiceXWPFDocument sub = new NiceXWPFDocument(new FileInputStream(&quot;sub.docx&quot;));
+
+// 合并两个文档
+NiceXWPFDocument newDoc = main.merge(sub);
+
+// 生成新文档
+FileOutputStream out = new FileOutputStream(&quot;new_doc.docx&quot;);
+doc.write(out);
+doc.close();
+out.close();
+</code></pre><h1><a href="#git学习笔记" name="git学习笔记"></a>Git学习笔记</h1>
 <pre><code class="git">git clone https://github.com/petterobam/my-sqlite.git
 cd my-sqlite/
 git status
