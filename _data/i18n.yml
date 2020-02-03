@@ -1,6 +1,7 @@
 en: &en
   my_reader: 'ReadThinking'
   my_learner: 'LearningNote'
+  my_qq_zone: 'QQ-ZONE'
   about: 'About'
   articles: 'Articles'
   back_to_top: 'Back to Top'
@@ -42,6 +43,7 @@ en-nz:
 zh: &zh
   my_reader: '读书手札'
   my_learner: '学习笔记'
+  my_qq_zone: 'QQ空间'
   about: '关于'
   articles: '文章列表'
   back_to_top: '返回顶部'
