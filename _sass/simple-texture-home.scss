@@ -186,26 +186,23 @@ textarea {
 }
 
 .unit-body li {
-    margin-top: 8px;
-    margin-bottom: 8px;
-}
-
-.unit-body ul li {
+    text-align: left;
     list-style: disc;
-}
-
-.unit-body li {
-    display: list-item;
-    text-align: -webkit-match-parent;
-}
-
-.unit-body li a {
-    float: left;
 }
 
 .unit-body li .date {
     font-size: .8em;
     float: right;
+}
+
+@media only screen and (max-width: 1200px) {
+  body {
+    font-size: .8em;
+    line-height: 24px;
+  }
+  .unit-body li .date {
+      display: none;
+  }
 }
 
 .unit-body span {
