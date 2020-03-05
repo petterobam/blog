@@ -129,6 +129,10 @@ $(document).ready(function () {
         $("body").removeClass('nav-overlay search-overlay');
     };
 
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
     $('.nav-global .btn-search').on('click', function () {
         $('.search-wrapper').css({display: "block"});
         $(".search-form").addClass('active');

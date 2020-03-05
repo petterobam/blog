@@ -15,6 +15,9 @@
                     <li class="nav-link"><a title="{{ site.data.i18n[site.lang].my_reader }}" href="{{ site.paths.my_reader | relative_url }}">{{ site.data.i18n[site.lang].my_reader }}</a></li>
                     <li class="nav-link"><a title="{{ site.data.i18n[site.lang].my_learner }}" href="{{ site.paths.my_learner | relative_url }}">{{ site.data.i18n[site.lang].my_learner }}</a></li>
                     <li class="nav-link"><a title="{{ site.data.i18n[site.lang].my_qq_zone }}" href="{{ site.paths.my_qq_zone | relative_url }}">{{ site.data.i18n[site.lang].my_qq_zone }}</a></li>
+                    {% if site.live2dgirl %}
+                    <li class="nav-link"><a title="召唤萌妹" class="btn-init-live2dgirl" href="#">萌妹</a></li>
+                    {% endif %}
                     <!--[if !IE]> -->
                     <li class="nav-link"><a title="{{ site.data.i18n[site.lang].search }}" class="btn-search" href="#">{{ site.data.i18n[site.lang].search }}</a></li>
                     <!-- <![endif]-->
