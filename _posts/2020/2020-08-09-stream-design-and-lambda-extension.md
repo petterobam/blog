@@ -329,7 +329,7 @@ public class LambdaSyntaxSugar {
 2. 接口上添加了 @FunctionalInterface 注解。
 
 ```
-Jdk 提供了一系列默认的函数式接口（java.util.functio.*），主要包含四大类：
+Jdk 提供了一系列默认的函数式接口（java.util.function.*），主要包含四大类：
 1、Supplier<T>：T get()；无输入，“生产”一个T类型的返回值。
 2、Consumer<T>：void accept(T t)；输入类型 T，“消费”掉，无返回。
 3、Function<T, R>：R apply(T t)；输入类型T返回类型R。
@@ -353,11 +353,9 @@ Lambda 表达式自动识别变成接口函数的实现对象：
 
 2、【编程方式更灵活】将方法传输后，能携带更多的信息。
 
-```
 1. 普通参数 可以转变成 生产者 Supplier<T> 传入，对象工厂表示：我们不再生产产品，我们只提供专利。
-2. 多态或重载 可以转变成 动态 Lambda 策略，参照 Collectors
-3. 转化业务可以策略化封装，参照 Collectors
-```
+2. 多态或重载 可以转变成 动态 Lambda 策略，参照 [Collectors（Lambda 转化者编程分析）](#heading-lambda-转化者编程分析)
+3. 转化业务可以策略化封装，参照 [Collectors（Lambda 转化者编程分析）](#heading-lambda-转化者编程分析)
 
 # 函数式编程思维扩展
 
@@ -630,6 +628,24 @@ public static Collector<CharSequence, ?, String> joining() {
 
 ...stream()...collect(Collectors.groupingBy
 ...stream()...collect(Collectors.partitioningBy
+```
+
+### 启发应用
+
+```
+业务通用转化范式？
+
+例如通用 Feed 流组装业务:
+Collector<T, A, R>  ->  BusinessCollector<DTO, List<Feed>, PageVO>
+* supplier： 创建新的 List<Feed>
+* accumulator：将输入元素合并到结果容器中 DTO -> Feed
+* combiner：合并两个结果容器（并行流使用，将多个线程产生的结果容器合并） Feeds -> NewFeeds
+* finisher：将结果容器转换成最终的表示  Feeds -> PageVO
+【扩展】
+* filters：过滤器 List<Function> 额外过滤器，链式过滤处理，可插拔
+* maps：通用业务映射器，实现不同场景的不同组装
+
+show me code ? TODO...
 ```
 
 # 扩展思维
