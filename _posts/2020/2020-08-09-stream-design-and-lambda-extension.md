@@ -417,13 +417,13 @@ sender.send(msg);
 // do something2
 // do something3
 // send msg
-sender(() -> {
+sender.send(() -> {
     Message msg = new Message();
     msg.setArg1(arg1);
     msg.setArg2(arg3);
     // do something4
     msg.setArg3(arg3);
-    sender.send(msg);
+    return msg;
 });
 
 默认构造器是一个天然的 Supplier<T>：
