@@ -24,11 +24,11 @@ sass:
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: # the subpath of your site, e.g. /blog
-title: PetterObam Blog
+title: 欧阳Boy_Petter's Blog
 description: "个人GitHub博客."
 keywords: 'java,IT,技术,blog'
 author:
-  name: "petterobam"
+  name: "欧阳Boy_Petter"
   job_title:
   location:
   email: 1460300366@qq.com
