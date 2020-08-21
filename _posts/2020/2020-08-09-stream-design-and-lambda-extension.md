@@ -648,6 +648,134 @@ Collector<T, A, R>  ->  BusinessCollector<DTO, List<Feed>, PageVO>
 show me code ? TODO...
 ```
 
+### 示例：Feed流组装范式 【2020-08-21】补充
+
+Feed流类结构：
+
+```json
+{
+    hasMore
+    List<FeedResource> {
+        ResourceType -> 视频、MV、Mlog、广告、直播、话题、圈子
+        ...
+        RelateResource.. {
+            创作者
+            艺人
+            歌曲
+            标签
+            权限
+            评论
+            ...
+        }
+    }
+    msg
+    ...
+}
+```
+
+组装流程：
+
+```
+FeedResourceIdWithType[]
+↓
+ ← GroupBy ResourceType
+↓
+Map<ResourceType, ResourceId[]>
+↓
+ ← ResourceConverter<ResourceId[],FeedResource(RelateResourceId[])[]> []
+↓
+FeedResource(RelateResourceId[])[] -> Map<RelateResourceType, RelateResourceId[]>
+↓
+ ← RelateResourceConverter<RelateResourceId[], Map<RelateResourceId, RelateResource>> []
+↓
+Map<RelateResourceId, RelateResource>[]
+↓
+ ← FeedResourceFiller<FeedResource(RelateResourceId[]), Map<RelateResourceId, RelateResource>[]>
+↓
+FeedResource(RelateResource[])[]
+↓
+ ← Rejust List and Package
+↓
+FeedResourcePage<FeedResource>(
+    hasMore
+    FeedResource(RelateResource[])[]
+    msg
+    ...
+)
+```
+
+编码伪代码：
+
+```java
+// 为了方便书写，T[] 等价于 List<T>
+class FeedResourceCollector<Map<ResourceType, ResourceId[]>, FeedResource(RelateResource[])[], FeedResourcePage> {
+    private Map<ResourceType, FeedResourceFunction<ResourceId[], FeedResource(RelateResource[])[]>> feedResourceConvertors;
+    private Map<ResourceType, FeedRelateResourceIdFunction<FeedResource, Map<RelateResourceType, RelateResourceId[]>>> feedResourceRelateIdConverts;
+    private Map<RelateResourceType, RelateResourceFunction<RelateResourceId[], Map<RelateResourceId, RelateResource>>> relateResourceConvertors;
+    private FeedResourceFillConsumer<FeedResource(RelateResource[])[], Map<RelateResourceType, Map<RelateResourceId, RelateResource>>> feedResourceFiller;
+    private FeedResourcePackageFunction<FeedResource(RelateResource[])[], FeedResourcePage<FeedResource>> feedPackager;
+
+    private void init() {
+        // loading feedResourceConvertors
+        feedResourceConvertors.put(VideoType, videoService::getByIds);
+        feedResourceConvertors.put(MvType, mvService::getByIds);
+        feedResourceConvertors.put(MlogType, mlogService::getByIds);
+        feedResourceConvertors.put(AdType, adService::getByIds);
+        feedResourceConvertors.put(LiveRoomType, liveRoomService::getByIds);
+        feedResourceConvertors.put(TalkType, talkService::getByIds);
+        feedResourceConvertors.put(CircleType, circleService::getByIds);
+        ...
+        // loading feedResourceRelateIdConverts
+        relateResourceConvertors.put(VideoType, VideoResourceBean::getRelateIdsMap);
+        relateResourceConvertors.put(MvType, MvResourceBean::getRelateIdsMap);
+        relateResourceConvertors.put(MlogType, MlogResourceBean::getRelateIdsMap);
+        relateResourceConvertors.put(AdType, AdResourceBean::getRelateIdsMap);
+        relateResourceConvertors.put(LiveRoomType, LiveRoomResourceBean::getRelateIdsMap);
+        relateResourceConvertors.put(TalkType, TalkResourceBean::getRelateIdsMap);
+        relateResourceConvertors.put(CircleType, CircleResourceBean::getRelateIdsMap);
+        // loading relateResourceConvertors
+        relateResourceConvertors.put(CreatorType, creatorService::getByIds);
+        relateResourceConvertors.put(ArtistType, artistService::getByIds);
+        relateResourceConvertors.put(SongType, songService::getByIds);
+        relateResourceConvertors.put(TagType, tagService::getByIds);
+        relateResourceConvertors.put(PriviligeType, priviligeService::getByIds);
+        relateResourceConvertors.put(CommentType, commentService::getByIds);
+        ...
+        // link feedResourceFiller
+        feedResourceFiller = FillFeedResourceFiller::apply
+        // link feedPackager
+        feedPackager = NewFeedPackager::package
+    }
+
+    public FeedResourcePage<FeedResource> renderFeedPage(Map<ResourceType, ResourceId[]> resourceIdMap) {
+        FeedResource(RelateResource[])[] feeds = new ArrayList<>();
+        // 1、得到 主feed集合（关联资源未填充，只有相关ID）
+        feedResourceConvertors.forEach(convertor -> {
+            feeds.addAll(convertor.getValue().apply(resourceIdMap.get(convertor.getKey())));
+        });
+        // 2、提取 关联资源ID，按 资源分类聚合
+        Map<RelateResourceType, RelateResourceId[]> relateResourceIdsMap = new HashMap<>();
+        feeds.forEach(feed -> {
+            Map<RelateResourceType, RelateResourceId[]> tempIdsMap = feedResourceRelateIdConverts.get(feed.getResourceType()).apply(feed);
+            // combine
+            tempIdsMap.forEach(entry -> {
+                relateResourceIdsMap.computeIfAbsent(entry.getKey(), ArrayList::new).addAll(entry.getValue());
+            });
+        });
+        // 3、查询关联资源，按资源分类聚合
+        Map<RelateResourceType, Map<RelateResourceId, RelateResource>> relateResourceMaps = new HashMap<>();
+        relateResourceIdsMap.forEach(entry -> {
+            relateResourceMaps.put(entry.getKey(), relateResourceConvertors.get(entry.getKey()).apply(entry.getValue()));
+        });
+        // 4、填充关联资源到 主feed集合
+        feedResourceFiller.apply(feeds, relateResourceMaps);
+        // 5、打包 到 结果集
+        return feedPackager.apply(feeds);
+    }
+}
+
+```
+
 # 扩展思维
 
 如果随着操作系统（CPU愈发小巧廉价，单机可以装上千个）或 JDK 的发展（并发的最小粒度不再是进程线程，而是方法栈），编程模式又会有怎样的变化？
