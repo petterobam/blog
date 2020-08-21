@@ -50,7 +50,7 @@ MVC参数接收的时候，针对泛型参数如何处理？
 
 自定义泛型注解类和转化器：
 
-```Java
+```java
 /**
  * 文件描述 含有泛型对象参数注解
  *
@@ -164,7 +164,7 @@ public enum SerializerFeature {
 
 因此需要重新定义 Fastjson 消息转化器：
 
-```Java
+```java
 /**
  * 文件描述 Web层转化器 Json转对象，对象转Json
  *
@@ -398,7 +398,7 @@ public class SwaggerApiConfig {
 所以，只需要将自定义的参数拦截器 WebGenericsParamArgumentResolver 优先级调到最高，至少要比系统默认的 RequestResponseBodyArgumentResolver
 要高才行，于是：
 
-```Java
+```java
 /**
  * 文件描述 将泛型注解放到最高优先级解析
  *
