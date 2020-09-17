@@ -24,9 +24,9 @@ CDN 的全称是 Content Delivery Network，即内容分发网络。CDN 是构�
 
 点“开始”-“运行”-输入 CMD，再输入 ipconfig /all ，在下“DNS SERVER”里找到你使用的 DNS 服务器地址。
 
-再输入 `nslookup （你的域名）` 你的 DNS 服务器 IP ，来查看是否能解析。
+再输入 `nslookup （要检测的域名）` 你的 DNS 服务器 IP ，来查看是否能解析。
 
-再输入 `nslookup abc.com 8.8.8.8` 使用 Google 的 DNS 服务器验证。  
+再输入 `nslookup （要检测的域名） 8.8.8.8` 使用 Google 的 DNS 服务器验证。  
 
 # 提速解决
 
