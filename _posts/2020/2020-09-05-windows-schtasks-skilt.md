@@ -49,7 +49,7 @@ schtasks /create /tn TaskName /tr TaskRun /sc schedule [/mo modifier] [/d day] [
 step 1: 新建 daily-report.bat
 ```cmd
 :: 打开日报
-start "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" http://report.igame.163.com/m/report/my/list
+start "C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" [日报网址]
 :: UTF-8 模式
 chcp 65001
 :: 发送提醒的消息
@@ -60,7 +60,7 @@ msg /server:127.0.0.1 * 写周报了，兄弟！！
 
 step 2：添加任务，WIN+R 运行 `cmd \admin` ，打开 CMD
 ```cmd
-SCHTASKS /Create /SC DAILY /TN daily-report /TR D:\Workspace-Netease\work-files\cmd-job\daily-report.bat /ST 19:00
+SCHTASKS /Create /SC DAILY /TN daily-report /TR D:\Workspace-Netease\work-files\cmd-job\daily-report.bat /ST 19:00 /ED 2100/12/31
 schtasks /query /tn daily-report
 ```
 
@@ -77,7 +77,7 @@ msg /server:127.0.0.1 * 吃中饭了，兄弟！！
 
 step 2：添加任务，WIN+R 运行 `cmd \admin` ，打开 CMD
 ```cmd
-schtasks /create /sc DAILY /tn lunch-msg /tr D:\Workspace-Netease\work-files\cmd-job\lunch-msg.bat /st 11:50
+schtasks /create /sc DAILY /tn lunch-msg /tr D:\Workspace-Netease\work-files\cmd-job\lunch-msg.bat /st 11:50 /ED 2100/12/31
 schtasks /query /tn lunch-msg
 
 PS：吃晚饭就不用我教了吧 @_@
