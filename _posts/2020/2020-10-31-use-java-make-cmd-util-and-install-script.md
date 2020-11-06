@@ -1,4 +1,3 @@
-# 
 ---
 layout: post
 title: "用 Java 制作命令行工具并提供自动安装脚本"
