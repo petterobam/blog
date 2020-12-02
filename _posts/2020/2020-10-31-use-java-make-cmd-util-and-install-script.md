@@ -194,7 +194,7 @@ private static void help() {
 所以，后续需要添加什么新的工具直接添加一个 BaseCmdUtils 扩展类并实现其中三个静态方法即可
 ```
 
-PS：具体代码逻辑参见：https://github.com/petterobam/util-cmd
+PS：具体代码逻辑参见：[https://github.com/petterobam/util-cmd](https://github.com/petterobam/util-cmd)
 
 ## Maven 打包
 
@@ -294,7 +294,7 @@ Windows 的命令行窗口没办法使用 Alias，只能通过注册表预执行
     @doskey util=java -jar ${projectPath}\util-cmd.jar $* 
     ```
 2. 新建一个 cmd-alia.reg 文件
-    ```reg
+    ```shell
     Windows Registry Editor Version 5.00
 
     [HKEY_CURRENT_USER\Software\Microsoft\Command Processor]
@@ -343,13 +343,13 @@ goto exit
 
 powershell 的配置文件和 Linux 类似，将预加载命令添加到 `notepad $PROFILE` 文件里面就能达到效果
 
-```ps1
+```shell
 # 由于 powershell 的 Add-Alias 命令无法追随参数，所以用的 function 命令预加载指定快捷命令：
 function util { java -jar $project_path\target\util-cmd.jar `$(`$args[0]) `$(`$args[1]) `$(`$args[2]) `$(`$args[3]) `$(`$args[4]) `$(`$args[5]) }
 ```
 
 自动安装脚本如下：
-```ps1
+```shell
 echo "-----> utf-8 mode"
 chcp 65001
 echo "-----> ps1 current path"
