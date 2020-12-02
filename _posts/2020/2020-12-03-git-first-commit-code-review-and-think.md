@@ -10,10 +10,12 @@ redirect_from:
 
 ## Git 源码第一次提交 CodeReview
 
->Today, let's review Linus Torvalds's code.
+Today, let's review Linus Torvalds's code.
 
 ### 检出第一次提交
+
 >检出源码并定位到第一次提交
+
 ```shell
 # 检出 Git 源码
 $ git clone https://github.com/git/git.git
@@ -24,7 +26,9 @@ HEAD is now at e83c516331 Initial revision of "git", the information manager fro
 ```
 
 ### 一些小提示
+
 >需要 CodeReview 的文件请按照如下顺序！
+
 ```shell
 $ git ls-files
  1. cache.h
@@ -53,7 +57,9 @@ README 【*】总结文档，作者的设计和想法
 ```
 
 ### 一步步深入技巧
+
 >如何按照提交记录一步步 CodeReview ？
+
 ```shell
 # 向后检出一个提交
 $ git log --reverse --pretty=%H origin/master | grep -A 1 $(git rev-parse HEAD) | tail -1 | xargs git checkout
@@ -173,7 +179,8 @@ read-tree: 根据输入的 TREE 对象 SHA1 值输出打印 TREE 的内容信息
 Oh，let's try it.
 ```
 
-> 初始化且添加一个文件，查看 GitDB。
+>初始化且添加一个文件，查看 GitDB。
+
 ```shell
 $ git init-db
 
@@ -193,6 +200,7 @@ $ git cat-file -p 3bb333e4f50b5bd51844c7a59a0f5b52ba993409
 ```
 
 >添加一个文件夹和文件，观察 GitDB。
+
 ```shell
 $ mkdir test-dir
 
@@ -214,6 +222,7 @@ $ git ls-files --stage
 ```
 
 >提交内容，观察 GitDB
+
 ```shell
 $ git commit -m "test-commit"
 [master (root-commit) 014237f] test-commit
@@ -253,6 +262,7 @@ $ git cat-file -p cceef7530fda0c16783241412793f6218b1edc6e
 ```
 
 >删除文件 test1.txt 并添加文件 test2.txt
+
 ```shell
 $ echo "test index see" > test2.txt
 $ rm -rf test1.txt
@@ -281,6 +291,7 @@ git cat-file -p 8404b2676456885b00f239be95674e9c4ff5550a
 ```
 
 >再观察下 .git 下其他文件的情况
+
 ```shell
 .git/logs/refs/heads/master
 .git/logs/HEAD
@@ -297,6 +308,7 @@ $ git cat-file -p 'master^{tree}'
 ```
 
 >自己尝试下，通过 GitDB 里面的文件，反查对应的文档
+
 ```shell
 
 # 打开任何一个 git 项目在 .git/objects 里面随便找一个文件夹（xx）+ 文件（x{38}）
