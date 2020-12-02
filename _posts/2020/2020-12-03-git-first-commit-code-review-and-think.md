@@ -10,7 +10,7 @@ redirect_from:
 
 ## Git 源码第一次提交 CodeReview
 
-Today, let's review Linus Torvalds's code.
+>Today, let's review Linus Torvalds's code.
 
 ### 检出第一次提交
 
@@ -85,7 +85,7 @@ $ git diff HEAD~1
 $ git checkout HEAD~1
 ```
 
-that's all. go and think!!
+>that's all. go and think!!
 
 ---
 
@@ -109,6 +109,7 @@ PS：从 2018 和 Git 2.19 开始，代码已重构为使用 SHA-256。
 ```
 
 ### 三种对象构成所有
+
 >对象有三种类型：blob、tree、commit。
 
 1. blob：文件内容 zlib 后的文件
@@ -232,7 +233,8 @@ $ git commit -m "test-commit"
 # 此时会产生对应的 tree 和 changeset 对象文件
 ```
 
-依次解压内容如下
+>依次解压内容如下
+
 ```shell
 # 此时会产生三个文件，对应的类型分别如下
 commit  .git/objects/01/4237ff974856b594a18dc0710c63ed70c11ee1
@@ -315,7 +317,7 @@ $ git cat-file -p 'master^{tree}'
 $ git cat-file -p xxx{38}
 ```
 
-to be continue ...
+>to be continue ...
 
 ---
 
