@@ -19,7 +19,7 @@ redirect_from:
 ```shell
 # 检出 Git 源码
 $ git clone https://github.com/git/git.git
-# 切换到第一行
+# 切换到第一次提交
 $ git log --reverse --pretty=%H origin/master | head -1 | xargs git checkout
 Previous HEAD position was 72ffeb997e Ninth batch
 HEAD is now at e83c516331 Initial revision of "git", the information manager from hell
@@ -50,7 +50,7 @@ cache.h 【*】一些变量和 object(blob/tree/commit) 结构定义，注释很
 init-db.c 对应 git init 命令，初始化 .git（最开始是 .dircache） 文件夹内容
 update-cache.c 【*】对应 git add 命令，将文件添加到 .git/index 和 .git/objects
 write-tree.c、commit-tree.c 【*】对应 git commit 将文件夹关系和 changeset 添加到 .git/objects
-read-cache.c、read-tree.c、cat-file 解压 object 文件到临时文件
+read-cache.c、read-tree.c、cat-file.c 解压 object 文件到临时文件
 show-diff.c 调用系统 diff 命令，将解压的临时文件和当前文件做 diff 对比
 Makefile 编译安装配置文件
 README 【*】总结文档，作者的设计和想法
@@ -121,6 +121,7 @@ PS：从 2018 和 Git 2.19 开始，代码已重构为使用 SHA-256。
 3. changeset(commit)：如下格式组装的文本 zlib 后的文件
    ```
    [tree SHA1]
+   [parent [pre-commit SHA1](if exit pre-commit)
    [author 环境提交人|提交人 环境提交人邮箱|提交人邮箱 环境时间]
    [committer 提交人 提交人邮箱 提交时间]
 
