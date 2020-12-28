@@ -10,4 +10,5 @@ https://github.com/yizeng/jekyll-theme-simple-texture
 gem install jekyll bundler
 bundle install --path vendor/bundle
 bundle exec jekyll serve
+bundle exec jekyll serve --incremental
 ```
