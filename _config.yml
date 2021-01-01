@@ -81,9 +81,12 @@ live2dgirl: true
 paths:
   home: /
   blog: /blog/
+  life_news: /life/
   categories: /blog/categories/
   tags: /blog/tags/
   my_reader: /reader/index.html
   my_learner: /learner/index.html
   my_qq_zone: /QQ/zone/1460300366/index.html
   my_github: https://github.com/petterobam
+
+exclude: ["vendor"]

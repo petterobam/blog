@@ -1,4 +1,5 @@
 en: &en
+  life_news: 'LifeNews'
   my_reader: 'ReadThinking'
   my_learner: 'LearningNote'
   my_qq_zone: 'QQ-ZONE'
@@ -42,6 +43,7 @@ en-ca:
 en-nz:
   <<: *en
 zh: &zh
+  life_news: '生活动态'
   my_reader: '读书手札'
   my_learner: '学习笔记'
   my_qq_zone: 'QQ空间'

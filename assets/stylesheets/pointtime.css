@@ -1,0 +1,107 @@
+/* timeline */
+
+
+#content article .entry-content p a{
+    color: #2080df;
+}
+.point-time {
+    content: "";
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    top: 9px;
+    left: 40px;
+    background: #1c87bf;
+    margin-left: -4px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px #fff;
+}
+
+.point1 {
+    background-color: #f6393f;
+}
+
+.point2 {
+    background-color: #1c87bf;
+}
+
+.point3 {
+    background-color: #95c91e;
+}
+
+.point4 {
+    background-color: #ffb902;
+}
+
+.point5 {
+    background-color: #d32d93;
+}
+
+.archive {
+
+}
+
+.archive a {
+    font-size: 18px;
+}
+
+.archive span {
+    font-size: 10px;
+}
+
+.archive {
+    position: relative;
+}
+
+.archive > h3 {
+    height: 20px;
+    line-height: 20px;
+    text-align: left;
+    font-size: 1.4em;
+    color: #1d1d1d;
+    padding: 10px;
+    border-bottom:#9f9f9f 1px solid;
+}
+
+.archive section {
+
+    position: relative;
+}
+
+.archive section:before {
+    content: "";
+    width: 5px;
+    top: 17px;
+    bottom: -35px;
+    left: 40px;
+    background: #e6e6e6;
+    position: absolute;
+}
+
+.archive section:last-child:before {
+    display: none;
+}
+
+.archive section time {
+    display: block;
+    position: absolute;
+}
+
+.archive section time > span {
+    display: block;
+    text-align: right;
+}
+
+.archive section aside {
+    color: #3a3a38;
+    margin-left: 60px;
+
+}
+
+.archive section .brief {
+    color: #9f9f9f;
+}
+
+.life-news-body img {
+    width: 20%;
+}
