@@ -3,21 +3,21 @@
 <div class="archive" >
 {% for post in site.posts  %}
     {% if post.layout == 'post' %}
-        {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
-        {% capture this_month %}{{ post.date | date: "%m" }}{% endcapture %}
-        {% capture next_year %}{{ post.previous.date | date: "%Y" }}{% endcapture %}
-        {% capture next_month %}{{ post.previous.date | date: "%m" }}{% endcapture %}
-
         {% assign post_ids = post.id | split: "/" %}
         {% if post_ids.last != 'life' %}
             {% continue %}
         {% endif %}  
 
+        {% capture next_year %}{{ this_year }}{% endcapture %}
+        {% capture next_month %}{{ this_month }}{% endcapture %}
+        {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+        {% capture this_month %}{{ post.date | date: "%m" }}{% endcapture %}
+
         {% if forloop.first %}
             <h3 id="{{ this_year }}-ref">{{this_year}}</h3>
         {% else %}
             {% if this_year != next_year %}
-                <h3 id="{{ next_year }}-ref">{{next_year}}</h3>
+                <h3 id="{{ this_year }}-ref">{{this_year}}</h3>
             {% endif %}  
         {% endif %}  
         
