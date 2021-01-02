@@ -2,7 +2,7 @@
 layout: post
 title: "公网 CDN 污染如何愉快上网冲浪"
 description: "公网 CDN 污染如何愉快上网冲浪"
-categories: [整理，CDN,DNS]
+categories: [整理,CDN,DNS]
 tags: [CDN,DNS]
 redirect_from:
   - /2020/08/28/

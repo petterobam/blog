@@ -3,14 +3,14 @@ layout: post
 title: "一次提速百倍的 SQL 优化记录"
 description: "SQL 优化经验分享"
 categories: [整理]
-tags: [SQL,优化]
+tags: [SQL, 优化]
 redirect_from:
   - /2019/03/11/
 ---
 
 为避免麻烦，文中涉及的表名、字段名、查询条件内容均通过脱敏，为便于阅读，命名通过修改修改，测试数据每张表的容量大小均在万行以上。
 
-## 需求(权限相关过滤查询)
+## 需求（权限相关过滤查询）
 
 ```
 ①预算角色（按项目成本中心+资源产品线对应的预算人）
@@ -18,7 +18,7 @@ redirect_from:
 ④资源联系人、资源审批人、结算数据查询人（对象权限）
 ```
 
-## 优化前的SQL
+## 优化前的 SQL
 
 我们按需求循规蹈矩的写写试试：
 
@@ -26,7 +26,7 @@ redirect_from:
 -- 非权限类的查询用 1=1 代替来讲解
 select p.* from t_project p
 	where 1 = 1
-	    -- ③项目发起人(项目表维度)
+	    -- ③项目发起人（项目表维度）
 		and (p.responsible_id = 5336471
 		-- ④资源联系人、资源审批人、结算数据查询人（对象权限）（项目资源表维度）
 		or exists (select 1 from t_project_resource pr where pr.project_id = p.id
@@ -38,7 +38,7 @@ select p.* from t_project p
         -- ③项目发起人、项目负责人、项目审批人（对象权限）（项目审批流维度）
 		or exists (select 1 from t_approval_process ap where object_id = p.id and object_class = 'xxx.xxx'
 		    and exists (select 1 from t_approval_record ar where ar.workflow_process_id = ap.id and ar.deal_username = 'current_username'))
-        -- ①预算（按cc）（预算成本中心表维度）
+        -- ①预算（按 cc）（预算成本中心表维度）
 		or exists (select 1 from t_costcenter_budgeteer where costcenter_id = p.costcenter_id and budgeteer_name = 'current_username'));
 ```
 
@@ -53,23 +53,23 @@ select p.* from t_project p
 ### 通过分析 IN 和 EXISTS 的特性，用 IN 代替写
 
 ```
-1、select * from A where id in (select id from B) --使用in
-2、select * from A where exists(select B.id from B where B.id=A.id) --使用exists
-3、select A.* from A,B where A.id=B.id --不使用in和exists
+1、select * from A where id in (select id from B) --使用 in
+2、select * from A where exists(select B.id from B where B.id=A.id) --使用 exists
+3、select A.* from A,B where A.id=B.id --不使用 in 和 exists
 
 具体使用时到底选择哪一个，主要考虑查询效率问题：
-第一条语句使用了A表的索引；
-第二条语句使用了B表的索引；
-第三条语句同时使用了A表、B表的索引；
-如果A、B表的数据量不大，那么这三个语句执行效率几乎无差别；
-如果A表大，B表小，显然第一条语句效率更高，反之，则第二条语句效率更高；
+第一条语句使用了 A 表的索引；
+第二条语句使用了 B 表的索引；
+第三条语句同时使用了 A 表、B 表的索引；
+如果 A、B 表的数据量不大，那么这三个语句执行效率几乎无差别；
+如果 A 表大，B 表小，显然第一条语句效率更高，反之，则第二条语句效率更高；
 ```
 
 ```sql
 -- 非权限类的查询用 1=1 代替来讲解
 select p.* from t_project p
   where 1 = 1
-    -- ③项目发起人(项目表维度)
+    -- ③项目发起人（项目表维度）
     and (p.responsible_id = 5336471
     -- ④资源联系人、资源审批人、结算数据查询人（对象权限）（项目资源表维度）
     or p.id in (select  pr.project_id1 from t_project_resource pr where (
@@ -81,11 +81,11 @@ select p.* from t_project p
     -- ③项目发起人、项目负责人、项目审批人（对象权限）（项目审批流维度）
     or p.id in (select object_id from t_approval_process ap where object_class = 'xxx.xxx'
         and exists (select 1 from t_approval_record ar where ar.workflow_process_id = ap.id and ar.deal_username = 'current_username'))
-    -- ①预算（按cc）（预算成本中心表维度）
+    -- ①预算（按 cc）（预算成本中心表维度）
     or exists (select 1 from t_costcenter_budgeteer where costcenter_id = p.costcenter_id and budgeteer_name = 'current_username'));
 ```
 
-SQL执行时间并未有改善，依次替换 exists 为 in，时间只有几百毫秒的差异，
+SQL 执行时间并未有改善，依次替换 exists 为 in，时间只有几百毫秒的差异，
 
 为了保证行数为主表记录，所以没办法做过多的联表，由于④、①、③的筛选维度比较深，而且子表数据量比较大
 
@@ -97,20 +97,20 @@ SQL执行时间并未有改善，依次替换 exists 为 in，时间只有几百
 
 1. <span style="color:red;">容易被捕捉的条件放前面 -> 预先缩小结果集</span>（where 筛选是从左往右执行）
 2. <span style="color:red;">主表很大，避免做 where 下的关联子查询 -> 尽量用 <主表字段>-[判断]-<子表筛选的一次性结果集></span> （有效避免造成 N 次 n 范围的子筛选）
-3. <span style="color:red;">or -> union -> 并用 union</span>（or、in效率等同，可以or化的in可以适当转成union）
+3. <span style="color:red;">or -> union -> 并用 union</span>（or、in 效率等同，可以 or 化的 in 可以适当转成 union）
 4. <span style="color:red;">in -> join  -> 交用 join</span> （不是 left join，join 取的是交集，特别是有索引的 join 比 索引字段 in 效果要优秀很多）
-5. <span style="color:red;">特殊结果字段返回放在分页排序外层 </span>  ->  查询分页排序往往是对结果行数敏感，往往由内部主SQL决定
+5. <span style="color:red;">特殊结果字段返回放在分页排序外层 </span>  ->  查询分页排序往往是对结果行数敏感，往往由内部主 SQL 决定
 
-## 优化后的SQL
+## 优化后的 SQL
 
-优化后的 <span style="color:red;">SQL 执行时间达到 （0.45秒左右）</span>
+优化后的 <span style="color:red;">SQL 执行时间达到 （0.45 秒左右）</span>
 
 ```sql
 -- 非权限类的查询用 1=1 代替来讲解
 (select t.* from t_project t where 1 = 1
-    -- ③项目发起人(项目表维度)
+    -- ③项目发起人（项目表维度）
     and (t.responsible_id = 5336471
-	   -- ①预算（按cc）（预算成本中心表维度） 主表很大，一次无关联子查询得到一次性结果集，筛选要快很多
+	   -- ①预算（按 cc）（预算成本中心表维度） 主表很大，一次无关联子查询得到一次性结果集，筛选要快很多
 	   or costcenter_id in (select ai.costcenter_id from t_costcenter_budgeteer ai where budgeteer_name = 'current_username')))
 
 -- 拆开 or 去重

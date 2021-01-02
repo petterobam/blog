@@ -3,7 +3,7 @@ layout: post
 title: "Fastjson 的使用研究"
 description: "Fastjson 的使用经验分享"
 categories: [整理]
-tags: [Fastjson,泛型,Swagger]
+tags: [Fastjson, 泛型，Swagger]
 redirect_from:
   - /2019/06/14/
 ---
@@ -24,12 +24,12 @@ Result<T> obj = (Result<T>) JSON.parseObject(js, Result.class);
 Result<T> obj = (Result<T>) JSON.parseObject(js, new TypeReference<Result<T>>(){});
 ```
 
-MVC参数接收的时候，针对泛型参数如何处理？
+MVC 参数接收的时候，针对泛型参数如何处理？
 
 自定义参数注解和相关的参数拦截器
 
 ```xml
-<!--web层注解拦截器-消息转化器定义-->
+<!--web 层注解拦截器-消息转化器定义-->
 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
     <property name="customArgumentResolvers">
         <list>
@@ -39,9 +39,9 @@ MVC参数接收的时候，针对泛型参数如何处理？
     </property>
     <property name="messageConverters">
         <list>
-            <!--json消息转化器-->
+            <!--json 消息转化器-->
             <ref bean="jsonConverter"/>
-            <!--html数据-->
+            <!--html 数据-->
             <ref bean="simpleStringConverter"/>
         </list>
     </property>
@@ -65,7 +65,7 @@ public @interface GenericsRequestBody {
 }
 
 /**
- * 文件描述 含有泛型对象参数json转对象
+ * 文件描述 含有泛型对象参数 json 转对象
  *
  * @author ouyangjie
  * @Title: WebGenericsParamArgumentResolver
@@ -90,7 +90,7 @@ public class WebGenericsParamArgumentResolver implements HandlerMethodArgumentRe
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
                    NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         try {
-            // 获取JSON字符串
+            // 获取 JSON 字符串
             String jsonStr;
             // 判断 content-type 是否是 application/json 的数据类型
             String contentType = nativeWebRequest.getHeader("content-type");
@@ -110,7 +110,7 @@ public class WebGenericsParamArgumentResolver implements HandlerMethodArgumentRe
             }
             return result;
         } catch (JSONException e) {
-            logger.error("resolveArgument中JSON.parseObject方法出错：" + e.getMessage(), e);
+            logger.error("resolveArgument 中 JSON.parseObject 方法出错：" + e.getMessage(), e);
             return UNRESOLVED;
         }
     }
@@ -124,26 +124,26 @@ public class WebGenericsParamArgumentResolver implements HandlerMethodArgumentRe
 ```java
 package com.alibaba.fastjson.serializer;
 public enum SerializerFeature {
-    1. QuoteFieldNames,//输出key时是否使用双引号,默认为true
-    2. UseSingleQuotes,//使用单引号而不是双引号,默认为false
-    3. WriteMapNullValue,//是否输出值为null的字段,默认为false
-    4. WriteEnumUsingToString,//Enum输出name()或者original,默认为false
-    5. UseISO8601DateFormat,//Date使用ISO8601格式输出，默认为false
-    6. WriteNullListAsEmpty,//List字段如果为null,输出为[],而非null
-    7. WriteNullStringAsEmpty,//字符类型字段如果为null,输出为"",而非null
-    8. WriteNullNumberAsZero,//数值字段如果为null,输出为0,而非null
-    9. WriteNullBooleanAsFalse,//Boolean字段如果为null,输出为false,而非null
-    10. SkipTransientField,//如果是true，类中的Get方法对应的Field是transient，序列化时将会被忽略。默认为true
-    11. SortField,//按字段名称排序后输出。默认为false
-    12. WriteTabAsSpecial,//把\t做转义输出，默认为false
-    13. PrettyFormat,//结果是否格式化,默认为false
-    14. WriteClassName,//序列化时写入类型信息，默认为false。反序列化是需用到
-    15. DisableCircularReferenceDetect,//消除对同一对象循环引用的问题，默认为false
+    1. QuoteFieldNames,//输出 key 时是否使用双引号，默认为 true
+    2. UseSingleQuotes,//使用单引号而不是双引号，默认为 false
+    3. WriteMapNullValue,//是否输出值为 null 的字段，默认为 false
+    4. WriteEnumUsingToString,//Enum 输出 name() 或者 original, 默认为 false
+    5. UseISO8601DateFormat,//Date 使用 ISO8601 格式输出，默认为 false
+    6. WriteNullListAsEmpty,//List 字段如果为 null, 输出为 [], 而非 null
+    7. WriteNullStringAsEmpty,//字符类型字段如果为 null, 输出为"", 而非 null
+    8. WriteNullNumberAsZero,//数值字段如果为 null, 输出为 0, 而非 null
+    9. WriteNullBooleanAsFalse,//Boolean 字段如果为 null, 输出为 false, 而非 null
+    10. SkipTransientField,//如果是 true，类中的 Get 方法对应的 Field 是 transient，序列化时将会被忽略。默认为 true
+    11. SortField,//按字段名称排序后输出。默认为 false
+    12. WriteTabAsSpecial,//把、t 做转义输出，默认为 false
+    13. PrettyFormat,//结果是否格式化，默认为 false
+    14. WriteClassName,//序列化时写入类型信息，默认为 false。反序列化是需用到
+    15. DisableCircularReferenceDetect,//消除对同一对象循环引用的问题，默认为 false
     16. WriteSlashAsSpecial,//对斜杠'/'进行转义
-    17. BrowserCompatible,//将中文都会序列化为\uXXXX格式，字节数会多一些，但是能兼容IE 6，默认为false
-    18. WriteDateUseDateFormat,//全局修改日期格式,默认为false。JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";JSON.toJSONString(obj, SerializerFeature.WriteDateUseDateFormat),
+    17. BrowserCompatible,//将中文都会序列化为、uXXXX 格式，字节数会多一些，但是能兼容 IE 6，默认为 false
+    18. WriteDateUseDateFormat,//全局修改日期格式，默认为 false。JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";JSON.toJSONString(obj, SerializerFeature.WriteDateUseDateFormat),
     19. NotWriteRootClassName,//暂不知，求告知
-    20. DisableCheckSpecialChar,//一个对象的字符串属性中如果有特殊字符如双引号，将会在转成json时带有反斜杠转移符。如果不需要转义，可以使用这个属性。默认为false
+    20. DisableCheckSpecialChar,//一个对象的字符串属性中如果有特殊字符如双引号，将会在转成 json 时带有反斜杠转移符。如果不需要转义，可以使用这个属性。默认为 false
     21. BeanToArray; //暂不知，求告知
 }
 ```
@@ -166,7 +166,7 @@ public enum SerializerFeature {
 
 ```java
 /**
- * 文件描述 Web层转化器 Json转对象，对象转Json
+ * 文件描述 Web 层转化器 Json 转对象，对象转 Json
  *
  * @author ouyangjie
  * @Title: WebJsonHttpMessageConverter
@@ -196,7 +196,7 @@ public class WebJsonHttpMessageConverter extends FastJsonHttpMessageConverter {
     }
 
     /**
-     * 将json字符串转化成json
+     * 将 json 字符串转化成 json
      *
      * @param obj
      * @param outputMessage
@@ -232,7 +232,7 @@ public class SwaggerApiConfig {
     private String systemUrl;
 
     /**
-     * 根据配置读取是否开启swagger文档，针对测试与生产环境采用不同的配置
+     * 根据配置读取是否开启 swagger 文档，针对测试与生产环境采用不同的配置
      */
     @Value("#{config['swagger.enable']}")
     private boolean isSwaggerEnable;
@@ -321,11 +321,11 @@ public class SwaggerApiConfig {
 ...
 <!--swagger 扫包配置 可以不需要，如果你要自定义 Swagger 对 Api 的扫描加载规则的话-->
 <!--<context:component-scan base-package="springfox" />-->
-<!-- 添加Swagger2的java config作为SpringMVC的bean -->
+<!-- 添加 Swagger2 的 java config 作为 SpringMVC 的 bean -->
 <bean class="com.xxx.xxx.swagger.SwaggerApiConfig"/>
 
-<!--swagger相关配置-->
-<!-- 配置Swagger相关静态资源 -->
+<!--swagger 相关配置-->
+<!-- 配置 Swagger 相关静态资源 -->
 <mvc:resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"/>
 <mvc:resources location="classpath:/META-INF/resources/" mapping="doc.html"/>
 <mvc:resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"/>
@@ -349,7 +349,7 @@ public class SwaggerApiConfig {
 
 ```xml
 ...
-<!--swagger专用的-->
+<!--swagger 专用的-->
 <servlet-mapping>
     <servlet-name>dispatcherServlet</servlet-name>
     <url-pattern>/swagger-resources</url-pattern>
@@ -379,13 +379,13 @@ public class SwaggerApiConfig {
 
 ### 让自定义的泛型注解也被 Swagger 解析成 json 请求参数
 
-#### 那么问题来了1
+#### 那么问题来了 1
 
 上面的泛型注解 `@GenericsRequestBody` 貌似被 Swagger 解析成了 FormData 的参数形式，不是 json 请求参数
 
 只要对该参数同时使用 `@GenericsRequestBody` 和 `@RequestBody` 就可以被 Swagger 解析成 json 请求参数 `~\(≧▽≦)/~` 啦啦啦
 
-#### 那么问题来了2
+#### 那么问题来了 2
 
 虽然被 Swagger 解析成了 json 请求，说明 Jackson 还是对泛型很友好哒，但是接口自身不能精准解析泛型参数了
 
@@ -393,7 +393,7 @@ public class SwaggerApiConfig {
 
 自定义的东西优先级就是差一些，难道要用 Jackson 解析器解析 json 吗？
 
-众所周知，Jackson 参数解析器没法优雅的解决实体里面参数的相互依赖问题，需要一个个屏蔽循环依赖的参数解析，这样感jio是无止境的工作量
+众所周知，Jackson 参数解析器没法优雅的解决实体里面参数的相互依赖问题，需要一个个屏蔽循环依赖的参数解析，这样感 jio 是无止境的工作量
 
 所以，只需要将自定义的参数拦截器 WebGenericsParamArgumentResolver 优先级调到最高，至少要比系统默认的 RequestResponseBodyArgumentResolver
 要高才行，于是：
@@ -429,7 +429,7 @@ public class ConfigFirstGenericsParamArgumentResolver {
 
 ```xml
 ...
-<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+<!-- 启动 Spring MVC 的注解功能，完成请求和注解 POJO 的映射 -->
 <bean name="requestMappingHandlerAdapter"
       class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
     <property name="messageConverters">
@@ -441,7 +441,7 @@ public class ConfigFirstGenericsParamArgumentResolver {
     </property>
 </bean>
 
-<!--含有泛型的请求参数json转对象-->
+<!--含有泛型的请求参数 json 转对象-->
 <bean id="genericsJsonResolver" class="com.xxx.xxx.web.util.handler.argument.WebGenericsParamArgumentResolver"/>
 <!--将泛型注解放到最高优先级解析-->
 <bean class="com.xxx.xxx.web.util.handler.argument.ConfigFirstGenericsParamArgumentResolver"/>

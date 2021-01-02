@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Sqlite连接池和批量操作实现"
+title: "Sqlite 连接池和批量操作实现"
 author: "petterobam"
-description: "Sqlite连接池和批量操作实现"
-categories: [Sqlite, 面向对象封装, Java]
-tags: [Sqlite,连接池,批量]
+description: "Sqlite 连接池和批量操作实现"
+categories: [Sqlite, 面向对象封装，Java]
+tags: [Sqlite, 连接池，批量]
 redirect_from:
   - /2018/05/18/
 ---
@@ -17,7 +17,7 @@ redirect_from:
 1. ~~增删查改等基本功能~~
 1. ~~数量查询功能~~
 1. ~~分表分库~~
-1. ~~Sqlite控制台基础功能类~~
+1. ~~Sqlite 控制台基础功能类~~
 1. ~~自定义配置加载~~
 1. **批量操作（事务）**
 1. 缓存库基础功能类实现
@@ -30,7 +30,7 @@ redirect_from:
 
 ## 连接池
 
-连接池，众所周知，做过有数据库的应用的程序员都应该听过这个名词。鉴于数据库是一个独立的系统，应用要想和它交互就需要建立连接，但是就这个过程慢成狗（相比其他操作）。因此，在抗压、响应速度等方面都因为这个瓶颈，相比于其他更慢的语言（比如python）都没有什么大的优势，就算虚拟机再优化提升也不能提高数据库的效率。所以知道了瓶颈，就能发现问题，解决最慢的部分就是必须要去考虑的，那就是连接。连接最慢的不是通过连接的交互过程，而是建立连接的过程。
+连接池，众所周知，做过有数据库的应用的程序员都应该听过这个名词。鉴于数据库是一个独立的系统，应用要想和它交互就需要建立连接，但是就这个过程慢成狗（相比其他操作）。因此，在抗压、响应速度等方面都因为这个瓶颈，相比于其他更慢的语言（比如 python）都没有什么大的优势，就算虚拟机再优化提升也不能提高数据库的效率。所以知道了瓶颈，就能发现问题，解决最慢的部分就是必须要去考虑的，那就是连接。连接最慢的不是通过连接的交互过程，而是建立连接的过程。
 
 解决方案：预先建好一堆连接屯在那里，等到想用的时候拿一个出来直接用，我们称这堆连接和其相关的机制是一个连接池（Connection Pool）。
 
@@ -40,7 +40,7 @@ redirect_from:
 
 ```java
 /**
- * Sqlite连接自定义封装类
+ * Sqlite 连接自定义封装类
  * @author 欧阳洁
  * @since 2018-05-02 13:26
  */
@@ -50,7 +50,7 @@ public class SqliteBaseConnection {
     private Connection connection;// 链接对象
 
     /**
-     * 重置连接uri，并且同时会刷新连接对象
+     * 重置连接 uri，并且同时会刷新连接对象
      * @param uri
      */
     public boolean resetUri(String uri){
@@ -64,7 +64,7 @@ public class SqliteBaseConnection {
             }
             return true;
         } catch (SQLException e) {
-            SqliteLogUtils.error("[resetUri]重置连接对象失败！",e);
+            SqliteLogUtils.error("[resetUri] 重置连接对象失败！",e);
             e.printStackTrace();
             return false;
         }
@@ -84,7 +84,7 @@ public class SqliteBaseConnection {
             }
             return true;
         } catch (SQLException e) {
-            SqliteLogUtils.error("[refreshConnection]重新建立连接对象失败！",e);
+            SqliteLogUtils.error("[refreshConnection] 重新建立连接对象失败！",e);
             e.printStackTrace();
             return false;
         }
@@ -120,7 +120,7 @@ public class SqliteBaseConnection {
 
 ```java
 /**
- * Sqlite连接工厂
+ * Sqlite 连接工厂
  * @author 欧阳洁
  * @since 2018-05-02 13:30
  */
@@ -235,13 +235,13 @@ public class SqliteBaseConnectionFactory {
             // 超过最大线程数
             addNum = CON_MAX - runConList.size();
             if (addNum <= 0) {
-                SqliteLogUtils.warn("当前使用的连接数量大于自定义的最大连接[{}]限制！", CON_MAX);
+                SqliteLogUtils.warn("当前使用的连接数量大于自定义的最大连接 [{}] 限制！", CON_MAX);
                 return false;
             }
         } else if (idleConList.size() < CON_MIN) {
             addNum = CON_MAX - idleConList.size() - runConList.size();
             if (addNum <= 0) {
-                SqliteLogUtils.warn("连接池中当前使用的连接数量太多，闲置连接数量小于自定义的最小[{}]闲置连接！", CON_MIN);
+                SqliteLogUtils.warn("连接池中当前使用的连接数量太多，闲置连接数量小于自定义的最小 [{}] 闲置连接！", CON_MIN);
                 return false;
             }
         }
@@ -262,7 +262,7 @@ public class SqliteBaseConnectionFactory {
      */
     protected synchronized static int checkAllIdleConnection() {
         int idleRefreshCount = 0;
-        SqliteLogUtils.info("INFO:[可用链接数:{}]，[已用连接数:{}]",idleConList.size(),runConList.size());
+        SqliteLogUtils.info("INFO:[可用链接数：{}]，[已用连接数：{}]",idleConList.size(),runConList.size());
         try {
             if (REFRESH_CON_POOL) {//是否刷新闲置连接池里面的连接
                 for (SqliteBaseConnection con : idleConList) {
@@ -288,7 +288,7 @@ public class SqliteBaseConnectionFactory {
      */
     protected synchronized static int checkAllRunningConnection() {
         int runningRemoveCount = 0;
-        SqliteLogUtils.info("INFO:[可用链接数:{}]，[已用连接数:{}]",idleConList.size(),runConList.size());
+        SqliteLogUtils.info("INFO:[可用链接数：{}]，[已用连接数：{}]",idleConList.size(),runConList.size());
         SqliteBaseConnection con = null;
         for (int i = 0; i < runConList.size(); i++) {
             con = runConList.get(i);
@@ -322,7 +322,7 @@ public class SqliteBaseConnectionFactory {
             try {
                 newSqliteConnection = createBaseConnection(dbPath);
             } catch (SQLException e) {
-                SqliteLogUtils.error("[addConnection]添加新连接异常！",e);
+                SqliteLogUtils.error("[addConnection] 添加新连接异常！",e);
                 e.printStackTrace();
             }
             idleConList.add(newSqliteConnection);
@@ -344,7 +344,7 @@ public class SqliteBaseConnectionFactory {
  * @since 2018-05-02 13:41
  */
 public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
-    private static int SLEEP = SqliteConfig.getPoolThreadSleep();// 线程每次SLEEP时长
+    private static int SLEEP = SqliteConfig.getPoolThreadSleep();// 线程每次 SLEEP 时长
     private static boolean CHECK_RUN_ACTIVE = false;// 检查 ClearRunConnectionThread 线程是否在
     private static boolean CHECK_IDLE_ACTIVE = false;// 检查 RefreshIdleConnectionThread 线程是否在
     private static boolean CHECK_MONITOR_ACTIVE = false;// 检查 MonitorConnectionPoolThread 线程是否在
@@ -361,7 +361,7 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
             SqliteThreadUtils.buildJobFactory("Sqlite 连接池 监控系统 线程池"), new ThreadPoolExecutor.AbortPolicy());
 
     /**
-     * 获取用于Sqlite连接池监控用的线程池服务
+     * 获取用于 Sqlite 连接池监控用的线程池服务
      * @return
      */
     public static ExecutorService getExethread() {
@@ -411,11 +411,11 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
                 while (true) {
                     try {
                         if (SqliteConnectionPool.CHECK_RUN_ACTIVE) {
-                            SqliteLogUtils.info("池回收无效或久置超时的连接对象的 线程运行中...当前该类线程数量：{}", COUNT_RUN_ACTIVE);
+                            SqliteLogUtils.info("池回收无效或久置超时的连接对象的 线程运行中。.. 当前该类线程数量：{}", COUNT_RUN_ACTIVE);
                             SqliteConnectionPool.CHECK_RUN_ACTIVE = false;
                         }
                         if (!SqliteConnectionPool.USE_CONNECT_POOL) {
-                            SqliteLogUtils.info("池回收无效或久置超时的连接对象的 线程结束...当前该类线程数量：{}", COUNT_RUN_ACTIVE - 1);
+                            SqliteLogUtils.info("池回收无效或久置超时的连接对象的 线程结束。.. 当前该类线程数量：{}", COUNT_RUN_ACTIVE - 1);
                             break;// 如果配置不使用连接池，结束线程
                         }
                         SqliteThreadUtils.sleep(SLEEP);
@@ -424,7 +424,7 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
                         idleConList.clear();
                         runConList.clear();
                         addClearRunConnectionThread();
-                        SqliteLogUtils.error("ERROR:[池回收无效或久置超时的连接对象的 线程死掉,重新添加新线程！]", e);
+                        SqliteLogUtils.error("ERROR:[池回收无效或久置超时的连接对象的 线程死掉，重新添加新线程！]", e);
                         e.printStackTrace();
                         break;
                     }
@@ -444,11 +444,11 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
                 while (true) {
                     try {
                         if (SqliteConnectionPool.CHECK_MONITOR_ACTIVE) {
-                            SqliteLogUtils.info("池检查刷新闲置连接对象的 线程运行中...当前该类线程数量：{}", COUNT_IDLE_ACTIVE);
+                            SqliteLogUtils.info("池检查刷新闲置连接对象的 线程运行中。.. 当前该类线程数量：{}", COUNT_IDLE_ACTIVE);
                             SqliteConnectionPool.CHECK_MONITOR_ACTIVE = false;
                         }
                         if (!SqliteConnectionPool.USE_CONNECT_POOL) {
-                            SqliteLogUtils.info("池检查刷新闲置连接对象的 线程结束...当前该类线程数量：{}", COUNT_IDLE_ACTIVE - 1);
+                            SqliteLogUtils.info("池检查刷新闲置连接对象的 线程结束。.. 当前该类线程数量：{}", COUNT_IDLE_ACTIVE - 1);
                             break;// 如果配置不使用连接池，结束线程
                         }
                         SqliteThreadUtils.sleep(SLEEP);
@@ -458,7 +458,7 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
                         idleConList.clear();
                         runConList.clear();
                         addRefreshIdleConnectionThread();
-                        SqliteLogUtils.error("ERROR:[池检查刷新闲置连接对象的 线程死掉,重新添加新线程！]", e);
+                        SqliteLogUtils.error("ERROR:[池检查刷新闲置连接对象的 线程死掉，重新添加新线程！]", e);
                         e.printStackTrace();
                         break;
                     }
@@ -478,11 +478,11 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
                 while (true) {
                     try {
                         if (SqliteConnectionPool.CHECK_IDLE_ACTIVE) {
-                            SqliteLogUtils.info("池监控并适时生产新连接对象的 线程运行中...当前该类线程数量：{}", COUNT_MONITOR_ACTIVE);
+                            SqliteLogUtils.info("池监控并适时生产新连接对象的 线程运行中。.. 当前该类线程数量：{}", COUNT_MONITOR_ACTIVE);
                             SqliteConnectionPool.CHECK_IDLE_ACTIVE = false;
                         }
                         if (!SqliteConnectionPool.USE_CONNECT_POOL) {
-                            SqliteLogUtils.info("池监控并适时生产新连接对象的 线程结束...当前该类线程数量：{}", COUNT_MONITOR_ACTIVE - 1);
+                            SqliteLogUtils.info("池监控并适时生产新连接对象的 线程结束。.. 当前该类线程数量：{}", COUNT_MONITOR_ACTIVE - 1);
                             break;// 如果配置不使用连接池，结束线程
                         }
                         SqliteThreadUtils.sleep(SLEEP);
@@ -491,7 +491,7 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
                         idleConList.clear();
                         runConList.clear();
                         addMonitorConnectionPoolThread();
-                        SqliteLogUtils.error("ERROR:[池监控并适时生产新连接对象的 线程死掉,重新添加新线程！]", e);
+                        SqliteLogUtils.error("ERROR:[池监控并适时生产新连接对象的 线程死掉，重新添加新线程！]", e);
                         e.printStackTrace();
                         break;
                     }
@@ -507,7 +507,7 @@ public class SqliteConnectionPool extends SqliteBaseConnectionFactory {
 
 ```java
 # 自定义属性配置
-# 默认路径从class路径，此时sqlite.uri可以写相对路径
+# 默认路径从 class 路径，此时 sqlite.uri 可以写相对路径
 sqlite.path.classpath=true
 # 数据库路径
 sqlite.uri=database/sqlite.db
@@ -530,8 +530,7 @@ sqlite.pool.thread.sleep=2000
 sqlite.username=
 sqlite.password=
 
-
-# 是否启用非自定义属性的自定义，下面这些属性是Sqlite或JDBC自带属性，一般有默认值，自定义请在专业选手陪同下，默认不启用
+# 是否启用非自定义属性的自定义，下面这些属性是 Sqlite 或 JDBC 自带属性，一般有默认值，自定义请在专业选手陪同下，默认不启用
 sqlite.config.enable=false
 # 内置属性配置 详细请见：https://github.com/petterobam/database-oop/blob/master/sqlite-oop/src/main/resources/config/sqlite.properties
 ...
@@ -539,11 +538,11 @@ sqlite.config.enable=false
 
 ## 批量操作
 
-数据库的增、删、改语句都是独立的句子，每个句子都能独立的表达各自的意思，而不会因为上一句没有，下一句不能独立执行。JDBC 默认执行每个非查询SQL语句都会自动提交，完成一个原子操作。然而，每次提交就意味着一次对库的修改操作，这对于常规沟通是没有问题的，也是值得肯定的，但是如果是一个批量修改，一个个提交就太耗时了，而且提交还可能导致连接关闭。所以像这种作文题要把所有的句子组成文章才能交卷，否则时间不够只能交白卷了。
+数据库的增、删、改语句都是独立的句子，每个句子都能独立的表达各自的意思，而不会因为上一句没有，下一句不能独立执行。JDBC 默认执行每个非查询 SQL 语句都会自动提交，完成一个原子操作。然而，每次提交就意味着一次对库的修改操作，这对于常规沟通是没有问题的，也是值得肯定的，但是如果是一个批量修改，一个个提交就太耗时了，而且提交还可能导致连接关闭。所以像这种作文题要把所有的句子组成文章才能交卷，否则时间不够只能交白卷了。
 
 ```java
 /**
- * 非查询语句批量执行Sql语句
+ * 非查询语句批量执行 Sql 语句
  * @param sqlList
  * @param batchCount
  * @return
@@ -553,7 +552,7 @@ public int batchExecuteSql(List<String> sqlList, int batchCount) {
     try {
         int result = 0;
         if (SqliteUtils.isNotEmpty(sqlList)) {
-            if (batchCount <= 0) {//默认批量提交粒度100条
+            if (batchCount <= 0) {//默认批量提交粒度 100 条
                 batchCount = SqliteConstant.DEFAULT_BATCH_COUNT;
             }
             // create a database connection
@@ -569,7 +568,7 @@ public int batchExecuteSql(List<String> sqlList, int batchCount) {
                     statement.executeBatch();
                     connection.commit();// 提交
                     if (null == connection || connection.isClosed()) {
-                        //如果连接关闭了 就在创建一个 为什么要这样 原因是 connection.commit()后可能conn被关闭
+                        //如果连接关闭了 就在创建一个 为什么要这样 原因是 connection.commit() 后可能 conn 被关闭
                         connection = this.getConnection();
                         connection.setAutoCommit(false);
                         statement = connection.createStatement();
@@ -595,7 +594,7 @@ public int batchExecuteSql(List<String> sqlList, int batchCount) {
 }
 
 /**
- * 非查询语句（带参数）批量执行Sql语句
+ * 非查询语句（带参数）批量执行 Sql 语句
  *
  * @param sqlWithParamList
  * @param batchCount
@@ -606,7 +605,7 @@ public int batchExecute(List<T> sqlWithParamList, int batchCount) {
     try {
         int result = 0;
         if (SqliteUtils.isNotEmpty(sqlWithParamList)) {
-            if (batchCount <= 0) {//默认批量提交粒度100条
+            if (batchCount <= 0) {//默认批量提交粒度 100 条
                 batchCount = SqliteConstant.DEFAULT_BATCH_COUNT;
             }
             // create a database connection
@@ -625,7 +624,7 @@ public int batchExecute(List<T> sqlWithParamList, int batchCount) {
                         prep.executeBatch();
                         connection.commit();// 提交
                         if (null == connection || connection.isClosed()) {
-                            //如果连接关闭了 就在创建一个 为什么要这样 原因是 connection.commit()后可能conn被关闭
+                            //如果连接关闭了 就在创建一个 为什么要这样 原因是 connection.commit() 后可能 conn 被关闭
                             connection = this.getConnection();
                             connection.setAutoCommit(false);
                         }
@@ -668,7 +667,7 @@ public int batchExecute(List<T> sqlWithParamList, int batchCount) {
 
 ```java
 /**
- * Sqlite线程连接池测试
+ * Sqlite 线程连接池测试
  * @author 欧阳洁
  * @since 2018-05-03 18:27
  */
@@ -682,11 +681,8 @@ public class SqliteConnectionPoolTest {
         try {
             // 取两个连接，观察十秒看线程执行打印日志
             SqliteConnectionPool.getConnection();
-            SqliteConnectionPool.getConnection();
             SqliteThreadUtils.sleep(10000);
             // 取三个连接，观察十秒看线程执行打印日志
-            SqliteConnectionPool.getConnection();
-            SqliteConnectionPool.getConnection();
             SqliteConnectionPool.getConnection();
             SqliteThreadUtils.sleep(10000);
             // 关闭所有连接池线程，观察十秒看线程执行打印日志
@@ -703,66 +699,65 @@ public class SqliteConnectionPoolTest {
 
 测试结果：
 
->[sqlite-oop]-[info]-[Fri May 18 22:15:00 CST 2018]-[池检查刷新闲置连接对象的 线程运行中...当前该类线程数量：1]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池监控并适时生产新连接对象的 线程运行中...当前该类线程数量：1]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]<br/>
+>[sqlite-oop]-[info]-[Fri May 18 22:15:00 CST 2018]-[池检查刷新闲置连接对象的 线程运行中。.. 当前该类线程数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池监控并适时生产新连接对象的 线程运行中。.. 当前该类线程数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：2]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池回收无效或久置超时的连接对象的 线程运行中...当前该类线程数量：1]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[池回收无效或久置超时的连接对象的 线程运行中。.. 当前该类线程数量：1]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：2]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:02 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:2]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：2]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：1]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:1]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：1]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:04 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:1]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：1]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：1]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:06 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数:13]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[INFO:[可用链接数：13]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:08 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:3]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：3]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：3]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:10 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:12 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:14 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:16 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数:10]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[INFO:[可用链接数：10]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:18 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池监控并适时生产新连接对象的 线程结束...当前该类线程数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数:5]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池监控并适时生产新连接对象的 线程结束。.. 当前该类线程数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数：5]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[定时清除已分配的废弃或超时连接，清除数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池回收无效或久置超时的连接对象的 线程结束...当前该类线程数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数:5]，[已用连接数:0]]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池回收无效或久置超时的连接对象的 线程结束。.. 当前该类线程数量：0]<br/>
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[INFO:[可用链接数：5]，[已用连接数：0]]<br/>
 [sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[检测到闲置连接池中无效连接并重置的数量：0]<br/>
-[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池检查刷新闲置连接对象的 线程结束...当前该类线程数量：0]<br/>
-
+[sqlite-oop]-[info]-[Fri May 18 22:15:20 CST 2018]-[池检查刷新闲置连接对象的 线程结束。.. 当前该类线程数量：0]<br/>
 
 ### 批量操作测试
 
 ```java
 /**
- * Sqlite批量操作测试
+ * Sqlite 批量操作测试
  * @author 欧阳洁
  * @since 2018-05-14 16:47
  */
 public class SqliteBatchTest {
     @Test
     public void test() throws ClassNotFoundException {
-        TestTableService sqliteService = new TestTableService();//没有使用spring注入，暂时自己构建
+        TestTableService sqliteService = new TestTableService();//没有使用 spring 注入，暂时自己构建
 
         sqliteService.delete("delete from t_test_table");
         SqliteLogUtils.info("===数据总条数：{}",sqliteService.count(new TestTable()));

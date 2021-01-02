@@ -1,0 +1,49 @@
+div#book-list {
+    display: inline-block;
+}
+div.book-line {
+    display: inline-block;
+}
+
+.book-thumbnail {
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 310px;
+    margin-bottom: 30px;
+    border-radius: 0;
+    padding: 4px;
+    border: 1px solid #DDDDDD;
+    float: left;
+}
+
+.book-thumbnail h3 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 22px;
+    text-align: center;
+}
+
+
+.book-thumbnail a {
+    padding: 0;
+}
+
+.book-thumbnail img {
+    max-width: 96%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    max-height: 420px;
+}
+
+.book-thumbnail .caption {
+    overflow-y: hidden;
+    color: #555;
+    padding: 9px;
+}
+
+.book-content {
+    font-size: 10px;
+    color: black;
+    line-height: 16px;
+}

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Git源码·LinusTorvalds第一次提交CR和启发"
-description: "【2020-12-03】Git源码第一次提交CR和启发"
-categories: [整理，工具制作]
-tags: [Git，底层原理]
+title: "Git 源码·LinusTorvalds 第一次提交 CR 和启发"
+description: "【2020-12-03】Git 源码第一次提交 CR 和启发"
+categories: [整理，源码]
+tags: [Git, 底层原理]
 redirect_from:
   - /2020/12/03/
 ---
@@ -115,7 +115,7 @@ PS：从 2018 和 Git 2.19 开始，代码已重构为使用 SHA-256。
 1. blob：文件内容 zlib 后的文件
 2. tree：如下格式组装的文本 zlib 后的文件
    ```
-   [文件属性(mode) 类型(blob/tree) SHA1 文件名]
+   [文件属性 (mode) 类型 (blob/tree) SHA1 文件名]
    [...]
    ```
 3. changeset(commit)：如下格式组装的文本 zlib 后的文件
@@ -325,4 +325,4 @@ $ git cat-file -p xxx{38}
 相关参考资料：
 1. Pro Git 第二版：[英文版](https://git-scm.com/book/en/v2) # [中文版](https://git-scm.com/book/zh/v2) # [高亮版](https://gitee.com/progit/index.html) # [侧边菜单版](https://www.progit.cn/)
 2. [改变世界的一次代码提交](https://hutusi.com/articles/the-greatest-git-commit)
-3. [Git源码·LinusTorvalds第一次提交CR和启发](http://www.petterobam.cn/blog/2020/12/03/git-first-commit-code-review-and-think/)
+3. [Git 源码·LinusTorvalds 第一次提交 CR 和启发](http://www.petterobam.cn/blog/2020/12/03/git-first-commit-code-review-and-think/)

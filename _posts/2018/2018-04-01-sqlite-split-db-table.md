@@ -1,16 +1,16 @@
 ---
 layout: post
-title: "Sqlite封装之分库与分表"
-description: "Sqlite数据库的面向对象封装"
-categories: [Sqlite, 面向对象封装, Java]
-tags: [Sqlite,分库,分表]
+title: "Sqlite 封装之分库与分表"
+description: "Sqlite 数据库的面向对象封装"
+categories: [Sqlite, 面向对象封装，Java]
+tags: [Sqlite, 分库，分表]
 redirect_from:
   - /2018/04/01/
 ---
 
 ## 前情提要
 
-最近成立了一个多人合作的开源项目（[Database-OOP](https://github.com/petterobam/database-oop)），让我进一步优化和改进了之前写的Sqlite封装，主要为了适应多变的应用场景又添加了一些新的功能，比如实现控制台语言的执行，为此我还特别做了一个应用（[Sqlite控制台](https://github.com/petterobam/my-sqlite-console)）、比如下面要讲解的分库和分表功能等等。
+最近成立了一个多人合作的开源项目（[Database-OOP](https://github.com/petterobam/database-oop)），让我进一步优化和改进了之前写的 Sqlite 封装，主要为了适应多变的应用场景又添加了一些新的功能，比如实现控制台语言的执行，为此我还特别做了一个应用（[Sqlite 控制台](https://github.com/petterobam/my-sqlite-console)）、比如下面要讲解的分库和分表功能等等。
 
 ## 分库与分表
 
@@ -107,7 +107,7 @@ redirect_from:
   }
   ```
 
-  - 动态加载：当 dbType 为动态分表情况，在执行SQL动态得到库源
+  - 动态加载：当 dbType 为动态分表情况，在执行 SQL 动态得到库源
 
   ```java
   /**
@@ -171,7 +171,7 @@ public @interface SqliteTableSplit {
 
 #### 记录分表属性
 
-服务注入时候检测并记录分表属性（Field），在生成SQL的时候动态获取表名
+服务注入时候检测并记录分表属性（Field），在生成 SQL 的时候动态获取表名
 
 ```java
 /**
@@ -184,7 +184,7 @@ public String getTableName(T target,boolean needCreateTable) {
   if (SqliteUtils.isBlank(this.tableName)) {
       this.tableName = this.getTableNameForClass(this.targetClass);
   }
-  //启用分表功能后，动态获取表名，并生成建表SQL
+  //启用分表功能后，动态获取表名，并生成建表 SQL
   if (null != this.tableSplitField) {
       String fieldValue = (String) this.readField(this.tableSplitField, target);
       if (!SqliteUtils.isBlank(fieldValue)) {
@@ -270,7 +270,7 @@ public class TestSqliteSplit extends SqliteBaseEntity {
     private String searchType;
     /**
      * 发布时间 （非表字段）
-     * 注：这里不使用SqliteColumn主键，默认的列名为publishtime
+     * 注：这里不使用 SqliteColumn 主键，默认的列名为 publishtime
      */
     @SqliteTransient
     @SqliteColumn(name = "publish_time")
@@ -283,7 +283,7 @@ public class TestSqliteSplit extends SqliteBaseEntity {
 ```java
 @Test
 public void test5() {
-    TestSqliteSplitService sqliteService = new TestSqliteSplitService();//没有使用spring注入，暂时自己构建
+    TestSqliteSplitService sqliteService = new TestSqliteSplitService();//没有使用 spring 注入，暂时自己构建
     TestSqliteSplit entity = new TestSqliteSplit();
     entity.setName("test1");
     entity.setAuthor("petter");
@@ -361,7 +361,7 @@ public class TestTableSplit extends SqliteBaseEntity {
     private String searchType;
     /**
      * 发布时间 （非表字段）
-     * 注：这里不使用SqliteColumn主键，默认的列名为publishtime
+     * 注：这里不使用 SqliteColumn 主键，默认的列名为 publishtime
      */
     @SqliteTransient
     @SqliteColumn(name = "publish_time")
@@ -373,7 +373,7 @@ public class TestTableSplit extends SqliteBaseEntity {
 ```java
 @Test
 public void test2() {
-    TestTableSplitService sqliteService = new TestTableSplitService();//没有使用spring注入，暂时自己构建
+    TestTableSplitService sqliteService = new TestTableSplitService();//没有使用 spring 注入，暂时自己构建
     TestTableSplit entity = new TestTableSplit();
     entity.setType("t1");//分表字段
 
@@ -387,7 +387,6 @@ public void test2() {
     entity.setArticle("article2");
     entity.setCreateTime(SqliteUtils.getStringDate());
     sqliteService.insert(entity);
-
 
     entity.setType("t2");//分表字段
 

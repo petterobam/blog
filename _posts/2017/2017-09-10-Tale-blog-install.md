@@ -1,20 +1,20 @@
 ---
 layout: post
-title: "Tale博客部署"
-description: "Tale博客搭建过程分享"
-categories: [框架,CentOs]
-tags: [博客,搭建,CentOs,Tale]
+title: "Tale 博客部署"
+description: "Tale 博客搭建过程分享"
+categories: [框架，CentOs]
+tags: [博客，搭建，CentOs,Tale]
 redirect_from:
   - /2017/09/10/
 ---
 
 ## @首先你要有
 
-服务器（我的是CentOs，在[搬瓦工](https://bwh1.net/) 上买的国外服务器）、电脑、浏览器、WIFI、远程连接工具（我用的是SecureCRT）
+服务器（我的是 CentOs，在 [搬瓦工](https://bwh1.net/) 上买的国外服务器）、电脑、浏览器、WIFI、远程连接工具（我用的是 SecureCRT）
 
-## 安装jdk1.8
+## 安装 jdk1.8
 	
-	// 查看可用的jdk
+	// 查看可用的 jdk
 	yum search java | grep -i jdk  
 		
 		ldapjdk-javadoc.x86_64 : Javadoc for ldapjdk
@@ -43,21 +43,21 @@ redirect_from:
 		java-1.8.0-openjdk-src-debug.x86_64 : OpenJDK Source Bundle for packages with
 		ldapjdk.x86_64 : The Mozilla LDAP Java SDK
 	
-	//安装jdk1.8
+	//安装 jdk1.8
 	yum install java-1.8.0-openjdk.x86_64 
 
 ## iptables 永久打开新端口
 
 1. CentOS/RHEL 7
 		
-		//tale 默认是9000，我们需要开放9000端口
+		//tale 默认是 9000，我们需要开放 9000 端口
         sudo firewall-cmd --zone=public --add-port=9000/tcp --permanent
 		sudo firewall-cmd --zone=public --add-port=80/tcp --permanent
 		sudo firewall-cmd --reload 
 
 2. CentOS/RHEL 6
 
-		//tale 默认是9000，我们需要开放9000端口
+		//tale 默认是 9000，我们需要开放 9000 端口
 		sudo iptables -I INPUT -p tcp -m tcp --dport 9000 -j ACCEPT
 		sudo iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
 		sudo service iptables save 
@@ -72,31 +72,31 @@ redirect_from:
 
 		wget http://nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm
 
-2. nginx开启对外映射共享
+2. nginx 开启对外映射共享
 
 		// 安装源库
 		chmod +x nginx-release-centos-6-0.el6.ngx.noarch.rpm 
 		// 解压
 		rpm -i nginx-release-centos-6-0.el6.ngx.noarch.rpm 
-		// 安装nginx
+		// 安装 nginx
 		yum install nginx
-		// 启动nginx
+		// 启动 nginx
 		service nginx start
 
 3. 简单说明
 
-   - 默认nginx配置文件: /etc/nginx/nginx.conf         【nginx主要的配置文件】 
-   - 默认nginx的ssl配置文件: /etc/nginx/conf.d/ssl.conf 【配置SSL证书的，也可以并入到nginx.conf 文件里】 
-   - 默认nginx的虚拟主机配置文件: /etc/nginx/conf.d/virtual.conf 【如同Apache的虚拟主机配置，也可以并入到nginx.conf文件里】 
-   - 默认的web_root文件夹路径: /usr/share/nginx/html 【web目录夹，放置Magento主程序】 
+   - 默认 nginx 配置文件：/etc/nginx/nginx.conf         【nginx 主要的配置文件】 
+   - 默认 nginx 的 ssl 配置文件：/etc/nginx/conf.d/ssl.conf 【配置 SSL 证书的，也可以并入到 nginx.conf 文件里】 
+   - 默认 nginx 的虚拟主机配置文件：/etc/nginx/conf.d/virtual.conf 【如同 Apache 的虚拟主机配置，也可以并入到 nginx.conf 文件里】 
+   - 默认的 web_root 文件夹路径：/usr/share/nginx/html 【web 目录夹，放置 Magento 主程序】 
 
-4. 将你的 web程序文件夹 放到/usr/share/nginx/html下
+4. 将你的 web 程序文件夹 放到/usr/share/nginx/html 下
 
-## 在线下载安装tale
+## 在线下载安装 tale
 
 1. 下载
 
-		// 请到nginx的html目录下下载
+		// 请到 nginx 的 html 目录下下载
 		sudo wget http://7xls9k.dl1.z0.glb.clouddn.com/tale.zip
 
 2. 解压
@@ -104,13 +104,13 @@ redirect_from:
 		unzip tale.zip
 
 3. 启动
-		// 进入tale网站的bin目录下
+		// 进入 tale 网站的 bin 目录下
 		cd tale/bin
 		// 脚本执行授权
 		chmod 755 tale.sh
 		// 启动
 		sh tale.sh start
-		// 默认的启动JVM参数为 -Xms128m -Xmx128m 如果你想修改内存配置可以这样 
+		// 默认的启动 JVM 参数为 -Xms128m -Xmx128m 如果你想修改内存配置可以这样 
 		sh tale.sh start "-Xms512m -Xmx512m
 		// 关闭博客程序
 		sh tale.sh stop
@@ -121,7 +121,7 @@ redirect_from:
 
 ## 绑定域名
 
-通过 IP:端口号，tale默认是9000，访问可以的话，可以去阿里云或其他网站上买个域名，配置好DNS解析，就可以通过域名访问，9000端口不像80是默认端口，在域名后面带个端口比较难看，可以将tale的端口改为80
+通过 IP: 端口号，tale 默认是 9000，访问可以的话，可以去阿里云或其他网站上买个域名，配置好 DNS 解析，就可以通过域名访问，9000 端口不像 80 是默认端口，在域名后面带个端口比较难看，可以将 tale 的端口改为 80
 		
 	// 进入配置文件夹
 	cd tale/resources
@@ -135,7 +135,7 @@ redirect_from:
 	// 启动
 	sh tale.sh start
 
-你会发现无法启动，因为80端口被占用了 sh /usr/local/webserver/nginx/html/tale/bin/tale.sh start
+你会发现无法启动，因为 80 端口被占用了 sh /usr/local/webserver/nginx/html/tale/bin/tale.sh start
 
 	Exception in thread "main" com.blade.exception.EmbedServerException: java.net.BindException: Address already in use
 	        at com.blade.embedd.EmbedJettyServer.startup(EmbedJettyServer.java:170)
@@ -159,17 +159,17 @@ redirect_from:
 	        at com.blade.embedd.EmbedJettyServer.startup(EmbedJettyServer.java:166)
 	        ... 5 more
 
-需要修改nginx的默认配置，将nginx端口改成其他的
+需要修改 nginx 的默认配置，将 nginx 端口改成其他的
 
-	// 修改nginx的默认配置
+	// 修改 nginx 的默认配置
 	vi /etc/nginx/conf.d/default.conf
-	// 将listen改成其他，例如i
+	// 将 listen 改成其他，例如 i
 	server {
 	    listen       81;
 	    server_name  localhost;
 	    ……
 	}
-	// 退出保存，重启nginx
+	// 退出保存，重启 nginx
 	nginx -s reload
 
-然后在重启tale，就可以了
+然后在重启 tale，就可以了

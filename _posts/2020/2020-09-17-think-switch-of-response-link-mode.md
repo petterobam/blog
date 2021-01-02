@@ -1,16 +1,16 @@
 ---
 layout: post
-title: "案例思考-Switch语句实现职责链模式"
-description: "【2020-09-17】案例思考-Switch语句实现职责链模式"
-categories: [整理,Switch]
-tags: [面向函数编程,职责链模式]
+title: "案例思考-Switch 语句实现职责链模式"
+description: "【2020-09-17】案例思考-Switch 语句实现职责链模式"
+categories: [整理，Switch]
+tags: [面向函数编程，职责链模式]
 redirect_from:
   - /2020/09/17/
 ---
 
 # 案例介绍
 
-撇去之前 [Stream深入分析到Lambada扩展使用](/blog/2020/08/09/stream-design-and-lambda-extension/) 介绍的 switch 语句是 Java 的语法糖，底层编译是通过 hashcode、equal 实现多类型遍历 case。
+撇去之前 [Stream 深入分析到 Lambada 扩展使用](/blog/2020/08/09/stream-design-and-lambda-extension/) 介绍的 switch 语句是 Java 的语法糖，底层编译是通过 hashcode、equal 实现多类型遍历 case。
 
 我们来看下近期编程时在代码中看到 Switch 被误用的情况：
 
@@ -138,7 +138,7 @@ redirect_from:
 我们先来看看面向对象的职责链模式（伪代码）：
 
 ```java
-某个审批流程 A，当申请员工等级为 Lvx 时候，需要 Lvx-1 的所有人审批，最后由系统自动审批.
+某个审批流程 A，当申请员工等级为 Lvx 时候，需要 Lvx-1 的所有人审批，最后由系统自动审批。
 已知共有 5 个级别，每个级别审批需要做不同的事。
 
 class SpSystemOfA {

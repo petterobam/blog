@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "Stream深入分析到Lambda扩展使用"
-description: "Stream深入分析到Lambda扩展使用"
-categories: [整理,Stream,Lambda]
+title: "Stream 深入分析到 Lambda 扩展使用"
+description: "Stream 深入分析到 Lambda 扩展使用"
+categories: [整理，Stream,Lambda]
 tags: [Lambda,Stream]
 redirect_from:
   - /2020/08/09/
@@ -28,14 +28,14 @@ Start -> [Self Create] -> [Self Do 1] -> ... -> [Self Do n] -> [Output] -> End
 
 ## 范式
 流式编程的 [流对象] 至少有两种方法：
-1. 过程方法 -> 消费Data或Function，返回 this
+1. 过程方法 -> 消费 Data 或 Function，返回 this
 2. 结果方法 -> 返回目标对象（或消费流结果）
 
 ```java
 // 用故事模板讲述一个故事
 String story = new StringBuffer("Story:").append(man).append(action).append(woman).toString();
 
-// Stream常见示例
+// Stream 常见示例
 List<student> result = students.stream().sorted(Comparator.comparing(Student::getSex)).collect(Collectors.toList());
 
 Map<String, String> res = Stream.of(objs).collect(Collectors.toMap(Obj::getId, Obj::getName);
@@ -306,8 +306,8 @@ public class LambdaSyntaxSugar {
         方法名是 lambda$所在函数名$0,1,2,...，但方法引用的表达式不会生成方法。
 2. 在 lambda 地方会产生一个 invokeDynamic 指令，这个指令会调用
         bootstrap（引导）方法，bootstrap 方法会指向自动生成的 lambda$所在函数名$0 方法或者方法引用的方法。
-3. bootstrap方法使用上是调用了 LambdaMetafactory.metafactory 静态方法
-        该方法返回了 CallSite (调用站点)，里面包含了 MethodHandle （方法句柄）也就是最终调用的方法。
+3. bootstrap 方法使用上是调用了 LambdaMetafactory.metafactory 静态方法
+        该方法返回了 CallSite （调用站点），里面包含了 MethodHandle （方法句柄）也就是最终调用的方法。
 4. 如果函数体里面没有使用 this，那么就是 static 方法，否则就是成员方法
 ```
 
@@ -330,10 +330,10 @@ public class LambdaSyntaxSugar {
 
 ```
 Jdk 提供了一系列默认的函数式接口（java.util.function.*），主要包含四大类：
-1、Supplier<T>：T get()；无输入，“生产”一个T类型的返回值。
+1、Supplier<T>：T get()；无输入，“生产”一个 T 类型的返回值。
 2、Consumer<T>：void accept(T t)；输入类型 T，“消费”掉，无返回。
-3、Function<T, R>：R apply(T t)；输入类型T返回类型R。
-4、Predicate<T>：boolean test(T t)；输入类型T，并进行条件“判断”，返回true|false。特殊的 Function<T, Boolean>
+3、Function<T, R>：R apply(T t)；输入类型 T 返回类型 R。
+4、Predicate<T>：boolean test(T t)；输入类型 T，并进行条件“判断”，返回 true|false。特殊的 Function<T, Boolean>
 ```
 
 Lambda 表达式自动识别变成接口函数的实现对象：
@@ -431,7 +431,7 @@ Supplier<JavaBean> supplier = JavaBean::new
 JavaBean bean = supplier.get();
 
 如果将构造器参数化，会有什么好玩的东西呢？
-没想出来...
+没想出来。..
 ```
 
 ## Lambda 消费者编程分析
@@ -458,11 +458,11 @@ public interface Consumer<T, U> {
 // 定义一个消费者接口，三个参数可能的组合
 
 依次类推，取决于传入的方法是与第一个参数是否相关，规律总结如下：
-Comsumer<T, 其他类型..> -> accept(T t, 其他参数..)
-1、[类T]::方法 -(其他参数)，第一个参数t类型T，则调用：t.方法(其他参数)
-2、[类A]::静态方法 -(t, 其他参数),第一个参数t类型T，则调用：类A.静态方法(t, 其他参数)
-3、[对象obj-类T/A]::方法 -(t, 其他参数)，调用：obj.方法(t, 其他参数)
-4、(t, 其他参数) -> {...} ，自动生成的匿名函数：[static] lambda$当前函数名$1(t, 其他参数)
+Comsumer<T, 其他类型。.> -> accept(T t, 其他参数。.)
+1、[类 T]:: 方法 -（其他参数），第一个参数 t 类型 T，则调用：t. 方法（其他参数）
+2、[类 A]:: 静态方法 -(t, 其他参数）, 第一个参数 t 类型 T，则调用：类 A. 静态方法 (t, 其他参数）
+3、[对象 obj-类 T/A]:: 方法 -(t, 其他参数），调用：obj. 方法 (t, 其他参数）
+4、(t, 其他参数） -> {...} ，自动生成的匿名函数：[static] lambda$当前函数名$1(t, 其他参数）
 ```
 
 ### 示例：通用 Builder 实现
@@ -635,7 +635,7 @@ public static Collector<CharSequence, ?, String> joining() {
 ```
 业务通用转化范式？
 
-例如通用 Feed 流组装业务:
+例如通用 Feed 流组装业务：
 Collector<T, A, R>  ->  BusinessCollector<DTO, List<Feed>, PageVO>
 * supplier： 创建新的 List<Feed>
 * accumulator：将输入元素合并到结果容器中 DTO -> Feed
@@ -648,9 +648,9 @@ Collector<T, A, R>  ->  BusinessCollector<DTO, List<Feed>, PageVO>
 show me code ? TODO...
 ```
 
-### 示例：Feed流组装范式 【2020-08-21】补充
+### 示例：Feed 流组装范式 【2020-08-21】补充
 
-Feed流类结构：
+Feed 流类结构：
 
 ```json
 {
@@ -749,11 +749,11 @@ class FeedResourceCollector<Map<ResourceType, ResourceId[]>, FeedResource(Relate
 
     public FeedResourcePage<FeedResource> renderFeedPage(Map<ResourceType, ResourceId[]> resourceIdMap) {
         FeedResource(RelateResource[])[] feeds = new ArrayList<>();
-        // 1、得到 主feed集合（关联资源未填充，只有相关ID）
+        // 1、得到 主 feed 集合（关联资源未填充，只有相关 ID）
         feedResourceConvertors.forEach(convertor -> {
             feeds.addAll(convertor.getValue().apply(resourceIdMap.get(convertor.getKey())));
         });
-        // 2、提取 关联资源ID，按 资源分类聚合
+        // 2、提取 关联资源 ID，按 资源分类聚合
         Map<RelateResourceType, RelateResourceId[]> relateResourceIdsMap = new HashMap<>();
         feeds.forEach(feed -> {
             Map<RelateResourceType, RelateResourceId[]> tempIdsMap = feedResourceRelateIdConverts.get(feed.getResourceType()).apply(feed);
@@ -767,7 +767,7 @@ class FeedResourceCollector<Map<ResourceType, ResourceId[]>, FeedResource(Relate
         relateResourceIdsMap.forEach(entry -> {
             relateResourceMaps.put(entry.getKey(), relateResourceConvertors.get(entry.getKey()).apply(entry.getValue()));
         });
-        // 4、填充关联资源到 主feed集合
+        // 4、填充关联资源到 主 feed 集合
         feedResourceFiller.apply(feeds, relateResourceMaps);
         // 5、打包 到 结果集
         return feedPackager.apply(feeds);
@@ -778,7 +778,7 @@ class FeedResourceCollector<Map<ResourceType, ResourceId[]>, FeedResource(Relate
 
 # 扩展思维
 
-如果随着操作系统（CPU愈发小巧廉价，单机可以装上千个）或 JDK 的发展（并发的最小粒度不再是进程线程，而是方法栈），编程模式又会有怎样的变化？
+如果随着操作系统（CPU 愈发小巧廉价，单机可以装上千个）或 JDK 的发展（并发的最小粒度不再是进程线程，而是方法栈），编程模式又会有怎样的变化？
 
 1. 参照 GPU 图计算模式，JDK 编译器自动优化，分析出函数语句入参出参的依赖性，形成执行图模型，实现方法栈并行执行。
 

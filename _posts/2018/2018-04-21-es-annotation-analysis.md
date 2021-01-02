@@ -1,17 +1,17 @@
 ---
 layout: post
-title: "Elasticsearch面向对象封装之注解分析"
+title: "ElasticSearch 面向对象封装之注解分析"
 author: "petterobam"
-description: "Elasticsearch面向对象封装之注解分析"
-categories: [Elasticsearch, 面向对象封装, Java]
-tags: [Elasticsearch,实现思路]
+description: "ElasticSearch 面向对象封装之注解分析"
+categories: [ElasticSearch, 面向对象封装，Java]
+tags: [ElasticSearch, 实现思路]
 redirect_from:
   - /2018/04/21/
 ---
 
 ## 前情提要
 
-前一段时间封装过关系型数据库，发现出奇的好用，最近想尝试对Elasticsearch做一个面向对象封装。与ES这种文档存储系统不同，多数关系型数据库类型属性单一、结果扁平。而ES存储的文档结构立体，层次通常深度大于1，还包含了索引、评分系统的的建立，因而他的文档数据收集确显得比较复杂。但是幸好ES给了一系列默认的配置，即使我们不定义任何结构也能实现普通关系型数据库那样的存储和查询功能，因为json格式的数据天生就包含了存储结构，但是要凸显ES的性能和扩展开发，需要对存储结构做一个更精细的定义及收集，特别是如果要支持自动建立索引这种功能，对Mapping的支持要详细而且完整。前篇Sqlite的封装已经说过，自定义注解是悄无声息收集存储结构数据的完美姿势，当然无注解也会有默认配置，下面我根据通用套路去定义一些注解。
+前一段时间封装过关系型数据库，发现出奇的好用，最近想尝试对 ElasticSearch 做一个面向对象封装。与 ES 这种文档存储系统不同，多数关系型数据库类型属性单一、结果扁平。而 ES 存储的文档结构立体，层次通常深度大于 1，还包含了索引、评分系统的的建立，因而他的文档数据收集确显得比较复杂。但是幸好 ES 给了一系列默认的配置，即使我们不定义任何结构也能实现普通关系型数据库那样的存储和查询功能，因为 json 格式的数据天生就包含了存储结构，但是要凸显 ES 的性能和扩展开发，需要对存储结构做一个更精细的定义及收集，特别是如果要支持自动建立索引这种功能，对 Mapping 的支持要详细而且完整。前篇 Sqlite 的封装已经说过，自定义注解是悄无声息收集存储结构数据的完美姿势，当然无注解也会有默认配置，下面我根据通用套路去定义一些注解。
 
 ## 实体类注解
 
@@ -19,11 +19,11 @@ redirect_from:
 
 1. 定义 Index、Type，为空的话，实体类中元字段 ```_index```、```_type```要定义
 
-2. 扩展定义 动态Index生成规则、动态Type生成规则
+2. 扩展定义 动态 Index 生成规则、动态 Type 生成规则
 
 ### @EsDynamicMapping({...})
 
-1. 动态定义Mapping属性模板
+1. 动态定义 Mapping 属性模板
 
 2. 主要属性
 
@@ -33,7 +33,7 @@ redirect_from:
     * ```numeric_detection```：```true/false```，数字检测
 
   - 动态模板
-    * ```dynamic_templates```，存json对象数组或json对象数组对应的文件路径。例如：
+    * ```dynamic_templates```，存 json 对象数组或 json 对象数组对应的文件路径。例如：
 
     ```java
     [
@@ -61,42 +61,42 @@ redirect_from:
 
 ### @EsMappingFile(...)
 
-1. 定义 value ，Mapping的json文件路径，自定义Mapping方式之一
+1. 定义 value ，Mapping 的 json 文件路径，自定义 Mapping 方式之一
 
-2. 直接读取Mapping结构构建实体类对应的doc存储结构
+2. 直接读取 Mapping 结构构建实体类对应的 doc 存储结构
 
-3. 适用于复制ES库已有的映射结构导入 ， 简化开发
+3. 适用于复制 ES 库已有的映射结构导入 ， 简化开发
 
 ## 实体类属性注解
 
 ### @EsFieldsJson(...)
 
-1. 定义 value ， Mapping 中对应 每个property 的 定义 Json 字符串，自定义Mapping方式之一
+1. 定义 value ， Mapping 中对应 每个 property 的 定义 Json 字符串，自定义 Mapping 方式之一
 
-2. 适用于专业ES开发人士，可以对每个doc节点精确定义属性，达到更好的效果
+2. 适用于专业 ES 开发人士，可以对每个 doc 节点精确定义属性，达到更好的效果
 
 ### @EsFields({...})
 
-自定义Mapping方式之一，粒度细化定义
+自定义 Mapping 方式之一，粒度细化定义
 
 #### 定义 type ， 默认 string
 
   - 简单域类型
-    * 字符串: ```string```, ```text```, ```keyword```
+    * 字符串：```string```, ```text```, ```keyword```
     * 整数 : ```byte```, ```short```, ```integer```, ```long```, ```alf_float```，```scaled_float```
-    * 浮点数: ```float```, ```double```
-    * 布尔型: ```boolean```
-    * 日期: ```date```
+    * 浮点数：```float```, ```double```
+    * 布尔型：```boolean```
+    * 日期：```date```
 
   - 复杂域类型
     * 数组：```array```, 普通数据数组
-    * 对象：```object```, json格式对象
-    * 对象数组：```nested```, json对象数组
+    * 对象：```object```, json 格式对象
+    * 对象数组：```nested```, json 对象数组
 
   - 其他数据类型
     * 经纬度点类型：```geo_point```
     * 地理形状类型：```geo_shape```
-    * IP数据类型：```ip```, 用于IPv4和IPv6地址
+    * IP 数据类型：```ip```, 用于 IPv4 和 IPv6 地址
     * 完成数据类型：```completion``` 提供自动完成的建议
     * 令牌计数数据类型：```token_count``` 计算字符串中的令牌数量
     * mapper-murmur3：```murmur3``` 在索引时计算值的哈希值并将它们存储在索引中
@@ -113,11 +113,11 @@ redirect_from:
 
   - ```analyzer``` ，分析器语言类型 ， 空则不定义，默认 ```standard```
     * 内含的还有```whitespace``` 、 ```simple``` 、 ```english```
-    * 自定义请参考API
+    * 自定义请参考 API
 
   - ```format``` ， 一般用于日期用字符串格式存储，定义日期格式
 
-  - ```normalizer``` ， 空则不定义，跟随elasticsearch默认值
+  - ```normalizer``` ， 空则不定义，跟随 elasticsearch 默认值
 
   - ```boost``` ， 相关性查询权重设置，默认```1.0```
 
@@ -125,7 +125,7 @@ redirect_from:
 
   - ```copy_to``` ，定义的组字段名， 将多个字段的值复制到组字段中，然后可以将其作为单个字段进行查询
 
-  - ```doc_values``` ， 默认```true```，false则查询的结果集中没有该字段
+  - ```doc_values``` ， 默认```true```，false 则查询的结果集中没有该字段
 
   - ```dynamic``` ， 默认```true```，多用于```object```类型字段
     * ```true```：新检测到的字段被添加到映射中。（默认）
@@ -136,7 +136,7 @@ redirect_from:
 
   - ```eager_global_ordinals``` ，提高聚合查询速度，聚合字段可以设置为```true```
 
-  - ```fielddata``` ， 空则不定义，跟随elasticsearch默认值
+  - ```fielddata``` ， 空则不定义，跟随 elasticsearch 默认值
 
   - ```ignore_above``` ， 属性值为整数，针对字符类型数据，长度比设定值长的将不被索引和存储
 
@@ -148,9 +148,9 @@ redirect_from:
     * ```positions```：文档编号，术语频率和术语位置（或顺序）被编入索引。
     * ```offsets```：文档编号，术语频率，位置以及开始和结束字符偏移（将术语映射回原始字符串）进行索引。
 
-  - ```fields``` ， 多领域定义，详情查看API
+  - ```fields``` ， 多领域定义，详情查看 API
 
-  - ```norms``` ， 用于开启或禁用规范，用于查询评分，详情见API
+  - ```norms``` ， 用于开启或禁用规范，用于查询评分，详情见 API
 
   - ```null_value``` ， 当传入```null```时候，用该属性的值替代```null```存储
 
@@ -159,11 +159,11 @@ redirect_from:
   - ```search_analyzer``` ， 定义搜索时的分析器，用于覆盖默认建立索引的分析器，通常不设定
 
   - ```similarity``` ， 定义评分算法
-    * ```BM25```：```Okapi BM25```算法。请参阅[]可插入相似性算法。](https://www.elastic.co/guide/en/elasticsearch/guide/master/pluggable-similarites.html)
-    * ```classic```：```TF/IDF```算法。请参阅[Lucene的实用评分函数](https://www.elastic.co/guide/en/elasticsearch/guide/master/practical-scoring-function.html)。
+    * ```BM25```：```Okapi BM25```算法。请参阅 [] 可插入相似性算法。](https://www.elastic.co/guide/en/elasticsearch/guide/master/pluggable-similarites.html)
+    * ```classic```：```TF/IDF```算法。请参阅 [Lucene 的实用评分函数](https://www.elastic.co/guide/en/elasticsearch/guide/master/practical-scoring-function.html)。
     * ```boolean```：一种简单的布尔相似性，在不需要全文排名时使用，分数只应基于查询条件是否匹配而使用。布尔相似度给出了一个等于他们的查询提升的分数。
 
-  - ```store``` ，```true/false``` 通常查询是对编入的索引进行查询，不必从```_source```字段中提取这些字段k可以设置为 ```false```。
+  - ```store``` ，```true/false``` 通常查询是对编入的索引进行查询，不必从```_source```字段中提取这些字段 k 可以设置为 ```false```。
 
   - ```term_vector``` ， 定义术语，用于特定文档搜索
     * ```no```：没有任何术语向量被存储。（默认）
@@ -176,16 +176,16 @@ redirect_from:
 
 #### 元字段定义的属性
 
-  类中定义元字段，而这些元字段不属于文档本身，但是可以丰富扩展ES的功能，只有如下的元字段才可以定义的属性一般为```enabled```，启用或禁用。
+  类中定义元字段，而这些元字段不属于文档本身，但是可以丰富扩展 ES 的功能，只有如下的元字段才可以定义的属性一般为```enabled```，启用或禁用。
 
   - 身份元字段编辑
     * ```_index```：文档所属的索引，可以扩展为**相同数据类型的分索引存储**，垂直分储
     * ```_uid```：由```_type```和和组成的复合字段```_id```
     * ```_type```：文档的映射类型，可以扩展为**相同数据类型的分类型存储**，水平分储
-    * ```_id```：文件的ID
+    * ```_id```：文件的 ID
 
   - 文档源元数据字段编辑
-    * ```_source```：代表文档正文的原始JSON，禁用该字段会失去很多功能，不建议，如有需要请参考API
+    * ```_source```：代表文档正文的原始 JSON，禁用该字段会失去很多功能，不建议，如有需要请参考 API
       + ```enabled```：```true```、```false```两种
     * ```_size```：```_source```字段 的大小，由```mapper-size```插件提供
 
@@ -205,17 +205,17 @@ redirect_from:
 
 ### @EsQuerySql({...})
 
-1. 对SQL语句的支持，通过SQL转化器，转化为ES查询体查询
+1. 对 SQL 语句的支持，通过 SQL 转化器，转化为 ES 查询体查询
 
-2. 定义 ```sql```、```params```，实现自定义SQL转ES查询
+2. 定义 ```sql```、```params```，实现自定义 SQL 转 ES 查询
 
 ### @EsQueryParams(...)
 
-1. 定义 ```value```，Params字符串方式自定义查询，占位符用 ```#param#``` 或 ```#1#```，param对应实体类字段名或普通参数传入顺序
+1. 定义 ```value```，Params 字符串方式自定义查询，占位符用 ```#param#``` 或 ```#1#```，param 对应实体类字段名或普通参数传入顺序
 
 ### @EsQueryJson(...)
 
-1. 定义 ```value```，Json请求体方式自定义查询，占用符用 ```#param#``` 或 ```#1#```，param对应实体类字段名或普通参数传入顺序
+1. 定义 ```value```，Json 请求体方式自定义查询，占用符用 ```#param#``` 或 ```#1#```，param 对应实体类字段名或普通参数传入顺序
 
 ## 后记
 

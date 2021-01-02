@@ -2,7 +2,7 @@
 layout: post
 title: "一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch"
 description: "Hadoop + Pig + Jython + AmMap + ElasticSearch 实践记录"
-categories: [整理,实践]
+categories: [整理，实践]
 tags: [Hadoop,Pig,Jython,AmMap,ElasticSearch]
 redirect_from:
   - /2019/08/10/
@@ -12,7 +12,7 @@ redirect_from:
 
 实践参考：https://github.com/phodal/ideabook
 
-我有一个 <del>2G左右</del> 很大的网站访问日志。我想看看访问网站的人都来自哪里，于是我想开始想办法来分析这日志，这是一个Web生成的界面，通过Elastic.js向搜索引擎查询数据，将再这些数据渲染到地图上。
+我有一个 <del>2G 左右</del> 很大的网站访问日志。我想看看访问网站的人都来自哪里，于是我想开始想办法来分析这日志，这是一个 Web 生成的界面，通过 Elastic.js 向搜索引擎查询数据，将再这些数据渲染到地图上。
 
 ![Demo](/images/practice/access-map.png)
 
@@ -20,32 +20,31 @@ Hadoop + Pig + Jython + AmMap + ElasticSearch
 
 使用的技术栈有上面这些，他们的简介如下：
 
-- Hadoop是一个由Apache基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。
-- Pig 是一个基于Hadoop的大规模数据分析平台，它提供的SQL-LIKE语言叫Pig Latin，该语言的编译器会把类SQL的数据分析请求转换为一系列经过优化处理的MapReduce运算。
-- Jython是一种完整的语言，而不是一个Java翻译器或仅仅是一个Python编译器，它是一个Python语言在Java中的完全实现。Jython也有很多从CPython中继承的模块库。
-- AmMap是用于创建交互式Flash地图的工具。您可以使用此工具来显示您的办公室地点，您的行程路线，创建您的经销商地图等。
-- ElasticSearch是一个基于Lucene 构建的开源，分布式，RESTful 搜索引擎。 设计用于云计算中，能够达到搜索实时、稳定、可靠和快速，并且安装使用方便。
+- Hadoop 是一个由 Apache 基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。
+- Pig 是一个基于 Hadoop 的大规模数据分析平台，它提供的 SQL-LIKE 语言叫 Pig Latin，该语言的编译器会把类 SQL 的数据分析请求转换为一系列经过优化处理的 MapReduce 运算。
+- Jython 是一种完整的语言，而不是一个 Java 翻译器或仅仅是一个 Python 编译器，它是一个 Python 语言在 Java 中的完全实现。Jython 也有很多从 CPython 中继承的模块库。
+- AmMap 是用于创建交互式 Flash 地图的工具。您可以使用此工具来显示您的办公室地点，您的行程路线，创建您的经销商地图等。
+- ElasticSearch 是一个基于 Lucene 构建的开源，分布式，RESTful 搜索引擎。 设计用于云计算中，能够达到搜索实时、稳定、可靠和快速，并且安装使用方便。
 
 ## 步骤
 
 总的步骤并不是很复杂，可以分为：
 
 - 搭建基础设施
-- 解析access.log
-- 转换IP为GEO信息
+- 解析 access.log
+- 转换 IP 为 GEO 信息
 - 展示数据到地图上
 
 ### Step 1: 搭建基础设施
 
 在这一些系列的实战中，比较麻烦的就是安装这些工具，我们需要安装上面提到的一系列工具。对于不同的系统来说，都有相似的安装工具：
 
-- Windows上可以使用Chocolatey
-- Ubuntu / Mint上可以使用aptitude
-- CentOS / OpenSUSE上可以使用yum安装
-- Mac OS上可以使用brew安装
+- Windows 上可以使用 Chocolatey
+- Ubuntu / Mint 上可以使用 aptitude
+- CentOS / OpenSUSE 上可以使用 yum 安装
+- Mac OS 上可以使用 brew 安装
 
-
-如下是 Mac OS 下安装Hadoop、Pig、Elasticsearch、Jython 的方式
+如下是 Mac OS 下安装 Hadoop、Pig、Elasticsearch、Jython 的方式
 
 ```bash
 brew install hadoop
@@ -55,7 +54,7 @@ brew install jython
 ```
 对于其他操作系统也可以使用相似的方法来安装。
 
-Hadoop 安装完还要配置本地单机模式，ssh免登陆访问等，请自行百度
+Hadoop 安装完还要配置本地单机模式，ssh 免登陆访问等，请自行百度
 
 针对这些工具，可以配置一些启动关闭快捷命令：
 
@@ -68,30 +67,30 @@ alias hadoop-start-all='sh /usr/local/Cellar/hadoop/3.1.2/sbin/start-all.sh'
 alias hadoop-stop-all='sh /usr/local/Cellar/hadoop/3.1.2/sbin/stop-all.sh'
 ```
 
-接着我们还需要安装一个Hadoop的插件，用于连接 Hadoop 和 ElasticSearch。
+接着我们还需要安装一个 Hadoop 的插件，用于连接 Hadoop 和 ElasticSearch。
 
 下载地址：[https://github.com/elastic/elasticsearch-hadoop](https://github.com/elastic/elasticsearch-hadoop)
 
-复制其中的 elasticsearch-hadoop-pig-*.jar 到你的pig库的目录，如我的是：/usr/local/Cellar/pig/0.17.0，这里我的文件名是：elasticsearch-hadoop-pig-7.3.0.jar。
+复制其中的 elasticsearch-hadoop-pig-*.jar 到你的 pig 库的目录，如我的是：/usr/local/Cellar/pig/0.17.0，这里我的文件名是：elasticsearch-hadoop-pig-7.3.0.jar。
 
 下面我们就可以尝试去解析我们的日志了。
 
-### *Step 2:* 解析access.log
+### *Step 2:* 解析 access.log
 
-在开始解析之前，先让我们来看看几条Nginx的日志：
+在开始解析之前，先让我们来看看几条 Nginx 的日志：
 
 ```
 10.95.30.42 - - [17/Jul/2019:00:00:29 +0800] "GET /v-dist/static/css/app.96cc1435284192fe5e4b4a4164f2660b.min.css HTTP/1.1" 200 217190
 10.95.30.42 - - [17/Jul/2019:00:00:29 +0800] "GET /v-dist/static/js/vendor.1336ea68444e0be86ffd.min.js HTTP/1.1" 200 782353
 ```
 
-而上面的日志实际上是有对应的格式的，这个格式写在我们的Nginx配置文件中。如下是上面的日志的格式：
+而上面的日志实际上是有对应的格式的，这个格式写在我们的 Nginx 配置文件中。如下是上面的日志的格式：
 
 ```
 log_format  access $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent;
 ```
 
-在最前面的是访问者的IP地址，然后是访问者的当地时间、请求的类型、状态码、访问的URL、用户的User Agent等等。随后，我们就可以针对上面的格式编写相应的程序，这些代码如下所示：
+在最前面的是访问者的 IP 地址，然后是访问者的当地时间、请求的类型、状态码、访问的 URL、用户的 User Agent 等等。随后，我们就可以针对上面的格式编写相应的程序，这些代码如下所示：
 
 ```sql
 -- register file:/usr/local/Cellar/pig/0.17.0/libexec/lib/piggybank.jar;
@@ -117,7 +116,7 @@ LOGS_BASE = FOREACH RAW_LOGS GENERATE
 
 -- Dump LOGS_BASE;
 -- A = FOREACH LOGS_BASE GENERATE ToDate(timestamp, 'dd/MMM/yyyy:HH:mm:ss Z', 'Asia/Singapore') as date, ip, url,(int)status,(bytes == '-' ? 0 : (int)bytes) as bytes;
--- JDK1.8默认时区无法转化这种格式的 （17/Jul/2019:00:00:29 +0800） ，试了上百个时区，不知道具体是哪个时区，http://joda-time.sourceforge.net/timezones.html
+-- JDK1.8 默认时区无法转化这种格式的 （17/Jul/2019:00:00:29 +0800） ，试了上百个时区，不知道具体是哪个时区，http://joda-time.sourceforge.net/timezones.html
 A = FOREACH LOGS_BASE GENERATE ToDate(timestamp, 'dd/MMM/yyyy:HH:mm:ss Z', 'Etc/GMT+8') as date, ip, url,(int)status,(bytes == '-' ? 0 : (int)bytes) as bytes;
 -- Dump A;
 -- B = GROUP A BY (timestamp);
@@ -132,13 +131,13 @@ STORE A INTO 'data/demo-A' USING PigStorage (',');
 
 Pig 的学习请参考：https://www.w3cschool.cn/apache_pig/?
 
-### *Step 3:* 转换IP为GEO信息
+### *Step 3:* 转换 IP 为 GEO 信息
 
-<del>在简单地完成了一个Demo之后，我们就可以将IP转换为GEO信息了，这里我们需要用到一个名为pygeoip的库。GeoIP是一个根据IP地址查询位置的API的集成。它支持对国家、地区、城市、纬度和经度的查询。实际上，就是在一个数据库中有对应的国家和地区的IP段，根据这个IP段，我们就可以获取对应的地理位置。</del>
+<del>在简单地完成了一个 Demo 之后，我们就可以将 IP 转换为 GEO 信息了，这里我们需要用到一个名为 pygeoip 的库。GeoIP 是一个根据 IP 地址查询位置的 API 的集成。它支持对国家、地区、城市、纬度和经度的查询。实际上，就是在一个数据库中有对应的国家和地区的 IP 段，根据这个 IP 段，我们就可以获取对应的地理位置。</del>
 
 因为 geoip 升级了，下不了离线数据库，替换成 geoip2
 
-由于使用Java来实现这个功能比较麻烦，这里我们就使用Jython来实现。大部分的过程和上面都是一样的，除了注册了一个自定义的库，并在这个库里使用了解析GEO的方法，代码如下所示：
+由于使用 Java 来实现这个功能比较麻烦，这里我们就使用 Jython 来实现。大部分的过程和上面都是一样的，除了注册了一个自定义的库，并在这个库里使用了解析 GEO 的方法，代码如下所示：
 
 ```sql
 -- demo2.pig
@@ -184,14 +183,13 @@ STORE B INTO 'nginx_access_city/log_city_sum' USING org.elasticsearch.hadoop.pig
 -- pig -x local demo4.pig > output/demo4/log-`date +%Y%m%d%H%M%S`.log 2>&1
 ```
 
-在第三行里，我们注册了 <del>utils.py</del> utils2.py 并将其中的函数作为 utils。接着在倒数第二行里，我们执行了四个 utils 函数。即:
+在第三行里，我们注册了 <del>utils.py</del> utils2.py 并将其中的函数作为 utils。接着在倒数第二行里，我们执行了四个 utils 函数。即：
 
-- get_country从IP中解析出国家
-- get_city从IP中解析出城市
-- get_geo从IP中解析出经纬度信息
+- get_country 从 IP 中解析出国家
+- get_city 从 IP 中解析出城市
+- get_geo 从 IP 中解析出经纬度信息
 
-
-其对应的 Python 代码如下所示:
+其对应的 Python 代码如下所示：
 ```python
 # -*- coding:utf-8 -*-
 import sys
@@ -207,7 +205,6 @@ def get_city(ip):
         return response.city.name
     except:
         pass
-
 
 @outputSchema('country:chararray')
 def get_country(ip):
@@ -250,7 +247,7 @@ bower install elasticsearch
 bower install ammap
 ```
 
-添加这些库到html文件里:
+添加这些库到 html 文件里：
 
 ```html
 <!DOCTYPE html>

@@ -97,7 +97,7 @@ Maven 打包
 
 打一个可执行的 Jar，通过命令执行：
 ```shell
-java -jar 包名.jar
+java -jar 包名。jar
 ```
 
 当然也可以把 Jar 打包成可执行文件：[exe4j](https://www.ej-technologies.com/download/exe4j/files)
@@ -110,7 +110,7 @@ public static void main(String[] args) {
     MainApp.excute(params);
 }
 
-$ java -jar 包名.jar $参数 1 $参数 2 "$参数 3" ...
+$ java -jar 包名。jar $参数 1 $参数 2 "$参数 3" ...
 
 ↓
 
@@ -122,7 +122,7 @@ MainApp.excute(new String[]{ "$参数 1" "$参数 2" "$参数 3" ... })
 所谓的预处理就是把普通参数进行提取，归类为 [options] 对 [agraments] 的映射。
 
 ```java
-$ java -jar 包名.jar [类型] [动作] [arguments]
+$ java -jar 包名。jar [类型] [动作] [arguments]
 [类型] 用于寻找具体的业务实现类，对应模块
 [动作] 用于定位具体的执行代码块或调用的函数，具体到功能
 [arguments] 普通参数，依赖 [options]
@@ -240,7 +240,7 @@ cmd 批处理自动安装
 powershell 自动安装
 ```
 
-所谓自动安装就是将 `java -jar 包名.jar ` 绑定某个快捷命令，比如 `util`
+所谓自动安装就是将 `java -jar 包名。jar ` 绑定某个快捷命令，比如 `util`
 
 这个在 shell 里面就直接通过 `alias util=java -jar $PROJECT_PATH/target/util-cmd.jar` 指定了，其他里面同理。
 

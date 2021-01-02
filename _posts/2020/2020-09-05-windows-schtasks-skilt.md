@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "【Windows命令】SCHTASKS计划任务日常使用技巧"
-description: "【Windows命令】SCHTASKS计划任务日常使用技巧"
+title: "【Windows 命令】SCHTASKS 计划任务日常使用技巧"
+description: "【Windows 命令】SCHTASKS 计划任务日常使用技巧"
 categories: [整理，CMD,SCHTASKS]
 tags: [CMD,SCHTASKS]
 redirect_from:

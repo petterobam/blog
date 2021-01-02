@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "CentOS自动发邮件"
-description: "CentOS自动发邮件操作分享"
-categories: [邮件,CentOs]
-tags: [CentOs,maillx,定时任务,邮件]
+title: "CentOS 自动发邮件"
+description: "CentOS 自动发邮件操作分享"
+categories: [邮件，CentOs]
+tags: [CentOs,maillx, 定时任务，邮件]
 redirect_from:
   - /2017/09/17/
 ---
@@ -12,9 +12,9 @@ redirect_from:
 
 我们组有十几个人，安排了值日倒垃圾的表，但是总是有人会忘记，然后产品经理就将这个东西与个人绩效挂钩，少一次扣一分，这里用我的服务器把值日表里内容对应的人每天定时给他发邮件提醒。
 
-## 配置mail
+## 配置 mail
 
-### 查看mail是否已安装
+### 查看 mail 是否已安装
 
 	[root@host ~]# mail
 	-bash: mail: command not found
@@ -27,9 +27,9 @@ redirect_from:
 
 	[root@host ~]# yum install mail
 		
-### 配置mail
+### 配置 mail
 
-1. 查看mail配置
+1. 查看 mail 配置
 
 		[root@host ~]# mail
 		No mail for root
@@ -52,31 +52,31 @@ redirect_from:
 
 对了，这个密码需要邮箱的授权码，不是登录密码。
 
-=_= 醉了，我的网易邮箱不能开启stmp服务，改用qq邮箱，stmp服务器是smtp.qq.com。
+=_= 醉了，我的网易邮箱不能开启 stmp 服务，改用 qq 邮箱，stmp 服务器是 smtp.qq.com。
 
-## 配置sendmail
+## 配置 sendmail
 
-### 安装sendmail
+### 安装 sendmail
 
 	yum install -y sendmail
 
-### 配置sendmail
+### 配置 sendmail
 
 	sendmail -bd –q12h
 
- * -b：设定Sendmail服务运行于后台。
- * -d：指定Sendmail以Daemon（守护进程）方式运行。
- * -q：设定当Sendmail无法成功发送邮件时，就将邮件保存在队列里，并指定保存时间。上面的12h表示保留12小时。
+ * -b：设定 Sendmail 服务运行于后台。
+ * -d：指定 Sendmail 以 Daemon（守护进程）方式运行。
+ * -q：设定当 Sendmail 无法成功发送邮件时，就将邮件保存在队列里，并指定保存时间。上面的 12h 表示保留 12 小时。
 
-此外，要检测Sendmail服务器是否正常运行，可以使用命令行：
+此外，要检测 Sendmail 服务器是否正常运行，可以使用命令行：
 
 	/etc/rc.d/init.d/sendmail status
 
-### 配置Senmail的SMTP认证
+### 配置 Senmail 的 SMTP 认证
 
 	vi /etc/mail/sendmail.mc
 
-esc,查找`/TRUST_AUTH_MECH`，去掉这两行
+esc, 查找`/TRUST_AUTH_MECH`，去掉这两行
 
 	dnl TRUST_AUTH_MECH(`EXTERNAL DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
 	dnl define(`confAUTH_MECHANISMS', `EXTERNAL GSSAPI DIGEST-MD5 CRAM-MD5 LOGIN PLAIN')dnl
@@ -92,11 +92,11 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 	[root#host ~]#m4 /etc/mail/sendmail.mc > /etc/mail/sendmail.cf
 	m4:/etc/mail/sendmail.mc:10: cannot open `/usr/share/sendmail-cf/m4/cf.m4': No such file or directory
 
-需要安装sendmail-cf
+需要安装 sendmail-cf
 
 	yum install sendmail-cf
 
-### 重启sendmail
+### 重启 sendmail
 	
 	/etc/init.d/sendmail restart
 
@@ -105,7 +105,7 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 	[root@host ~]# echo '文本内容！' | mail -s "标题" 1460300366@qq.com
  	smtp-server: 530 Error: A secure connection is requiered(such as ssl).......
 
-### 忽略ssl验证
+### 忽略 ssl 验证
 	
 修改添加参数
 
@@ -144,13 +144,13 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 
 中文乱码这样解决
 
-	1）查看支持的字符集是否有GBK
+	1）查看支持的字符集是否有 GBK
 	[root@host ~]# locale -a
 	2) 安装英文版默认的字符集配置为：
 	[root@host ~]# cat /etc/sysconfig/i18n
 	LANG="en_US.UTF-8"
 	SYSFONT="latarcyrheb-sun16"
-	3) 修改为中文字符集:
+	3) 修改为中文字符集：
 	[root@host ~]# vi /etc/sysconfig/i18n
 	LANG="zh_CN.GBK"
 	SUPPORTED="zh_CN.UTF-8:zh_CN:zh"
@@ -172,10 +172,10 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 
 	#!/bin/csh
 	SENDDATE=`date`
-	echo "定时测试，每天7点" | /bin/mail -s "邮件主题 - $SENDDATE" 1460300366@qq.com
+	echo "定时测试，每天 7 点" | /bin/mail -s "邮件主题 - $SENDDATE" 1460300366@qq.com
 
 ### 添加定时任务
-让脚本定时自动运行，这个例子是每天7:00发送邮件
+让脚本定时自动运行，这个例子是每天 7:00 发送邮件
 
 	[root@host ~]# echo "00 07 * * * root /root/test.sh" >> /etc/crontab
 	[root@host ~]# echo >> /etc/crontab
@@ -183,7 +183,7 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 
 明天看下效果，然后就写实际应用脚本。
 
-经检测执行命令前要加个sh，才能执行脚本，因为我那个开头写错了`/bin/csh`，应该是`/bin/bash`，否则会报错，不过用sh执行就不用管这个问题，并且也不需要确定有没有授权。
+经检测执行命令前要加个 sh，才能执行脚本，因为我那个开头写错了`/bin/csh`，应该是`/bin/bash`，否则会报错，不过用 sh 执行就不用管这个问题，并且也不需要确定有没有授权。
 
 	[root@host ~]# /root/test.sh 
 	-bash: /root/test.sh: /bin/csh: bad interpreter: 没有那个文件或目录
@@ -197,6 +197,3 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 	/etc/init.d/crond restart
 
 ![测试结果](/images/centos-auto-mail/test-sendmail-auto.png)
-
-
-

@@ -2,15 +2,15 @@
 layout: post
 title: "项目依赖冲突解决技巧和经验"
 description: "【2020-07-23】项目依赖冲突解决技巧和经验"
-categories: [整理,Maven]
-tags: [Maven,冲突]
+categories: [整理，Maven]
+tags: [Maven, 冲突]
 redirect_from:
   - /2020/07/23/
 ---
 
 # 背景
 
-一般正规的 CI 的时候会包含【冲突检测】和【Jar包版本检测】这两项，出现失败的时候，需要解决问题。
+一般正规的 CI 的时候会包含【冲突检测】和【Jar 包版本检测】这两项，出现失败的时候，需要解决问题。
 
 # 冲突检测卡点
 
@@ -19,16 +19,16 @@ redirect_from:
 1. 包冲突（The diffrent in conflict: [groupId]:[artifactId]）
     ```
     1、相同包不同版本，多数情况下不影响使用，系统默认选择加载其一。
-    2、Maven命令表现：([groupId]:[artifactId]:[conflict version] compile -  omitted for conflict with [used version])
+    2、Maven 命令表现：([groupId]:[artifactId]:[conflict version] compile -  omitted for conflict with [used version])
     ``` 
 2. 类冲突（duplicate classes）
     ```
     1、相同类路径且相同类名，可能包名不相同。
     2、如果类内容不一样，会增加应用不确定性。
     3、关键类需要处理，非关键类可以选择忽视。
-    4、Maven命令表现：
-     1) 同jar ([groupId]:[artifactId]:[version] - version managed from [conflit version]; omitted for duplicate)
-     2) 不同jar ([groupId]:[artifactId]:[version]:runtime - scope managed from compile; omitted for duplicate)
+    4、Maven 命令表现：
+     1) 同 jar ([groupId]:[artifactId]:[version] - version managed from [conflit version]; omitted for duplicate)
+     2) 不同 jar ([groupId]:[artifactId]:[version]:runtime - scope managed from compile; omitted for duplicate)
     ```
 
 ## 包冲突处理步骤
@@ -73,7 +73,7 @@ mvn dependency:tree > mvn.txt
 
 方法二：runtime debug 查看类源头
 ```java
-// Jdk自带
+// Jdk 自带
 <类名>.class.getProtectionDomain().getCodeSource().toString()
 // 或者使用工具类
 ClassLoaderUtils.where(<类名>.class)  
@@ -123,7 +123,7 @@ public class ClassLoaderUtils {
 }
 ```
 
-# Jar包版本检测卡点
+# Jar 包版本检测卡点
 
 jar 卡点一般是原来 jar 包有故障或安全问题，需要在上线时候修复，红色部分的是必须要做的。
 
@@ -142,7 +142,7 @@ jar 卡点一般是原来 jar 包有故障或安全问题，需要在上线时�
 </dependencyManagement>
 ```
 
-方法二：修改高版本或引入高版本包且exclusion 低版本的依赖。
+方法二：修改高版本或引入高版本包且 exclusion 低版本的依赖。
 ```bash
 # 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖
 mvn clear install -Dmaven.test.skip=true
@@ -163,9 +163,9 @@ mvn denpendency:tree -Dincludes=[groupId]:[artifactId]
 
 由于有大量 jar 包版本卡点，没有使用 dependencyManagement 强制指定版本，就直接升级了脚手架，出现了的问题：
 
-1. 日志框架问题（日志框架初始化失败，JVM启动失败）
+1. 日志框架问题（日志框架初始化失败，JVM 启动失败）
     ```java
-    日志相关类找不到，导致JVM启动异常
+    日志相关类找不到，导致 JVM 启动异常
 
     启动情况：必现 
 
@@ -228,9 +228,9 @@ mvn denpendency:tree -Dincludes=[groupId]:[artifactId]
 
     2、Failure to find [groupId]:[artifactId]:pom:[version] in 远程仓库地址 was cached in local repository，resolution will not be reattempted until the update interval of 仓库名 has elapsed or updates are forced.
     本地 maven 下载异常，且在 本地仓库（idea->setting->maven->local repository) 
-    创建了 [目标包文件目录]（local repository/[groupId].spilt(".")多级目录/[artifactId]文件夹/[version]目录）和 xxx.lastUpdated，
+    创建了 [目标包文件目录](local repository/[groupId].spilt(".") 多级目录/[artifactId] 文件夹/[version] 目录）和 xxx.lastUpdated，
     导致不会重新获取远程文件，除非远程标记更新时间更新或本地强制远程更新
-        1）删除本地jar包目录或*.lastUpdated文件
+        1）删除本地 jar 包目录或*.lastUpdated 文件
         2）配置 setting.xml 强制远程校验
             <repositories>
                 <repository>
