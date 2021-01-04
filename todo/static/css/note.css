@@ -1,0 +1,106 @@
+/*
+use case
+----------------------
+<ul class='todo-blank'>
+    <li>
+        <a href="#">
+        <h2>Title #1</h2>
+        <p>Text Content #1</p>
+        </a>
+    </li>
+    <li>
+        <a href="#">
+        <h2>Title #2</h2>
+        <p>Text Content #2</p>
+        </a>
+    </li>
+</ul>
+*/
+ul.todo-blank h2,p {
+  font-size: 100%;
+  font-weight: normal;
+}
+ul.todo-blank,li {
+  list-style: none;
+}
+ul.todo-blank {
+  overflow: hidden;
+  padding: 3em;
+}
+ul.todo-blank li a {
+  text-decoration: none;
+  color: #000;
+  background: #ffc;
+  display: block;
+  height: 10em;
+  width: 10em;
+  padding: 1em;
+  -moz-box-shadow: 5px 5px 7px rgba(33, 33, 33, 1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+  box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+  -moz-transition: -moz-transform 0.15s linear;
+  -o-transition: -o-transform 0.15s linear;
+  -webkit-transition: -webkit-transform 0.15s linear;
+}
+ul.todo-blank li {
+  margin: 1em;
+  float: left;
+}
+ul.todo-blank li h2 {
+  font-size: 140%;
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+ul.todo-blank li p {
+  font-family: "Reenie Beanie", arial, sans-serif;
+  font-size: 180%;
+}
+ul.todo-blank li a {
+  -webkit-transform: rotate(-6deg);
+  -o-transform: rotate(-6deg);
+  -moz-transform: rotate(-6deg);
+}
+ul.todo-blank li:nth-child(even) a {
+  -o-transform: rotate(4deg);
+  -webkit-transform: rotate(4deg);
+  -moz-transform: rotate(4deg);
+  position: relative;
+  top: 5px;
+  background: #cfc;
+}
+ul.todo-blank li:nth-child(3n) a {
+  -o-transform: rotate(-3deg);
+  -webkit-transform: rotate(-3deg);
+  -moz-transform: rotate(-3deg);
+  position: relative;
+  top: -5px;
+  background: #ccf;
+}
+ul.todo-blank li:nth-child(5n) a {
+  -o-transform: rotate(5deg);
+  -webkit-transform: rotate(5deg);
+  -moz-transform: rotate(5deg);
+  position: relative;
+  top: -10px;
+}
+ul.todo-blank li a:hover,
+ul.todo-blank li a:focus {
+  box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+  -webkit-transform: scale(1.25);
+  -moz-transform: scale(1.25);
+  -o-transform: scale(1.25);
+  position: relative;
+  z-index: 5;
+}
+ul.todo-blank ol {
+  text-align: center;
+}
+ul.todo-blank ol li {
+  display: inline;
+  padding-right: 1em;
+}
+ul.todo-blank ol li a {
+  color: #fff;
+}

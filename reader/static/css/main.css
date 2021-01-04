@@ -1,49 +1,83 @@
 div#book-list {
-    display: inline-block;
+  display: inline-block;
+  background: #222;
+  padding-top: 10px;
 }
-div.book-line {
-    display: inline-block;
+
+/* 2-GRID */
+@media screen and (min-width: 600px) {
+  div#book-list {
+    -moz-column-count: 2;
+    -webkit-column-count: 2;
+    column-count: 2;
+  }
+}
+/* 3-GRID */
+@media screen and (min-width: 900px) {
+  div#book-list {
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 3;
+  }
+}
+/* 4-GRID */
+@media screen and (min-width: 1200px) {
+  div#book-list {
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+  }
 }
 
 .book-thumbnail {
-    margin-left: 10px;
-    margin-right: 10px;
-    max-width: 310px;
-    margin-bottom: 30px;
-    border-radius: 0;
-    padding: 4px;
-    border: 1px solid #DDDDDD;
-    float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 30px;
+  border-radius: 0;
+  padding: 4px;
+  border: 1px solid #dddddd;
+  float: left;
+  -moz-page-break-inside: avoid;
+  -webkit-column-break-inside: avoid;
+  break-inside: avoid;
+  background: #FFF;
+}
+
+.book-thumbnail:hover {
+    background: rgb(212, 250, 247);
+    border: 2px solid rgb(252, 185, 41);
+    cursor: pointer;
 }
 
 .book-thumbnail h3 {
-    margin-top: 0px;
-    margin-bottom: 10px;
-    font-size: 22px;
-    text-align: center;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  font-family: "Gill Sans", sans-serif;
+  text-transform: uppercase;
+  font-size: 1em;
+  text-align: center;
 }
 
-
 .book-thumbnail a {
-    padding: 0;
+  padding: 0;
 }
 
 .book-thumbnail img {
-    max-width: 96%;
-    height: auto;
-    margin: 0 auto;
-    display: block;
-    max-height: 420px;
+  max-width: 96%;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  max-height: 420px;
 }
 
 .book-thumbnail .caption {
-    overflow-y: hidden;
-    color: #555;
-    padding: 9px;
+  overflow-y: hidden;
+  color: #555;
+  padding: 9px;
 }
 
 .book-content {
-    font-size: 10px;
-    color: black;
-    line-height: 16px;
+  font-size: 10px;
+  color: black;
+  line-height: 16px;
 }

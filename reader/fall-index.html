@@ -1,5 +1,5 @@
 ---
-layout: reader/reader_page
+layout: reader/reader_fall_page
 title: 读书手扎
 header: 读书手扎
 description: "这里展示了读书手扎."
@@ -8,52 +8,49 @@ group: navigation
 {% raw %}
 <br/>
 <div class="container">
-    <div id="book-list" class="row">
+    <div id="book-list" class="grid-line">
     </div>
 </div>
 <script id="book-list-tpl" type="text/html">
     {{# for(var i = 0;i< d.length;i++){ }} 
-        <div class="book-thumbnail">
-            <a href="{{ d[i].itemHref }}" target="_blank" title="{{ d[i].itemName }}">
-                <img src="{{ d[i].imgHref }}" alt="{{ d[i].itemName }}" />
-            </a>
-            <div class="caption">
-                <h3>
-                    <a href="{{ d[i].itemHref }}" target="_blank" title="{{ d[i].itemName }}">{{ d[i].itemName }}</a>
-                </h3>
-                <a href="{{ d[i].itemHref }}" target="_blank" title="{{ d[i].content }}">
-                    <p class="book-content">{{ d[i].content }}</p>
-                </a>
+    <div class="item shift0">
+        <a class="link" href="{{ d[i].itemHref }}">
+            <div class="hovercontent">
+            <h1>{{ d[i].itemName }}</h1>
+            <h3>{{ d[i].content }}</h3>
             </div>
-        </div>
+            <img src="{{ d[i].imgHref }}">
+        </a>
+    </div>
     {{# } }}
 </script>
+{% endraw %}
 <script>
     $(function() {
         var data = [{
             itemHref: 'meet-unknowed-self/index.html',
             itemName: '遇见未知的自己',
-            imgHref: 'meet-unknowed-self/book.jpg',
+            imgHref: '{{ site.baseurl }}/reader/meet-unknowed-self/book.jpg',
             content: '偶然迷茫的时候看到这本书，于是记录下来；希望当我下次再迷茫的时候我能再次翻开这本书，得到不一样的解读...'
         }, {
             itemHref: 'https://book.douban.com/review/12035595/',
             itemName: '虽然人人都说暴力不好',
-            imgHref: 'people-say-violence-bad/book.jpg',
+            imgHref: '{{ site.baseurl }}/reader/people-say-violence-bad/book.jpg',
             content: '你如何看待暴力，stop，让我们换个视角...'
         }, {
             itemHref: 'https://book.douban.com/review/10106297/',
             itemName: '血字的研究',
-            imgHref: 'Holmes-bloom-study/book.jpg',
+            imgHref: '{{ site.baseurl }}/reader/Holmes-bloom-study/book.jpg',
             content: '福尔摩斯探案①...'
         }, {
             itemHref: 'https://book.douban.com/review/10127468/',
             itemName: '四签名',
-            imgHref: 'Holmes-four-signature/book.jpg',
+            imgHref: '{{ site.baseurl }}/reader/Holmes-four-signature/book.jpg',
             content: '福尔摩斯探案②...'
         }, {
             itemHref: 'https://book.douban.com/review/10223134/',
             itemName: '巴斯克维尔的猎犬',
-            imgHref: 'Holmes-basikver-dog/book.jpg',
+            imgHref: '{{ site.baseurl }}/reader/Holmes-basikver-dog/book.jpg',
             content: '福尔摩斯探案③...'
         }];
 
@@ -62,4 +59,3 @@ group: navigation
         });
     });
 </script>
-{% endraw %}
