@@ -2,11 +2,7 @@
 
 <div class="archive" >
 {% for post in site.posts  %}
-    {% if post.layout == 'post' %}
-        {% assign post_ids = post.id | split: "/" %}
-        {% if post_ids.last != 'life' %}
-            {% continue %}
-        {% endif %}  
+    {% if post.layout == 'life_post' %}
 
         {% capture next_year %}{{ this_year }}{% endcapture %}
         {% capture next_month %}{{ this_month }}{% endcapture %}
