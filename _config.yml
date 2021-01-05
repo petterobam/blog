@@ -89,4 +89,4 @@ paths:
   my_qq_zone: /QQ/zone/1460300366/index.html
   my_github: https://github.com/petterobam
 
-exclude: ["QQ","vendor"]
+exclude: ["vendor"]
