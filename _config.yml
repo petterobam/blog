@@ -21,6 +21,10 @@ kramdown:
 sass:
   style: compressed
 
+collections:
+  'life_posts':
+    output: true
+
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
 baseurl: # the subpath of your site, e.g. /blog
@@ -86,7 +90,7 @@ paths:
   tags: /blog/tags/
   my_reader: /reader/index.html
   my_learner: /learner/index.html
-  my_qq_zone: /QQ/zone/1460300366/index.html
+  my_qq_zone: /other/QQ/zone/1460300366/index.html
   my_github: https://github.com/petterobam
 
 exclude: ["vendor"]

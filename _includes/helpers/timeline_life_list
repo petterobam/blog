@@ -1,7 +1,8 @@
 
 
 <div class="archive" >
-{% for post in site.posts  %}
+{% assign life_post_list = site.life_posts | sort: 'date' | reverse %}
+{% for post in life_post_list %}
     {% if post.layout == 'life_post' %}
 
         {% capture next_year %}{{ this_year }}{% endcapture %}
