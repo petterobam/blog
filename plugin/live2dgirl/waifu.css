@@ -8,6 +8,7 @@
     -webkit-transform: translateY(3px);
     transform: translateY(3px);
     cursor: pointer;
+    display: none;
 }
 .waifu:hover {
     -webkit-transform: translateY(0);
