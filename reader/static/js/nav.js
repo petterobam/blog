@@ -119,6 +119,7 @@ if (null != dirEle && dirEle.innerHTML == "") {
     var dirEle = document.getElementById('js-nav-directory');
 }
 /*移动端目录事件定义*/
+/* 
 var mediaMenubar = document.getElementById("mediaMenubar");
 if(null != mediaMenubar) {
     var dirLinkEvent = false;
@@ -135,7 +136,9 @@ if(null != mediaMenubar) {
         }
         dirLinkEvent = true;
     };
-}
+} 
+*/
+
 var aLink = dirEle.getElementsByTagName("a");
 for (i = 0;i < aLink.length;i++) {
     aLink[i].onclick = function() {

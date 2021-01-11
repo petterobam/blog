@@ -2,11 +2,9 @@
 layout: book_post
 title: "《遇见未知的自己》摘录"
 author: "petterobam"
-description: "遇见未知的自己"
-categories: [读书]
-tags: [读书]
-redirect_from:
-  - /2018/04/22/
+description: "偶然迷茫的时候看到这本书，于是记录下来；希望当我下次再迷茫的时候我能再次翻开这本书，得到不一样的解读..."
+book_name: "遇见未知的自己"
+img_url: "/reader/meet-unknowed-self/book.jpg"
 ---
 
 ## 前言

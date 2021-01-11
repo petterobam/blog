@@ -1,5 +1,3 @@
-
-
 <div class="archive" >
 {% assign life_post_list = site.life_posts | sort: 'date' | reverse %}
 {% for post in life_post_list %}

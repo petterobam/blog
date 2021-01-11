@@ -33,6 +33,10 @@ sass:
 collections:
   life_posts:
     output: true
+  letter_posts:
+    output: true
+  book_posts:
+    output: true
 
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
