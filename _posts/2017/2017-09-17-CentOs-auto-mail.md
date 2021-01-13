@@ -48,7 +48,7 @@ redirect_from:
 
 我用的是网易邮箱，对外的服务器地址有这些
 
-![网易邮箱服务器信息](/images/centos-auto-mail/mail-service-info.png)
+![网易邮箱服务器信息](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/centos-auto-mail/mail-service-info.png)
 
 对了，这个密码需要邮箱的授权码，不是登录密码。
 
@@ -158,7 +158,7 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 	4) 执行如下命令或者重启即可生效。
 	[root@host ~]# source /etc/sysconfig/i18n
 
-![发送成功！](/images/centos-auto-mail/success-mail-qq.png)
+![发送成功！](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/centos-auto-mail/success-mail-qq.png)
 
 ## 脚本定时发送
 
@@ -196,4 +196,4 @@ esc，查找`/DAEMON_OPTIONS`，改为任意网段可访问
 
 	/etc/init.d/crond restart
 
-![测试结果](/images/centos-auto-mail/test-sendmail-auto.png)
+![测试结果](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/centos-auto-mail/test-sendmail-auto.png)

@@ -10,7 +10,8 @@
 <head>
     {% include common/meta.html %}
     <link href='{{ site.baseurl }}/assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="{{ site.baseurl }}/reader/static/css/book.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/learner/static/css/learn.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ site.baseurl }}/assets/stylesheets/prism.css"/>
     {% include common/libraries.html %}
 </head>
 
@@ -66,6 +67,7 @@
     {% endif %}
     {% include blog/scripts.html %}
     {% include common/img2show.html %}
+    <script src="{{ site.baseurl }}/assets/javascripts/prism.js"></script>
 </body>
 
 </html>

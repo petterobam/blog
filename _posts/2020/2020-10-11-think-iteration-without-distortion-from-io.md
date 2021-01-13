@@ -30,9 +30,9 @@ new BufferedReader(new InputStreamReader(new FileInputStream(new File(filePath))
 业务数据流（比如 Feed 流 --> 场景数据流） --> 业务迭代（业务数据流的迭代和扩展）
 ```
 
-![文件流类型相关继承关系](/images/io/io-type.png)
+![文件流类型相关继承关系](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/io/io-type.png)
 
-![文件流功能相关继承关系](/images/io/io-function.png)
+![文件流功能相关继承关系](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/io/io-function.png)
 
 # 装饰模式
 

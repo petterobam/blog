@@ -1,12 +1,48 @@
 ---
 ---
 [
+  {
+    "title"      : "文章列表",
+    "url"        : "{{ site.paths.blog }}"
+  },
+  {
+    "title"      : "生活动态",
+    "url"        : "{{ site.paths.life_news }}"
+  },
+  {
+    "title"      : "读书手札",
+    "url"        : "{{ site.paths.my_reader }}"
+  },
+  {
+    "title"      : "学习笔记",
+    "url"        : "{{ site.paths.my_learner }}"
+  },
+  {
+    "title"      : "GitHub",
+    "url"        : "{{ site.paths.my_github }}"
+  } 
   {% for post in site.posts %}
-    {
+    ,{
       "title"      : "{{ post.title | escape }}",
       "url"        : "{{ post.url }}",
       "date"       : "{{ post.date }}",
       "shortdate"  : "{{ post.date | date: '%B %d, %Y' }}"
-    } {% if forloop.last %}{% else %},{% endif %}
+    } 
+  {% endfor %}
+  {% for post in site.life_posts %}
+    ,{
+      "title"      : "{{ post.title | escape }}",
+      "url"        : "{{ post.url }}",
+      "date"       : "{{ post.date }}",
+      "shortdate"  : "{{ post.date | date: '%B %d, %Y' }}"
+    } 
+  {% endfor %}
+  {% for post in site.learner_posts %}
+    ,{
+      "title"      : "{{ post.title | escape }}",
+      "url"        : "{{ post.url }}",
+      "date"       : "{{ post.date }}",
+      "shortdate"  : "{{ post.date | date: '%B %d, %Y' }}"
+    } 
   {% endfor %}
 ]

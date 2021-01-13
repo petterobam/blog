@@ -14,7 +14,7 @@ redirect_from:
 
 我有一个 <del>2G 左右</del> 很大的网站访问日志。我想看看访问网站的人都来自哪里，于是我想开始想办法来分析这日志，这是一个 Web 生成的界面，通过 Elastic.js 向搜索引擎查询数据，将再这些数据渲染到地图上。
 
-![Demo](/images/practice/access-map.png)
+![Demo](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/practice/access-map.png)
 
 Hadoop + Pig + Jython + AmMap + ElasticSearch
 

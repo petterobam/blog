@@ -62,7 +62,7 @@ Word、PDF 在文件结构上的结构有所不同，就连 Word 家的 Doc 和 
 
 于是，可穷举就有一个最小单位，我们可以将一个大的 HTML 文档，通过穷举的项和上下文关系特性，将其切成一个个 HTML 文本小块，这就是文本切块的工具原理，穷举就是文档中的小标题关键字。
 
-![文本切块设计](/images/word-pdf-parse/text-cut-design.png)
+![文本切块设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/text-cut-design.png)
 
 当然，这上面的锚点有效性的定义上还要解决一些问题：
 
@@ -76,7 +76,7 @@ Word、PDF 在文件结构上的结构有所不同，就连 Word 家的 Doc 和 
 
 既然前面一直是基于 HTML，那么 HTML 的特性 DOM 需要好好利用起来。java 的 HTML 解析器目前比较出名的像 Jsoup、Xpath 等，不过由于 Jsoup 语法更接近 JQuery，所以我选择了 Jsoup。利用到 Jsoup 后，文本就可以一口气变成一个 DOM 元素集，可以进行很方便的元素扣取，特别是对表格和图片的处理，简直如有神助。当然，要把它变成一个工具，需要先让他很流畅的支持批量提取数据的功能。
 
-![元素扣取设计](/images/word-pdf-parse/text-jsoup-design.png)
+![元素扣取设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/text-jsoup-design.png)
 
 从该工具中衍生了一套表格数据处理的方法，包括错位表格、跨行、跨列表格数据的定位和提取。
 
@@ -84,7 +84,7 @@ Word、PDF 在文件结构上的结构有所不同，就连 Word 家的 Doc 和 
 
 我们都知道正则源于文法重点 3 型文法，对应于有限状态自动机，好吧，我们或许不知道（[点击了解](https://www.2cto.com/kf/201411/356617.html "点击了解")）。所以，我们对正则算法的匹配效率不需要过多讨论，反正要达到类似的效果正则是比较高效的。然而，我们知道 java 的正则表达式真正耗时的不是索引取取数据的时间，而是用正则表达式 compile 文本的时间，有效的减少正则的 compile，就需要简单的对原来的正则表达式进行封装，让离散的数据一次性的变成有效的数据集。
 
-![正则匹配设计](/images/word-pdf-parse/text-matcher-design.png)
+![正则匹配设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/text-matcher-design.png)
 
 正则除了可以做复杂的预判和替换外，批量匹配的正则单元具有开始结束索引和组的这两个重要的特征。索引可以模仿切块功能的锚点，实现更为复杂的切块，比如行程信息中精确到每天的行程信息解析，就是利用这种变形版的正则切块法，直接有效区分解析非表格风格的行程，当然也可以针对表格风格的行程（不过一般情况下，表格风格的行程用 Jsoup 解析效果更佳）。组就相当于提取到的有效数据，是一种更加自由的元素扣取，不用像 Jsoup 这样，要规范的 HTML 文本才能有效扣取。另外，切块中的容占比计算也用到了正则工具。
 
@@ -92,19 +92,19 @@ Word、PDF 在文件结构上的结构有所不同，就连 Word 家的 Doc 和 
 
 当大部分数据都出来了之后，我们就要精雕细，处理那些顽固数据。例如，线路行程里面的城市数据，这种无法方便穷举的城市数据匹配，对词这个最小单元要有很高效的解析，而且还要是城市的单词。幸好我们公司有 Elasticsearch，旅游方面实现了针对我们库的一个城市提取服务。当然，这个项目的内部我也添加了 Lucene 分词，用于备用情况下生成某些有概括性的语义小标题，结合 2012 年的 IKAnalyzer 可以达到每秒 600 万字的解析量，解析时间可以忽略不计。
 
-![分词和聚类](/images/word-pdf-parse/text-fcjl-design.png)
+![分词和聚类](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/text-fcjl-design.png)
 
 聚类，貌似牵扯到了一点点数据分析，其实用到它只是为了解决一个比较关键的问题：那就是确保行程数据按天为单位可以达到连续有效。对于行程数据，这种极具统一风格的信息，我统计出了近 10 种风格，但是这是人做的文档，一般情况下风格都是相同的。加之容占比排除等等的作用，可以很有效的提取到每天的行程。然而，如果正文中出现了其他行程如何处理，恰恰这种时候容占比也不能排除（非表格格式的行程信息多见）。就好比我们用正则切块匹配到了多种风格的锚点，这样就会打乱锚点的顺序，第二天和第三天中间多了个“第 5 天”，第三天和第四天之间多了个“第 1 天”，聪明的我们已然了解到需要排除“第 5 天”和“第 7 天”的这两个数据，他们的风格不对。而聚类就是统计这些风格出现的次数，次数高者得胜，其他淘汰。
 
 ## 细节解析数据流向简图
 
-![细节设计](/images/word-pdf-parse/project-new-design.png)
+![细节设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/project-new-design.png)
 
 ## 全自动匹配
 
 其实，一开始我一直想避免模板，但是有人可能已经发现，在上面用到了模板，那就是切块。只是这个模板是文档标题，一般是旅游的各个模块，属于行业术语。虽然，有些术语不同地方叫法略有差异，但是配置门槛较低，也可以针对性的穷举。那么如果假设我们有一个穷举库，我们是不是可以达到自动匹配呢？当然可以。但是当时我这个项目没有分配数据库，而且我觉得操作数据库也极大的影响了性能，只做了一个简要的自动匹配。“模板”是用 SQLIT 录入和存储的，在项目启动的时候加载到缓存可以，避免频繁的数据库操作。由于没有评分系统，不能对各个模板进行优先级排序和特征记录，所以自动匹配只是粗暴的通过匹配到的数据数量高低来做判断优劣，不能自动运转优化。
 
-![自动匹配解析](/images/word-pdf-parse/text-muticut-design.png)
+![自动匹配解析](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/text-muticut-design.png)
 
 ## 后续
 

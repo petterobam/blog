@@ -34,26 +34,26 @@ CDN 的全称是 Content Delivery Network，即内容分发网络。CDN 是构�
 
 1. 百度搜索 [站长工具 ping 检测](https://www.baidu.com/s?tn=02003390_hao_pg&ie=utf-8&wd=%E7%AB%99%E9%95%BF%E5%B7%A5%E5%85%B7%20ping%E6%A3%80%E6%B5%8B)，选择一个站长工具，比如：http://ping.chinaz.com
 2. 输入你访问的慢的域名，比如我们下载 idea 插件的地址：plugins.jetbrains.com
-    ![Ping-Test.png](/images/dns-host/Ping-Test.png) 
+    ![Ping-Test.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/dns-host/Ping-Test.png) 
 3. 找一个最快的 ip 配置到本地的 DNS 里面，推荐使用 [SwitchHosts](https://oldj.github.io/SwitchHosts/) 工具方便下载
-    ![SwitchHosts.png](/images/dns-host/SwitchHosts.png)
+    ![SwitchHosts.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/dns-host/SwitchHosts.png)
 4. 然后可以愉快的冲浪了
 
 方法二：
 
 使用 [DNS Jumper](https://www.sordum.org/7952/dns-jumper-v2-2/) >> [介绍参考](https://www.zhihu.com/question/32229915/answer/112085467)
 
-![DNS-Jumper.png](/images/dns-host/DNS-Jumper.png)
+![DNS-Jumper.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/dns-host/DNS-Jumper.png)
 
 # 愉快的浏览 Github
 
 Github 是个综合网站，代码库、个人信息、搜索索引、图片等都在不同的域名，国内访问特别卡顿，需要配置下比较快速的 DNS 才能保证体验。
 
-![Github-Host.png](/images/dns-host/Github-Host.png)
+![Github-Host.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/dns-host/Github-Host.png)
 
 幸好有人长期维护这些域名 DNS，所以打开 SwitchHosts，添加 [远程订阅] host：https://raw.githubusercontent.com/521xueweihan/GitHub520/master/hosts
 
-![Github-Remote-Host.png](/images/dns-host/Github-Remote-Host.png)
+![Github-Remote-Host.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/dns-host/Github-Remote-Host.png)
 
 # CDN 其他探索参考
 

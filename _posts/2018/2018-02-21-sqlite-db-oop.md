@@ -811,4 +811,4 @@ public void test4() {
 * Git 地址：[https://github.com/petterobam/my-sqlite](https://github.com/petterobam/my-sqlite)
 * Git-wiki：[https://github.com/petterobam/my-sqlite/wiki/](https://github.com/petterobam/my-sqlite/wiki/)
 * Git 检出地址：https://github.com/petterobam/my-sqlite.git
-* 源码下载：[点击下载](http://www.oyjie.cn/upload/2018/02/rpdd0gs1vkhrvr3rlhh4khq8i6.rar)
+* 源码下载：[点击下载](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/oyjie.cn/upload/2018/02/rpdd0gs1vkhrvr3rlhh4khq8i6.rar)

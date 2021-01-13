@@ -86,7 +86,8 @@
                     var obj = m[i];
                     output = settings.template;
                     output = output.replace(/\{(.*?)\}/g, function(match, property) {
-                        return obj[property];
+                        var ret = obj[property];
+                        return ret == undefined ? ' ' : ret;
                     });
                     searchResults.append($(output));
                 }

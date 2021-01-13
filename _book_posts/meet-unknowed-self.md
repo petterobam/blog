@@ -4,7 +4,7 @@ title: "《遇见未知的自己》摘录"
 author: "petterobam"
 description: "偶然迷茫的时候看到这本书，于是记录下来；希望当我下次再迷茫的时候我能再次翻开这本书，得到不一样的解读..."
 book_name: "遇见未知的自己"
-img_url: "/reader/meet-unknowed-self/book.jpg"
+img_url: "https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/reader/meet-unknowed-self/book.jpg"
 ---
 
 ## 前言

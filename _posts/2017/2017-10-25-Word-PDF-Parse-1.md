@@ -20,17 +20,17 @@ redirect_from:
 
 项目启动初，需要给一个初步的项目设计，下面是项目内部的结构设计：
 
-![项目框架设计](/images/word-pdf-parse/project-struct-design.png)
+![项目框架设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/project-struct-design.png)
 
 简化起来大概就是这个样子：
 
-![项目框架设计](/images/word-pdf-parse/parse-simple-step.png)
+![项目框架设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/parse-simple-step.png)
 
 ## 时间计划
 
 项目启动后，需要给一个简要的功能计划和时间的预估：
 
-![项目框架设计](/images/word-pdf-parse/project-time-manage.png)
+![项目框架设计](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/word-pdf-parse/project-time-manage.png)
 
 ## 框架架构
 

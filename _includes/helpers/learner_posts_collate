@@ -1,0 +1,18 @@
+{% assign posts_collate = site.posts %}
+
+{% for post in site.learner_posts %}
+
+    {% if forloop.first %}<ul class="post-list">{% endif %}
+
+    <li>
+        <a class="active internal" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="date">
+            by {% if page.author == null %}{{ site.author.name }}{% else %}{{ page.author }}{% endif %}
+        </span>
+    </li>
+
+    {% if forloop.last %}</ul>{% endif %}
+
+{% endfor %}
+
+{% assign posts_collate = nil %}

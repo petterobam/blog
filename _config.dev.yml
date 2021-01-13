@@ -37,6 +37,17 @@ collections:
     output: true
   book_posts:
     output: true
+  learner_posts:
+    output: true
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "learner_posts"
+    values:
+      layout: "learn_post"
+      author: "欧阳Boy_Petter"
 
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
@@ -101,9 +112,9 @@ paths:
   life_news: /life/
   categories: /blog/categories/
   tags: /blog/tags/
-  my_reader: /reader/index.html
-  my_learner: /learner/index.html
-  my_qq_zone: /other/QQ/zone/1460300366/index.html
+  my_reader: /reader/
+  my_learner: /learner/
+  my_qq_zone: /other/QQ/
   my_github: https://github.com/petterobam
 
-exclude: ["other","vendor"]
+exclude: ["vendor"]

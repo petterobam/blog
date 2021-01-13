@@ -56,7 +56,7 @@ chcp 65001
 msg /server:127.0.0.1 * 写周报了，兄弟！！
 ```
 
-![daily-report.png](/images/windows-schtasks/daily-report.png)
+![daily-report.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/windows-schtasks/daily-report.png)
 
 step 2：添加任务，WIN+R 运行 `cmd \admin` ，打开 CMD
 ```cmd
@@ -73,7 +73,7 @@ chcp 65001
 :: 发送吃饭提醒的消息
 msg /server:127.0.0.1 * 吃中饭了，兄弟！！
 ```
-![lunch-msg.png](/images/windows-schtasks/lunch-msg.png)
+![lunch-msg.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/windows-schtasks/lunch-msg.png)
 
 step 2：添加任务，WIN+R 运行 `cmd \admin` ，打开 CMD
 ```cmd
@@ -126,7 +126,7 @@ Adobe、Flash、Google、WPS 一些更新计划可以删除掉
 schtasks /delete /tn {taskName} /F
 ```
 
-![app-tasks.png](/images/windows-schtasks/app-tasks.png)
+![app-tasks.png](https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/windows-schtasks/app-tasks.png)
 
 ```cmd
 schtasks /delete /tn AdobeGCInvoker-1.0 /F
