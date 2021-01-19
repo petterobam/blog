@@ -1,0 +1,42 @@
+{% assign posts_list = paginator.posts %}
+<ul class="post-list">
+{% for post in posts_list %}
+    {% if post.layout == 'post' %}
+        <li>
+            <a class="active internal" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+            {% if post.last_updated %}
+                <span title="{{ site.data.i18n[site.lang].last_updated }}: {{ post.last_updated | date: "%b %d, %Y" }}" class="date">{{ post.date | date: "%b %d, %Y" }}</span>
+            {% else %}
+                <span class="date">{{ post.date | date: "%b %d, %Y" }}</span>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}
+</ul>
+{% assign posts_list = nil %}
+
+{% if paginator.total_pages > 1 %}
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&laquo; Prev</a>
+  {% else %}
+    <span>&laquo; Prev</span>
+  {% endif %}
+
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <em>{{ page }}</em>
+    {% elsif page == 1 %}
+      <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">{{ page }}</a>
+    {% else %}
+      <a href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', page }}">{{ page }}</a>
+    {% endif %}
+  {% endfor %}
+
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Next &raquo;</a>
+  {% else %}
+    <span>Next &raquo;</span>
+  {% endif %}
+</div>
+{% endif %}
