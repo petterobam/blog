@@ -1,0 +1,18 @@
+{% assign posts_collate = site.posts %}
+
+{% for post in site.letter_posts %}
+
+    {% if forloop.first %}<ul class="post-list">{% endif %}
+
+    <li>
+        <a class="active internal" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="date">
+            to {{ page.sendTo }} by {% if page.sendFrom == null %}{{ site.author.name }}{% else %}{{ page.sendFrom }}{% endif %}
+        </span>
+    </li>
+
+    {% if forloop.last %}</ul>{% endif %}
+
+{% endfor %}
+
+{% assign posts_collate = nil %}

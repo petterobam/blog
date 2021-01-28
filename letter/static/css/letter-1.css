@@ -1,9 +1,18 @@
 /*
 use case
 ---------------------------
-<div class="bg-grid"></div>
+<section class="letter-content">
+  <blockquote>
+      The essence of the independent mind lies not in what it thinks, but in how it thinks.<br>
+      — Christopher Hitchens
+  </blockquote>
+  <blockquote>
+      The best way to predict the future is to invent it.<br>
+      — Alan Kay
+  </blockquote>
+</section>
 */
-.bg-grid {
+.letter-content {
   height: auto;
   padding: 10px;
   padding-top: 64px;
@@ -14,8 +23,8 @@ use case
   background-position: center;
 }
 
-.bg-grid:before,
-.bg-grid:after {
+.letter-content:before,
+.letter-content:after {
   content: "";
   position: absolute;
   z-index: 0;
@@ -30,12 +39,12 @@ use case
     calc(68px * -3) 0 0 0 #fff, calc(68px * -4) 0 0 0 #fff,
     calc(68px * -5) 0 0 0 #fff;
 }
-.bg-grid:before {
+.letter-content:before {
   top: 0;
   width: 10px;
 }
 
-.bg-grid:after {
+.letter-content:after {
   top: 26px;
   width: 28px;
   border-radius: 50%;

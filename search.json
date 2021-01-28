@@ -11,15 +11,15 @@
   },
   {
     "title"      : "读书手札",
-    "url"        : "{{ site.paths.my_reader }}"
+    "url"        : "{{ site.paths.reader }}"
   },
   {
     "title"      : "学习笔记",
-    "url"        : "{{ site.paths.my_learner }}"
+    "url"        : "{{ site.paths.learner }}"
   },
   {
     "title"      : "GitHub",
-    "url"        : "{{ site.paths.my_github }}"
+    "url"        : "{{ site.paths.github }}"
   } 
   {% for post in site.posts %}
     ,{

@@ -1,8 +1,8 @@
 /* 
 use case
 ---------------------------------------
-<section class="notepad">
-    <div class="notepad-heading">
+<section class="letter-content">
+    <div class="letter-content-heading">
         <h1>Notepad</h1>
     </div>
     <blockquote>
@@ -16,9 +16,9 @@ use case
 </section> 
 */
 
-.notepad,
-.notepad:before,
-.notepad:after {
+.letter-content,
+.letter-content:before,
+.letter-content:after {
   background-color: white;
   background-image: -webkit-linear-gradient(#f6abca 1px, transparent 1px),
     -webkit-linear-gradient(#f6abca 1px, transparent 1px),
@@ -40,7 +40,7 @@ use case
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15), 0 0 4px rgba(0, 0, 0, 0.5);
 }
 
-.notepad {
+.letter-content {
   position: relative;
   margin: 60px auto;
   padding: 0 23px 14px 35px;
@@ -49,15 +49,15 @@ use case
   font-size: 11px;
   color: #666;
 }
-.notepad p,
-.notepad blockquote {
+.letter-content p,
+.letter-content blockquote {
   margin-bottom: 23px;
 }
-.notepad :last-child {
+.letter-content :last-child {
   margin-bottom: 0;
 }
-.notepad:before,
-.notepad:after {
+.letter-content:before,
+.letter-content:after {
   content: "";
   position: absolute;
   z-index: -1;
@@ -68,7 +68,7 @@ use case
   height: 4px;
   background-size: 1px 1px, 1px 1px, 0 0;
 }
-.notepad:before {
+.letter-content:before {
   z-index: -2;
   left: 6px;
   right: 6px;
@@ -76,7 +76,7 @@ use case
   background-color: #eee;
 }
 
-.notepad-heading {
+.letter-content-heading {
   position: relative;
   margin: 0 -23px 14px -35px;
   height: 38px;
@@ -91,15 +91,15 @@ use case
   box-shadow: inset 0 1px #2f81ad, 0 2px 1px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(0, 0, 0, 0.5), 0 1px black;
 }
-.notepad-heading > h1 {
+.letter-content-heading > h1 {
   line-height: 36px;
   font-size: 14px;
   color: white;
   text-align: center;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
 }
-.notepad-heading:before,
-.notepad-heading:after {
+.letter-content-heading:before,
+.letter-content-heading:after {
   content: "";
   position: absolute;
   bottom: 2px;
@@ -109,7 +109,7 @@ use case
   border-top: 1px dashed #617c90;
   border-color: rgba(255, 255, 255, 0.35);
 }
-.notepad-heading:after {
+.letter-content-heading:after {
   bottom: 3px;
   border-color: #071c2c;
   border-color: rgba(0, 0, 0, 0.5);

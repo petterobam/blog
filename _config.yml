@@ -52,6 +52,21 @@ defaults:
     values:
       layout: "learn_post"
       author: "欧阳Boy_Petter"
+  -
+    scope:
+      path: ""
+      type: "life_posts"
+    values:
+      layout: "life_post"
+      author: "欧阳Boy_Petter"
+  -
+    scope:
+      path: ""
+      type: "letter_posts"
+    values:
+      layout: "letter_post"
+      sendFrom: "欧阳Boy_Petter"
+      cssType: "letter-1"
 
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
@@ -116,9 +131,9 @@ paths:
   life_news: /life/
   categories: /blog/categories/
   tags: /blog/tags/
-  my_reader: /reader/
-  my_learner: /learner/
-  my_qq_zone: /other/QQ/
-  my_github: https://github.com/petterobam
+  reader: /reader/
+  learner: /learner/
+  qq_zone: /other/QQ/
+  github: https://github.com/petterobam
 
 exclude: ["vendor"]
