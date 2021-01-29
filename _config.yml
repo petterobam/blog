@@ -133,6 +133,7 @@ paths:
   tags: /blog/tags/
   reader: /reader/
   learner: /learner/
+  letter: /letter/
   qq_zone: /other/QQ/
   github: https://github.com/petterobam
 
