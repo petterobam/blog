@@ -25,10 +25,14 @@
             <div class="unit-body">
                 <div class="unit-inner unit-body-inner">
                     <section class="letter-content">
-                        <h2 style="text-align: center;">{{ page.title }}</h2>
+                        <div class="heading">
+                            <h1>{{ page.title }}</h1>
+                        </div>
                         <p>{{ page.sendTo }}：</p>
                         <div>
-                            {{ content }}
+                            <pre>
+{{ content }}
+                            </pre>
                         </div>
                         <p style="text-align: right;">
                             {{ page.wishes }} <br/> {{ page.sendFrom }}

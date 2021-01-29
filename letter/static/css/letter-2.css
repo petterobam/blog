@@ -42,12 +42,28 @@ use case
 
 .letter-content {
   position: relative;
-  margin: 60px auto;
-  padding: 0 23px 14px 35px;
+  padding: 10px 23px 14px 35px;
   width: auto;
-  line-height: 23px;
-  font-size: 11px;
+  line-height: 1.5em;
+  font-size: 1em;
   color: #666;
+  word-wrap: break-word;
+  word-break: normal;
+  font-family: STCaiyun, cursive;
+}
+
+.letter-content * {
+  font-family: STCaiyun, cursive;
+}
+
+.letter-content pre {
+  word-wrap: break-word;
+  word-break: normal;
+  white-space:pre-wrap; /* css3.0 */ 
+  white-space:-moz-pre-wrap; /* Firefox */ 
+  white-space:-pre-wrap; /* Opera 4-6 */ 
+  white-space:-o-pre-wrap; /* Opera 7 */ 
+  word-wrap:break-word; /* Internet Explorer 5.5+ */ 
 }
 .letter-content p,
 .letter-content blockquote {
@@ -76,10 +92,9 @@ use case
   background-color: #eee;
 }
 
-.letter-content-heading {
+.letter-content .heading {
   position: relative;
   margin: 0 -23px 14px -35px;
-  height: 38px;
   background: #14466a;
   border-radius: 2px 2px 0 0;
   background-image: -webkit-linear-gradient(top, #226797, #0c3452);
@@ -91,15 +106,15 @@ use case
   box-shadow: inset 0 1px #2f81ad, 0 2px 1px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(0, 0, 0, 0.5), 0 1px black;
 }
-.letter-content-heading > h1 {
-  line-height: 36px;
-  font-size: 14px;
+.letter-content .heading > h1 {
+  line-height: 2em;
+  font-size: 1.5em;
   color: white;
   text-align: center;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
 }
-.letter-content-heading:before,
-.letter-content-heading:after {
+.letter-content .heading:before,
+.letter-content .heading:after {
   content: "";
   position: absolute;
   bottom: 2px;
@@ -109,7 +124,7 @@ use case
   border-top: 1px dashed #617c90;
   border-color: rgba(255, 255, 255, 0.35);
 }
-.letter-content-heading:after {
+.letter-content .heading:after {
   bottom: 3px;
   border-color: #071c2c;
   border-color: rgba(0, 0, 0, 0.5);

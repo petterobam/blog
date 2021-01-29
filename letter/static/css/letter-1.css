@@ -17,10 +17,11 @@ use case
   padding: 10px;
   padding-top: 64px;
   background-color: #efefef;
-  background-image: linear-gradient(#e7e6e6 1px, transparent 0),
-    linear-gradient(90deg, #e7e6e6 1px, transparent 0);
+  background-image: linear-gradient(#e7e6e6 1px, transparent 0),linear-gradient(90deg, #e7e6e6 1px, transparent 0);
   background-size: 21px 21px, 21px 21px;
   background-position: center;
+  word-wrap: break-word;
+  word-break: normal;
 }
 
 .letter-content:before,
@@ -48,4 +49,14 @@ use case
   top: 26px;
   width: 28px;
   border-radius: 50%;
+}
+
+.letter-content pre {
+  word-wrap: break-word;
+  word-break: normal;
+  white-space:pre-wrap; /* css3.0 */ 
+  white-space:-moz-pre-wrap; /* Firefox */ 
+  white-space:-pre-wrap; /* Opera 4-6 */ 
+  white-space:-o-pre-wrap; /* Opera 7 */ 
+  word-wrap:break-word; /* Internet Explorer 5.5+ */ 
 }
