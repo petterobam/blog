@@ -34,6 +34,10 @@ paginate_path: "/page:num"
 sass:
   style: compressed
 
+assets:
+   sources:
+       - letter/static/fonts
+  
 collections:
   life_posts:
     output: true
