@@ -60,3 +60,11 @@ use case
   white-space:-o-pre-wrap; /* Opera 7 */ 
   word-wrap:break-word; /* Internet Explorer 5.5+ */ 
 }
+
+.letter-content .heading > h1 {
+  line-height: 2em;
+  font-size: 1.5em;
+  text-align: center;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+  margin-top: 0;
+}

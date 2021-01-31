@@ -16,20 +16,6 @@ use case
 </section> 
 */
 
-@font-face {
-  /* 信笺体 */
-  font-family: "Letter";
-  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/letter.eot");
-  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/letter.eot?#iefix") format("embedded-opentype"),
-    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/letter.woff") format("woff"),
-    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/letter.ttf") format("truetype"),
-    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/letter.svg") format("svg");
-}
-
-.body .unit-body {
-  padding: 0;
-}
-
 .letter-content,
 .letter-content:before,
 .letter-content:after {
@@ -59,15 +45,10 @@ use case
   padding: 10px 23px 14px 35px;
   width: auto;
   line-height: 1.5em;
-  font-size: 1.5em;
+  font-size: 1em;
   color: #666;
   word-wrap: break-word;
   word-break: normal;
-  font-family: 'Letter';
-}
-
-.letter-content * {
-  font-family: 'Letter';
 }
 
 .letter-content pre {

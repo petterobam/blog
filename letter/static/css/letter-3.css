@@ -17,7 +17,6 @@ use case
   word-wrap: break-word;
   word-break: normal;
   position: relative;
-  margin: 80px auto;
   padding: 29px 20px 20px 45px;
   line-height: 30px;
   color: #6a5f49;
@@ -87,7 +86,7 @@ use case
   border-width: 0 1px;
 }
 .letter-content:after {
-  z-index: -1;
+/*   z-index: -1;
   left: 0;
   right: 0;
   background: rgba(242, 246, 193, 0.9);
@@ -96,7 +95,7 @@ use case
   -moz-transform: rotate(2deg);
   -ms-transform: rotate(2deg);
   -o-transform: rotate(2deg);
-  transform: rotate(2deg);
+  transform: rotate(2deg); */
 }
 .letter-content pre {
   word-wrap: break-word;
@@ -143,4 +142,12 @@ use case
 
 .lt-ie8 .letter-content {
   padding: 15px 25px;
+}
+
+.letter-content .heading > h1 {
+  line-height: 2em;
+  font-size: 1.5em;
+  text-align: center;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+  margin-top: 0;
 }
