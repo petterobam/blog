@@ -17,8 +17,7 @@ body {
 
 h1 {
     font-size: 5em;
-
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
 }
 
 h2 {
@@ -120,6 +119,7 @@ textarea {
     &:hover,
     &:focus {
         background-color: $color-background-light !important;
+        color: #000000 !important;
     }
 }
 
@@ -128,6 +128,7 @@ textarea {
     &:hover,
     &:focus {
         background-color: $color-background-dark !important;
+        color: #FFFFFF !important;
     }
 }
 
