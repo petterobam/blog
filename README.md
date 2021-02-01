@@ -15,3 +15,12 @@ rm -r _site && bundle exec jekyll serve --incremental
 rm -r _site | bundle exec jekyll serve --config _config.dev.yml
 rm -r _site && bundle exec jekyll serve --config _config.dev.yml
 ```
+
+# 图片地址
+
+Github
+- https://raw.githubusercontent.com/petterobam/picture-bucket/main/{path}
+
+CDN 映射地址
+- https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/{path}
+
