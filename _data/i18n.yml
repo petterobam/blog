@@ -1,8 +1,8 @@
 en: &en
   life_news: 'LifeNews'
-  reader: 'ReadThinking'
+  reader: 'Reading'
   letter: 'Letter'
-  learner: 'LearningNote'
+  learner: 'Note'
   qq_zone: 'QQ-ZONE'
   github: 'Github'
   about: 'About'
@@ -45,16 +45,16 @@ en-ca:
 en-nz:
   <<: *en
 zh: &zh
-  life_news: '生活动态'
-  reader: '读书手札'
+  life_news: '动态'
+  reader: '读书'
   letter: '信'
-  learner: '学习笔记'
-  qq_zone: 'QQ空间'
+  learner: '笔记'
+  qq_zone: 'QQ-ZONE'
   github: 'Github'
   about: '关于'
-  articles: '文章列表'
+  articles: '文章'
   back_to_top: '返回顶部'
-  categories: '文章分类'
+  categories: '分类'
   close: '关闭'
   enter_blog: '进入博客'
   enter_github: '访问Github'
@@ -78,7 +78,7 @@ zh: &zh
   show_author: '显示作者'
   show_comments: '显示评论'
   show_license: '显示许可证'
-  tags: '文章标签'
+  tags: '标签'
   theme_info: '<p><small>本博客主题 由 <a href="https://github.com/petterobam" target="_blank">欧阳Boy_Petter</a> 基于  <a href="https://github.com/yizeng/jekyll-theme-simple-texture" target="_blank">Simple Texture</a> 开发.</small></p>'
   view: '查阅'
 zh-cn:
