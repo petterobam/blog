@@ -1,6 +1,6 @@
 {% assign posts_collate = site.posts %}
 
-{% for post in site.letter_posts %}
+{% for post in site.song_posts %}
 
     {% if forloop.first %}<ul class="post-list">{% endif %}
 

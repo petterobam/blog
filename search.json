@@ -51,6 +51,14 @@
       "url"        : "{{ post.url }}",
       "date"       : "{{ post.date }}",
       "shortdate"  : "{{ post.date | date: '%B %d, %Y' }}"
+    }
+  {% endfor %}
+  {% for post in site.song_posts %}
+    ,{
+      "title"      : "{{ post.title | escape }}",
+      "url"        : "{{ post.url }}",
+      "date"       : "{{ post.date }}",
+      "shortdate"  : "{{ post.date | date: '%B %d, %Y' }}"
     } 
   {% endfor %}
 ]

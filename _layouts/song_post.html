@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="{{ site.lang }}">
+<!--<![endif]-->
+
+<head>
+    {% include common/meta.html %}
+    <link href='{{ site.baseurl }}/assets/stylesheets/blog.css' rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/letter/static/css/font-zh.css" type="text/css" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/letter/static/css/font-en.css" type="text/css" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/letter/static/css/{{ page.cssType }}.css" type="text/css" />
+    <style type="text/css">
+        .body .unit-body {
+            padding: 1em;
+        }
+
+        .letter-content * {
+            font-family: '{{ page.font }}',
+            cursive;
+        }
+    </style>
+    {% include common/libraries.html %}
+</head>
+
+<body>
+    {% include common/notices.html %}
+    {% include blog/overlay.html %}
+
+    <div id="page" class="hentry">
+        {% include blog/header.html %}
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <section class="letter-content">
+                        <div class="heading">
+                            <h1>{{ page.title }}</h1>
+                        </div>
+                        <p>{{ page.sendTo }}：</p>
+                        <div>
+                            <pre>
+{{ content }}
+                            </pre>
+                        </div>
+                        <p style="text-align: right;">
+                            {{ page.wishes }} <br /> {{ page.sendFrom }}
+                        </p>
+                    </section>
+                </div>
+                <div class="misc-content">
+                    <!-- gitment -->
+                    {% if site.gitment.owner and site.gitment.repo and site.gitment.oauth_client_id and
+                    site.gitment.oauth_client_secret %}
+                    {% include common/gitment.html %}
+                    {% endif %}
+                    <!-- utterances -->
+                    {% if site.utterances.enable %}
+                    {% include common/utterances.html %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% include blog/footer.html %}
+    </div>
+    {% if site.directory %}
+    <script type="text/javascript" src="{{ site.baseurl }}/reader/static/js/nav.js"></script>
+    {% endif %}
+    {% include blog/scripts.html %}
+    {% include common/img2show.html %}
+</body>
+
+</html>

@@ -43,6 +43,8 @@ collections:
     output: true
   learner_posts:
     output: true
+  song_posts:
+    output: true
 
 defaults:
   -
@@ -58,6 +60,13 @@ defaults:
       type: "life_posts"
     values:
       layout: "life_post"
+      author: "欧阳Boy_Petter"
+  -
+    scope:
+      path: ""
+      type: "song_posts"
+    values:
+      layout: "song_post"
       author: "欧阳Boy_Petter"
   -
     scope:
@@ -129,6 +138,8 @@ paths:
   home: /
   blog: /blog/
   life_news: /life/
+  gist: /gist/
+  song: /song/
   categories: /blog/categories/
   tags: /blog/tags/
   reader: /reader/
