@@ -1,0 +1,6 @@
+{% assign video = page.video %}
+<div style="margin-bottom: 10px; position: relative; height: 0; padding-bottom: {{ video.paddingBottom }};">
+    <iframe src="{{ video.playUrl }}"
+     allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" frameborder="0"
+     style="position:absolute; width:{{ video.width }}; height:{{ video.height }}; top:0; left:0"></iframe>
+</div>
