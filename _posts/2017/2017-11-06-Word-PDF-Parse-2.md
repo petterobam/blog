@@ -6,6 +6,8 @@ categories: [心得]
 tags: [Word,PDF, 分词，聚类，文本分析]
 redirect_from:
   - /2017/11/06/
+utterances:
+  issue_number: "5" 
 ---
 
 ## 前情提要

@@ -7,6 +7,8 @@ categories: [Sqlite, 面向对象封装，Java]
 tags: [Sqlite, 连接池，批量]
 redirect_from:
   - /2018/05/18/
+utterances:
+  issue_number: "11" 
 ---
 
 ## 前情提要

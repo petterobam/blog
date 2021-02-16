@@ -6,6 +6,8 @@ categories: [体会，心得]
 tags: [项目管控]
 redirect_from:
   - /2017/09/22/
+utterances:
+  issue_number: "3" 
 ---
 
 依据个人这两个月的项目管控体验，总结了在我们公司项目管控一些相关的要注意的地方。

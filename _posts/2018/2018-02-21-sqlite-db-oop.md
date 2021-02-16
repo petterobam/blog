@@ -6,6 +6,8 @@ categories: [体会，sqlite, 数据库，Java]
 tags: [数据库，封装，面向对象，sqlite]
 redirect_from:
   - /2018/02/21/
+utterances:
+  issue_number: "7" 
 ---
 
 ## 前情提要

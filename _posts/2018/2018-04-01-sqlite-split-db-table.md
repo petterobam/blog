@@ -6,6 +6,8 @@ categories: [Sqlite, 面向对象封装，Java]
 tags: [Sqlite, 分库，分表]
 redirect_from:
   - /2018/04/01/
+utterances:
+  issue_number: "8" 
 ---
 
 ## 前情提要

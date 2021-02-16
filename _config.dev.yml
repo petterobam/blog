@@ -29,7 +29,7 @@ liquid:
   strict_variables  : false
 
 paginate: 5
-paginate_path: "/page:num"
+paginate_path: "/home/page:num"
 
 sass:
   style: compressed

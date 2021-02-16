@@ -29,11 +29,11 @@ liquid:
   strict_variables  : false
 
 paginate: 5
-paginate_path: "/page:num"
+paginate_path: "/home/page:num"
 
 sass:
   style: compressed
-
+  
 collections:
   life_posts:
     output: true
@@ -57,16 +57,16 @@ defaults:
   -
     scope:
       path: ""
-      type: "life_posts"
+      type: "song_posts"
     values:
-      layout: "life_post"
+      layout: "song_post"
       author: "欧阳Boy_Petter"
   -
     scope:
       path: ""
-      type: "song_posts"
+      type: "life_posts"
     values:
-      layout: "song_post"
+      layout: "life_post"
       author: "欧阳Boy_Petter"
   -
     scope:
@@ -143,8 +143,8 @@ paths:
   categories: /blog/categories/
   tags: /blog/tags/
   reader: /reader/
-  learner: /learner/
   letter: /letter/
+  learner: /learner/
   qq_zone: /other/QQ/
   github: https://github.com/petterobam
 

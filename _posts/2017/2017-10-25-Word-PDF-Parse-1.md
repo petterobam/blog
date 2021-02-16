@@ -6,6 +6,8 @@ categories: [体会，框架]
 tags: [Word,PDF, 解析，数据提取]
 redirect_from:
   - /2017/10/25/
+utterances:
+  issue_number: "4" 
 ---
 
 ## 前情提要

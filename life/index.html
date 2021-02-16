@@ -4,5 +4,107 @@ title: 生活动态
 header: 生活动态
 description: "这里展示了生活动态."
 group: navigation
+label: "life"
 ---
-{% include helpers/timeline_life_list %}
+<script type="text/javascript" src="{{ site.baseurl }}/plugin/laytpl/laytpl.js"></script>
+{% assign dist_post_list = site.life_posts | sort: 'date' | reverse %}
+{% include common/post2jsvar.html %}
+{% raw %}
+<div id="fall-post-list" class="archive" ></div>
+<div style="text-align: center;"><a id="load-more-posts" style="cursor: pointer;">↓↓ 加载更多 ↓↓</a></div>
+
+<script id="fall-post-list-tpl" type="text/html">
+{{# for(var i = 0;i< d.length;i++){ }} 
+    {{# if(d[i].this_year != d[i].next_year) { }}
+    <h3 id="{{ d[i].this_year }}-ref">{{ d[i].this_year }}</h3>
+    {{# } }}
+
+    <section>
+        <span class="point-time "></span>
+        <time datetime='{{ d[i].this_month }}'>
+            <span>
+                <h3 id="{{ d[i].this_year }}-{{ d[i].this_month }}-ref">
+                    {{ d[i].this_month }}-{{ d[i].this_day }}
+                </h3>
+            </span>
+        </time>
+        <aside>
+            <a href="{{ d[i].url }}" title="{{ d[i].title }}">{{ d[i].title }}</a>
+            <span><font color="gray">{{ d[i].date }}</font></span>
+        </aside>
+    </section>    
+    <section>
+        <aside>
+            <article class="unit-article layout-post">
+                <div class="unit-inner unit-article-inner">
+                    <div itemscope itemtype="http://schema.org/Article" class="content">
+                        <div class="bd article-content">
+                            <div class="entry-content">
+                                <div id="articleBody" class="life-news-body" itemprop="articleBody">
+                                    {{ d[i].content }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </aside>
+    </section>
+{{# } }}
+</script>
+{% endraw %}
+
+<script type="text/javascript">
+// 在文档加载完毕后执行
+$(document).ready(function() {
+    var current_page = 0;
+    var next_page = 1;
+    var page_size = 5;
+    var single = false;
+    $("#load-more-posts").on('click', function () {
+        if (single) {
+            return;
+        } else {
+            single = true;
+        }
+        $(this).attr("disabled",true);
+        $(this).text("loading...");
+        var data = post_list.slice(current_page * page_size, next_page * page_size);
+        laytpl($("#fall-post-list-tpl").html()).render(data, function(html) {
+            $("#fall-post-list").append(html);
+        });
+        current_page++;
+        next_page++;
+        if (current_page * page_size < post_list.length) {
+            $(this).text("↓↓ 加载更多 ↓↓");
+            $(this).attr("disabled", false);
+            single = false;
+        } else {
+            $(this).parent().text("↑↑ 没有更多了，以上就是全部 ↑↑");
+            $(this).hide();
+        }
+    });
+    // 加载第一页
+    $("#load-more-posts").click();
+    // 开始监听滚动条
+    $(window).scroll(function(){
+        if (single) {
+            return;
+        }
+        // 滚动高度
+        var scroH = $(document).scrollTop();  
+        // 可见高度 
+        var viewH = $(window).height();  
+        // 内容高度
+        var contentH = $(document).height();  
+        // 距离底部高度小于100px
+        var diffHeight = contentH - (scroH + viewH);
+        if (diffHeight <= 100){  
+            $("#load-more-posts").click();
+        }
+        if (diffHeight == 0){  //滚动条滑到底部啦
+            $("#load-more-posts").click();
+        }
+    })
+});
+</script>

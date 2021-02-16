@@ -7,6 +7,8 @@ categories: [ElasticSearch, 面向对象封装，Java]
 tags: [ElasticSearch, 实现思路]
 redirect_from:
   - /2018/04/21/
+utterances:
+  issue_number: "9" 
 ---
 
 ## 前情提要

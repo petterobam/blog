@@ -6,6 +6,8 @@ categories: [体会，SVN]
 tags: [代码提交，代码合并，打包]
 redirect_from:
   - /2017/12/10/
+utterances:
+  issue_number: "6" 
 ---
 
 ## 前情提要

@@ -6,6 +6,8 @@ categories: [框架，CentOs]
 tags: [博客，搭建，CentOs,Tale]
 redirect_from:
   - /2017/09/10/
+utterances:
+  issue_number: "1" 
 ---
 
 ## @首先你要有

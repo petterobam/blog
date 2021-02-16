@@ -6,6 +6,8 @@ categories: [邮件，CentOs]
 tags: [CentOs,maillx, 定时任务，邮件]
 redirect_from:
   - /2017/09/17/
+utterances:
+  issue_number: "2" 
 ---
 
 ## 应用场景

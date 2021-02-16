@@ -7,6 +7,8 @@ categories: [Access, 面向对象封装，Java]
 tags: [Access, 差异]
 redirect_from:
   - /2018/06/02/
+utterances:
+  issue_number: "12" 
 ---
 
 ## 前情提要
