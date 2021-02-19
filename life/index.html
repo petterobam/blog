@@ -72,6 +72,9 @@ $(document).ready(function() {
         var data = post_list.slice(current_page * page_size, next_page * page_size);
         laytpl($("#fall-post-list-tpl").html()).render(data, function(html) {
             $("#fall-post-list").append(html);
+            if (img2ShowExit) {
+                imgEnlarge();
+            }
         });
         current_page++;
         next_page++;
