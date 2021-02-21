@@ -1,0 +1,20 @@
+<!-- <script src="{{ site.baseurl }}/plugin/print/jquery-migrate-1.2.1.min.js"></script> -->
+<script src="{{ site.baseurl }}/plugin/print/jquery.jqprint-0.3.js"></script>
+<style type="test/css">
+    .print-link {
+    
+    
+    
+    
+    padding: 1.2em 1.2em .2em;
+    
+    
+}
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("div#page").prepend("<a style='font-size:.9em;position:fixed;right:.25em;top:.5em;text-decoration:none;cursor:pointer;z-index:99999999' "
+            + " href='javascript:$(\"div#printBody\").jqprint({importCSS: true,printContainer: true,operaSupport: false})' " 
+            + " onmouseover='this.style.color=\"orange\"' onmouseout='this.style.color=\"blue\"'>打印</a>")
+    });
+</script>

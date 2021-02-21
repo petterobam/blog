@@ -1,0 +1,14 @@
+<iframe id="printIframe" name="printIframe" src="{{ page.url }}" frameborder="0" height="0" width="0"></iframe>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        $("div#page").prepend("<a style='font-size:.9em;position:fixed;right:1.25em;top:.5em;text-decoration:none;cursor:pointer;z-index:99999999' "
+            + " href='javascript:printArea(\"div#printBody\")' "
+            + " onmouseover='this.style.color=\"orange\"' onmouseout='this.style.color=\"blue\"'>打印</a>")
+    });
+    function printArea(element) {
+        var printIframe = document.getElementById('printIframe');
+        printIframe.contentWindow.document.body.innerHTML = $(element).html();
+        printIframe.contentWindow.print();
+    }
+</script>

@@ -35,7 +35,7 @@
 
         <div class="body animated fadeInDown" role="main">
             <div class="unit-body">
-                <div class="unit-inner unit-body-inner">
+                <div id="printBody" class="unit-inner unit-body-inner">
                     <section class="letter-content">
                         <div class="heading">
                             <h1>{{ page.title }}</h1>
@@ -66,11 +66,9 @@
         </div>
         {% include blog/footer.html %}
     </div>
-    {% if site.directory %}
-    <script type="text/javascript" src="{{ site.baseurl }}/reader/static/js/nav.js"></script>
-    {% endif %}
     {% include blog/scripts.html %}
     {% include common/img2show.html %}
+    {% include common/addprint3.html %}
 </body>
 
 </html>
