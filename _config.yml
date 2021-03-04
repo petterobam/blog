@@ -145,6 +145,7 @@ paths:
   reader: /reader/
   letter: /letter/
   learner: /learner/
+  board: /board/
   qq_zone: /other/QQ/
   github: https://github.com/petterobam
 

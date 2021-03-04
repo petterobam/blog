@@ -14,6 +14,10 @@ label: "book"
             {% for post in book_post_list %}
                 {% if post.layout == 'book_post' %}
                 <div class="book-thumbnail">
+                    <div class="status-block">
+                        <div class="status-background {{ post.book_status }}"></div>
+                        <div class="status-font">{{ post.book_statusName }}</div>
+                    </div>
                     <a href="{{ post.book_url | default: post.url }}" target="_blank" title="{{ post.book_name }}">
                         <img src="{{ post.img_url }}" alt="{{ post.book_name }}" />
                     </a>

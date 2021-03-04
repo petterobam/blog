@@ -40,13 +40,50 @@ div#book-list {
   -moz-page-break-inside: avoid;
   -webkit-column-break-inside: avoid;
   break-inside: avoid;
-  background: #FFF;
+  background: #fff;
+  position: relative;
 }
 
 .book-thumbnail:hover {
-    background: rgb(212, 250, 247);
-    border: 2px solid rgb(252, 185, 41);
-    cursor: pointer;
+  background: rgb(212, 250, 247);
+  border: 2px solid rgb(252, 185, 41);
+  cursor: pointer;
+}
+
+.book-thumbnail .status-block {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+}
+
+.book-thumbnail .status-block .status-background {
+  position: absolute;
+  right: 0px;
+  width: 0px;
+  height: 0px;
+  border-top: 50px solid rgb(158, 158, 158);
+  border-left: 50px solid transparent;
+}
+
+.book-thumbnail .status-block .status-font {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  transform: rotate(45deg);
+  color: rgb(255, 255, 255);
+  right: -7px;
+  top: 5px;
+  font-size: 15px;
+}
+
+.book-thumbnail .status-block .readed {
+  border-top: 50px solid gray;
+}
+.book-thumbnail .status-block .reading {
+  border-top: 50px solid red;
+}
+.book-thumbnail .status-block .wanted {
+  border-top: 50px solid darkorchid;
 }
 
 .book-thumbnail h3 {
