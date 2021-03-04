@@ -413,7 +413,7 @@ function importBoard(blob) {
 //
 function createDemoBoard() {
   var blob =
-    '{"format":20190412,"id":1555071015420,"revision":581,"title":"本地任务台","lists":[{"title":"这是提示","notes":[{"text":"所有信息都是存在本地的。\nCtrl+Z 可以撤回。","raw":false,"min":false}]},{"title":"紧急任务","notes":[{"text":"完成学习，并且开始吧！","raw":false,"min":false}]},{"title":"其他任务","notes":[{"text":"发挥你的创造，丰富使用吧。","raw":false,"min":false}]}]}';
+    '{"format":20190412,"id":1555071015420,"revision":581,"title":"本地任务台","lists":[{"title":"这是提示","notes":[{"text":"所有信息都是存在本地的。\\nCtrl+Z 可以撤回。","raw":false,"min":false}]},{"title":"紧急任务","notes":[{"text":"完成学习，并且开始吧！","raw":false,"min":false}]},{"title":"其他任务","notes":[{"text":"发挥你的创造，丰富使用吧。","raw":false,"min":false}]}]}';
 
   var demo = parseBoard(blob);
 
