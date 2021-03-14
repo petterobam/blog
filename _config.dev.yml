@@ -45,6 +45,8 @@ collections:
     output: true
   song_posts:
     output: true
+  family_posts:
+    output: true
 
 defaults:
   -
@@ -76,6 +78,14 @@ defaults:
       layout: "letter_post"
       sendFrom: "欧阳Boy_Petter"
       cssType: "letter-1"
+  -
+    scope:
+      path: ""
+      type: "family_posts"
+    values:
+      layout: "family_post"
+      author: "欧阳Boy_Petter"
+      font: "Love"
 
 # Site Data
 url: # the base hostname & protocol for your site, e.g. http://example.com
@@ -147,6 +157,8 @@ paths:
   learner: /learner/
   board: /board/
   qq_zone: /other/QQ/
+  other: /other/
+  family: /family/
   github: https://github.com/petterobam
 
 exclude: ["vendor"]

@@ -1,7 +1,7 @@
 ---
 layout: gist/gist
-title : 代码
-header : 代码
+title : 代码 - Gist
+header : 代码 - Gist
 group: navigation
 ---
 

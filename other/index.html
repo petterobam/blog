@@ -1,0 +1,25 @@
+---
+layout: page
+title : 其他功能和页面
+header : 其他功能和页面
+group: navigation
+label: "other"
+---
+
+
+<ul class="post-list nav-global">
+    <li class="active internal">
+        <a label="gist" href="{{ site.paths.gist | relative_url }}">{{ site.data.i18n[site.lang].gist }} - 一些代码片段</a>
+    </li>
+    <li class="active internal">
+        <a label="gist" href="{{ site.paths.board | relative_url }}">{{ site.data.i18n[site.lang].board }} - 临时任务管理工具</a>
+    </li>
+    <li class="active internal">
+        <a label="QQ" href="{{ site.paths.qq_zone | relative_url }}">{{ site.data.i18n[site.lang].qq_zone }} - 青涩的空间记录</a>
+    </li>
+    {% if site.live2dgirl %}
+    <li class="active internal">
+        <a title="召唤萌妹" class="btn-init-live2dgirl" href="#">萌妹 - 召唤本站虚拟助理</a>
+    </li>
+    {% endif %}
+</ul>
