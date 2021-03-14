@@ -7,7 +7,7 @@
     <li style="border-bottom:1px solid #141414;">
         <a class="active internal" href="{{ post.url | relative_url }}">{{ post.title }}</a>
         <span class="date">
-            to [{{ post.sendTo }}] by [{% if post.sendFrom == null %}{{ site.author.name }}{% else %}{{ post.sendFrom }}{% endif %}]
+        {% if post.author == null %}{{ site.author.name }}{% else %}{{ post.author }}{% endif %}
         </span>
     </li>
 
