@@ -182,9 +182,10 @@ TableTools.styleTable(table, style);
 ```
 ### NiceXWPFDocument
 NiceXWPFDocument 是对原生 XWPFDocument 的增强。
-
-#### 某个位置插入表格
+```java
 NiceXWPFDocument doc = new NiceXWPFDocument(new FileInputStream("./deepoove.docx"));
+```
+#### 某个位置插入表格
 ```java
 // 在某个run位置插入10行10列的表格
 // XWPFRun run = ...
@@ -207,7 +208,7 @@ NiceXWPFDocument newDoc = main.merge(sub);
 
 // 生成新文档
 FileOutputStream out = new FileOutputStream("new_doc.docx");
-doc.write(out);
-doc.close();
-out.close();
+newDoc.write(out);
+newDoc.close();
+newDoc.close();
 ```
