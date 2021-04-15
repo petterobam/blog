@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "读：《遇见未知的自己》"
+title: "速读《遇见未知的自己》"
 author: "petterobam"
 description: "遇见未知的自己"
 categories: [读书]
