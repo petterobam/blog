@@ -1,0 +1,32 @@
+<script type="text/javascript">
+$(function () {
+    $(".gist").dblclick(function() {
+        if ($(this).attr("pack-up") == "1") {
+            $(this).find(".gist-data").css({
+                "overflow": "auto",
+                "height": "auto",
+                "border-bottom": "1px solid #ddd"
+            });
+            $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+            $(this).attr("pack-up", "0");
+        } else {
+            $(this).find(".gist-data").css({
+                "overflow": "hidden",
+                "height": "75px",
+                "border-bottom": "3px solid red"
+            });
+            $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+            $(this).attr("pack-up", "1");
+        }
+    });
+    $(".gist").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist").attr("pack-up", "1");
+    $(".gist").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
