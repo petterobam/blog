@@ -1,6 +1,6 @@
 <script type="text/javascript">
 $(function () {
-    $(".gist").dblclick(function() {
+    $(".gist-file").dblclick(function() {
         if ($(this).attr("pack-up") == "1") {
             $(this).find(".gist-data").css({
                 "overflow": "auto",
@@ -19,14 +19,14 @@ $(function () {
             $(this).attr("pack-up", "1");
         }
     });
-    $(".gist").find(".gist-data").css({
+    $(".gist-file").find(".gist-data").css({
         "overflow": "hidden",
         "height": "75px",
         "border-bottom": "3px solid red"
     });
-    $(".gist").attr("pack-up", "1");
-    $(".gist").find(".gist-data").css({"cursor":"pointer"});
-    $(".gist").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
 });
 </script>
 
