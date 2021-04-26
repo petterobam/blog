@@ -157,6 +157,7 @@ paths:
   learner: /learner/
   board: /board/
   qq_zone: /other/QQ/
+  pwgen: /other/pwgen/
   other: /other/
   family: /family/
   github: https://github.com/petterobam
