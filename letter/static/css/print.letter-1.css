@@ -1,0 +1,70 @@
+/*
+use case
+---------------------------
+<section class="letter-content">
+  <blockquote>
+      The essence of the independent mind lies not in what it thinks, but in how it thinks.<br>
+      — Christopher Hitchens
+  </blockquote>
+  <blockquote>
+      The best way to predict the future is to invent it.<br>
+      — Alan Kay
+  </blockquote>
+</section>
+*/
+.letter-content {
+  height: auto;
+  padding: 10px;
+  padding-top: 64px;
+  background-color: #efefef;
+  background-image: linear-gradient(#e7e6e6 1px, transparent 0),linear-gradient(90deg, #e7e6e6 1px, transparent 0);
+  background-size: 21px 21px, 21px 21px;
+  background-position: center;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+.letter-content:before,
+.letter-content:after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block;
+  background-color: #fff;
+  height: 28px;
+  box-shadow: 68px 0 0 0 #fff, calc(68px * 2) 0 0 0 #fff,
+    calc(68px * 3) 0 0 0 #fff, calc(68px * 4) 0 0 0 #fff,
+    calc(68px * 5) 0 0 0 #fff, -68px 0 0 0 #fff, calc(68px * -2) 0 0 0 #fff,
+    calc(68px * -3) 0 0 0 #fff, calc(68px * -4) 0 0 0 #fff,
+    calc(68px * -5) 0 0 0 #fff;
+}
+.letter-content:before {
+  top: 0;
+  width: 10px;
+}
+
+.letter-content:after {
+  top: 26px;
+  width: 28px;
+  border-radius: 50%;
+}
+
+.letter-content pre {
+  word-wrap: break-word;
+  word-break: normal;
+  white-space:pre-wrap; /* css3.0 */ 
+  white-space:-moz-pre-wrap; /* Firefox */ 
+  white-space:-pre-wrap; /* Opera 4-6 */ 
+  white-space:-o-pre-wrap; /* Opera 7 */ 
+  word-wrap:break-word; /* Internet Explorer 5.5+ */ 
+}
+
+.letter-content .heading > h1 {
+  line-height: 2em;
+  font-size: 1.5em;
+  text-align: center;
+  text-shadow: 0 -1px rgba(0, 0, 0, 0.7);
+  margin-top: 0;
+}
