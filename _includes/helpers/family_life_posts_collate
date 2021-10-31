@@ -2,7 +2,7 @@
 
 {% for post in site.family_posts %}
 
-    {% if post.type == 'family' %}
+    {% if post.type == 'life' %}
 
         {% if forloop.first %}<ul class="post-list">{% endif %}
 
