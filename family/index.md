@@ -21,8 +21,6 @@ label: "family"
 
 {% include helpers/family_posts_collate %}
 
----
-
 ## 生活篇
 
 ```
@@ -30,8 +28,4 @@ label: "family"
 此处与家庭篇相辅相成，希望每个家庭成员都能热爱生活，感受生命，
 ```
 
----
-
 {% include helpers/family_life_posts_collate %}
-
-## 家族篇
