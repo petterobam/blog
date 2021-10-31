@@ -21,6 +21,8 @@ label: "family"
 
 {% include helpers/family_posts_collate %}
 
+<br/>
+
 ## 生活篇
 
 ```
@@ -29,3 +31,6 @@ label: "family"
 ```
 
 {% include helpers/family_life_posts_collate %}
+
+
+## 家族篇

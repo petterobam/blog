@@ -1,20 +1,18 @@
 {% assign posts_collate = site.posts %}
 
+<ul class="post-list">
 {% for post in site.family_posts %}
 
 {% if post.type == 'family' %}
-
-{% if forloop.first %}<ul class="post-list">{% endif %}
 
 <li style="border-bottom:1px solid #141414;">
 <a class="active internal" href="{{ post.url | relative_url }}">{{ post.title }}</a>
 <span class="date">[{{ post.tip }}]</span>
 </li>
 
-{% if forloop.last %}</ul>{% endif %}
-
 {% endif %}
 
 {% endfor %}
+</ul>
 
 {% assign posts_collate = nil %}
