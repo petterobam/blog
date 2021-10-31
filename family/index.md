@@ -21,14 +21,16 @@ label: "family"
 
 {% include helpers/family_posts_collate %}
 
+---
 
 ## 生活篇
-
 
 ```
 开启生活篇是最近感受到的，温暖应该伴随着乐趣，这样才不会滋生枯燥的细菌。
 此处与家庭篇相辅相成，希望每个家庭成员都能热爱生活，感受生命，
 ```
+
+---
 
 {% include helpers/family_life_posts_collate %}
 
