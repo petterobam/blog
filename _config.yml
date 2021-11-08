@@ -55,6 +55,7 @@ defaults:
       type: "learner_posts"
     values:
       layout: "learn_post"
+      label: "learn"
       author: "欧阳Boy_Petter"
   -
     scope:
@@ -63,6 +64,7 @@ defaults:
     values:
       layout: "song_post"
       author: "欧阳Boy_Petter"
+      label: "song"
   -
     scope:
       path: ""
@@ -77,6 +79,7 @@ defaults:
     values:
       layout: "letter_post"
       sendFrom: "欧阳Boy_Petter"
+      label: "letter"
       cssType: "letter-1"
   -
     scope:
@@ -85,6 +88,7 @@ defaults:
     values:
       layout: "family_post"
       author: "欧阳Boy_Petter"
+      label: "family"
       font: "Love"
 
 # Site Data
