@@ -158,6 +158,7 @@ paths:
   board: /board/
   qq_zone: /other/QQ/
   pwgen: /other/pwgen/
+  gitemoji: /other/gitemoji/
   other: /other/
   family: /family/
   github: https://github.com/petterobam
