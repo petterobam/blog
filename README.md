@@ -1,3 +1,5 @@
+![Alt](https://repobeats.axiom.co/api/embed/780b3693687dd5bc67d42374c8700c7073426891.svg "Repobeats analytics image")
+
 # blog
 我的GitHub博客，链接：http://www.petterobam.cn
 
