@@ -18,6 +18,8 @@ rm -r _site | bundle exec jekyll serve --config _config.dev.yml
 rm -r _site && bundle exec jekyll serve --config _config.dev.yml
 ```
 
+远程如果 workflow 运行失败，先禁用
+
 # 图片地址
 
 Github
