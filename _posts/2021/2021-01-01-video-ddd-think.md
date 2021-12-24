@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "视频 UGC 领域思考（持续补充）"
+title: "【领域】视频 UGC 领域思考和归纳"
 description: "【2021-01-01】视频 UGC 领域思考"
 categories: [整理，总结]
 tags: [领域, UGC]
