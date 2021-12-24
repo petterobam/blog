@@ -27,4 +27,3 @@ Github
 
 CDN 映射地址
 - https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/{path}
-
