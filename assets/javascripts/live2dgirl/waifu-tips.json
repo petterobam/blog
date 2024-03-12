@@ -1,0 +1,86 @@
+{
+    "mouseover": [
+        {
+            "selector": ".hentry a[href^='http']",
+            "text": ["要看看 <span style=\"color:#0099cc;\">{text}</span> 么？"]
+        },
+        {
+            "selector": ".entry-content .year",
+            "text": ["下面是 <span style=\"color:#0099cc;\">{text}</span> 年里发布的文章哦"]
+        },
+        {
+            "selector": ".post-list a",
+            "text": ["要打开 <span style=\"color:#0099cc;\">{text}</span> 这篇文章看看么？"]
+        },
+        {
+            "selector": ".tag_box a",
+            "text": ["要看所有  <span style=\"color:#0099cc;\">{text}</span> 相关的吗？"]
+        },
+        {
+            "selector": ".entry-content h3",
+            "text": ["这是 <span style=\"color:#0099cc;\">{text}</span> 相关的呢"]
+        },
+        {
+            "selector": ".logo a",
+            "text": ["要点击前往首页吗？想回到上一页可以使用浏览器的后退功能哦"]
+        },
+        {
+            "selector": ".nav-link a",
+            "text": ["要看看 <span style=\"color:#0099cc;\">{text}</span> 么？"]
+        },
+        {
+            "selector": "#openHiddenLinkId",
+            "text": ["点击可以展开或收起这篇文章的目录哦"]
+        },
+        {
+            "selector": ".gitment-editor-write-field",
+            "text": ["想要去评论些什么吗？"]
+        },
+        {
+            "selector": ".gitment-editor-login-link",
+            "text": ["要授权登录，然后评论咩 >_<"]
+        },
+        {
+            "selector": ".gitment-editor-submit",
+            "text": ["要[提交]^(Commit)了吗 ~ _ ~"]
+        },
+        {
+            "selector": ".gitment-heart-icon",
+            "text": ["喜欢吗？点一下可以告诉他哦！"]
+        },
+        {
+            "selector": "input.search-field",
+            "text": ["找不到想看的内容？搜索看看吧 ^_^"]
+        },
+        {
+            "selector": "[rel=prev]",
+            "text": ["去上一页看看吧"]
+        },
+        {
+            "selector": "[rel=next]",
+            "text": ["去下一页看看吧"]
+        },
+        {
+            "selector": "#directory-content ul a",
+            "text": ["要翻到 <span style=\"color:#0099cc;\">{text}</span> 看看么？"]
+        },
+        {
+            "selector": ".back-to-top,.gotop",
+            "text": ["返回顶部么？"]
+        },
+        {
+            "selector": "c-player div.lyric-button",
+            "text": ["有<span style=\"color:#0099cc;\">歌词</span>的话就能跟着一起唱呢"]
+        },
+        {
+            "selector": ".waifu #live2d",
+            "text": ["干嘛呢你，快把手拿开", "鼠…鼠标放错地方了！","哼，没想到你是这种人！","⌇●﹏●⌇","(*////▽////*)"]
+        }
+    ],
+    "click": [
+        {
+            "selector": ".waifu #live2d",
+            "text": ["是…是不小心碰到了吧", "萝莉控是什么呀", "你看到我的小熊了吗","我主银不在，你不能欺虎我 T_T","想看羞羞的东西吗？o(*////▽////*)q", "坏银！！","流氓！！！","再摸的话我可要报警了！⌇●﹏●⌇", "110吗，这里有个变态一直在摸我(ó﹏ò｡)"]
+        }
+    ]
+}

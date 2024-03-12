@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Stream 深入分析到 Lambda 扩展使用 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Stream 深入分析到 Lambda 扩展使用" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="Stream 深入分析到 Lambda 扩展使用" />
+<meta property="og:description" content="Stream 深入分析到 Lambda 扩展使用" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-09T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"Stream 深入分析到 Lambda 扩展使用","@type":"BlogPosting","url":"/blog/2020/08/09/stream-design-and-lambda-extension/","headline":"Stream 深入分析到 Lambda 扩展使用","dateModified":"2020-08-09T00:00:00+00:00","datePublished":"2020-08-09T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2020/08/09/stream-design-and-lambda-extension/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="Lambda,Stream" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">Stream 深入分析到 Lambda 扩展使用</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2020-08-09T00:00:00+00:00" datetime="2020-08-09T00:00:00+00:00">August 09, 2020 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：5507 字，&nbsp;预计阅读时间：55 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#Lambda" title="Lambda">
+            Lambda <span>1</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#Stream" title="Stream">
+            Stream <span>1</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#整理" title="整理">
+            整理 <span>20</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#Lambda" title="Lambda">Lambda <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#Stream" title="Stream">Stream <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h1 id="heading-stream-启发之流式编程">Stream 启发之流式编程</h1>
+
+<p>流式编程是一种外表优美，逻辑自洽的一种编程范式，Jdk 很早就在做尝试。</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// Stream 出来之前就有很多流式编程实现，比如</span>
+<span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuilder</span><span class="o">(</span><span class="s">"select * from "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">table</span><span class="o">).(</span><span class="s">" where 1=1 "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">queryStr</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
+<span class="c1">// 自定义实现的构造者</span>
+<span class="n">JavaBean</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">JavaBeanBuilder</span><span class="o">.</span><span class="na">new</span><span class="o">().</span><span class="na">arg1</span><span class="o">(</span><span class="n">param1</span><span class="o">).</span><span class="na">arg2</span><span class="o">(</span><span class="n">param2</span><span class="o">).</span><span class="na">argN</span><span class="o">(</span><span class="n">paramN</span><span class="o">).</span><span class="na">bulid</span><span class="o">();</span>
+</code></pre>
+</div>
+
+<h2 id="heading-故事性">故事性</h2>
+<p>故事性：如果简单的单行代码表示单词或短语，多行代码完成一个闭环功能，我称其描述了一个故事。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>流式编程天然有一个故事模板：
+Start -&gt; [Self Create] -&gt; [Self Do 1] -&gt; ... -&gt; [Self Do n] -&gt; [Output] -&gt; End
+就酱，一行语句描述一个代码故事~
+</code></pre>
+</div>
+
+<h2 id="heading-范式">范式</h2>
+<p>流式编程的 [流对象] 至少有两种方法：</p>
+<ol>
+  <li>过程方法 -&gt; 消费 Data 或 Function，返回 this</li>
+  <li>结果方法 -&gt; 返回目标对象（或消费流结果）</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 用故事模板讲述一个故事</span>
+<span class="n">String</span> <span class="n">story</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="s">"Story:"</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">man</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">action</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">woman</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
+
+<span class="c1">// Stream 常见示例</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">student</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">sorted</span><span class="o">(</span><span class="n">Comparator</span><span class="o">.</span><span class="na">comparing</span><span class="o">(</span><span class="nl">Student:</span><span class="o">:</span><span class="n">getSex</span><span class="o">)).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="n">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">objs</span><span class="o">).</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toMap</span><span class="o">(</span><span class="nl">Obj:</span><span class="o">:</span><span class="n">getId</span><span class="o">,</span> <span class="nl">Obj:</span><span class="o">:</span><span class="n">getName</span><span class="o">);</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">&gt;&gt;</span> <span class="n">classStudentsMap</span> <span class="o">=</span> <span class="n">students</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="nl">Student:</span><span class="o">:</span><span class="n">ClassId</span><span class="o">));</span>
+<span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span><span class="o">(</span><span class="nl">JavaBean:</span><span class="o">:</span><span class="n">getKeyId</span><span class="o">,</span> <span class="n">Collectors</span><span class="o">.</span><span class="na">mapping</span><span class="o">(</span><span class="nl">JavaBean:</span><span class="o">:</span><span class="n">getValue</span><span class="o">,</span> <span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">())));</span>
+
+<span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">ids</span> <span class="o">=</span> <span class="n">orders</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">map</span><span class="o">(</span><span class="n">o</span> <span class="o">-&gt;</span> <span class="n">o</span><span class="o">.</span><span class="na">getUserId</span><span class="o">()).</span><span class="na">distinct</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+<span class="kt">long</span> <span class="n">count</span> <span class="o">=</span> <span class="n">datas</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">filter</span><span class="o">(</span><span class="n">d</span> <span class="o">-&gt;</span> <span class="n">d</span><span class="o">.</span><span class="na">getScore</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">80</span><span class="o">).</span><span class="na">count</span><span class="o">();</span>
+<span class="n">String</span> <span class="n">output</span> <span class="o">=</span> <span class="n">strs</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">distinct</span><span class="o">().</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">","</span><span class="o">));</span>
+<span class="n">Optional</span><span class="o">&lt;</span><span class="n">Book</span><span class="o">&gt;</span> <span class="n">thickBook</span> <span class="o">=</span> <span class="n">books</span><span class="o">.</span><span class="na">parallelStream</span><span class="o">().</span><span class="na">max</span><span class="o">(</span><span class="n">Comparator</span><span class="o">.</span><span class="na">comparing</span><span class="o">(</span><span class="nl">Book:</span><span class="o">:</span><span class="n">getPages</span><span class="o">));</span>
+<span class="n">datas</span><span class="o">.</span><span class="na">stream</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="nl">JavaBean:</span><span class="o">:</span><span class="n">doSomthing</span><span class="o">);</span>
+
+<span class="err">过程方法：</span><span class="n">filter</span><span class="err">、</span><span class="n">map</span><span class="err">、</span><span class="n">sorted</span><span class="err">、</span><span class="n">distinct</span><span class="o">...</span>
+<span class="err">结果方法：</span><span class="n">collect</span><span class="err">、</span><span class="n">count</span><span class="err">、</span><span class="n">max</span><span class="err">、</span><span class="n">min</span><span class="err">、</span><span class="n">forEach</span><span class="o">...</span>
+</code></pre>
+</div>
+
+<h1 id="heading-stream-深入之语法糖">Stream 深入之语法糖</h1>
+
+<p>语法糖，底层语法衍生出的新的语法。</p>
+
+<h2 id="heading-常见语法糖">常见语法糖</h2>
+
+<p>反编译揭秘一些语法糖：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 自动拆装箱</span>
+<span class="n">Integer</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+<span class="n">i</span><span class="o">++;</span>
+<span class="err">↓</span>
+<span class="n">Integer</span> <span class="n">i</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+<span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="na">intValue</span><span class="o">();</span>
+<span class="n">i</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">i</span><span class="o">.</span><span class="na">intValue</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">)</span>
+<span class="c1">// 数字加下划线自动去下划线</span>
+<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">1000</span><span class="n">_0_0000</span><span class="o">;</span>
+<span class="kt">long</span> <span class="n">nums</span> <span class="o">=</span> <span class="mi">1000</span><span class="n">_0000000_0_0_0L</span><span class="o">;</span>
+<span class="err">↓</span>
+<span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">100000000</span><span class="o">;</span>
+<span class="kt">long</span> <span class="n">nums</span> <span class="o">=</span> <span class="mi">10000000000000L</span><span class="o">;</span>
+<span class="c1">// 字符串相加</span>
+<span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">"A"</span> <span class="o">+</span> <span class="s">"B"</span><span class="o">;</span>
+<span class="n">String</span> <span class="n">str5</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">str1</span><span class="o">;</span>
+<span class="err">↓</span>
+<span class="n">String</span> <span class="n">str1</span> <span class="o">=</span> <span class="s">"AB"</span><span class="o">;</span>
+<span class="o">(</span><span class="k">new</span> <span class="n">StringBuilder</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="mi">4</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">str1</span><span class="o">).</span><span class="na">toString</span><span class="o">();</span>
+<span class="c1">// while、for 循环底层基础语法</span>
+<span class="k">while</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">i</span><span class="o">++;</span>
+<span class="o">}</span>
+<span class="err">↓</span>
+<span class="k">for</span> <span class="o">(;</span> <span class="n">i</span><span class="o">.</span><span class="na">intValue</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="o">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">i</span><span class="o">.</span><span class="na">intValue</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">))</span> <span class="o">;</span>
+<span class="c1">// case 语句</span>
+<span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">"2"</span><span class="o">;</span>
+<span class="k">switch</span> <span class="o">(</span><span class="n">str</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="s">"2"</span><span class="o">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="s">"5"</span><span class="o">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="err">↓</span>
+<span class="n">String</span> <span class="n">str</span> <span class="o">=</span> <span class="s">"2"</span><span class="o">;</span>
+<span class="n">Object</span> <span class="n">integer</span> <span class="o">=</span> <span class="n">str</span><span class="o">;</span> 
+<span class="kt">int</span> <span class="n">i1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> 
+<span class="k">switch</span> <span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">integer</span><span class="o">).</span><span class="na">hashCode</span><span class="o">())</span> <span class="o">{</span> 
+    <span class="k">case</span> <span class="mi">50</span><span class="o">:</span>
+        <span class="k">if</span> <span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">integer</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="s">"2"</span><span class="o">))</span> <span class="n">i1</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="mi">53</span><span class="o">:</span>
+        <span class="k">if</span> <span class="o">(((</span><span class="n">String</span><span class="o">)</span><span class="n">integer</span><span class="o">).</span><span class="na">equals</span><span class="o">(</span><span class="s">"5"</span><span class="o">))</span> <span class="n">i1</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="k">break</span><span class="o">;</span> 
+<span class="o">}</span> 
+<span class="k">switch</span> <span class="o">(</span><span class="n">i1</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">case</span> <span class="mi">0</span><span class="o">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="k">case</span> <span class="mi">1</span><span class="o">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+        <span class="k">break</span><span class="o">;</span>
+    <span class="k">default</span><span class="o">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="c1">// 枚举</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kd">enum</span> <span class="n">TestEnum</span> <span class="o">{</span>
+    <span class="n">V1</span><span class="o">,</span><span class="n">V2</span>
+<span class="o">}</span>
+<span class="err">↓</span>
+<span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">TestEnum</span> <span class="kd">extends</span> <span class="n">Enum</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nf">TestEnum</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">s</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span> 
+    <span class="o">}</span> 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">TestEnum</span><span class="o">[]</span> <span class="nf">values</span><span class="o">()</span> <span class="o">{</span> 
+        <span class="n">TestEnum</span> <span class="n">at</span><span class="o">[];</span> 
+        <span class="kt">int</span> <span class="n">i</span><span class="o">;</span> 
+        <span class="n">TestEnum</span> <span class="n">at1</span><span class="o">[];</span> 
+        <span class="n">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">at</span> <span class="o">=</span> <span class="n">ENUM$VALUES</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">at1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="o">[</span><span class="n">i</span> <span class="o">=</span> <span class="n">at</span><span class="o">.</span><span class="na">length</span><span class="o">],</span> <span class="mi">0</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span> 
+        <span class="k">return</span> <span class="n">at1</span><span class="o">;</span> 
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">TestEnum</span> <span class="nf">valueOf</span><span class="o">(</span><span class="n">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span> 
+        <span class="k">return</span> <span class="o">(</span><span class="n">TestEnum</span><span class="o">)</span><span class="n">Enum</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">TestEnum</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">s</span><span class="o">);</span> 
+    <span class="o">}</span> 
+ 
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">TestEnum</span> <span class="n">V1</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">TestEnum</span> <span class="n">V2</span><span class="o">;</span> 
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">TestEnum</span> <span class="n">ENUM$VALUES</span><span class="o">[];</span> 
+    <span class="kd">static</span> <span class="o">{</span> 
+        <span class="n">V1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestEnum</span><span class="o">(</span><span class="s">"V1"</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span> 
+        <span class="n">V2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestEnum</span><span class="o">(</span><span class="s">"V2"</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span> 
+        <span class="n">ENUM$VALUES</span> <span class="o">=</span> <span class="o">(</span><span class="k">new</span> <span class="n">TestEnum</span><span class="o">[]</span> <span class="o">{</span> 
+            <span class="n">V1</span><span class="o">,</span> <span class="n">V2</span>
+        <span class="o">});</span> 
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-lambda-语句语法糖">Lambda 语句语法糖</h2>
+
+<p>Lambda 语句语法糖分析</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Supplier</span> <span class="n">supplier</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">3</span><span class="o">;</span>
+    <span class="n">Object</span> <span class="n">a</span> <span class="o">=</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+    <span class="n">Function</span> <span class="n">function</span> <span class="o">=</span> <span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="mi">4</span><span class="o">;</span>
+    <span class="n">Object</span> <span class="n">b</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="n">Consumer</span> <span class="n">consumer</span> <span class="o">=</span> <span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{};</span>
+    <span class="n">consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+    <span class="n">Predicate</span> <span class="n">predicate</span> <span class="o">=</span> <span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">predicate</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="err">↓</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="n">Supplier</span> <span class="n">supplier</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">Object</span> <span class="n">a</span> <span class="o">=</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+    <span class="kd">final</span> <span class="n">Function</span> <span class="n">function</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">Object</span> <span class="n">b</span> <span class="o">=</span> <span class="n">function</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">Consumer</span> <span class="n">consumer</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="o">{};</span>
+    <span class="n">consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">b</span><span class="o">);</span>
+    <span class="kd">final</span> <span class="n">Predicate</span> <span class="n">predicate</span> <span class="o">=</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="n">predicate</span><span class="o">.</span><span class="na">test</span><span class="o">(</span><span class="n">Boolean</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="o">));</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="cm">/* synthetic */</span> <span class="kt">boolean</span> <span class="n">lambda$main</span><span class="err">$</span><span class="mi">3</span><span class="o">(</span><span class="kd">final</span> <span class="n">Object</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="cm">/* synthetic */</span> <span class="kt">void</span> <span class="n">lambda$main</span><span class="err">$</span><span class="mi">2</span><span class="o">(</span><span class="kd">final</span> <span class="n">Object</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="cm">/* synthetic */</span> <span class="n">Object</span> <span class="n">lambda$main</span><span class="err">$</span><span class="mi">1</span><span class="o">(</span><span class="kd">final</span> <span class="n">Object</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">4</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="cm">/* synthetic */</span> <span class="n">Object</span> <span class="n">lambda$main</span><span class="err">$</span><span class="mi">0</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="err">↓</span>
+
+<span class="err">查看反编译</span> <span class="n">main</span> <span class="err">函数的</span> <span class="n">TypeCode</span>
+<span class="n">javap</span> <span class="o">-</span><span class="n">c</span> <span class="n">LambdaSyntaxSugar</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">);</span>
+    <span class="nl">Flags:</span> <span class="n">PUBLIC</span><span class="o">,</span> <span class="n">STATIC</span>
+    <span class="nl">Code:</span>
+                <span class="n">linenumber</span>      <span class="mi">17</span>
+            <span class="mi">0</span><span class="o">:</span> <span class="n">invokedynamic</span>   <span class="n">BootstrapMethod</span> <span class="err">#</span><span class="mi">0</span><span class="o">,</span> <span class="nl">get:</span><span class="o">()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Supplier</span><span class="o">;</span>
+            <span class="mi">5</span><span class="o">:</span> <span class="n">astore_1</span>        <span class="cm">/* supplier */</span>
+                <span class="n">linenumber</span>      <span class="mi">18</span>
+            <span class="mi">6</span><span class="o">:</span> <span class="n">aload_1</span>         <span class="cm">/* supplier */</span>
+            <span class="mi">7</span><span class="o">:</span> <span class="n">invokeinterface</span> <span class="n">java</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Supplier</span><span class="o">.</span><span class="na">get</span><span class="o">:()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+            <span class="mi">12</span><span class="o">:</span> <span class="n">astore_2</span>        <span class="cm">/* a */</span>
+                <span class="n">linenumber</span>      <span class="mi">20</span>
+            <span class="mi">13</span><span class="o">:</span> <span class="n">invokedynamic</span>   <span class="n">BootstrapMethod</span> <span class="err">#</span><span class="mi">1</span><span class="o">,</span> <span class="nl">apply:</span><span class="o">()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Function</span><span class="o">;</span>
+            <span class="mi">18</span><span class="o">:</span> <span class="n">astore_3</span>        <span class="cm">/* function */</span>
+                <span class="n">linenumber</span>      <span class="mi">21</span>
+            <span class="mi">19</span><span class="o">:</span> <span class="n">aload_3</span>         <span class="cm">/* function */</span>
+            <span class="mi">20</span><span class="o">:</span> <span class="n">aload_2</span>         <span class="cm">/* a */</span>
+            <span class="mi">21</span><span class="o">:</span> <span class="n">invokeinterface</span> <span class="n">java</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Function</span><span class="o">.</span><span class="na">apply</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+            <span class="mi">26</span><span class="o">:</span> <span class="n">astore</span>          <span class="n">b</span>
+                <span class="n">linenumber</span>      <span class="mi">23</span>
+            <span class="mi">28</span><span class="o">:</span> <span class="n">invokedynamic</span>   <span class="n">BootstrapMethod</span> <span class="err">#</span><span class="mi">2</span><span class="o">,</span> <span class="nl">accept:</span><span class="o">()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Consumer</span><span class="o">;</span>
+            <span class="mi">33</span><span class="o">:</span> <span class="n">astore</span>          <span class="n">consumer</span>
+                <span class="n">linenumber</span>      <span class="mi">24</span>
+            <span class="mi">35</span><span class="o">:</span> <span class="n">aload</span>           <span class="n">consumer</span>
+            <span class="mi">37</span><span class="o">:</span> <span class="n">aload</span>           <span class="n">b</span>
+            <span class="mi">39</span><span class="o">:</span> <span class="n">invokeinterface</span> <span class="n">java</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">V</span>
+                <span class="n">linenumber</span>      <span class="mi">26</span>
+            <span class="mi">44</span><span class="o">:</span> <span class="n">invokedynamic</span>   <span class="n">BootstrapMethod</span> <span class="err">#</span><span class="mi">3</span><span class="o">,</span> <span class="nl">test:</span><span class="o">()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Predicate</span><span class="o">;</span>
+            <span class="mi">49</span><span class="o">:</span> <span class="n">astore</span>          <span class="n">predicate</span>
+                <span class="n">linenumber</span>      <span class="mi">27</span>
+            <span class="mi">51</span><span class="o">:</span> <span class="n">aload</span>           <span class="n">predicate</span>
+            <span class="mi">53</span><span class="o">:</span> <span class="n">aload_2</span>         <span class="cm">/* a */</span>
+            <span class="mi">54</span><span class="o">:</span> <span class="n">aload</span>           <span class="n">b</span>
+            <span class="mi">56</span><span class="o">:</span> <span class="n">if_acmpne</span>       <span class="mi">63</span>
+            <span class="mi">59</span><span class="o">:</span> <span class="n">iconst_1</span>       
+            <span class="mi">60</span><span class="o">:</span> <span class="k">goto</span>            <span class="mi">64</span>
+            <span class="mi">63</span><span class="o">:</span> <span class="n">iconst_0</span>       
+            <span class="mi">64</span><span class="o">:</span> <span class="n">invokestatic</span>    <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Boolean</span><span class="o">.</span><span class="na">valueOf</span><span class="o">:(</span><span class="n">Z</span><span class="o">)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Boolean</span><span class="o">;</span>
+            <span class="mi">67</span><span class="o">:</span> <span class="n">invokeinterface</span> <span class="n">java</span><span class="o">/</span><span class="n">util</span><span class="o">/</span><span class="n">function</span><span class="o">/</span><span class="n">Predicate</span><span class="o">.</span><span class="na">test</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Z</span>
+            <span class="mi">72</span><span class="o">:</span> <span class="n">pop</span>            
+                <span class="n">linenumber</span>      <span class="mi">28</span>
+            <span class="mi">73</span><span class="o">:</span> <span class="k">return</span>
+
+<span class="err">↓</span>
+
+<span class="err">查看常量池：</span>
+<span class="n">javap</span> <span class="o">-</span><span class="n">v</span> <span class="n">LambdaSyntaxSugar</span>
+
+<span class="c1">// 截取部分 BootstrapMethods 部分</span>
+<span class="nl">BootstrapMethods:</span>
+  <span class="mi">0</span><span class="o">:</span> <span class="err">#</span><span class="mi">56</span> <span class="n">invokestatic</span> <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="na">metafactory</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandles$Lookup</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">String</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandle</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invok</span>
+<span class="n">e</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">CallSite</span><span class="o">;</span>
+    <span class="n">Method</span> <span class="nl">arguments:</span>
+      <span class="err">#</span><span class="mi">57</span> <span class="o">()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+      <span class="err">#</span><span class="mi">58</span> <span class="n">invokestatic</span> <span class="n">syntax</span><span class="o">/</span><span class="n">LambdaSyntaxSugar</span><span class="o">.</span><span class="na">lambda</span><span class="n">$main</span><span class="err">$</span><span class="mi">0</span><span class="o">:()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+      <span class="err">#</span><span class="mi">57</span> <span class="o">()</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+  <span class="mi">1</span><span class="o">:</span> <span class="err">#</span><span class="mi">56</span> <span class="n">invokestatic</span> <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="na">metafactory</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandles$Lookup</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">String</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandle</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invok</span>
+<span class="n">e</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">CallSite</span><span class="o">;</span>
+    <span class="n">Method</span> <span class="nl">arguments:</span>
+      <span class="err">#</span><span class="mi">62</span> <span class="o">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+      <span class="err">#</span><span class="mi">63</span> <span class="n">invokestatic</span> <span class="n">syntax</span><span class="o">/</span><span class="n">LambdaSyntaxSugar</span><span class="o">.</span><span class="na">lambda</span><span class="n">$main</span><span class="err">$</span><span class="mi">1</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+      <span class="err">#</span><span class="mi">62</span> <span class="o">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;</span>
+  <span class="mi">2</span><span class="o">:</span> <span class="err">#</span><span class="mi">56</span> <span class="n">invokestatic</span> <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="na">metafactory</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandles$Lookup</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">String</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandle</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invok</span>
+<span class="n">e</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">CallSite</span><span class="o">;</span>
+    <span class="n">Method</span> <span class="nl">arguments:</span>
+      <span class="err">#</span><span class="mi">67</span> <span class="o">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">V</span>
+      <span class="err">#</span><span class="mi">68</span> <span class="n">invokestatic</span> <span class="n">syntax</span><span class="o">/</span><span class="n">LambdaSyntaxSugar</span><span class="o">.</span><span class="na">lambda</span><span class="n">$main</span><span class="err">$</span><span class="mi">2</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">V</span>
+      <span class="err">#</span><span class="mi">67</span> <span class="o">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">V</span>
+  <span class="mi">3</span><span class="o">:</span> <span class="err">#</span><span class="mi">56</span> <span class="n">invokestatic</span> <span class="n">java</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">LambdaMetafactory</span><span class="o">.</span><span class="na">metafactory</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandles$Lookup</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">String</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">MethodHandle</span><span class="o">;</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invok</span>
+<span class="n">e</span><span class="o">/</span><span class="n">MethodType</span><span class="o">;)</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">invoke</span><span class="o">/</span><span class="n">CallSite</span><span class="o">;</span>
+    <span class="n">Method</span> <span class="nl">arguments:</span>
+      <span class="err">#</span><span class="mi">72</span> <span class="o">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Z</span>
+      <span class="err">#</span><span class="mi">73</span> <span class="n">invokestatic</span> <span class="n">syntax</span><span class="o">/</span><span class="n">LambdaSyntaxSugar</span><span class="o">.</span><span class="na">lambda</span><span class="n">$main</span><span class="err">$</span><span class="mi">3</span><span class="o">:(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Z</span>
+      <span class="err">#</span><span class="mi">72</span> <span class="o">(</span><span class="n">Ljava</span><span class="o">/</span><span class="n">lang</span><span class="o">/</span><span class="n">Object</span><span class="o">;)</span><span class="n">Z</span>
+</code></pre>
+</div>
+
+<p>默认情况下生成的方法都是静态方法，只有在非静态方法里面使用 Lambda 且 Lambda 方法体里面使用了非静态成员方法或变量，才生成成员方法。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LambdaSyntaxSugar</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">str</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">not_main</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">Supplier</span> <span class="n">supplier</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">3</span><span class="o">;</span>
+        <span class="n">Supplier</span> <span class="n">supplier2</span> <span class="o">=</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">str</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="err">↓</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">LambdaSyntaxSugar</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">str</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">LambdaSyntaxSugar</span><span class="o">()</span> <span class="o">{</span>
+        <span class="cm">/*SL:14*/</span><span class="kd">super</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">not_main</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">final</span> <span class="n">Supplier</span> <span class="n">supplier</span> <span class="o">=</span> <span class="cm">/*EL:17*/</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="n">Supplier</span> <span class="n">supplier2</span> <span class="o">=</span> <span class="cm">/*EL:18*/</span><span class="o">()</span> <span class="o">-&gt;</span> <span class="k">this</span><span class="o">.</span><span class="na">str</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="cm">/* synthetic */</span> <span class="n">Object</span> <span class="n">lambda$not_main</span><span class="err">$</span><span class="mi">1</span><span class="o">()</span> <span class="o">{</span>
+        <span class="cm">/*SL:18*/</span><span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">str</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="cm">/* synthetic */</span> <span class="n">Object</span> <span class="n">lambda$not_main</span><span class="err">$</span><span class="mi">0</span><span class="o">()</span> <span class="o">{</span>
+        <span class="cm">/*SL:17*/</span><span class="k">return</span> <span class="n">Integer</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>综上：</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>1. 编译器会为每一个 lambda 表达式生成一个方法。
+        方法名是 lambda$所在函数名$0,1,2,...，但方法引用的表达式不会生成方法。
+2. 在 lambda 地方会产生一个 invokeDynamic 指令，这个指令会调用
+        bootstrap（引导）方法，bootstrap 方法会指向自动生成的 lambda$所在函数名$0 方法或者方法引用的方法。
+3. bootstrap 方法使用上是调用了 LambdaMetafactory.metafactory 静态方法
+        该方法返回了 CallSite （调用站点），里面包含了 MethodHandle （方法句柄）也就是最终调用的方法。
+4. 如果函数体里面没有使用 this，那么就是 static 方法，否则就是成员方法
+</code></pre>
+</div>
+
+<p>出色的反编译工具：</p>
+
+<ol>
+  <li><a href="http://java-decompiler.github.io/">JD-GUI（要注意支持的 Jdk 版本）</a></li>
+  <li><a href="https://github.com/deathmarine/Luyten">Luyten（推荐）</a></li>
+  <li><a href="http://www.benf.org/other/cfr/">CFR</a></li>
+</ol>
+
+<h1 id="heading-lambda-之函数式编程">Lambda 之函数式编程</h1>
+
+<p>万物可对象的原则的话，Lambda 表达式都可以对应一种函数式接口实现，而语法里也通过语法糖封装实现了 Lambda 和函数式接口对象自动匹配和转化。</p>
+
+<h2 id="heading-函数式接口">函数式接口</h2>
+
+<p>特征：</p>
+
+<ol>
+  <li>接口只有一个未实现的方法。</li>
+  <li>接口上添加了 @FunctionalInterface 注解。</li>
+</ol>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Jdk 提供了一系列默认的函数式接口（java.util.function.*），主要包含四大类：
+1、Supplier&lt;T&gt;：T get()；无输入，“生产”一个 T 类型的返回值。
+2、Consumer&lt;T&gt;：void accept(T t)；输入类型 T，“消费”掉，无返回。
+3、Function&lt;T, R&gt;：R apply(T t)；输入类型 T 返回类型 R。
+4、Predicate&lt;T&gt;：boolean test(T t)；输入类型 T，并进行条件“判断”，返回 true|false。特殊的 Function&lt;T, Boolean&gt;
+</code></pre>
+</div>
+
+<p>Lambda 表达式自动识别变成接口函数的实现对象：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>参数 -&gt; 方法体
+
+无参数+无返回值：() -&gt; {...} 无接收类型，作为变量传输需要自定义类型，虽然 Runnable 就是这种函数式接口，不建议直接使用。
+无参+有返回值：() -&gt; {...;return x;} 为 Supplier&lt;T&gt; 实现接收
+有参+无返回值：(Object..) -&gt; {...} 为 Consumer/BiConsumer&lt;T..&gt; 实现接收，至多两个参数，更多参数需要自己定义 Consumer
+有参+有返回值：(Object) -&gt; {...;return x;} 为 Function&lt;T, R&gt; 实现接收
+</code></pre>
+</div>
+
+<h2 id="heading-函数参数化后">函数参数化后</h2>
+
+<p>1、【性能提升】不用生成额外的匿名类，通过把函数式接口的匿名内部类方法的调用改成类静态方法调用来完成。</p>
+
+<p>2、【编程方式更灵活】将方法传输后，能携带更多的信息。</p>
+
+<ol>
+  <li>普通参数 可以转变成 生产者 Supplier<T> 传入，对象工厂表示：我们不再生产产品，我们只提供专利。</T></li>
+  <li>多态或重载 可以转变成 动态 Lambda 策略，参照 <a href="#heading-lambda-转化者编程分析">Collectors（Lambda 转化者编程分析）</a></li>
+  <li>转化业务可以策略化封装，参照 <a href="#heading-lambda-转化者编程分析">Collectors（Lambda 转化者编程分析）</a></li>
+</ol>
+
+<h1 id="heading-函数式编程思维扩展">函数式编程思维扩展</h1>
+
+<p>思考模式：生产者 and 消费者 + 粒度细化到函数</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>函数参数：入参、出参
+1. 入参：无、有（数据、服务）
+2. 出参：void、有（数据、服务）
+
+排列组合：
+1. 无入参+有出参：纯生产者
+2. 有入参+无出参：纯消费者
+3. 无入参+无出参：自产自销（best 稳定）
+4. 有入参+有出参：交易者
+
+【异常】扮演的角色？  -&gt;  淘汰机制。
+</code></pre>
+</div>
+
+<h2 id="heading-应用分析">应用分析</h2>
+
+<p>应用方向：学会将函数看成一种类型的参数，可以解锁很多玩法。</p>
+
+<h2 id="heading-lambda-生产者编程分析">Lambda 生产者编程分析</h2>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 定义一个生产者</span>
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="n">T</span> <span class="nf">get</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="err">由于</span> <span class="n">Java</span> <span class="err">里面只能返回一个对象，所以纯生产者一般只有一种定义和变化。</span>
+
+<span class="err">对于我们日常的编程，任何参数可以的演变方向：</span>
+<span class="n">method1</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">);</span>
+<span class="n">method2</span><span class="o">(</span><span class="n">JavaBean</span> <span class="n">b</span><span class="o">);</span>
+<span class="n">method3</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="n">JavaBean</span> <span class="n">b</span><span class="o">);</span>
+<span class="err">↓</span>
+<span class="n">method1</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">a</span><span class="o">);</span>
+<span class="n">method2</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">JavaBean</span><span class="o">&gt;</span> <span class="n">b</span><span class="o">);</span>
+<span class="n">method3</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">a</span><span class="o">,</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">JavaBean</span><span class="o">&gt;</span> <span class="n">b</span><span class="o">);</span>
+</code></pre>
+</div>
+
+<h3 id="heading-示例多数场景下的代码收束利器">示例：多数场景下的代码收束利器</h3>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">Message</span> <span class="n">msg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Message</span><span class="o">();</span>
+<span class="c1">// do something1</span>
+<span class="c1">// do something2</span>
+<span class="c1">// do something3</span>
+<span class="n">msg</span><span class="o">.</span><span class="na">setArg1</span><span class="o">(</span><span class="n">arg1</span><span class="o">);</span>
+<span class="n">msg</span><span class="o">.</span><span class="na">setArg2</span><span class="o">(</span><span class="n">arg3</span><span class="o">);</span>
+<span class="c1">// do something4</span>
+<span class="n">msg</span><span class="o">.</span><span class="na">setArg3</span><span class="o">(</span><span class="n">arg3</span><span class="o">);</span>
+<span class="n">sender</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">msg</span><span class="o">);</span>
+
+<span class="err">↓</span>
+
+<span class="c1">// do something1</span>
+<span class="c1">// do something2</span>
+<span class="c1">// do something3</span>
+<span class="c1">// send msg</span>
+<span class="n">sender</span><span class="o">.</span><span class="na">send</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">Message</span> <span class="n">msg</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Message</span><span class="o">();</span>
+    <span class="n">msg</span><span class="o">.</span><span class="na">setArg1</span><span class="o">(</span><span class="n">arg1</span><span class="o">);</span>
+    <span class="n">msg</span><span class="o">.</span><span class="na">setArg2</span><span class="o">(</span><span class="n">arg3</span><span class="o">);</span>
+    <span class="c1">// do something4</span>
+    <span class="n">msg</span><span class="o">.</span><span class="na">setArg3</span><span class="o">(</span><span class="n">arg3</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">msg</span><span class="o">;</span>
+<span class="o">});</span>
+
+<span class="err">默认构造器是一个天然的</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="err">：</span>
+<span class="n">Supplier</span><span class="o">&lt;</span><span class="n">JavaBean</span><span class="o">&gt;</span> <span class="n">supplier</span> <span class="o">=</span> <span class="nl">JavaBean:</span><span class="o">:</span><span class="k">new</span>
+<span class="n">JavaBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+
+<span class="err">如果将构造器参数化，会有什么好玩的东西呢？</span>
+<span class="err">没想出来。</span><span class="o">..</span>
+</code></pre>
+</div>
+
+<h2 id="heading-lambda-消费者编程分析">Lambda 消费者编程分析</h2>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 定义一个消费者接口，一个参数可能的组合</span>
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="err">↓</span>
+<span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="na">doSomthing</span><span class="o">();</span>
+<span class="o">(</span><span class="n">t</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">lambda</span><span class="err">$</span><span class="o">]</span><span class="n">doSomthing</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+
+<span class="c1">// 定义一个消费者接口，两个参数可能的组合</span>
+<span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Consumer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">U</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">void</span> <span class="nf">accept</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">,</span> <span class="n">U</span> <span class="n">u</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="err">↓</span>
+<span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">u</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">t</span><span class="o">.</span><span class="na">doSomthing</span><span class="o">(</span><span class="n">u</span><span class="o">);</span>
+<span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">u</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">[</span><span class="n">lambda</span><span class="err">$</span><span class="o">]</span><span class="n">doSomthing</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">u</span><span class="o">);</span>
+
+<span class="c1">// 定义一个消费者接口，三个参数可能的组合</span>
+
+<span class="err">依次类推，取决于传入的方法是与第一个参数是否相关，规律总结如下：</span>
+<span class="n">Comsumer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="err">其他类型。</span><span class="o">.&gt;</span> <span class="o">-&gt;</span> <span class="n">accept</span><span class="o">(</span><span class="n">T</span> <span class="n">t</span><span class="o">,</span> <span class="err">其他参数。</span><span class="o">.)</span>
+<span class="mi">1</span><span class="err">、</span><span class="o">[</span><span class="err">类</span> <span class="n">T</span><span class="o">]::</span> <span class="err">方法</span> <span class="o">-</span><span class="err">（其他参数），第一个参数</span> <span class="n">t</span> <span class="err">类型</span> <span class="n">T</span><span class="err">，则调用：</span><span class="n">t</span><span class="o">.</span> <span class="err">方法（其他参数）</span>
+<span class="mi">2</span><span class="err">、</span><span class="o">[</span><span class="err">类</span> <span class="n">A</span><span class="o">]::</span> <span class="err">静态方法</span> <span class="o">-(</span><span class="n">t</span><span class="o">,</span> <span class="err">其他参数）</span><span class="o">,</span> <span class="err">第一个参数</span> <span class="n">t</span> <span class="err">类型</span> <span class="n">T</span><span class="err">，则调用：类</span> <span class="n">A</span><span class="o">.</span> <span class="err">静态方法</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="err">其他参数）</span>
+<span class="mi">3</span><span class="err">、</span><span class="o">[</span><span class="err">对象</span> <span class="n">obj</span><span class="o">-</span><span class="err">类</span> <span class="n">T</span><span class="o">/</span><span class="n">A</span><span class="o">]::</span> <span class="err">方法</span> <span class="o">-(</span><span class="n">t</span><span class="o">,</span> <span class="err">其他参数），调用：</span><span class="n">obj</span><span class="o">.</span> <span class="err">方法</span> <span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="err">其他参数）</span>
+<span class="mi">4</span><span class="err">、</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="err">其他参数）</span> <span class="o">-&gt;</span> <span class="o">{...}</span> <span class="err">，自动生成的匿名函数：</span><span class="o">[</span><span class="kd">static</span><span class="o">]</span> <span class="n">lambda</span><span class="err">$当前函数名$</span><span class="mi">1</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="err">其他参数）</span>
+</code></pre>
+</div>
+
+<h3 id="heading-示例通用-builder-实现">示例：通用 Builder 实现</h3>
+
+<p>函数式编程前的传统实现：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">JavaBeanBuilder</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">JavaBean</span> <span class="n">instant</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">JavaBeanBuilder</span><span class="o">(</span><span class="n">JavaBean</span> <span class="n">instant</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">instant</span> <span class="o">=</span> <span class="n">instant</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">JavaBeanBuilder</span> <span class="nf">builder</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">JavaBeanBuilder</span><span class="o">(</span><span class="k">new</span> <span class="n">JavaBean</span><span class="o">());</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">JavaBeanBuilder</span> <span class="nf">arg1</span><span class="o">(</span><span class="n">Long</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">instant</span><span class="o">.</span><span class="na">setArg1</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">JavaBeanBuilder</span> <span class="nf">arg2</span><span class="o">(</span><span class="n">String</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">instant</span><span class="o">.</span><span class="na">setArg2</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+    <span class="kd">public</span> <span class="n">JavaBean</span> <span class="nf">build</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">JavaBean</span> <span class="n">result</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">instant</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">instant</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">JavaBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="n">JavaBeanBuilder</span><span class="o">.</span><span class="na">builder</span><span class="o">().</span><span class="na">arg1</span><span class="o">(</span><span class="mi">1L</span><span class="o">).</span><span class="na">arg2</span><span class="o">(</span><span class="s">"2"</span><span class="o">)...</span><span class="na">build</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">bean</span><span class="o">.</span><span class="na">getArg1</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>基于函数式编程的通用 Builder 实现：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Builder</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">T</span> <span class="n">instant</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">Builder</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">instant</span> <span class="o">=</span> <span class="n">supplier</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Builder</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">of</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Builder</span><span class="o">(</span><span class="n">supplier</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="o">&lt;</span><span class="n">D</span><span class="o">&gt;</span> <span class="n">Builder</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">with</span><span class="o">(</span><span class="n">BiConsumer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">D</span><span class="o">&gt;</span> <span class="n">consumer</span><span class="o">,</span> <span class="n">D</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">consumer</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">instant</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">T</span> <span class="nf">build</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">T</span> <span class="n">result</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">instant</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">instant</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">JavaBean</span> <span class="n">bean</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="nl">JavaBean:</span><span class="o">:</span><span class="k">new</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="nl">JavaBean:</span><span class="o">:</span><span class="n">setArg1</span><span class="o">,</span> <span class="mi">1L</span><span class="o">).</span><span class="na">with</span><span class="o">(</span><span class="nl">JavaBean:</span><span class="o">:</span><span class="n">setArg2</span><span class="o">,</span> <span class="s">"2"</span><span class="o">)...</span><span class="na">build</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">bean</span><span class="o">.</span><span class="na">getKeyId</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-lambda-转化者编程分析">Lambda 转化者编程分析</h2>
+
+<p>Function&lt;T, R&gt; 转化者是生产者和消费者特征的集合体，在 JDK 中表现最明显的就是 Stream 编程中的 Collertors</p>
+
+<p>Collertors 提供一系列静态方法生成策略用于数据转化，策略的通式如下：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">class</span> <span class="nc">CollectorImpl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="kd">implements</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">BiConsumer</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">accumulator</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">BinaryOperator</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">combiner</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="n">finisher</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Characteristics</span><span class="o">&gt;</span> <span class="n">characteristics</span><span class="o">;</span>
+
+    <span class="n">CollectorImpl</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">,</span>
+                    <span class="n">BiConsumer</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">accumulator</span><span class="o">,</span>
+                    <span class="n">BinaryOperator</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">combiner</span><span class="o">,</span>
+                    <span class="n">Function</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span><span class="n">R</span><span class="o">&gt;</span> <span class="n">finisher</span><span class="o">,</span>
+                    <span class="n">Set</span><span class="o">&lt;</span><span class="n">Characteristics</span><span class="o">&gt;</span> <span class="n">characteristics</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">supplier</span> <span class="o">=</span> <span class="n">supplier</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">accumulator</span> <span class="o">=</span> <span class="n">accumulator</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">combiner</span> <span class="o">=</span> <span class="n">combiner</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">finisher</span> <span class="o">=</span> <span class="n">finisher</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">characteristics</span> <span class="o">=</span> <span class="n">characteristics</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="n">CollectorImpl</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">,</span>
+                    <span class="n">BiConsumer</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="n">accumulator</span><span class="o">,</span>
+                    <span class="n">BinaryOperator</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="n">combiner</span><span class="o">,</span>
+                    <span class="n">Set</span><span class="o">&lt;</span><span class="n">Characteristics</span><span class="o">&gt;</span> <span class="n">characteristics</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">(</span><span class="n">supplier</span><span class="o">,</span> <span class="n">accumulator</span><span class="o">,</span> <span class="n">combiner</span><span class="o">,</span> <span class="n">castingIdentity</span><span class="o">(),</span> <span class="n">characteristics</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">BiConsumer</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span> <span class="n">T</span><span class="o">&gt;</span> <span class="nf">accumulator</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">accumulator</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Supplier</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="nf">supplier</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">supplier</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">BinaryOperator</span><span class="o">&lt;</span><span class="n">A</span><span class="o">&gt;</span> <span class="nf">combiner</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">combiner</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Function</span><span class="o">&lt;</span><span class="n">A</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="nf">finisher</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">finisher</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Set</span><span class="o">&lt;</span><span class="n">Characteristics</span><span class="o">&gt;</span> <span class="nf">characteristics</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">characteristics</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="err">【元数据】接口元数据含义：</span>
+<span class="n">T</span><span class="err">：输入的元素类型</span>
+<span class="n">A</span><span class="err">：累积结果的容器类型</span>
+<span class="n">R</span><span class="err">：最终生成的结果类型</span>
+
+<span class="err">【范式】各方法用途：</span>
+<span class="n">supplier</span><span class="err">：</span> <span class="err">创建新的结果容器</span>
+<span class="n">accumulator</span><span class="err">：将输入元素合并到结果容器中</span>
+<span class="n">combiner</span><span class="err">：合并两个结果容器（并行流使用，将多个线程产生的结果容器合并）</span>
+<span class="n">finisher</span><span class="err">：将结果容器转换成最终的表示</span>
+
+<span class="err">↓</span>
+
+<span class="o">&lt;</span><span class="n">R</span><span class="o">,</span> <span class="n">A</span><span class="o">&gt;</span> <span class="n">R</span> <span class="nf">collect</span><span class="o">(</span><span class="n">Collector</span><span class="o">&lt;?</span> <span class="kd">super</span> <span class="n">T</span><span class="o">,</span> <span class="n">A</span><span class="o">,</span> <span class="n">R</span><span class="o">&gt;</span> <span class="n">collector</span><span class="o">);</span>
+
+<span class="err">例如：</span>
+<span class="o">...</span><span class="na">stream</span><span class="o">()...</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="o">?,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="nf">toList</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">CollectorImpl</span><span class="o">&lt;&gt;((</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;)</span> <span class="nl">ArrayList:</span><span class="o">:</span><span class="k">new</span><span class="o">,</span> <span class="nl">List:</span><span class="o">:</span><span class="n">add</span><span class="o">,</span>
+                                <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">left</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">right</span><span class="o">);</span> <span class="k">return</span> <span class="n">left</span><span class="o">;</span> <span class="o">},</span>
+                                <span class="c1">// i -&gt; (R) i</span>
+                                <span class="n">CH_ID</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="o">...</span><span class="na">stream</span><span class="o">()....</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">toCollection</span><span class="o">(</span><span class="nl">TreeSet:</span><span class="o">:</span><span class="k">new</span><span class="o">));</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="n">C</span> <span class="kd">extends</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">T</span><span class="o">,</span> <span class="o">?,</span> <span class="n">C</span><span class="o">&gt;</span> <span class="nf">toCollection</span><span class="o">(</span><span class="n">Supplier</span><span class="o">&lt;</span><span class="n">C</span><span class="o">&gt;</span> <span class="n">collectionFactory</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">CollectorImpl</span><span class="o">&lt;&gt;(</span><span class="n">collectionFactory</span><span class="o">,</span> <span class="n">Collection</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">add</span><span class="o">,</span>
+                                <span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">r1</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">r2</span><span class="o">);</span> <span class="k">return</span> <span class="n">r1</span><span class="o">;</span> <span class="o">},</span>
+                                <span class="n">CH_ID</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="o">...</span><span class="na">stream</span><span class="o">().....</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">joining</span><span class="o">(</span><span class="s">","</span><span class="o">));</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Collector</span><span class="o">&lt;</span><span class="n">CharSequence</span><span class="o">,</span> <span class="o">?,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">joining</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">CollectorImpl</span><span class="o">&lt;</span><span class="n">CharSequence</span><span class="o">,</span> <span class="n">StringBuilder</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;(</span>
+            <span class="nl">StringBuilder:</span><span class="o">:</span><span class="k">new</span><span class="o">,</span> <span class="nl">StringBuilder:</span><span class="o">:</span><span class="n">append</span><span class="o">,</span>
+            <span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="o">{</span> <span class="n">r1</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">r2</span><span class="o">);</span> <span class="k">return</span> <span class="n">r1</span><span class="o">;</span> <span class="o">},</span>
+            <span class="nl">StringBuilder:</span><span class="o">:</span><span class="n">toString</span><span class="o">,</span> <span class="n">CH_NOID</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="o">...</span><span class="na">stream</span><span class="o">()...</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">groupingBy</span>
+<span class="o">...</span><span class="na">stream</span><span class="o">()...</span><span class="na">collect</span><span class="o">(</span><span class="n">Collectors</span><span class="o">.</span><span class="na">partitioningBy</span>
+</code></pre>
+</div>
+
+<h3 id="heading-启发应用">启发应用</h3>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>业务通用转化范式？
+
+例如通用 Feed 流组装业务：
+Collector&lt;T, A, R&gt;  -&gt;  BusinessCollector&lt;DTO, List&lt;Feed&gt;, PageVO&gt;
+* supplier： 创建新的 List&lt;Feed&gt;
+* accumulator：将输入元素合并到结果容器中 DTO -&gt; Feed
+* combiner：合并两个结果容器（并行流使用，将多个线程产生的结果容器合并） Feeds -&gt; NewFeeds
+* finisher：将结果容器转换成最终的表示  Feeds -&gt; PageVO
+【扩展】
+* filters：过滤器 List&lt;Function&gt; 额外过滤器，链式过滤处理，可插拔
+* maps：通用业务映射器，实现不同场景的不同组装
+
+show me code ? TODO...
+</code></pre>
+</div>
+
+<h3 id="heading-示例feed-流组装范式-2020-08-21补充">示例：Feed 流组装范式 【2020-08-21】补充</h3>
+
+<p>Feed 流类结构：</p>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="err">hasMore</span><span class="w">
+    </span><span class="err">List&lt;FeedResource&gt;</span><span class="w"> </span><span class="err">{</span><span class="w">
+        </span><span class="err">ResourceType</span><span class="w"> </span><span class="err">-&gt;</span><span class="w"> </span><span class="err">视频、MV、Mlog、广告、直播、话题、圈子</span><span class="w">
+        </span><span class="err">...</span><span class="w">
+        </span><span class="err">RelateResource..</span><span class="w"> </span><span class="err">{</span><span class="w">
+            </span><span class="err">创作者</span><span class="w">
+            </span><span class="err">艺人</span><span class="w">
+            </span><span class="err">歌曲</span><span class="w">
+            </span><span class="err">标签</span><span class="w">
+            </span><span class="err">权限</span><span class="w">
+            </span><span class="err">评论</span><span class="w">
+            </span><span class="err">...</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="err">}</span><span class="w">
+    </span><span class="err">msg</span><span class="w">
+    </span><span class="err">...</span><span class="w">
+</span><span class="err">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<p>组装流程：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>FeedResourceIdWithType[]
+↓
+ ← GroupBy ResourceType
+↓
+Map&lt;ResourceType, ResourceId[]&gt;
+↓
+ ← ResourceConverter&lt;ResourceId[],FeedResource(RelateResourceId[])[]&gt; []
+↓
+FeedResource(RelateResourceId[])[] -&gt; Map&lt;RelateResourceType, RelateResourceId[]&gt;
+↓
+ ← RelateResourceConverter&lt;RelateResourceId[], Map&lt;RelateResourceId, RelateResource&gt;&gt; []
+↓
+Map&lt;RelateResourceId, RelateResource&gt;[]
+↓
+ ← FeedResourceFiller&lt;FeedResource(RelateResourceId[]), Map&lt;RelateResourceId, RelateResource&gt;[]&gt;
+↓
+FeedResource(RelateResource[])[]
+↓
+ ← Rejust List and Package
+↓
+FeedResourcePage&lt;FeedResource&gt;(
+    hasMore
+    FeedResource(RelateResource[])[]
+    msg
+    ...
+)
+</code></pre>
+</div>
+
+<p>编码伪代码：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 为了方便书写，T[] 等价于 List&lt;T&gt;</span>
+<span class="kd">class</span> <span class="nc">FeedResourceCollector</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">ResourceType</span><span class="o">,</span> <span class="n">ResourceId</span><span class="o">[]&gt;,</span> <span class="n">FeedResource</span><span class="o">(</span><span class="n">RelateResource</span><span class="o">[])[],</span> <span class="n">FeedResourcePage</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">ResourceType</span><span class="o">,</span> <span class="n">FeedResourceFunction</span><span class="o">&lt;</span><span class="n">ResourceId</span><span class="o">[],</span> <span class="n">FeedResource</span><span class="o">(</span><span class="n">RelateResource</span><span class="o">[])[]&gt;&gt;</span> <span class="n">feedResourceConvertors</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">ResourceType</span><span class="o">,</span> <span class="n">FeedRelateResourceIdFunction</span><span class="o">&lt;</span><span class="n">FeedResource</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceType</span><span class="o">,</span> <span class="n">RelateResourceId</span><span class="o">[]&gt;&gt;&gt;</span> <span class="n">feedResourceRelateIdConverts</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceType</span><span class="o">,</span> <span class="n">RelateResourceFunction</span><span class="o">&lt;</span><span class="n">RelateResourceId</span><span class="o">[],</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceId</span><span class="o">,</span> <span class="n">RelateResource</span><span class="o">&gt;&gt;&gt;</span> <span class="n">relateResourceConvertors</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">FeedResourceFillConsumer</span><span class="o">&lt;</span><span class="n">FeedResource</span><span class="o">(</span><span class="n">RelateResource</span><span class="o">[])[],</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceType</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceId</span><span class="o">,</span> <span class="n">RelateResource</span><span class="o">&gt;&gt;&gt;</span> <span class="n">feedResourceFiller</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">FeedResourcePackageFunction</span><span class="o">&lt;</span><span class="n">FeedResource</span><span class="o">(</span><span class="n">RelateResource</span><span class="o">[])[],</span> <span class="n">FeedResourcePage</span><span class="o">&lt;</span><span class="n">FeedResource</span><span class="o">&gt;&gt;</span> <span class="n">feedPackager</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// loading feedResourceConvertors</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">VideoType</span><span class="o">,</span> <span class="nl">videoService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">MvType</span><span class="o">,</span> <span class="nl">mvService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">MlogType</span><span class="o">,</span> <span class="nl">mlogService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">AdType</span><span class="o">,</span> <span class="nl">adService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">LiveRoomType</span><span class="o">,</span> <span class="nl">liveRoomService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">TalkType</span><span class="o">,</span> <span class="nl">talkService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CircleType</span><span class="o">,</span> <span class="nl">circleService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="o">...</span>
+        <span class="c1">// loading feedResourceRelateIdConverts</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">VideoType</span><span class="o">,</span> <span class="nl">VideoResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">MvType</span><span class="o">,</span> <span class="nl">MvResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">MlogType</span><span class="o">,</span> <span class="nl">MlogResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">AdType</span><span class="o">,</span> <span class="nl">AdResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">LiveRoomType</span><span class="o">,</span> <span class="nl">LiveRoomResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">TalkType</span><span class="o">,</span> <span class="nl">TalkResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CircleType</span><span class="o">,</span> <span class="nl">CircleResourceBean:</span><span class="o">:</span><span class="n">getRelateIdsMap</span><span class="o">);</span>
+        <span class="c1">// loading relateResourceConvertors</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CreatorType</span><span class="o">,</span> <span class="nl">creatorService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">ArtistType</span><span class="o">,</span> <span class="nl">artistService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">SongType</span><span class="o">,</span> <span class="nl">songService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">TagType</span><span class="o">,</span> <span class="nl">tagService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">PriviligeType</span><span class="o">,</span> <span class="nl">priviligeService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CommentType</span><span class="o">,</span> <span class="nl">commentService:</span><span class="o">:</span><span class="n">getByIds</span><span class="o">);</span>
+        <span class="o">...</span>
+        <span class="c1">// link feedResourceFiller</span>
+        <span class="n">feedResourceFiller</span> <span class="o">=</span> <span class="nl">FillFeedResourceFiller:</span><span class="o">:</span><span class="n">apply</span>
+        <span class="c1">// link feedPackager</span>
+        <span class="n">feedPackager</span> <span class="o">=</span> <span class="nl">NewFeedPackager:</span><span class="o">:</span><span class="kn">package</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">FeedResourcePage</span><span class="o">&lt;</span><span class="n">FeedResource</span><span class="o">&gt;</span> <span class="nf">renderFeedPage</span><span class="o">(</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">ResourceType</span><span class="o">,</span> <span class="n">ResourceId</span><span class="o">[]&gt;</span> <span class="n">resourceIdMap</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">FeedResource</span><span class="o">(</span><span class="n">RelateResource</span><span class="o">[])[]</span> <span class="n">feeds</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="c1">// 1、得到 主 feed 集合（关联资源未填充，只有相关 ID）</span>
+        <span class="n">feedResourceConvertors</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">convertor</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">feeds</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">convertor</span><span class="o">.</span><span class="na">getValue</span><span class="o">().</span><span class="na">apply</span><span class="o">(</span><span class="n">resourceIdMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">convertor</span><span class="o">.</span><span class="na">getKey</span><span class="o">())));</span>
+        <span class="o">});</span>
+        <span class="c1">// 2、提取 关联资源 ID，按 资源分类聚合</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceType</span><span class="o">,</span> <span class="n">RelateResourceId</span><span class="o">[]&gt;</span> <span class="n">relateResourceIdsMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">feeds</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">feed</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceType</span><span class="o">,</span> <span class="n">RelateResourceId</span><span class="o">[]&gt;</span> <span class="n">tempIdsMap</span> <span class="o">=</span> <span class="n">feedResourceRelateIdConverts</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">feed</span><span class="o">.</span><span class="na">getResourceType</span><span class="o">()).</span><span class="na">apply</span><span class="o">(</span><span class="n">feed</span><span class="o">);</span>
+            <span class="c1">// combine</span>
+            <span class="n">tempIdsMap</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">entry</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                <span class="n">relateResourceIdsMap</span><span class="o">.</span><span class="na">computeIfAbsent</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="nl">ArrayList:</span><span class="o">:</span><span class="k">new</span><span class="o">).</span><span class="na">addAll</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">());</span>
+            <span class="o">});</span>
+        <span class="o">});</span>
+        <span class="c1">// 3、查询关联资源，按资源分类聚合</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceType</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">RelateResourceId</span><span class="o">,</span> <span class="n">RelateResource</span><span class="o">&gt;&gt;</span> <span class="n">relateResourceMaps</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">relateResourceIdsMap</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">entry</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">relateResourceMaps</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">(),</span> <span class="n">relateResourceConvertors</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getKey</span><span class="o">()).</span><span class="na">apply</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">getValue</span><span class="o">()));</span>
+        <span class="o">});</span>
+        <span class="c1">// 4、填充关联资源到 主 feed 集合</span>
+        <span class="n">feedResourceFiller</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">feeds</span><span class="o">,</span> <span class="n">relateResourceMaps</span><span class="o">);</span>
+        <span class="c1">// 5、打包 到 结果集</span>
+        <span class="k">return</span> <span class="n">feedPackager</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">feeds</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre>
+</div>
+
+<h1 id="heading-扩展思维">扩展思维</h1>
+
+<p>如果随着操作系统（CPU 愈发小巧廉价，单机可以装上千个）或 JDK 的发展（并发的最小粒度不再是进程线程，而是方法栈），编程模式又会有怎样的变化？</p>
+
+<ol>
+  <li>
+    <p>参照 GPU 图计算模式，JDK 编译器自动优化，分析出函数语句入参出参的依赖性，形成执行图模型，实现方法栈并行执行。</p>
+  </li>
+  <li>
+    <p>参照 Serverless 和容器模型，当方法栈数据无状态化后，实现函数分发执行。</p>
+  </li>
+</ol>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2020/07/23/maven-conflict-resolves/" title="上一篇 '项目依赖冲突解决技巧和经验'"> ← 项目依赖冲突解决技巧和经验</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2020/08/28/about-cdn-and-enjoy-the-internet/" title="下一篇 '公网 CDN 污染如何愉快上网冲浪'">公网 CDN 污染如何愉快上网冲浪 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Git 源码·LinusTorvalds 第一次提交 CR 和启发 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Git 源码·LinusTorvalds 第一次提交 CR 和启发" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="【2020-12-03】Git 源码第一次提交 CR 和启发" />
+<meta property="og:description" content="【2020-12-03】Git 源码第一次提交 CR 和启发" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-03T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"【2020-12-03】Git 源码第一次提交 CR 和启发","@type":"BlogPosting","url":"/blog/2020/12/03/git-first-commit-code-review-and-think/","headline":"Git 源码·LinusTorvalds 第一次提交 CR 和启发","dateModified":"2020-12-03T00:00:00+00:00","datePublished":"2020-12-03T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2020/12/03/git-first-commit-code-review-and-think/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="Git,底层原理" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">Git 源码·LinusTorvalds 第一次提交 CR 和启发</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2020-12-03T00:00:00+00:00" datetime="2020-12-03T00:00:00+00:00">December 03, 2020 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：1133 字，&nbsp;预计阅读时间：11 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#整理" title="整理">
+            整理 <span>20</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#源码" title="源码">
+            源码 <span>1</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#Git" title="Git">Git <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#底层原理" title="底层原理">底层原理 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h2 id="heading-git-源码第一次提交-codereview">Git 源码第一次提交 CodeReview</h2>
+
+<blockquote>
+  <p>Today, let's review Linus Torvalds's code.</p>
+</blockquote>
+
+<h3 id="heading-检出第一次提交">检出第一次提交</h3>
+
+<blockquote>
+  <p>检出源码并定位到第一次提交</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># 检出 Git 源码</span>
+<span class="gp">$ </span>git clone https://github.com/git/git.git
+<span class="c"># 切换到第一次提交</span>
+<span class="gp">$ </span>git log --reverse --pretty<span class="o">=</span>%H origin/master | head -1 | xargs git checkout
+Previous HEAD position was 72ffeb997e Ninth batch
+HEAD is now at e83c516331 Initial revision of <span class="s2">"git"</span>, the information manager from hell
+</code></pre>
+</div>
+
+<h3 id="heading-一些小提示">一些小提示</h3>
+
+<blockquote>
+  <p>需要 CodeReview 的文件请按照如下顺序！</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git ls-files
+ 1. cache.h
+ 2. init-db.c
+ 3. update-cache.c
+ 4. write-tree.c
+ 5. <span class="nb">read</span>-cache.c
+ 6. commit-tree.c
+ 7. cat-file.c
+ 8. <span class="nb">read</span>-tree.c
+ 9. show-diff.c
+10. Makefile
+11. README
+
+让我们按照上面的文件顺序 Review 一下 Linus Torvalds 的 Code 吧！！
+
+NOTE!! 一些小提示~
+cache.h 【<span class="k">*</span>】一些变量和 object<span class="o">(</span>blob/tree/commit<span class="o">)</span> 结构定义，注释很多，请多花时间理解
+init-db.c 对应 git init 命令，初始化 .git（最开始是 .dircache） 文件夹内容
+update-cache.c 【<span class="k">*</span>】对应 git add 命令，将文件添加到 .git/index 和 .git/objects
+write-tree.c、commit-tree.c 【<span class="k">*</span>】对应 git commit 将文件夹关系和 changeset 添加到 .git/objects
+<span class="nb">read</span>-cache.c、read-tree.c、cat-file.c 解压 object 文件到临时文件
+show-diff.c 调用系统 diff 命令，将解压的临时文件和当前文件做 diff 对比
+Makefile 编译安装配置文件
+README 【<span class="k">*</span>】总结文档，作者的设计和想法
+</code></pre>
+</div>
+
+<h3 id="heading-一步步深入技巧">一步步深入技巧</h3>
+
+<blockquote>
+  <p>如何按照提交记录一步步 CodeReview ？</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># 向后检出一个提交</span>
+<span class="gp">$ </span>git log --reverse --pretty<span class="o">=</span>%H origin/master | grep -A 1 <span class="k">$(</span>git rev-parse HEAD<span class="k">)</span> | tail -1 | xargs git checkout
+Previous HEAD position was e83c516331 Initial revision of <span class="s2">"git"</span>, the information manager from hell
+HEAD is now at 8bc9a0c769 Add copyright notices.
+<span class="c"># Git 日志美化</span>
+<span class="gp">$ </span>git log --pretty<span class="o">=</span>format:<span class="s1">'|%h|%ae|%an|%aI|%s'</span> --numstat
+|e83c516331|torvalds@ppc970.osdl.org|Linus Torvalds|2005-04-07T15:13:13-07:00|Initial revision of <span class="s2">"git"</span>, the information manager from hell
+40      0       Makefile
+168     0       README
+93      0       cache.h
+23      0       cat-file.c
+172     0       commit-tree.c
+51      0       init-db.c
+259     0       <span class="nb">read</span>-cache.c
+43      0       <span class="nb">read</span>-tree.c
+81      0       show-diff.c
+248     0       update-cache.c
+66      0       write-tree.c
+<span class="c"># 该版本与前一个版本比较改动</span>
+<span class="gp">$ </span>git diff HEAD~1
+<span class="c"># 向前检出一个提交</span>
+<span class="gp">$ </span>git checkout HEAD~1
+</code></pre>
+</div>
+
+<blockquote>
+  <p>that's all. go and think!!</p>
+</blockquote>
+
+<hr />
+
+<h2 id="heading-git-第一次提交的源代码分析及带来的启示">Git 第一次提交的源代码分析及带来的启示</h2>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>Git 的本质就是一系列的文件对象集合，代码文件是对象、文件目录树是对象、commit 也是对象。
+文件对象的名称即内容的 SHA1 值，SHA1 哈希算法的值为 40 位。
+Linus 将前 2 位作为文件夹、后 38 位作为文件名。
+</code></pre>
+</div>
+
+<h3 id="heading-哈希碰撞问题">哈希碰撞问题</h3>
+<blockquote>
+  <p><a href="https://security.googleblog.com/2017/02/announcing-first-sha1-collision.html">哈希碰撞问题</a>：2017 年 2 月 23 日，SHA1 算法已经在谷歌的帮助下碰撞成功，使用 SHA1 的 Git 怎么处理这个事情？</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>https://stackoverflow.com/questions/9392365/how-would-git-handle-a-sha-1-collision-on-a-blob/9392525#9392525
+Git 创始人 Linus Torvalds 已经在邮件列表进行了回应，大体意思是 Git 除了 hash 了数据之外，还在文件头部存储了数据长度等信息。
+想要骗过 Git 除了 SHA-1 值要相同之外，数据长度也要一致才行，这大大增加了碰撞难度。
+Linus 说碰撞是通过增删一些可有可无的不透明数据来实现的，所以 Git 以后需要加强对不透明数据的检查，让这些碰撞无处可藏。
+PS：从 2018 和 Git 2.19 开始，代码已重构为使用 SHA-256。
+</code></pre>
+</div>
+
+<h3 id="heading-三种对象构成所有">三种对象构成所有</h3>
+
+<blockquote>
+  <p>对象有三种类型：blob、tree、commit。</p>
+</blockquote>
+
+<ol>
+  <li>blob：文件内容 zlib 后的文件</li>
+  <li>tree：如下格式组装的文本 zlib 后的文件
+    <div class="highlighter-rouge"><pre class="highlight"><code>[文件属性 (mode) 类型 (blob/tree) SHA1 文件名]
+[...]
+</code></pre>
+    </div>
+  </li>
+  <li>changeset(commit)：如下格式组装的文本 zlib 后的文件
+    <div class="highlighter-rouge"><pre class="highlight"><code>[tree SHA1]
+[parent [pre-commit SHA1](if exit pre-commit)
+[author 环境提交人|提交人 环境提交人邮箱|提交人邮箱 环境时间]
+[committer 提交人 提交人邮箱 提交时间]
+
+[{commit message}]
+</code></pre>
+    </div>
+  </li>
+</ol>
+
+<h3 id="heading-提交引起的数据结构变化简图">提交引起的数据结构变化简图</h3>
+
+<div class="language-yml highlighter-rouge"><pre class="highlight"><code><span class="s">假设文件经过两次提交，细节分别如下，我们来看下 objects 链的变化</span>
+<span class="s">0、git init</span>
+<span class="s">1、first commit log-1</span>
+<span class="s">new file</span><span class="pi">:</span>   <span class="s">file-1.txt</span>
+<span class="s">new file</span><span class="pi">:</span>   <span class="s">dirname-1/file-2.txt</span>
+<span class="s">2、second commit log-2</span>
+<span class="s">deleted</span><span class="pi">:</span>    <span class="s">dirname-1/file-2.txt</span>
+<span class="s">renamed</span><span class="pi">:</span>    <span class="s">file-1.txt -&gt; dirname-1/file-1.txt</span>
+<span class="s">new file</span><span class="pi">:</span>   <span class="s">file-3.txt</span>
+
+<span class="s">则以日志为时间维度，object 对象为数据维度，数据结构关系如下变化。</span>
+
+                      <span class="s">log-1 -----------------------------------------------→ log-2   ----------→  ...</span>
+                        <span class="s">↓                                                      ↓</span>
+                <span class="s">changeset-1(sha1-c1)                                      changeset-2(sha1-c2)</span> 
+                        <span class="s">↓                                                      ↓</span>
+                   <span class="s">tree-1(sha1-t1)                                         tree-3(sha1-t2)</span>  
+                    <span class="s">↙       ↘                                              ↙       ↘</span>
+<span class="s">(sha1-f1|file-1.txt)blob-1  tree-2(sha1-d1|dirname-1)  (sha1-f3|file-3.txt)blob-3   tree-4(sha1-d2|dirname-1)</span>
+                              <span class="s">↓  ↘                                                  ↓   ↘</span>
+      <span class="s">(sha1-f2|file-2.txt)blob-2   ...                         (sha1-f1|file-1.txt)blob-1  ...</span>
+
+</code></pre>
+</div>
+
+<h3 id="heading-如何设计出一个成功的开源产品">如何设计出一个成功的开源产品？</h3>
+
+<ol>
+  <li>解决痛点问题</li>
+  <li>极简设计</li>
+  <li>MVP (minimum viable product, 最小可用产品） —— 即使是少部分专业人士才会使用</li>
+  <li>快速发布，快速迭代</li>
+  <li>找到合适接班人</li>
+</ol>
+
+<hr />
+
+<h2 id="heading-git-底层命令实践">Git 底层命令实践</h2>
+
+<blockquote>
+  <p>第一次提交的代码包含的 7 个底层命令</p>
+</blockquote>
+
+<div class="language-yml highlighter-rouge"><pre class="highlight"><code><span class="s">init-db</span><span class="pi">:</span> <span class="s">初始化一个 git 本地仓库。</span>
+<span class="s">update-cache</span><span class="pi">:</span> <span class="s">输入文件路径，将该文件（或多个文件）加入缓冲区中。</span>
+<span class="s">write-tree</span><span class="pi">:</span> <span class="s">将缓存的目录树信息生成 TREE 对象，并写入对象数据库中。</span>
+<span class="s">commit-tree</span><span class="pi">:</span> <span class="s">将 TREE 对象信息生成 commit 节点对象并提交到版本历史中。</span>
+<span class="s">cat-file</span><span class="pi">:</span> <span class="s">由于所有的对象文件都经过 zlib 压缩，因此想要查看文件内容的话需要使用这个工具来解压生成临时文件，以便查看对象文件的内容。</span>
+<span class="s">show-diff</span><span class="pi">:</span> <span class="s">快速比较当前缓存与当前工作区的差异。</span>
+<span class="s">read-tree</span><span class="pi">:</span> <span class="s">根据输入的 TREE 对象 SHA1 值输出打印 TREE 的内容信息。</span>
+
+<span class="s">Oh，let's try it.</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>初始化且添加一个文件，查看 GitDB。</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git init-db
+
+<span class="gp">$ </span><span class="nb">echo</span> <span class="s2">"test git add"</span> &gt; test1.txt
+
+<span class="gp">$ </span>git <span class="nb">hash</span>-object test1.txt
+3bb333e4f50b5bd51844c7a59a0f5b52ba993409
+
+<span class="gp">$ </span>git add .
+<span class="c"># 此时 .git/objects 里面会产生一个文件 .git/objects/3b/b333e4f50b5bd51844c7a59a0f5b52ba993409</span>
+
+<span class="gp">$ </span>git cat-file -t 3bb333e4f50b5bd51844c7a59a0f5b52ba993409
+blob
+
+<span class="gp">$ </span>git cat-file -p 3bb333e4f50b5bd51844c7a59a0f5b52ba993409
+ þt e s t   g i t   a d d
+</code></pre>
+</div>
+
+<blockquote>
+  <p>添加一个文件夹和文件，观察 GitDB。</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>mkdir <span class="nb">test</span>-dir
+
+<span class="gp">$ </span><span class="nb">echo</span> <span class="s2">"test tree add"</span> &gt; <span class="nb">test</span>-tree.txt
+
+<span class="gp">$ </span>git <span class="nb">hash</span>-object <span class="nb">test</span>-dir/test-tree.txt
+9fad0267fc3a07507422f4b921c4780b500a53d5
+
+<span class="gp">$ </span>git add .
+<span class="c"># 此时 .git/objects 里面会产生一个文件 .git/objects/9f/ad0267fc3a07507422f4b921c4780b500a53d5</span>
+
+<span class="gp">$ </span>git cat-file -p 9fad0267fc3a07507422f4b921c4780b500a53d5
+ þt e s t   t r e e   a d d
+
+<span class="c"># 为啥没有生成 tree 文件，解压查看 .git/index 文件，文件名包含了文件路径，到提交的时候会生成 tree</span>
+<span class="gp">$ </span>git ls-files --stage
+100644 9fad0267fc3a07507422f4b921c4780b500a53d5 0       <span class="nb">test</span>-dir/test-tree.txt
+100644 3bb333e4f50b5bd51844c7a59a0f5b52ba993409 0       test1.txt
+</code></pre>
+</div>
+
+<blockquote>
+  <p>提交内容，观察 GitDB</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git commit -m <span class="s2">"test-commit"</span>
+<span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> 014237f] <span class="nb">test</span>-commit
+ 2 files changed, 0 insertions<span class="o">(</span>+<span class="o">)</span>, 0 deletions<span class="o">(</span>-<span class="o">)</span>
+ create mode 100644 <span class="nb">test</span>-dir/test-tree.txt
+ create mode 100644 test1.txt
+<span class="c"># 此时会产生对应的 tree 和 changeset 对象文件</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>依次解压内容如下</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># 此时会产生三个文件，对应的类型分别如下</span>
+commit  .git/objects/01/4237ff974856b594a18dc0710c63ed70c11ee1
+tree    .git/objects/17/86de2cabadfcbfbb1ef9b72096d6776a64f207
+tree    .git/objects/cc/eef7530fda0c16783241412793f6218b1edc6e
+
+<span class="c"># commit 文件解压</span>
+<span class="gp">$ </span>git cat-file -p 014237ff974856b594a18dc0710c63ed70c11ee1
+tree 1786de2cabadfcbfbb1ef9b72096d6776a64f207
+author petterobam &lt;1460300366@qq.com&gt; 1606888742 +0800
+committer petterobam &lt;1460300366@qq.com&gt; 1606888742 +0800
+
+<span class="nb">test</span>-commit
+
+<span class="c"># 查看类型</span>
+<span class="gp">$ </span>git cat-file -t 014237ff974856b594a18dc0710c63ed70c11ee1
+commit
+
+<span class="c"># 提交的 tree 文件解压</span>
+<span class="gp">$ </span>git cat-file -p 1786de2cabadfcbfbb1ef9b72096d6776a64f207
+040000 tree cceef7530fda0c16783241412793f6218b1edc6e    <span class="nb">test</span>-dir
+100644 blob 3bb333e4f50b5bd51844c7a59a0f5b52ba993409    test1.txt
+
+<span class="c"># tree 下面的 tree 文件解压</span>
+<span class="gp">$ </span>git cat-file -p cceef7530fda0c16783241412793f6218b1edc6e
+100644 blob 9fad0267fc3a07507422f4b921c4780b500a53d5    <span class="nb">test</span>-tree.txt
+</code></pre>
+</div>
+
+<blockquote>
+  <p>删除文件 test1.txt 并添加文件 test2.txt</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo</span> <span class="s2">"test index see"</span> &gt; test2.txt
+<span class="gp">$ </span>rm -rf test1.txt
+<span class="gp">$ </span>git add .
+<span class="gp">$ </span>git commit -m <span class="s2">"delete test1 and add test2"</span>
+<span class="o">[</span>master b543ac9] delete test1 and add test2
+ 2 files changed, 0 insertions<span class="o">(</span>+<span class="o">)</span>, 0 deletions<span class="o">(</span>-<span class="o">)</span>
+ delete mode 100644 test1.txt
+ create mode 100644 test2.txt
+<span class="c"># 发现产生了两个 object 文件</span>
+.git/objects/b5/43ac952ba32ad201f2e55d167d00dd450d1e66
+.git/objects/84/04b2676456885b00f239be95674e9c4ff5550a
+<span class="c"># 依次解压如下</span>
+<span class="gp">$ </span>git cat-file -p b543ac952ba32ad201f2e55d167d00dd450d1e66
+tree 8404b2676456885b00f239be95674e9c4ff5550a
+parent 014237ff974856b594a18dc0710c63ed70c11ee1
+author petterobam &lt;1460300366@qq.com&gt; 1606921927 +0800
+committer petterobam &lt;1460300366@qq.com&gt; 1606921927 +0800
+
+delete test1 and add test2
+------------------------------------
+git cat-file -p 8404b2676456885b00f239be95674e9c4ff5550a
+040000 tree cceef7530fda0c16783241412793f6218b1edc6e    <span class="nb">test</span>-dir
+100644 blob 06224df7b6d1d861f213721fd8f1720771fda6ae    test2.txt
+<span class="c"># 删除 text1.txt 并不会删除其对应的 blob 文件，而是生成一个新的 changeset 文件，changeset 文件指向一个新的 tree 文件</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>再观察下 .git 下其他文件的情况</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>.git/logs/refs/heads/master
+.git/logs/HEAD
+.git/refs/heads/master
+里面有一个最近一次 commit 产生 changeset 的 sha1
+---------------------------
+.git/COMMIT_EDITMSG
+里面记录的是最近一次 commit 的 message
+
+<span class="c"># 整个项目根目录如果有提交记录，也是一个 tree 文件</span>
+<span class="gp">$ </span>git cat-file -p <span class="s1">'master^{tree}'</span>
+040000 tree cceef7530fda0c16783241412793f6218b1edc6e    <span class="nb">test</span>-dir
+100644 blob 3bb333e4f50b5bd51844c7a59a0f5b52ba993409    test1.txt
+</code></pre>
+</div>
+
+<blockquote>
+  <p>自己尝试下，通过 GitDB 里面的文件，反查对应的文档</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>
+<span class="c"># 打开任何一个 git 项目在 .git/objects 里面随便找一个文件夹（xx）+ 文件（x{38}）</span>
+<span class="gp">$ </span>git cat-file -p xxx<span class="o">{</span>38<span class="o">}</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>to be continue …</p>
+</blockquote>
+
+<hr />
+
+<p>相关参考资料：</p>
+<ol>
+  <li>Pro Git 第二版：<a href="https://git-scm.com/book/en/v2">英文版</a> # <a href="https://git-scm.com/book/zh/v2">中文版</a> # <a href="https://gitee.com/progit/index.html">高亮版</a> # <a href="https://www.progit.cn/">侧边菜单版</a></li>
+  <li><a href="https://hutusi.com/articles/the-greatest-git-commit">改变世界的一次代码提交</a></li>
+  <li><a href="http://www.petterobam.cn/blog/2020/12/03/git-first-commit-code-review-and-think/">Git 源码·LinusTorvalds 第一次提交 CR 和启发</a></li>
+</ol>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2020/10/31/use-java-make-cmd-util-and-install-script/" title="上一篇 '用 Java 制作命令行工具并提供自动安装脚本'"> ← 用 Java 制作命令行工具并提供自动安装脚本</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2021/01/01/video-ddd-think/" title="下一篇 '【领域】视频 UGC 领域思考和归纳'">【领域】视频 UGC 领域思考和归纳 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

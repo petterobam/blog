@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Fastjson 的使用研究 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Fastjson 的使用研究" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="Fastjson 的使用经验分享" />
+<meta property="og:description" content="Fastjson 的使用经验分享" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-06-14T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"Fastjson 的使用经验分享","@type":"BlogPosting","url":"/blog/2019/06/14/fastjson-enjoy/","headline":"Fastjson 的使用研究","dateModified":"2019-06-14T00:00:00+00:00","datePublished":"2019-06-14T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2019/06/14/fastjson-enjoy/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="Fastjson,泛型,Swagger" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">Fastjson 的使用研究</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2019-06-14T00:00:00+00:00" datetime="2019-06-14T00:00:00+00:00">June 14, 2019 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：2123 字，&nbsp;预计阅读时间：21 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#整理" title="整理">
+            整理 <span>20</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#Fastjson" title="Fastjson">Fastjson <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#Swagger" title="Swagger">Swagger <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#泛型" title="泛型">泛型 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h2 id="heading-泛型转化typereference">泛型转化：TypeReference</h2>
+
+<p>常规的使用：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">js</span><span class="o">,</span> <span class="n">Result</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</code></pre>
+</div>
+
+<p>这样会发生类型转化错误，因为这里的 T 相关的变量，T 默认对应的是 Map 类型。</p>
+
+<p>泛型的对象转化方法：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">obj</span> <span class="o">=</span> <span class="o">(</span><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;)</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">js</span><span class="o">,</span> <span class="k">new</span> <span class="n">TypeReference</span><span class="o">&lt;</span><span class="n">Result</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;(){});</span>
+</code></pre>
+</div>
+
+<p>MVC 参数接收的时候，针对泛型参数如何处理？</p>
+
+<p>自定义参数注解和相关的参数拦截器</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!--web 层注解拦截器-消息转化器定义--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"customArgumentResolvers"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;list&gt;</span>
+            <span class="c">&lt;!--泛型参数转化器--&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"genericsJsonResolver"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/list&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"messageConverters"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;list&gt;</span>
+            <span class="c">&lt;!--json 消息转化器--&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"jsonConverter"</span><span class="nt">/&gt;</span>
+            <span class="c">&lt;!--html 数据--&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"simpleStringConverter"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/list&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre>
+</div>
+
+<p>自定义泛型注解类和转化器：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 文件描述 含有泛型对象参数注解
+ *
+ * @author ouyangjie
+ * @Title: GenericsRequestBody
+ * @date 2019/5/20 11:17 PM
+ */</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="n">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Target</span><span class="o">(</span><span class="n">ElementType</span><span class="o">.</span><span class="na">PARAMETER</span><span class="o">)</span>
+<span class="nd">@Documented</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">GenericsRequestBody</span> <span class="o">{</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+ * 文件描述 含有泛型对象参数 json 转对象
+ *
+ * @author ouyangjie
+ * @Title: WebGenericsParamArgumentResolver
+ * @date 2019/5/20 10:59 PM
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebGenericsParamArgumentResolver</span> <span class="kd">implements</span> <span class="n">HandlerMethodArgumentResolver</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Charset</span> <span class="n">UTF8</span> <span class="o">=</span> <span class="n">Charset</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"UTF-8"</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">CONTENT_TYPE</span> <span class="o">=</span> <span class="s">"application/json"</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="n">WebGenericsParamArgumentResolver</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="nf">WebGenericsParamArgumentResolver</span><span class="o">()</span> <span class="o">{}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">supportsParameter</span><span class="o">(</span><span class="n">MethodParameter</span> <span class="n">methodParameter</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">methodParameter</span><span class="o">.</span><span class="na">hasParameterAnnotation</span><span class="o">(</span><span class="n">GenericsRequestBody</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">resolveArgument</span><span class="o">(</span><span class="n">MethodParameter</span> <span class="n">methodParameter</span><span class="o">,</span> <span class="n">ModelAndViewContainer</span> <span class="n">modelAndViewContainer</span><span class="o">,</span>
+                   <span class="n">NativeWebRequest</span> <span class="n">nativeWebRequest</span><span class="o">,</span> <span class="n">WebDataBinderFactory</span> <span class="n">webDataBinderFactory</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 获取 JSON 字符串</span>
+            <span class="n">String</span> <span class="n">jsonStr</span><span class="o">;</span>
+            <span class="c1">// 判断 content-type 是否是 application/json 的数据类型</span>
+            <span class="n">String</span> <span class="n">contentType</span> <span class="o">=</span> <span class="n">nativeWebRequest</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"content-type"</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">StringUtils</span><span class="o">.</span><span class="na">isNotBlank</span><span class="o">(</span><span class="n">contentType</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">contentType</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">CONTENT_TYPE</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">jsonStr</span> <span class="o">=</span> <span class="n">WebRequestUtil</span><span class="o">.</span><span class="na">getJSONParam</span><span class="o">(</span><span class="n">nativeWebRequest</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">jsonStr</span> <span class="o">=</span> <span class="n">WebRequestUtil</span><span class="o">.</span><span class="na">parseParamToJSONStr</span><span class="o">(</span><span class="n">nativeWebRequest</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="n">Object</span> <span class="n">result</span><span class="o">;</span>
+            <span class="n">Type</span> <span class="n">originType</span> <span class="o">=</span> <span class="n">methodParameter</span><span class="o">.</span><span class="na">getGenericParameterType</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">originType</span> <span class="k">instanceof</span> <span class="n">ParameterizedType</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">ParameterizedType</span> <span class="n">type</span> <span class="o">=</span> <span class="o">(</span><span class="n">ParameterizedType</span><span class="o">)</span> <span class="n">originType</span><span class="o">;</span>
+                <span class="n">ParameterizedTypeImpl</span> <span class="n">fastjsonType</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ParameterizedTypeImpl</span><span class="o">(</span><span class="n">type</span><span class="o">.</span><span class="na">getActualTypeArguments</span><span class="o">(),</span> <span class="n">type</span><span class="o">.</span><span class="na">getOwnerType</span><span class="o">(),</span> <span class="n">type</span><span class="o">.</span><span class="na">getRawType</span><span class="o">());</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">jsonStr</span><span class="o">,</span> <span class="n">fastjsonType</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">jsonStr</span><span class="o">,</span> <span class="n">originType</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">JSONException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"resolveArgument 中 JSON.parseObject 方法出错："</span> <span class="o">+</span> <span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">UNRESOLVED</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-转化策略serializerfeature">转化策略：SerializerFeature</h2>
+
+<p>定义转化的策略和特征，详细策略清单如下</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">alibaba</span><span class="o">.</span><span class="na">fastjson</span><span class="o">.</span><span class="na">serializer</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="n">SerializerFeature</span> <span class="o">{</span>
+    <span class="mi">1</span><span class="o">.</span> <span class="n">QuoteFieldNames</span><span class="o">,</span><span class="c1">//输出 key 时是否使用双引号，默认为 true</span>
+    <span class="mi">2</span><span class="o">.</span> <span class="n">UseSingleQuotes</span><span class="o">,</span><span class="c1">//使用单引号而不是双引号，默认为 false</span>
+    <span class="mi">3</span><span class="o">.</span> <span class="n">WriteMapNullValue</span><span class="o">,</span><span class="c1">//是否输出值为 null 的字段，默认为 false</span>
+    <span class="mi">4</span><span class="o">.</span> <span class="n">WriteEnumUsingToString</span><span class="o">,</span><span class="c1">//Enum 输出 name() 或者 original, 默认为 false</span>
+    <span class="mi">5</span><span class="o">.</span> <span class="n">UseISO8601DateFormat</span><span class="o">,</span><span class="c1">//Date 使用 ISO8601 格式输出，默认为 false</span>
+    <span class="mi">6</span><span class="o">.</span> <span class="n">WriteNullListAsEmpty</span><span class="o">,</span><span class="c1">//List 字段如果为 null, 输出为 [], 而非 null</span>
+    <span class="mi">7</span><span class="o">.</span> <span class="n">WriteNullStringAsEmpty</span><span class="o">,</span><span class="c1">//字符类型字段如果为 null, 输出为"", 而非 null</span>
+    <span class="mi">8</span><span class="o">.</span> <span class="n">WriteNullNumberAsZero</span><span class="o">,</span><span class="c1">//数值字段如果为 null, 输出为 0, 而非 null</span>
+    <span class="mi">9</span><span class="o">.</span> <span class="n">WriteNullBooleanAsFalse</span><span class="o">,</span><span class="c1">//Boolean 字段如果为 null, 输出为 false, 而非 null</span>
+    <span class="mi">10</span><span class="o">.</span> <span class="n">SkipTransientField</span><span class="o">,</span><span class="c1">//如果是 true，类中的 Get 方法对应的 Field 是 transient，序列化时将会被忽略。默认为 true</span>
+    <span class="mi">11</span><span class="o">.</span> <span class="n">SortField</span><span class="o">,</span><span class="c1">//按字段名称排序后输出。默认为 false</span>
+    <span class="mi">12</span><span class="o">.</span> <span class="n">WriteTabAsSpecial</span><span class="o">,</span><span class="c1">//把、t 做转义输出，默认为 false</span>
+    <span class="mi">13</span><span class="o">.</span> <span class="n">PrettyFormat</span><span class="o">,</span><span class="c1">//结果是否格式化，默认为 false</span>
+    <span class="mi">14</span><span class="o">.</span> <span class="n">WriteClassName</span><span class="o">,</span><span class="c1">//序列化时写入类型信息，默认为 false。反序列化是需用到</span>
+    <span class="mi">15</span><span class="o">.</span> <span class="n">DisableCircularReferenceDetect</span><span class="o">,</span><span class="c1">//消除对同一对象循环引用的问题，默认为 false</span>
+    <span class="mi">16</span><span class="o">.</span> <span class="n">WriteSlashAsSpecial</span><span class="o">,</span><span class="c1">//对斜杠'/'进行转义</span>
+    <span class="mi">17</span><span class="o">.</span> <span class="n">BrowserCompatible</span><span class="o">,</span><span class="c1">//将中文都会序列化为、uXXXX 格式，字节数会多一些，但是能兼容 IE 6，默认为 false</span>
+    <span class="mi">18</span><span class="o">.</span> <span class="n">WriteDateUseDateFormat</span><span class="o">,</span><span class="c1">//全局修改日期格式，默认为 false。JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";JSON.toJSONString(obj, SerializerFeature.WriteDateUseDateFormat),</span>
+    <span class="mi">19</span><span class="o">.</span> <span class="n">NotWriteRootClassName</span><span class="o">,</span><span class="c1">//暂不知，求告知</span>
+    <span class="mi">20</span><span class="o">.</span> <span class="n">DisableCheckSpecialChar</span><span class="o">,</span><span class="c1">//一个对象的字符串属性中如果有特殊字符如双引号，将会在转成 json 时带有反斜杠转移符。如果不需要转义，可以使用这个属性。默认为 false</span>
+    <span class="mi">21</span><span class="o">.</span> <span class="n">BeanToArray</span><span class="o">;</span> <span class="c1">//暂不知，求告知</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-fastjson-解析器兼容-swagger-数据接口">Fastjson 解析器兼容 Swagger 数据接口</h2>
+
+<p>对于 MVC 项目正常接入 Swagger 之后，由于 Swagger 用的是 Jackson 转化器，使用 Fastjson 无法兼容 Swagger 自带的接口。</p>
+
+<p>主要是这两个接口：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>/swagger-resources/configuration/ui
+/v2/api-docs
+</code></pre>
+</div>
+
+<p>这两个接口被 FastJsonHttpMessageConverter 转化器拦截获取到的不是对象，而是一个 Json 字符串，
+所以解析返回参数 <code class="highlighter-rouge">JSON.toJSONString(obj, features);</code> 返回值会是一个 <code class="highlighter-rouge"><span class="p">{}</span></code></p>
+
+<p>因此需要重新定义 Fastjson 消息转化器：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 文件描述 Web 层转化器 Json 转对象，对象转 Json
+ *
+ * @author ouyangjie
+ * @Title: WebJsonHttpMessageConverter
+ * @ProjectName xxx
+ * @date 2019/5/2 04:26 PM
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebJsonHttpMessageConverter</span> <span class="kd">extends</span> <span class="n">FastJsonHttpMessageConverter</span> <span class="o">{</span>
+    <span class="cm">/**
+     * jackson 解析工具
+     */</span>
+    <span class="kd">private</span> <span class="n">ObjectMapper</span> <span class="n">mapper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ObjectMapper</span><span class="o">();</span>
+
+    <span class="kd">public</span> <span class="nf">WebJsonHttpMessageConverter</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">();</span>
+        <span class="c1">// this.getFastJsonConfig().getSerializeConfig().put(Json.class, SwaggerJsonSerializer.instance);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">writeInternal</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">,</span> <span class="n">HttpOutputMessage</span> <span class="n">outputMessage</span><span class="o">)</span>
+            <span class="kd">throws</span> <span class="n">IOException</span><span class="o">,</span> <span class="n">HttpMessageNotWritableException</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">obj</span> <span class="k">instanceof</span> <span class="n">springfox</span><span class="o">.</span><span class="na">documentation</span><span class="o">.</span><span class="na">spring</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">json</span><span class="o">.</span><span class="na">Json</span>
+                <span class="o">||</span> <span class="n">obj</span> <span class="k">instanceof</span> <span class="n">springfox</span><span class="o">.</span><span class="na">documentation</span><span class="o">.</span><span class="na">swagger</span><span class="o">.</span><span class="na">web</span><span class="o">.</span><span class="na">UiConfiguration</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">writeJsonStrToJson</span><span class="o">(</span><span class="n">obj</span><span class="o">,</span> <span class="n">outputMessage</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">.</span><span class="na">writeInternal</span><span class="o">(</span><span class="n">obj</span><span class="o">,</span> <span class="n">outputMessage</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 将 json 字符串转化成 json
+     *
+     * @param obj
+     * @param outputMessage
+     *
+     * @throws IOException
+     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">writeJsonStrToJson</span><span class="o">(</span><span class="n">Object</span> <span class="n">obj</span><span class="o">,</span> <span class="n">HttpOutputMessage</span> <span class="n">outputMessage</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">HttpHeaders</span> <span class="n">headers</span> <span class="o">=</span> <span class="n">outputMessage</span><span class="o">.</span><span class="na">getHeaders</span><span class="o">();</span>
+        <span class="n">ByteArrayOutputStream</span> <span class="n">outnew</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ByteArrayOutputStream</span><span class="o">();</span>
+        <span class="n">mapper</span><span class="o">.</span><span class="na">writeValue</span><span class="o">(</span><span class="n">outnew</span><span class="o">,</span> <span class="n">obj</span><span class="o">);</span>
+        <span class="n">outnew</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+        <span class="n">headers</span><span class="o">.</span><span class="na">setContentLength</span><span class="o">(</span><span class="n">outnew</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+        <span class="n">OutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="n">outputMessage</span><span class="o">.</span><span class="na">getBody</span><span class="o">();</span>
+        <span class="n">outnew</span><span class="o">.</span><span class="na">writeTo</span><span class="o">(</span><span class="n">out</span><span class="o">);</span>
+        <span class="n">outnew</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-mvc-正常接入-swagger">MVC 正常接入 Swagger</h3>
+
+<p>对于如何接入 Swagger，请自行百度，这里对 MVC 工程接入做个简单介绍。</p>
+
+<h4 id="heading-swaggerapiconfig-定义-docket">SwaggerApiConfig 定义 Docket</h4>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@EnableSwagger2</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackages</span> <span class="o">=</span> <span class="o">{</span><span class="s">"com.xxx.xxx"</span><span class="o">})</span>
+<span class="nd">@EnableWebMvc</span>
+<span class="nd">@EnableSwaggerBootstrapUI</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SwaggerApiConfig</span> <span class="o">{</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"#{config['system.url']}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">systemUrl</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * 根据配置读取是否开启 swagger 文档，针对测试与生产环境采用不同的配置
+     */</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"#{config['swagger.enable']}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">isSwaggerEnable</span><span class="o">;</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="n">Docket</span> <span class="nf">api</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">isSwaggerEnable</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">Docket</span><span class="o">(</span><span class="n">DocumentationType</span><span class="o">.</span><span class="na">SWAGGER_2</span><span class="o">).</span><span class="na">enable</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">apiInfo</span><span class="o">(</span><span class="n">apiInfoOnline</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">select</span><span class="o">()</span>
+                    <span class="c1">// 如果是线上环境，添加路径过滤，设置为全部都不符合</span>
+                    <span class="o">.</span><span class="na">paths</span><span class="o">(</span><span class="n">PathSelectors</span><span class="o">.</span><span class="na">none</span><span class="o">())</span>
+                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">defaultProduces</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+        <span class="n">defaultProduces</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"application/json"</span><span class="o">);</span>
+        <span class="n">defaultProduces</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"text/plain"</span><span class="o">);</span>
+        <span class="n">defaultProduces</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"*/*"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Docket</span><span class="o">(</span><span class="n">DocumentationType</span><span class="o">.</span><span class="na">SWAGGER_2</span><span class="o">).</span><span class="na">enable</span><span class="o">(</span><span class="n">isSwaggerEnable</span><span class="o">).</span><span class="na">apiInfo</span><span class="o">(</span><span class="n">apiInfo</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">produces</span><span class="o">(</span><span class="n">defaultProduces</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">consumes</span><span class="o">(</span><span class="n">defaultProduces</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">useDefaultResponseMessages</span><span class="o">(</span><span class="kc">false</span><span class="o">).</span><span class="na">pathProvider</span><span class="o">(</span><span class="k">new</span> <span class="n">CustRelativePathProvider</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">select</span><span class="o">()</span>
+                <span class="c1">// 接口太多，导致内存溢出</span>
+                <span class="c1">// .apis(RequestHandlerSelectors.basePackage("com.xxx.xxx.web"))</span>
+                <span class="o">.</span><span class="na">apis</span><span class="o">(</span><span class="n">RequestHandlerSelectors</span><span class="o">.</span><span class="na">withMethodAnnotation</span><span class="o">(</span><span class="n">ApiOperation</span><span class="o">.</span><span class="na">class</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">paths</span><span class="o">(</span><span class="n">PathSelectors</span><span class="o">.</span><span class="na">any</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 自定义生成的 RestFul 接口链接带的后缀，如 .do、.api、.json 等
+     */</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustRelativePathProvider</span> <span class="kd">extends</span> <span class="n">AbstractPathProvider</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">ROOT</span> <span class="o">=</span> <span class="s">"/"</span><span class="o">;</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="n">String</span> <span class="nf">getOperationPath</span><span class="o">(</span><span class="n">String</span> <span class="n">operationPath</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">UriComponentsBuilder</span> <span class="n">uriComponentsBuilder</span> <span class="o">=</span> <span class="n">UriComponentsBuilder</span><span class="o">.</span><span class="na">fromPath</span><span class="o">(</span><span class="s">"/"</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">removeAdjacentForwardSlashes</span><span class="o">(</span><span class="n">uriComponentsBuilder</span><span class="o">.</span><span class="na">path</span><span class="o">(</span><span class="n">operationPath</span><span class="o">).</span><span class="na">build</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+            <span class="k">return</span> <span class="n">uri</span> <span class="o">+</span> <span class="s">".json"</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="n">String</span> <span class="nf">applicationPath</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">ROOT</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="n">String</span> <span class="nf">getDocumentationPath</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">ROOT</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="n">ApiInfo</span> <span class="nf">apiInfo</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">ApiInfoBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"系统接口平台-仅开发测试环境"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">description</span><span class="o">(</span><span class="s">"开发、测试环境专属。"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">termsOfServiceUrl</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">contact</span><span class="o">(</span><span class="k">new</span> <span class="n">Contact</span><span class="o">(</span><span class="s">"欧阳洁"</span><span class="o">,</span> <span class="n">systemUrl</span><span class="o">,</span> <span class="s">"ouyangjie@email.com"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">version</span><span class="o">(</span><span class="s">"1.0.0"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 生产环境
+     * @return
+     */</span>
+    <span class="kd">private</span> <span class="n">ApiInfo</span> <span class="nf">apiInfoOnline</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">ApiInfoBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"生产环境屏蔽接口文档"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">description</span><span class="o">(</span><span class="s">"生产环境屏蔽接口文档"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">license</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">licenseUrl</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">termsOfServiceUrl</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">version</span><span class="o">(</span><span class="s">""</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">contact</span><span class="o">(</span><span class="k">new</span> <span class="n">Contact</span><span class="o">(</span><span class="s">"欧阳洁"</span><span class="o">,</span> <span class="n">systemUrl</span><span class="o">,</span> <span class="s">"ouyangjie@email.com"</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h4 id="heading-spring-servletxml-配置">spring-servlet.xml 配置</h4>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code>...
+<span class="c">&lt;!--swagger 扫包配置 可以不需要，如果你要自定义 Swagger 对 Api 的扫描加载规则的话--&gt;</span>
+<span class="c">&lt;!--&lt;context:component-scan base-package="springfox" /&gt;--&gt;</span>
+<span class="c">&lt;!-- 添加 Swagger2 的 java config 作为 SpringMVC 的 bean --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"com.xxx.xxx.swagger.SwaggerApiConfig"</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!--swagger 相关配置--&gt;</span>
+<span class="c">&lt;!-- 配置 Swagger 相关静态资源 --&gt;</span>
+<span class="nt">&lt;mvc:resources</span> <span class="na">location=</span><span class="s">"classpath:/META-INF/resources/"</span> <span class="na">mapping=</span><span class="s">"swagger-ui.html"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;mvc:resources</span> <span class="na">location=</span><span class="s">"classpath:/META-INF/resources/"</span> <span class="na">mapping=</span><span class="s">"doc.html"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;mvc:resources</span> <span class="na">location=</span><span class="s">"classpath:/META-INF/resources/webjars/"</span> <span class="na">mapping=</span><span class="s">"/webjars/**"</span><span class="nt">/&gt;</span>
+
+<span class="c">&lt;!--访问日志拦截器--&gt;</span>
+<span class="nt">&lt;mvc:interceptors&gt;</span>
+    <span class="nt">&lt;mvc:interceptor&gt;</span>
+        <span class="nt">&lt;mvc:mapping</span> <span class="na">path=</span><span class="s">"/**"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- 排除对 Swagger 相关资源请求的拦截 --&gt;</span>
+        <span class="nt">&lt;mvc:exclude-mapping</span> <span class="na">path=</span><span class="s">"/swagger*/**"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;mvc:exclude-mapping</span> <span class="na">path=</span><span class="s">"/v2/**"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;mvc:exclude-mapping</span> <span class="na">path=</span><span class="s">"/webjars/**"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!--访问日志记录--&gt;</span>
+        <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"com.xxx.xxx.web.util.aop.LogInterceptorAdapter"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+    <span class="nt">&lt;/mvc:interceptor&gt;</span>
+<span class="nt">&lt;/mvc:interceptors&gt;</span>
+...
+</code></pre>
+</div>
+
+<h4 id="heading-webxml-配置">web.xml 配置</h4>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code>...
+<span class="c">&lt;!--swagger 专用的--&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>dispatcherServlet<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/swagger-resources<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>dispatcherServlet<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/swagger-resources/configuration/ui<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>dispatcherServlet<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/swagger-resources/configuration/security<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>dispatcherServlet<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/v2/api-docs<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>dispatcherServlet<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/v2/api-docs-ext<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+<span class="nt">&lt;servlet-mapping&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>dispatcherServlet<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/csrf<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/servlet-mapping&gt;</span>
+...
+</code></pre>
+</div>
+
+<h3 id="heading-让自定义的泛型注解也被-swagger-解析成-json-请求参数">让自定义的泛型注解也被 Swagger 解析成 json 请求参数</h3>
+
+<h4 id="heading-那么问题来了-1">那么问题来了 1</h4>
+
+<p>上面的泛型注解 <code class="highlighter-rouge">@GenericsRequestBody</code> 貌似被 Swagger 解析成了 FormData 的参数形式，不是 json 请求参数</p>
+
+<p>只要对该参数同时使用 <code class="highlighter-rouge">@GenericsRequestBody</code> 和 <code class="highlighter-rouge">@RequestBody</code> 就可以被 Swagger 解析成 json 请求参数 <code class="highlighter-rouge">~\(≧▽≦)/~</code> 啦啦啦</p>
+
+<h4 id="heading-那么问题来了-2">那么问题来了 2</h4>
+
+<p>虽然被 Swagger 解析成了 json 请求，说明 Jackson 还是对泛型很友好哒，但是接口自身不能精准解析泛型参数了</p>
+
+<p>原来，同时使用 <code class="highlighter-rouge">@GenericsRequestBody</code> 和 <code class="highlighter-rouge">@RequestBody</code> 优先被 FastJsonHttpMessageConverter 解析了</p>
+
+<p>自定义的东西优先级就是差一些，难道要用 Jackson 解析器解析 json 吗？</p>
+
+<p>众所周知，Jackson 参数解析器没法优雅的解决实体里面参数的相互依赖问题，需要一个个屏蔽循环依赖的参数解析，这样感 jio 是无止境的工作量</p>
+
+<p>所以，只需要将自定义的参数拦截器 WebGenericsParamArgumentResolver 优先级调到最高，至少要比系统默认的 RequestResponseBodyArgumentResolver
+要高才行，于是：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 文件描述 将泛型注解放到最高优先级解析
+ *
+ * @author ouyangjie
+ * @Title: ConfigFirstGenericsParamArgumentResolver
+ * @ProjectName xxx
+ * @date 2019/6/13 11:52 PM
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConfigFirstGenericsParamArgumentResolver</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">RequestMappingHandlerAdapter</span> <span class="n">requestMappingHandlerAdapter</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="n">WebGenericsParamArgumentResolver</span> <span class="n">genericsJsonResolver</span><span class="o">;</span>
+
+    <span class="nd">@PostConstruct</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">injectSelfMethodArgumentResolver</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">HandlerMethodArgumentResolver</span><span class="o">&gt;</span> <span class="n">argumentResolvers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">argumentResolvers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">genericsJsonResolver</span><span class="o">);</span>
+        <span class="n">argumentResolvers</span><span class="o">.</span><span class="na">addAll</span><span class="o">(</span><span class="n">requestMappingHandlerAdapter</span><span class="o">.</span><span class="na">getArgumentResolvers</span><span class="o">());</span>
+        <span class="n">requestMappingHandlerAdapter</span><span class="o">.</span><span class="na">setArgumentResolvers</span><span class="o">(</span><span class="n">argumentResolvers</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>对应 xml</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code>...
+<span class="c">&lt;!-- 启动 Spring MVC 的注解功能，完成请求和注解 POJO 的映射 --&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">name=</span><span class="s">"requestMappingHandlerAdapter"</span>
+      <span class="na">class=</span><span class="s">"org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"messageConverters"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;list&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"jsonConverter"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"simpleStringConverter"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;ref</span> <span class="na">bean=</span><span class="s">"mappingJacksonHttpMessageConverter"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/list&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--含有泛型的请求参数 json 转对象--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"genericsJsonResolver"</span> <span class="na">class=</span><span class="s">"com.xxx.xxx.web.util.handler.argument.WebGenericsParamArgumentResolver"</span><span class="nt">/&gt;</span>
+<span class="c">&lt;!--将泛型注解放到最高优先级解析--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"com.xxx.xxx.web.util.handler.argument.ConfigFirstGenericsParamArgumentResolver"</span><span class="nt">/&gt;</span>
+...
+</code></pre>
+</div>
+
+<h2 id="heading-待续">待续</h2>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2019/03/11/sql-optimization-enjoy/" title="上一篇 '一次提速百倍的 SQL 优化记录'"> ← 一次提速百倍的 SQL 优化记录</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2019/08/10/Hadoop-Pig-Jython-AmMap-ElasticSearch/" title="下一篇 '一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch'">一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

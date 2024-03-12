@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>JAVA WEB 注解相关规范速查表 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="JAVA WEB 注解相关规范速查表" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="JAVA WEB 注解经验分享" />
+<meta property="og:description" content="JAVA WEB 注解经验分享" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-02-09T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"JAVA WEB 注解经验分享","@type":"BlogPosting","url":"/blog/2019/02/09/java-annotation/","headline":"JAVA WEB 注解相关规范速查表","dateModified":"2019-02-09T00:00:00+00:00","datePublished":"2019-02-09T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2019/02/09/java-annotation/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="Java,注解" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">JAVA WEB 注解相关规范速查表</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2019-02-09T00:00:00+00:00" datetime="2019-02-09T00:00:00+00:00">February 09, 2019 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：1207 字，&nbsp;预计阅读时间：12 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#整理" title="整理">
+            整理 <span>20</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#Java" title="Java">Java <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#注解" title="注解">注解 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h2 id="heading-spring-服务相关-bean">Spring 服务相关 Bean</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">@Service</code> 在业务逻辑层使用（service 层）</li>
+  <li><code class="highlighter-rouge">@Repository</code> 在数据访问层使用（dao 层）</li>
+  <li><code class="highlighter-rouge">@Component</code> 组件（以上都不是时使用）</li>
+</ul>
+
+<h3 id="heading-服务-bean-注入">服务 Bean 注入</h3>
+
+<ul>
+  <li>统一使用 <code class="highlighter-rouge">@Autowired</code>（Spring 支持） 注入</li>
+  <li><span style="color:red;">【不推荐】再使用</span> <code class="highlighter-rouge">@Inject</code>（JSR-330）或<code class="highlighter-rouge">@Resource</code>（JSR-250）注入</li>
+</ul>
+
+<h2 id="heading-mvc-相关注解">MVC 相关注解</h2>
+
+<h3 id="heading-基本注解">基本注解</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">@Controller</code> 在控制器的声明（controller 层）</li>
+  <li><code class="highlighter-rouge">@RequestMapping</code> 用于映射 Web 请求，包括访问路径和参数（类或方法上）</li>
+  <li><code class="highlighter-rouge">@ResponseBody</code> 支持将返回值放在 response 内，而不是一个页面，通常用户返回 json 数据（返回值旁或方法上）</li>
+  <li><code class="highlighter-rouge">@RequestBody</code> 允许 request 的参数在 request 体中，而不是在直接连接在地址后面。（放在参数前）</li>
+  <li>【*】<code class="highlighter-rouge">@PathVariable</code> 用于接收路径参数，比如 @RequestMapping(“/hello/{name}”) 申明的路径，将注解放在参数中前，即可获取该值，通常作为 Restful 的接口实现方法（放在参数前）</li>
+  <li>【*】<code class="highlighter-rouge">@RestController</code> 该注解为一个组合注解，相当于 @Controller 和 @ResponseBody 的组合，注解在类上，意味着，该 Controller 的所有方法都默认加上了 @ResponseBody。</li>
+</ul>
+
+<h3 id="heading-全局相关">全局相关</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">@ExceptionHandler</code> （方法上）用于全局处理控制器里的异常</li>
+  <li><code class="highlighter-rouge">@InitBinder</code> （方法上）用来设置 WebDataBinder，WebDataBinder 用来自动绑定前台请求参数到 Model 中。</li>
+  <li><code class="highlighter-rouge">@ModelAttribute</code> （方法上）本来的作用是绑定键值对到 Model 里，在 @ControllerAdvice 中是让全局的 @RequestMapping 都能获得在此处设置的键值对。</li>
+  <li><code class="highlighter-rouge">@ControllerAdvice</code> （类上）通过该注解单独的配置类，我们可以将对于所有控制器的全局配置放置在同一个位置，注解了 @ControllerAdvice 的类的方法可使用 @ExceptionHandler、@InitBinder、@ModelAttribute 注解到方法上， 这对所有注解了 @RequestMapping 的控制器内的方法有效。</li>
+</ul>
+
+<h2 id="heading-配置类注解">配置类注解</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">@Configuration</code> 声明当前类为配置类 （非 bean)，相当于 xml 形式的 Spring 配置（类上）</li>
+  <li><code class="highlighter-rouge">@Bean</code> 注解在方法上，声明当前方法的返回值为一个 bean，替代 xml 中的 <code class="highlighter-rouge">&lt;bean id="xxxx"&gt;...&lt;/bean&gt;</code> 方式（方法上）</li>
+  <li>【不推荐】<code class="highlighter-rouge">@Configuration + @Component</code> 注解，表明这个类是一个 bean，建议直接用服务注解（类上）</li>
+  <li>【不推荐】<code class="highlighter-rouge">@ComponentScan</code> 用于对 Component 进行扫描，相当于 xml 中的 <code class="highlighter-rouge">&lt;context:component-scan .../&gt;</code>（类上）</li>
+  <li>【不推荐】<code class="highlighter-rouge">@WishlyConfiguration</code> 为 @Configuration 与 @ComponentScan 的组合注解，可以替代这两个注解</li>
+</ul>
+
+<h3 id="heading-scope-类上-或-方法上-得有-bean"><code class="highlighter-rouge">@Scope</code> （类上 或 方法上-&gt;得有 @Bean）</h3>
+
+<p>设置 Spring 容器如何新建 Bean 实例，其设置类型包括：</p>
+
+<ul>
+  <li>Singleton （单例，一个 Spring 容器中只有一个 bean 实例，默认模式）</li>
+  <li>Protetype （每次调用新建一个 bean）</li>
+  <li>Request （web 项目中，给每个 http request 新建一个 bean）</li>
+  <li>Session （web 项目中，给每个 http session 新建一个 bean）</li>
+  <li>GlobalSession（给每一个 global http session 新建一个 Bean 实例）</li>
+</ul>
+
+<h2 id="heading-配置属性值注入">配置属性值注入</h2>
+
+<h3 id="heading-propertysource-加载配置文件类上">@PropertySource 加载配置文件（类上）</h3>
+
+<p>@PropertySource("classpath:resource/test.propertie")</p>
+
+<h3 id="heading-value-注解非静态属性上">@Value 注解（非静态属性上）</h3>
+
+<ul>
+  <li>【常用】注入配置文件</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"${book.name}"</span><span class="o">)</span>
+<span class="n">String</span> <span class="n">bookName</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>【*】注入表达式结果（一次性）</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"#{ T(java.lang.Math).random() * 100 }"</span><span class="o">)</span>
+<span class="n">String</span> <span class="n">randomNumber</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>【*】注入操作系统属性</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"#{systemProperties['os.name']}"</span><span class="o">)</span>
+<span class="n">String</span> <span class="n">osName</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>【*】注入其它 bean 属性</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"#{domeClass.name}"</span><span class="o">)</span>
+<span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>【*】注入文件资源</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"classpath:com/baidu/baihui/test/test.txt"</span><span class="o">)</span>
+<span class="n">String</span> <span class="n">Resource</span> <span class="n">file</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>【不推荐】注入网站资源</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"http://www.cznovel.com"</span><span class="o">)</span>
+<span class="n">Resource</span> <span class="n">url</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>【不推荐】注入普通字符</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@Value</span><span class="o">(</span><span class="s">"Michael Jackson"</span><span class="o">)</span>
+<span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+</code></pre>
+</div>
+
+<h2 id="heading-hibernate-注解">Hibernate 注解</h2>
+
+<h3 id="heading-类级别的注解">类级别的注解</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">@Entity</code> （类上）@Entity(name = "tableName") - 必须，将映射到指定的数据库表，属性： name - 写 HQL 时候用的，默认类名</li>
+  <li><code class="highlighter-rouge">@Table</code> （类上） @Table(name = "", catalog = "", schema = "")  - 可选，通常和@Entity 配合使用，只能标注在实体的 class 定义处，表示实体对应的数据库表的信息，属性：name - 可选，表示表的名称，默认的表名和实体名称一致，只有在不一致的情况下才需要指定表名</li>
+</ul>
+
+<h3 id="heading-属性级别的注解">属性级别的注解</h3>
+
+<p>属性级别的注解，放在属性上或放在其对应的 getter 前</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@Id</code> 映射生成主键</li>
+  <li><code class="highlighter-rouge">@GeneratedValue</code> 定义主键生成策略</li>
+  <li><code class="highlighter-rouge">@SequenceGenerator</code> 声明了一个数据库序列</li>
+  <li><code class="highlighter-rouge">@Column</code> 映射表的列</li>
+  <li><code class="highlighter-rouge">@Transient</code> 定义暂态属性，非表字段</li>
+  <li><code class="highlighter-rouge">@Version</code> 定义乐观锁</li>
+  <li><code class="highlighter-rouge">@Basic</code> 声明属性的存取策略</li>
+</ul>
+
+<h4 id="heading-主键相关注解">主键相关注解</h4>
+
+<ul>
+  <li>
+    <p>@Id - 必须，定义了映射到数据库表的主键的属性，一个实体只能有一个属性被映射为主键</p>
+  </li>
+  <li>@GeneratedValue(strategy = GenerationType , generator="") - 可选，用于定义主键生成策略
+    <ul>
+      <li>strategy - 表示主键生成策略，取值有：</li>
+      <li>GenerationType.AUTO 根据底层数据库自动选择（默认），若数据库支持自动增长类型，则为自动增长</li>
+      <li>GenerationType.INDENTITY 根据数据库的 Identity 字段生成，支持 DB2、MySQL、MS、SQL Server、SyBase 与 HyperanoicSQL 数据库的 Identity 类型主键</li>
+      <li>GenerationType.SEQUENCE 使用 Sequence 来决定主键的取值，适合 Oracle、DB2 等支持 Sequence 的数据库，一般结合@SequenceGenerator 使用（Oracle 没有自动增长类型，只能用 Sequence）</li>
+      <li>GenerationType.TABLE  使用指定表来决定主键取值，结合@TableGenerator 使用</li>
+      <li>generator - 表示主键生成器的名称，这个属性通常和 ORM 框架相关 , 例如：Hibernate 可以指定 uuid 等主键生成方式</li>
+    </ul>
+  </li>
+  <li>@SequenceGenerator — 注解声明了一个数据库序列
+    <ul>
+      <li>name - 表示该表主键生成策略名称，它被引用在@GeneratedValue 中设置的“gernerator”值中</li>
+      <li>sequenceName - 表示生成策略用到的数据库序列名称</li>
+      <li>initialValue - 表示主键初始值，默认为 0</li>
+      <li>allocationSize - 每次主键值增加的大小，例如设置成 1，则表示每次创建新记录后自动加 1，默认为 50</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="heading-非主键相关注解">非主键相关注解</h4>
+
+<ul>
+  <li>
+    <p>@Version - 可以在实体 bean 中使用@Version 注解，通过这种方式可添加对乐观锁定的支持，<a href="https://www.cnblogs.com/xiluhua/p/4381056.html">见参考</a></p>
+  </li>
+  <li>@Basic - 用于声明属性的存取策略：
+    <ul>
+      <li>@Basic(fetch=FetchType.EAGER) 即时获取（默认的存取策略）</li>
+      <li>@Basic(fetch=FetchType.LAZY) 延迟获取</li>
+    </ul>
+  </li>
+  <li>@Column - 可将属性映射到列，使用该注解来覆盖默认值，@Column 描述了数据库表中该字段的详细定义
+    <ul>
+      <li>name - 可选，表示数据库表中该字段的名称，默认情形属性名称一致</li>
+      <li>nullable - 可选，表示该字段是否允许为 null，默认为 true</li>
+      <li>unique - 可选，表示该字段是否是唯一标识，默认为 false</li>
+      <li>length - 可选，表示该字段的大小，仅对 String 类型的字段有效，默认值 255</li>
+      <li>insertable - 可选，表示在 ORM 框架执行插入操作时，该字段是否应出现 INSETRT 语句中，默认为 true</li>
+      <li>updateable - 可选，表示在 ORM 框架执行更新操作时，该字段是否应该出现在 UPDATE 语句中，默认为 true。对于一经创建就不可以更改的字段，该属性非常有用，如对于 birthday 字段</li>
+      <li>columnDefinition - 可选，表示该字段在数据库中的实际类型。通常 ORM 框架可以根据属性类型自动判断数据库中字段的类型，但是对于 Date 类型仍无法确定数据库中字段类型究竟是 DATE,TIME 还是 TIMESTAMP. 此外 ,String 的默认映射类型为 VARCHAR, 如果要将 String 类型映射到特定数据库的 BLOB 或 TEXT 字段类型，该属性非常有用</li>
+    </ul>
+  </li>
+  <li>@Transient - 可选，表示该属性并非一个到数据库表的字段的映射，ORM 框架将忽略该属性，如果一个属性并非数据库表的字段映射，就务必将其标示为@Transient，否则 ORM 框架默认其注解为 @Basic</li>
+</ul>
+
+<h3 id="heading-映射实体类的关联关系注解">映射实体类的关联关系注解</h3>
+
+<p><span style="color:red;">不推荐使用</span>，特别是多对多关系的注解，使用的时候最好都设置为 Fetch.LAZY 延迟加载</p>
+
+<ol>
+  <li>单向一对多：一方有集合属性，包含多个多方，而多方没有一方的引用。</li>
+  <li>单向多对一：多方有一方的引用，一方没有多方的引用。</li>
+  <li>双向一对多：两边都有多方的引用，方便查询。</li>
+  <li>双向多对一：两边都有多方的引用，方便查询。</li>
+  <li>单向多对多：需要一个中间表来维护两个实体表。</li>
+  <li>单向一对一：数据唯一，数据库数据也是一对一。</li>
+  <li>主键相同的一对一：使用同一个主键，省掉外键关联。</li>
+</ol>
+
+<p>3.3.1 关联映射的一些共有属性</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@JoinColumn</code> - 可选，用于描述一个关联的字段。@JoinColumn 和@Column 类似，描述的不是一个简单字段，而是一个关联字段，例如描述一个 @ManyToOne 的字段。
+    <ul>
+      <li>即用来定义外键在我们这个表中的属性名，例如实体 Order 有一个 User user 属性来关联实体 User，则 Order 的 user 属性为一个外键</li>
+      <li>name - 该字段的名称，由于@JoinColumn 描述的是一个关联字段，如 ManyToOne, 则默认的名称由其关联的实体决定</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">@OneToOne、@OneToMany、@ManyToOne、ManyToMany</code> 的共有属性：
+    <ul>
+      <li>fetch - 配置加载方式。取值有：
+        <ul>
+          <li>Fetch.EAGER -  及时加载，多对一默认是 Fetch.EAGER</li>
+          <li>Fetch.LAZY - 延迟加载，一对多默认是 Fetch.LAZY</li>
+        </ul>
+      </li>
+      <li>cascade - 设置级联方式，取值有：
+        <ul>
+          <li>CascadeType.PERSIST - 保存  - 调用 JPA 规范中的 persist()，不适用于 Hibernate 的 save() 方法</li>
+          <li>CascadeType.REMOVE - 删除  - 调用 JPA 规范中的 remove() 时，适用于 Hibernate 的 delete() 方法</li>
+          <li>CascadeType.MERGE - 修改  - 调用 JPA 规范中 merge() 时，不适用于 Hibernate 的 update() 方法</li>
+          <li>CascadeType.REFRESH - 刷新  - 调用 JPA 规范中的 refresh() 时，适用于 Hibernate 的 flush() 方法</li>
+          <li>CascadeType.ALL - 全部  - JPA 规范中的所有持久化方法</li>
+        </ul>
+      </li>
+      <li>targetEntity - 配置集合属性类型，如：@OneToMany(targetEntity=Book.class)</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="heading-一对一">一对一</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@OneToOne – 表示一个一对一的映射
+
+1. 主表类 A 与从表类 B 的主键值相对应。
+
+主表：
+ 
+@OneToOne(cascade = CascadeType.ALL)
+@PrimaryKeyJoinColumn
+private B b;
+ 
+从表：无
+
+2. 主表 A 中有一个从表属性是 B 类型的 b
+
+主表：
+
+@OneToOne(cascade = CascadeType.ALL) 
+@JoinColumn(name="主表外键")   //这里指定的是数据库中的外键字段。
+private B b;
+
+从表：无
+
+3. 主表 A 中有一个从表属性是 B 类型的 b，同时，从表 B 中有一个主表属性是 A 类型的 a
+
+主表：
+@OneToOne(cascade = CascadeType.ALL)
+@JoinColumn(name="主表外键")   //这里指定的是数据库中的外键字段。
+private B b;
+
+从表：
+
+@OneToOne(mappedBy = "主表类中的从表属性")
+private 主表类 主表对象；
+
+注意：@JoinColumn 是可选的。默认值是从表变量名+"_"+从表的主键（注意，这里加的是主键。而不是主键对应的变量）。
+</code></pre>
+</div>
+
+<h4 id="heading-多对一">多对一</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@ManyToOne - 表示一个多对一的映射，该注解标注的属性通常是数据库表的外键。
+
+1. 单向多对一：多方有一方的引用，一方没有多方的引用。
+
+在多方
+
+@ManyToOne(targetEntity=指定关联对象。class)
+@JoinColumn(name="指定产生的外键字段名")
+
+2. 双向多对一（不推荐）：容易引起循环依赖，比如 fastjson 序列化时候
+
+1）在多方
+
+@ManyToOne
+@JoinColumn(name="自己的数据库外键列名")
+
+2）在一方
+
+@OneToMany(mappedBy="多端的关联属性名")
+@JoinColumn(name="对方的数据库外键列名")
+</code></pre>
+</div>
+
+<h4 id="heading-一对多">一对多</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@OneToMany - 描述一个一对多的关联，该属性应该为集合类型，在数据库中并没有实际字段。
+
+1. 单向一对多：一方有集合属性，包含多个多方，而多方没有一方的引用。
+
+@OneToMany  默认会使用连接表做一对多关联
+添加@JoinColumn(name="xxx_id") 后，就会使用外键关联，而不使用连接表了。
+
+2. 双向一对多（不推荐）：容易引起循环依赖，比如 fastjson 序列化时候
+
+1）在多方
+
+@ManyToOne
+@JoinColumn(name="自己的数据库外键列名")
+
+2）在一方
+
+@OneToMany(mappedBy="多端的关联属性名")
+@JoinColumn(name="对方的数据库外键列名")
+</code></pre>
+</div>
+
+<h4 id="heading-多对多">多对多</h4>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>@ManyToMany - 可选，描述一个多对多的关联。
+
+属性：
+
+targetEntity - 表示多对多关联的另一个实体类的全名，例如：package.Book.class
+mappedBy - 用在双向关联中，把关系的维护权翻转。
+
+ 
+
+1. 单向多对多关联：
+
+    在主控方加入 @ManyToMany 注解即可。
+
+2. 双向多对多关联（不推荐）：容易引起循环依赖，比如 fastjson 序列化时候
+
+    两个实体间互相关联的属性必须标记为 @ManyToMany，并相互指定 targetEntity 属性。有且只有一个实体的 @ManyToMany 注解需要指定 mappedBy 属性，指向 targetEntity 的集合属性名称。
+</code></pre>
+</div>
+
+<h3 id="heading-其他注解">其他注解</h3>
+
+<p>@DiscriminatorValue - <span style="color:red;">不推荐使用</span>，一张表对应一整棵类继承树时，该类别对应的“表 part”</p>
+
+<p>首先参考这篇文章，很重要：<a href="https://my.oschina.net/jawava/blog/59064">hibernate 映射继承关系</a>：一张表对应一整棵类继承树，从文中可以知道，用一个表来存储对应的整个类别的数据，比如有 Cat 和 Animal，Cat 是 Animal 的子类，我仅用 Animal 一个表来存储 Animal 和 Cat 的字段和数据，而不是分成两个表。那么当我进行映射关系的时候，假如我要 Cat 类映射到 Animal 中 Cat 的部分，如何处理？在 Animal 中定义一个字段用来区分不同的表，比如 Animal 表中我额外增加字段名为 Type，那么在 Animal 这一张表中，我们本属于 Animal 表内容的，该字段我们设置为 animal，本属于 Cat 表的，该字段我们设置为 cat。你可以理解为，新增加字段来用以在同一个表中区分不同类别的内容。</p>
+
+<p>所以对应在注解上的使用的一个映射关系表示，就是这样的：对于”父类“，即准备用来囊括所有内容的那个表，我们需要定义这个对应的类为</p>
+
+<p>@DiscriminatorColumn(name = "xxx", discriminatorType = DiscriminatorType.xxx)</p>
+
+<p>这里的 name 就是指定表中用来区别各类内容的字段，而对于”子类“，我们需要注解标明@DiscriminatorValue(xxx)，这里的 xxx 即对应了父类中的 “区别用字段” 里的标识。</p>
+
+<p>举例来说，就是假如我们希望将 Animal 和 Cat 的内容都只存储在 Animal 这张表里，那么为了区分内容，我们对于 Animal 这个表新增某字段如 type；Animal 的类，注解为</p>
+
+<p>@DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING) ，同时设置@DiscriminatorValue("animal")；</p>
+
+<p>Cat extends Animal，Cat 的类，注解为@DiscriminatorValue(“cat")；那么 Animal 这个表中，字段 type 中，为 animal 的元组映射 Animal 类，为 cat 的元组映射 Cat 类。</p>
+
+<p>而这种方式，多用于数据库字典概念。</p>
+
+<p>@Transient</p>
+
+<p>如果某个属性不需要被持久化，可以加上 @javax.persistence.Transient 注解或者使用 java 的 transient 关键字</p>
+
+<p>@Lob</p>
+
+<p>实体 BLOB（<span style="color:red;">不建议</span>）、CLOB 类型的注解：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>BLOB 类型的属性声明为 byte[] 或者 java.sql.Blob，多用来直接将文件存储在数据库字段中（如图片）
+
+@Lob 
+@Basic(fetch=FetchType.LAZY)
+@Column(name="IMGS", columnDefinition="BLOB", nullable=true)
+private byte[] imgs;
+
+CLOB 类型的属性声明为 String 或 java.sql.Clob
+
+@Lob 
+@Basic(fetch = FetchType.EAGER) 
+@Column(name="REMARK", columnDefinition="CLOB", nullable=true)
+private String remark;
+</code></pre>
+</div>
+
+<p>详见参考 <a href="http://blog.sina.com.cn/s/blog_4f925fc30102eaio.html">Hibernate 的 Annotation 实体 BLOB、CLOB 类型注解</a></p>
+
+<h2 id="heading-切面aop相关注解">切面（AOP）相关注解</h2>
+
+<p><span style="color:red;">不建议</span>在业务代码中使用，如果有需要请使用代理模式或装饰模式实现</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@Aspect</code> 声明一个切面（类上） 使用 <code class="highlighter-rouge">@After</code>、<code class="highlighter-rouge">@Before</code>、<code class="highlighter-rouge">@Around</code> 定义建言（advice），可直接将拦截规则（切点）作为参数。
+    <ul>
+      <li><code class="highlighter-rouge">@After</code> 在方法执行之后执行（方法上）</li>
+      <li><code class="highlighter-rouge">@Before</code> 在方法执行之前执行（方法上）</li>
+      <li><code class="highlighter-rouge">@Around</code> 在方法执行之前与之后执行（方法上）</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">@PointCut</code> 声明切点 在 java 配置类中使用 <code class="highlighter-rouge">@EnableAspectJAutoProxy</code> 注解开启 Spring 对 AspectJ 代理的支持（类上）</li>
+</ul>
+
+<h2 id="heading-定时任务相关">定时任务相关</h2>
+
+<p><span style="color:red;">不建议</span>使用，定时任务请参照统一的定时任务做法</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@EnableScheduling</code> 在配置类上使用，开启计划任务的支持（类上）</li>
+  <li><code class="highlighter-rouge">@Scheduled</code> 来申明这是一个任务，包括 cron,fixDelay,fixRate 等类型（方法上，需先开启计划任务的支持）</li>
+</ul>
+
+<h2 id="heading-异步相关">异步相关</h2>
+
+<p><span style="color:red;">不建议</span>随便使用</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@EnableAsync</code> 配置类中，通过此注解开启对异步任务的支持，叙事性 AsyncConfigurer 接口（类上）</li>
+  <li><code class="highlighter-rouge">@Async</code> 在实际执行的 bean 方法使用该注解来申明其是一个异步任务（方法上或类上所有的方法都将异步），需要 @EnableAsync 开启异步任务</li>
+</ul>
+
+<h2 id="heading-enable-注解说明"><code class="highlighter-rouge">@Enable*</code> 注解说明</h2>
+
+<p>这些注解主要用来开启对 xxx 的支持，<span style="color:red;">不建议</span>随便使用</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@EnableAspectJAutoProxy</code> 开启对 AspectJ 自动代理的支持</li>
+  <li><code class="highlighter-rouge">@EnableAsync</code> 开启异步方法的支持</li>
+  <li><code class="highlighter-rouge">@EnableScheduling</code> 开启计划任务的支持</li>
+  <li><code class="highlighter-rouge">@EnableWebMvc</code> 开启 Web MVC 的配置支持</li>
+  <li><code class="highlighter-rouge">@EnableConfigurationProperties</code> 开启对 @ConfigurationProperties 注解配置 Bean 的支持</li>
+  <li><code class="highlighter-rouge">@EnableJpaRepositories</code> 开启对 SpringData JPA Repository 的支持</li>
+  <li><code class="highlighter-rouge">@EnableTransactionManagement</code> 开启注解式事务的支持</li>
+  <li><code class="highlighter-rouge">@EnableCaching</code> 开启注解式的缓存支持</li>
+</ul>
+
+<h2 id="heading-测试相关注解">测试相关注解</h2>
+
+<ul>
+  <li>@RunWith 运行器，Spring 中通常用于对 JUnit 的支持</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@RunWith</span><span class="o">(</span><span class="n">SpringJUnit4ClassRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+</code></pre>
+</div>
+
+<ul>
+  <li>@ContextConfiguration 用来加载配置 ApplicationContext，其中 classes 属性用来加载配置类</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@ContextConfiguration</span><span class="o">(</span><span class="n">classes</span><span class="o">={</span><span class="n">TestConfig</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+</code></pre>
+</div>
+
+<h2 id="heading-环境切换">环境切换</h2>
+
+<p><span style="color:red;">不推荐</span>使用</p>
+
+<ul>
+  <li><code class="highlighter-rouge">@Profile</code> 通过设定 Environment 的 ActiveProfiles 来设定当前 context 需要使用的配置环境。（类或方法上）</li>
+  <li><code class="highlighter-rouge">@Conditional</code> Spring4 中可以使用此注解定义条件话的 bean，通过实现 Condition 接口，并重写 matches 方法，从而决定该 bean 是否被实例化。（方法上）</li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2018/06/02/access-oop-diff-sqlite/" title="上一篇 'Access 封装之与 Sqlite 封装的差异'"> ← Access 封装之与 Sqlite 封装的差异</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2019/03/11/sql-optimization-enjoy/" title="下一篇 '一次提速百倍的 SQL 优化记录'">一次提速百倍的 SQL 优化记录 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

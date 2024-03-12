@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Swift 编程笔记 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Swift 编程笔记" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="常规关键词" />
+<meta property="og:description" content="常规关键词" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-10-07T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"常规关键词","@type":"BlogPosting","url":"/learner_posts/programming/Swift/","headline":"Swift 编程笔记","dateModified":"2023-10-07T00:00:00+00:00","datePublished":"2023-10-07T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/learner_posts/programming/Swift/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/blog/learner/static/css/learn.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/stylesheets/prism.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <header>
+                            <h1 id="big-title">Swift 编程笔记</h1>
+                        </header>
+                        <div class="main-content">
+                            <!-- 新增导航目录 -->
+                            
+<link rel="stylesheet" href="/assets/stylesheets/nav.css" type="text/css"/>
+<div class="nav-container">
+    <nav>
+        <div class="menubar expand button_active" id="mediaMenubar">
+        目录<span class="small-title">（点击收起）</span>
+        </div>
+        <div id="java-nav-directory"></div>
+        <div id="js-nav-directory"></div>
+    </nav>
+</div>
+<script defer type="text/javascript" src="/assets/javascripts/plugin/nav.js"></script>
+
+                            <div id="article-container" class="article-container">
+                                <article id="article-content">
+                                    <h1 id="heading-常规关键词">常规关键词</h1>
+
+<h2 id="heading-属性包装器">属性包装器</h2>
+
+<p><code class="highlighter-rouge">@Published</code>, <code class="highlighter-rouge">@ObservedObject</code>, <code class="highlighter-rouge">@State</code>, 和 <code class="highlighter-rouge">@Binding</code> 是 SwiftUI 中的一些属性包装器，它们用于处理视图状态和数据流。这些属性包装器在 SwiftUI 的声明性 UI 编程范式中扮演着核心的角色。我们来一起详细了解它们：</p>
+
+<h3 id="heading-published"><code class="highlighter-rouge">@Published</code></h3>
+
+<p><strong>用法</strong>:
+<code class="highlighter-rouge">@Published</code> 是用于在类（通常是 <code class="highlighter-rouge">ObservableObject</code>）中标记可观察的属性。当这些属性的值发生变化时，所有订阅这些更改的观察者都将收到通知。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li><code class="highlighter-rouge">@Published</code> 只能用于类的属性。</li>
+  <li>使用 <code class="highlighter-rouge">@Published</code> 时，必须让类遵守 <code class="highlighter-rouge">ObservableObject</code> 协议。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">class</span> <span class="kt">ExampleModel</span><span class="p">:</span> <span class="kt">ObservableObject</span> <span class="p">{</span>
+    <span class="kd">@Published</span> <span class="k">var</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-observedobject"><code class="highlighter-rouge">@ObservedObject</code></h3>
+
+<p><strong>用法</strong>:
+<code class="highlighter-rouge">@ObservedObject</code> 用于在视图中订阅一个遵守 <code class="highlighter-rouge">ObservableObject</code> 协议的对象，并在对象的 <code class="highlighter-rouge">@Published</code> 属性发生变化时更新视图。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li>当 <code class="highlighter-rouge">ObservedObject</code> 发生改变时，视图将重新渲染。</li>
+  <li>通常用于更复杂的数据模型或来自外部源的数据。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ExampleView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@ObservedObject</span> <span class="k">var</span> <span class="nv">model</span><span class="p">:</span> <span class="kt">ExampleModel</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">model</span><span class="o">.</span><span class="n">count</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-state"><code class="highlighter-rouge">@State</code></h3>
+
+<p><strong>用法</strong>:
+<code class="highlighter-rouge">@State</code> 用于在视图内部管理私有状态。当 <code class="highlighter-rouge">@State</code> 变量的值发生变化时，视图将更新。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li><code class="highlighter-rouge">@State</code> 应该用于视图私有的简单状态管理。</li>
+  <li>它在视图结构体之外创建一个存储，允许在值类型的视图中持有可变状态。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ExampleView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@State</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">isToggled</span> <span class="o">=</span> <span class="kc">false</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Toggle</span><span class="p">(</span><span class="nv">isOn</span><span class="p">:</span> <span class="err">$</span><span class="n">isToggled</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Toggle me!"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-binding"><code class="highlighter-rouge">@Binding</code></h3>
+
+<p><strong>用法</strong>:
+<code class="highlighter-rouge">@Binding</code> 用于创建对其他视图中状态的引用。它允许一个视图修改另一个视图的状态。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li>使用 <code class="highlighter-rouge">$</code> 前缀来传递 <code class="highlighter-rouge">@State</code> 变量的绑定。</li>
+  <li><code class="highlighter-rouge">@Binding</code> 不拥有其引用的状态的源。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ToggleSwitch</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@Binding</span> <span class="k">var</span> <span class="nv">isToggled</span><span class="p">:</span> <span class="kt">Bool</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Toggle</span><span class="p">(</span><span class="nv">isOn</span><span class="p">:</span> <span class="err">$</span><span class="n">isToggled</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Toggle me!"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@State</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">isToggled</span> <span class="o">=</span> <span class="kc">false</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">ToggleSwitch</span><span class="p">(</span><span class="nv">isToggled</span><span class="p">:</span> <span class="err">$</span><span class="n">isToggled</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在 SwiftUI 的设计中，<code class="highlighter-rouge">@Published</code>, <code class="highlighter-rouge">@ObservedObject</code>, <code class="highlighter-rouge">@State</code>, 和 <code class="highlighter-rouge">@Binding</code> 一起提供了一套强大的工具来在不同视图和数据模型之间管理和传递状态。了解并熟悉这些概念对于建立健壮的 SwiftUI 应用程序至关重要。</p>
+
+<p>是的，SwiftUI 还提供了其他几种属性包装器来满足不同的使用场景。除了您已提到的 <code class="highlighter-rouge">@Published</code>, <code class="highlighter-rouge">@ObservedObject</code>, <code class="highlighter-rouge">@State</code>, 和 <code class="highlighter-rouge">@Binding</code> 以外，下面是一些其他常用的属性包装器：</p>
+
+<h3 id="heading-environmentobject"><code class="highlighter-rouge">@EnvironmentObject</code></h3>
+
+<p><strong>用法</strong>: 
+<code class="highlighter-rouge">@EnvironmentObject</code> 用于在视图层级中共享一个数据对象。它允许一个对象能够被多个视图访问，而不必显式地传递它。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li>需要在视图层级的某个地方用 <code class="highlighter-rouge">.environmentObject(_:)</code> 修饰符来提供数据。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ExampleView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@EnvironmentObject</span> <span class="k">var</span> <span class="nv">settings</span><span class="p">:</span> <span class="kt">SettingsModel</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"Using settings: </span><span class="se">\(</span><span class="n">settings</span><span class="o">.</span><span class="n">someSetting</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>确保在视图层次结构的早期阶段注入<code class="highlighter-rouge">@EnvironmentObject</code>非常重要，因为这样做可以确保该对象在下游所有依赖它的视图中都是可访问的。下面的示例展示了如何正确地使用<code class="highlighter-rouge">.environmentObject(_:)</code>修饰符来注入一个对象实例。</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="c1">// 定义一个 ObservableObject 类型的类，它将在多个视图间共享</span>
+<span class="kd">class</span> <span class="kt">SharedUserSettings</span><span class="p">:</span> <span class="kt">ObservableObject</span> <span class="p">{</span>
+    <span class="kd">@Published</span> <span class="k">var</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"User"</span>
+<span class="p">}</span>
+
+<span class="c1">// 主视图</span>
+<span class="kd">struct</span> <span class="kt">ContentView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="c1">// 使用 @EnvironmentObject 属性包装器来声明对共享对象的需求</span>
+    <span class="kd">@EnvironmentObject</span> <span class="k">var</span> <span class="nv">settings</span><span class="p">:</span> <span class="kt">SharedUserSettings</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">VStack</span> <span class="p">{</span>
+            <span class="c1">// 该视图使用共享的 settings 对象</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Username: </span><span class="se">\(</span><span class="n">settings</span><span class="o">.</span><span class="n">username</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+            
+            <span class="c1">// 下一个视图也需要访问共享的 settings 对象</span>
+            <span class="kt">DetailView</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="c1">// 注意没有在这里使用 .environmentObject(_:) 修饰符</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 详细视图</span>
+<span class="kd">struct</span> <span class="kt">DetailView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="c1">// 同样使用 @EnvironmentObject 来声明对共享对象的需求</span>
+    <span class="kd">@EnvironmentObject</span> <span class="k">var</span> <span class="nv">settings</span><span class="p">:</span> <span class="kt">SharedUserSettings</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"Detailed view for user: </span><span class="se">\(</span><span class="n">settings</span><span class="o">.</span><span class="n">username</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="c1">// 注意没有在这里使用 .environmentObject(_:) 修饰符</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 预览视图</span>
+<span class="kd">struct</span> <span class="kt">ContentView_Previews</span><span class="p">:</span> <span class="kt">PreviewProvider</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">previews</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="c1">// 使用 .environmentObject(_:) 修饰符在预览中注入共享对象</span>
+        <span class="kt">ContentView</span><span class="p">()</span><span class="o">.</span><span class="nf">environmentObject</span><span class="p">(</span><span class="kt">SharedUserSettings</span><span class="p">())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 在 App 的主入口处注入共享对象</span>
+<span class="kd">@main</span>
+<span class="kd">struct</span> <span class="kt">YourApp</span><span class="p">:</span> <span class="kt">App</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">Scene</span> <span class="p">{</span>
+        <span class="kt">WindowGroup</span> <span class="p">{</span>
+            <span class="c1">// 在此处使用 .environmentObject(_:) 修饰符来注入共享对象</span>
+            <span class="kt">ContentView</span><span class="p">()</span><span class="o">.</span><span class="nf">environmentObject</span><span class="p">(</span><span class="kt">SharedUserSettings</span><span class="p">())</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+<p>在上述代码中：</p>
+<ul>
+  <li><code class="highlighter-rouge">SharedUserSettings</code> 是一个<code class="highlighter-rouge">ObservableObject</code>，用于在视图之间共享数据。</li>
+  <li><code class="highlighter-rouge">ContentView</code> 和 <code class="highlighter-rouge">DetailView</code> 使用 <code class="highlighter-rouge">@EnvironmentObject</code> 属性包装器声明对 <code class="highlighter-rouge">SharedUserSettings</code> 对象的依赖关系。</li>
+  <li>在 <code class="highlighter-rouge">YourApp</code> 的 <code class="highlighter-rouge">WindowGroup</code> 中，<code class="highlighter-rouge">.environmentObject(_:)</code> 修饰符被用于 <code class="highlighter-rouge">ContentView</code> 来注入 <code class="highlighter-rouge">SharedUserSettings</code> 实例。这样，<code class="highlighter-rouge">ContentView</code> 以及它的所有子视图（如 <code class="highlighter-rouge">DetailView</code>）都能访问这个共享对象。</li>
+  <li>同样的，为了在预览中正确显示视图，也需要在 <code class="highlighter-rouge">ContentView_Previews</code> 中使用 <code class="highlighter-rouge">.environmentObject(_:)</code>。</li>
+</ul>
+
+<p>这样就确保了在视图层次结构的早期阶段就注入了共享的对象实例，使得所有子视图都可以无缝访问它。</p>
+
+<h3 id="heading-appstorage"><code class="highlighter-rouge">@AppStorage</code></h3>
+
+<p><strong>用法</strong>: 
+<code class="highlighter-rouge">@AppStorage</code> 是一个便捷的存储简单数据（例如：<code class="highlighter-rouge">Int</code>, <code class="highlighter-rouge">String</code>, <code class="highlighter-rouge">Bool</code> 等）到用户的设置中的方式。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li>使用时要提供一个键来关联存储的值。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ExampleView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@AppStorage("username")</span> <span class="k">var</span> <span class="nv">username</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">"Guest"</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"Hello, </span><span class="se">\(</span><span class="n">username</span><span class="se">)</span><span class="s">!"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-environment"><code class="highlighter-rouge">@Environment</code></h3>
+
+<p><strong>用法</strong>: 
+<code class="highlighter-rouge">@Environment</code> 用来访问和使用环境中的值。例如，使用系统的大小类或布局方向等。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li>不要尝试修改 <code class="highlighter-rouge">@Environment</code> 变量的值。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ExampleView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@Environment(\.sizeCategory)</span> <span class="k">var</span> <span class="nv">sizeCategory</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">sizeCategory</span> <span class="o">&gt;=</span> <span class="o">.</span><span class="n">accessibilityLarge</span> <span class="p">{</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Large Text"</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Regular Text"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在 SwiftUI 中，<code class="highlighter-rouge">EnvironmentKey</code> 和 <code class="highlighter-rouge">EnvironmentValues</code> 一起工作，允许您在视图层次结构中插入和提取环境值。环境值通常用于在视图树中多个视图之间共享值或状态，而不需要显式地将它们传递作为参数。环境值对于定义视图的外观和行为的系统设置特别有用，例如：字体大小、颜色方案或布局方向。</p>
+
+<p>使用 <code class="highlighter-rouge">.environment</code> 修饰符可以设置特定视图及其所有子视图的环境值。当您在视图树中更深的位置设置环境值时，它会覆盖更高级别的值。</p>
+
+<p>在您给出的示例中：</p>
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="n">someview</span><span class="o">.</span><span class="nf">environment</span><span class="p">(</span><span class="err">\</span><span class="o">.</span><span class="n">isHovered</span><span class="p">,</span> <span class="n">isHovered</span><span class="p">)</span>
+</code></pre>
+</div>
+<p>这里，假设 <code class="highlighter-rouge">isHovered</code> 是一个自定义的 <code class="highlighter-rouge">EnvironmentKey</code>。首先，我们来看一下怎样可能定义这个环境键：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">IsHoveredKey</span><span class="p">:</span> <span class="kt">EnvironmentKey</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="k">var</span> <span class="nv">defaultValue</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="kd">extension</span> <span class="kt">EnvironmentValues</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">isHovered</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
+        <span class="k">get</span> <span class="p">{</span> <span class="k">self</span><span class="p">[</span><span class="kt">IsHoveredKey</span><span class="o">.</span><span class="k">self</span><span class="p">]</span> <span class="p">}</span>
+        <span class="k">set</span> <span class="p">{</span> <span class="k">self</span><span class="p">[</span><span class="kt">IsHoveredKey</span><span class="o">.</span><span class="k">self</span><span class="p">]</span> <span class="o">=</span> <span class="n">newValue</span> <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在上述代码中：</p>
+<ul>
+  <li><code class="highlighter-rouge">IsHoveredKey</code> 是一个结构体，实现了 <code class="highlighter-rouge">EnvironmentKey</code> 协议，并且定义了一个 <code class="highlighter-rouge">defaultValue</code>。这是如果环境中没有提供值时将要使用的值。</li>
+  <li>通过扩展 <code class="highlighter-rouge">EnvironmentValues</code> 并使用键的类型 (<code class="highlighter-rouge">IsHoveredKey.self</code>) 作为下标，我们提供了一个获取和设置环境变量的便捷方法。</li>
+</ul>
+
+<p>然后，我们就可以用 <code class="highlighter-rouge">.environment(\.isHovered, isHovered)</code> 来为特定视图及其子视图设置环境值了。在视图或其子视图中，您可以这样使用它：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">MyView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@Environment(\.isHovered)</span> <span class="k">var</span> <span class="nv">isHovered</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">Text</span><span class="p">(</span><span class="s">"Is hovered: </span><span class="se">\(</span><span class="n">isHovered</span> <span class="p">?</span> <span class="s">"Yes"</span> <span class="p">:</span> <span class="s">"No"</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>在这里，<code class="highlighter-rouge">@Environment(\.isHovered) var isHovered</code> 会自动从环境中取得 <code class="highlighter-rouge">isHovered</code> 的值。</p>
+
+<p>总的来说，使用 <code class="highlighter-rouge">EnvironmentKey</code> 可以使我们在视图层级中轻松共享状态和数据，而不需要通过复杂的传递链将数据从父视图传递到深层子视图。</p>
+
+<h3 id="heading-fetchrequest"><code class="highlighter-rouge">@FetchRequest</code></h3>
+
+<p><strong>用法</strong>: 
+在使用 Core Data 时，<code class="highlighter-rouge">@FetchRequest</code> 用于在您的视图中创建一个从您的 Core Data store 中检索数据的请求。</p>
+
+<p><strong>注意事项</strong>:</p>
+<ul>
+  <li>配置时要提供排序描述符和获取请求。</li>
+</ul>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">struct</span> <span class="kt">ExampleView</span><span class="p">:</span> <span class="kt">View</span> <span class="p">{</span>
+    <span class="kd">@FetchRequest(
+        entity: Item.entity()</span><span class="p">,</span>
+        <span class="nv">sortDescriptors</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSSortDescriptor</span><span class="p">(</span><span class="nv">keyPath</span><span class="p">:</span> <span class="err">\</span><span class="kt">Item</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="nv">ascending</span><span class="p">:</span> <span class="kc">true</span><span class="p">)]</span>
+    <span class="p">)</span> <span class="kd">private</span> <span class="k">var</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">FetchedResults</span><span class="o">&lt;</span><span class="kt">Item</span><span class="o">&gt;</span>
+    
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="n">some</span> <span class="kt">View</span> <span class="p">{</span>
+        <span class="kt">List</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="nv">id</span><span class="p">:</span> <span class="err">\</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="p">{</span> <span class="n">item</span> <span class="k">in</span>
+            <span class="kt">Text</span><span class="p">(</span><span class="s">"Item at </span><span class="se">\(</span><span class="n">item</span><span class="o">.</span><span class="n">timestamp</span><span class="o">!</span><span class="p">,</span> <span class="nv">formatter</span><span class="p">:</span> <span class="n">itemFormatter</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>每个属性包装器都针对特定的使用案例设计，并在 SwiftUI 应用的数据流管理中起着不同的作用。理解它们的功能和适用场景有助于更高效地使用 SwiftUI 构建用户界面。</p>
+
+<h2 id="heading-guard">guard</h2>
+
+<p><code class="highlighter-rouge">guard</code> 语句在 Swift 中用于提前退出一个代码块，如果一个或多个条件不满足。它常用于减少嵌套代码的复杂性，并在进一步的代码执行之前，检查必要条件是否满足。</p>
+
+<h3 id="heading-基本用法">基本用法：</h3>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">guard</span> <span class="n">someCondition</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="c1">// 这个代码块在 someCondition == false 时执行。</span>
+    <span class="c1">// 通常你在这里处理不满足条件时的情况，比如返回一个函数或抛出一个错误。</span>
+    <span class="k">return</span> <span class="c1">// 或 throw 或 break 等</span>
+<span class="p">}</span>
+
+<span class="c1">// 在这里，你可以确定 someCondition == true，所以你安全地进行其它的操作</span>
+</code></pre>
+</div>
+
+<h3 id="heading-使用时的几点注意">使用时的几点注意：</h3>
+
+<ol>
+  <li>
+    <p><strong>提前退出</strong>：
+<code class="highlighter-rouge">guard</code> 语句允许我们在不满足特定条件的情况下提前退出函数、方法或循环。</p>
+  </li>
+  <li>
+    <p><strong>减少嵌套</strong>：
+与 <code class="highlighter-rouge">if</code> 语句不同的是，如果 <code class="highlighter-rouge">guard</code> 的条件不满足，<code class="highlighter-rouge">else</code> 代码块中的代码将执行，并且整个作用域将被退出（使用 <code class="highlighter-rouge">return</code>、<code class="highlighter-rouge">break</code>、<code class="highlighter-rouge">continue</code> 或 <code class="highlighter-rouge">throw</code>）。这减少了代码的嵌套，使其更加易读。</p>
+  </li>
+  <li>
+    <p><strong>保持变量和常量的作用域</strong>：
+<code class="highlighter-rouge">guard</code> 语句允许在其之后的代码中使用在条件语句中定义的常量和变量。换句话说，你检查的常量和变量在 <code class="highlighter-rouge">guard</code> 语句后仍然是可用的。</p>
+  </li>
+</ol>
+
+<h3 id="heading-使用示例">使用示例：</h3>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">func</span> <span class="nf">someFunction</span><span class="p">(</span><span class="nv">input</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span> <span class="p">{</span>
+    <span class="c1">// 检查 input 是否有值</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">nonOptionalInput</span> <span class="o">=</span> <span class="n">input</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Input is nil"</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+
+    <span class="c1">// 由于 guard 语句确保了 input 不是 nil，所以 nonOptionalInput 现在是非可选的，</span>
+    <span class="c1">// 我们可以安全地使用它，没有需要检查它是否为 nil。</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Input is: </span><span class="se">\(</span><span class="n">nonOptionalInput</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre>
+</div>
+
+<p>在这个示例中：</p>
+
+<ul>
+  <li>如果 <code class="highlighter-rouge">input</code> 是 <code class="highlighter-rouge">nil</code>，<code class="highlighter-rouge">else</code> 代码块将会执行，打印一条消息，并退出函数。</li>
+  <li>如果 <code class="highlighter-rouge">input</code> 不是 <code class="highlighter-rouge">nil</code>，它的值会被赋给 <code class="highlighter-rouge">nonOptionalInput</code>，并且函数会继续执行 <code class="highlighter-rouge">guard</code> 之后的代码。</li>
+</ul>
+
+<p>在 Swift 中，<code class="highlighter-rouge">guard</code> 是一种强大的工具，它可以帮助你更清晰、更安全地管理你的代码的控制流程和可选值的解包。</p>
+
+<h1 id="heading-urlsession">URLSession</h1>
+
+<p>当然可以。下面是一个基本的 <code class="highlighter-rouge">URLSession</code> 使用示范，通过一个简单的 GET 请求来获取数据。我们将获取一个 JSON 数据，并在控制台打印出来：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+
+<span class="c1">// 创建一个 URL 对象</span>
+<span class="k">guard</span> <span class="k">let</span> <span class="nv">url</span> <span class="o">=</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"https://api.example.com/data"</span><span class="p">)</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Invalid URL"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 创建一个 URLSession 对象</span>
+<span class="k">let</span> <span class="nv">session</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="o">.</span><span class="n">shared</span>
+
+<span class="c1">// 创建一个 data task 对象来执行 GET 请求</span>
+<span class="k">let</span> <span class="nv">task</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="nf">dataTask</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span> <span class="p">{</span> <span class="n">data</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">error</span> <span class="k">in</span>
+    <span class="c1">// 确保没有错误发生</span>
+    <span class="k">guard</span> <span class="n">error</span> <span class="o">==</span> <span class="kc">nil</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Error: </span><span class="se">\(</span><span class="n">error</span><span class="o">!.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 确保我们收到了数据</span>
+    <span class="k">guard</span> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">data</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"No data received."</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    
+    <span class="c1">// 尝试解析 JSON</span>
+    <span class="k">do</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="nv">json</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JSONSerialization</span><span class="o">.</span><span class="nf">jsonObject</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">data</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[])</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"JSON: </span><span class="se">\(</span><span class="n">json</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="kt">DispatchQueue</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">async</span> <span class="p">{</span>
+            <span class="c1">// 在主线程中更新 UI，或者更新影响 UI 的数据结构</span>
+        <span class="p">}</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">"Unable to parse JSON: </span><span class="se">\(</span><span class="n">error</span><span class="o">.</span><span class="n">localizedDescription</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// 开始执行任务</span>
+<span class="n">task</span><span class="o">.</span><span class="nf">resume</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<p>这个示例演示了如何使用 <code class="highlighter-rouge">URLSession</code> 来进行网络请求并处理返回的数据。我们创建一个 <code class="highlighter-rouge">URL</code> 对象、一个 <code class="highlighter-rouge">URLSession</code> 任务，并在任务的回调中处理可能发生的错误以及接收到的数据。在这个回调中，我们也尝试解析 JSON 数据并打印它。最后，我们使用 <code class="highlighter-rouge">resume()</code> 开始任务。</p>
+
+<p>注意：在实际的应用中，你可能需要在 UI 更新中处理解析到的数据，这时确保你的 UI 更新在主线程上执行，以避免不可预测的行为。你可以使用 <code class="highlighter-rouge">DispatchQueue.main.async {}</code> 来在主线程中更新 UI。</p>
+
+<h2 id="heading-关于-cookie">关于 Cookie</h2>
+
+<p><code class="highlighter-rouge">URLSession</code> 是一个相当强大的工具，用于在 iOS, macOS, watchOS, 和 tvOS app 中管理 HTTP 和 HTTPS 网络请求。在涉及到身份验证和会话管理时，<code class="highlighter-rouge">URLSession</code> 提供了几种不同的行为模式，具体取决于如何创建和配置它。</p>
+
+<p>这里有几个关键点，可能有助于你理解你所描述的行为：</p>
+
+<h3 id="heading-urlsession-configuration">URLSession Configuration</h3>
+<p>在 <code class="highlighter-rouge">URLSession</code> 对象被创建时，它使用了一个 <code class="highlighter-rouge">URLSessionConfiguration</code> 对象。这个配置对象决定了 session 的行为。它有几种类型：</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">.default</code>: 使用磁盘存储缓存、Cookie 和证书存储。如果你不做任何配置，session 将会保留所有的 cookies 和缓存数据，直到它们到期或者被清除。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">.ephemeral</code>: 不会在磁盘上存储任何东西。所有的缓存、证书存储和 cookies 都保存在 RAM 中，并且在 session 任务结束时被清除。</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">.background</code>: 用于在后台执行上传和下载任务。</p>
+  </li>
+</ul>
+
+<h3 id="heading-cookie-handling">Cookie Handling</h3>
+<p>当你使用 <code class="highlighter-rouge">URLSession</code> 并成功进行身份验证（例如，登录到 GitHub）时，任何从服务器返回的 cookies（包括 session cookies 用于身份验证）通常都会自动存储在 session 中。如果你使用 <code class="highlighter-rouge">.default</code> 配置，这些 cookies 将被持久化，因此，你的应用将“记住”登录状态，即使在不同的 <code class="highlighter-rouge">URLSession</code> 实例和 app 重启之间也是如此。</p>
+
+<p>如果你不希望这种行为，可以使用 <code class="highlighter-rouge">.ephemeral</code> 配置或者定制你自己的 <code class="highlighter-rouge">URLSessionConfiguration</code> 来改变 cookie 的存储行为。</p>
+
+<p>例如，创建一个不保存 cookies 的 session 可以这样做：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">configuration</span> <span class="o">=</span> <span class="kt">URLSessionConfiguration</span><span class="o">.</span><span class="n">ephemeral</span>
+<span class="k">let</span> <span class="nv">session</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="n">configuration</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>或者，你可以细粒度控制 cookies 的行为：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">let</span> <span class="nv">configuration</span> <span class="o">=</span> <span class="kt">URLSessionConfiguration</span><span class="o">.</span><span class="k">default</span>
+<span class="n">configuration</span><span class="o">.</span><span class="n">httpShouldSetCookies</span> <span class="o">=</span> <span class="kc">false</span>
+<span class="n">configuration</span><span class="o">.</span><span class="n">httpCookieAcceptPolicy</span> <span class="o">=</span> <span class="o">.</span><span class="n">never</span>
+<span class="n">configuration</span><span class="o">.</span><span class="n">httpCookieStorage</span> <span class="o">=</span> <span class="kc">nil</span>
+<span class="k">let</span> <span class="nv">session</span> <span class="o">=</span> <span class="kt">URLSession</span><span class="p">(</span><span class="nv">configuration</span><span class="p">:</span> <span class="n">configuration</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>请注意，这样的设置可能会影响你的网络请求（例如，不再保持登录状态），确保这是你想要的行为。</p>
+
+<p>在 Swift 中，你可以使用 <code class="highlighter-rouge">HTTPCookieStorage</code> 类来清除或管理存储在你的 app 中的 cookies。这个类提供了几个方法来获取和删除存储在用户的设备上的 cookies。</p>
+
+<h2 id="heading-退出登录">退出登录</h2>
+
+<p>由于 URLSession 很方便，但是退出的时候就需要考虑清除一些方便，比如自测切换账号的时候，你就需要清除一些 cookie。</p>
+
+<p>以下是一些用来清除 cookies 的基本方法：</p>
+
+<h3 id="heading-清除特定的-cookie">清除特定的 Cookie</h3>
+<p>你可以通过遍历 <code class="highlighter-rouge">HTTPCookieStorage</code> 中的所有 cookies，然后通过 URL 或者名称找到并移除特定的 cookie。例如：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">cookies</span> <span class="o">=</span> <span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">cookies</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">cookie</span> <span class="k">in</span> <span class="n">cookies</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">cookie</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s">"yourCookieName"</span> <span class="p">{</span>
+            <span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">deleteCookie</span><span class="p">(</span><span class="n">cookie</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-清除所有-cookie">清除所有 Cookie</h3>
+<p>要删除所有的 cookies，你可以遍历 <code class="highlighter-rouge">HTTPCookieStorage</code> 中的所有 cookies 并删除它们：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">cookies</span> <span class="o">=</span> <span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="n">cookies</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">cookie</span> <span class="k">in</span> <span class="n">cookies</span> <span class="p">{</span>
+        <span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">deleteCookie</span><span class="p">(</span><span class="n">cookie</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<p>或者在 macOS 10.11+, iOS 9.0+ 等系统中，你可以直接调用：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">removeCookies</span><span class="p">(</span><span class="nv">since</span><span class="p">:</span> <span class="kt">Date</span><span class="o">.</span><span class="n">distantPast</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h3 id="heading-清除特定域名的-cookie">清除特定域名的 Cookie</h3>
+<p>如果你想要清除一个特定域名的所有 cookies，你可以这样操作：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">if</span> <span class="k">let</span> <span class="nv">cookies</span> <span class="o">=</span> <span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">cookies</span><span class="p">(</span><span class="nv">for</span><span class="p">:</span> <span class="kt">URL</span><span class="p">(</span><span class="nv">string</span><span class="p">:</span> <span class="s">"https://www.yourdomain.com"</span><span class="p">)</span><span class="o">!</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="n">cookie</span> <span class="k">in</span> <span class="n">cookies</span> <span class="p">{</span>
+        <span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">deleteCookie</span><span class="p">(</span><span class="n">cookie</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-清除所有会话-cookies">清除所有会话 Cookies</h3>
+<p>你也可以设置 session cookies 来在 app 退出后自动清除它们：</p>
+
+<div class="language-swift highlighter-rouge"><pre class="highlight"><code><span class="k">var</span> <span class="nv">cookieProperties</span> <span class="o">=</span> <span class="p">[</span><span class="kt">HTTPCookiePropertyKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]()</span>
+<span class="n">cookieProperties</span><span class="p">[</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="s">"yourCookieName"</span>
+<span class="n">cookieProperties</span><span class="p">[</span><span class="o">.</span><span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="s">"yourCookieValue"</span>
+<span class="n">cookieProperties</span><span class="p">[</span><span class="o">.</span><span class="n">domain</span><span class="p">]</span> <span class="o">=</span> <span class="s">"yourdomain.com"</span>
+<span class="n">cookieProperties</span><span class="p">[</span><span class="o">.</span><span class="n">path</span><span class="p">]</span> <span class="o">=</span> <span class="s">"/"</span>
+<span class="n">cookieProperties</span><span class="p">[</span><span class="o">.</span><span class="n">expires</span><span class="p">]</span> <span class="o">=</span> <span class="kt">Date</span><span class="p">(</span><span class="nv">timeIntervalSinceNow</span><span class="p">:</span> <span class="o">-</span><span class="mi">3600</span><span class="p">)</span>
+
+<span class="k">let</span> <span class="nv">cookie</span> <span class="o">=</span> <span class="kt">HTTPCookie</span><span class="p">(</span><span class="nv">properties</span><span class="p">:</span> <span class="n">cookieProperties</span><span class="p">)</span>
+<span class="kt">HTTPCookieStorage</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">setCookie</span><span class="p">(</span><span class="n">cookie</span><span class="o">!</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>这些方法通常能够满足你清除 cookies 的需求。</p>
+
+                                </article>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 评论组件 -->
+                <!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='learn']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+    
+    
+    <script src="/assets/javascripts/prism.js"></script>
+</body>
+
+</html>
+

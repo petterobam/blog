@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>数据库面向对象封装【干货】 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="数据库面向对象封装【干货】" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="数据库面向对象封装实战分享" />
+<meta property="og:description" content="数据库面向对象封装实战分享" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-02-21T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"数据库面向对象封装实战分享","@type":"BlogPosting","url":"/blog/2018/02/21/sqlite-db-oop/","headline":"数据库面向对象封装【干货】","dateModified":"2018-02-21T00:00:00+00:00","datePublished":"2018-02-21T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2018/02/21/sqlite-db-oop/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="数据库,封装,面向对象,sqlite" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">数据库面向对象封装【干货】</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2018-02-21T00:00:00+00:00" datetime="2018-02-21T00:00:00+00:00">February 21, 2018 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：5749 字，&nbsp;预计阅读时间：57 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#Java" title="Java">
+            Java <span>5</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#sqlite" title="sqlite">
+            sqlite <span>1</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#体会" title="体会">
+            体会 <span>4</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#数据库" title="数据库">
+            数据库 <span>1</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#sqlite" title="sqlite">sqlite <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#封装" title="封装">封装 <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#数据库" title="数据库">数据库 <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#面向对象" title="面向对象">面向对象 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h2 id="heading-前情提要">前情提要</h2>
+
+<p>大部分应用都是由程序和数据两个部分构成的，而数据除了少部分是通过配置等写死的外，大部分总是都是通过特殊格式的文件（xml、access 或 sqlite）或独立的系统（oracle、mysql、sql server 或 elasticsearch、mongodb 等）承载的。因此，程序和数据的无缝联结，对应用的扩展和迭代尤为重要，对程序的高可用和可维护性非常关键。故今天需要讨论的是对数据，主要是对数据库的封装，而习惯 OOP 的个人，则是对数据库的面向对象的封装。</p>
+
+<h2 id="heading-我的思路">我的思路</h2>
+
+<p>众所周知，我们与数据库沟通用的是数据库的语言 SQL，就像我们编程的语言是 Java、C#、JavaScript 一样，不同的语言是不能直接沟通的，需要一个翻译层，所以这一层就是面向数据库封装，而这一层 jdk 里面早就实现了（jdbc），本文个人以最接近的实际数据库的文件数据库 sqlite（org.sqlite.JDBC）来做代码实验。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.sql.Connection</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.DriverManager</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.PreparedStatement</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSet</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.ResultSetMetaData</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.SQLException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.sql.Statement</span><span class="o">;</span>
+</code></pre>
+</div>
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!-- maven:sqlite 数据库操作 --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.xerial<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>sqlite-jdbc<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>${sqlite.version}<span class="nt">&lt;/version&gt;</span> 
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre>
+</div>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="o">#</span><span class="n">java</span> <span class="err">所用的</span> <span class="k">sql</span> <span class="err">语言也是通用的</span> <span class="k">sql</span> <span class="err">预处理语言，通过占位符（</span><span class="o">?</span><span class="err">）接收各种类型的变量，可以说即安全又优美。</span>
+
+<span class="p">[</span><span class="n">oracle</span> <span class="err">语法</span><span class="p">]</span><span class="err">：</span><span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="k">table</span> <span class="k">where</span> <span class="mi">1</span><span class="o">=</span><span class="mi">1</span> <span class="k">and</span> <span class="n">column1</span><span class="o">=?</span> <span class="k">and</span> <span class="n">column2</span><span class="o">&gt;?</span> <span class="k">or</span> <span class="n">column3</span> <span class="k">like</span> <span class="s1">'%'</span><span class="o">||?||</span><span class="s1">'%'</span> 
+</code></pre>
+</div>
+
+<p>当前的很多框架已经完美的封装了数据库，mybatis、hibernate 这些对数据库的语言做了非常灵活的处理，也有一套各自自己的语法。但是，个人认为 xml 文件还是属于配置文件，如果能实现零配置的面向对象封装就好了。面向对象封装需要达到的程度就是通过一个对象的信息可以直接自动的产生数据库相关的 sql，然后将对象的变量属性值对应 sql 的占位符，并且在基类上实现基本的功能。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">SqliteBaseDao</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">insert</span><span class="o">(</span><span class="n">String</span> <span class="n">sql</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">update</span><span class="o">(</span><span class="n">String</span> <span class="n">sql</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">delete</span><span class="o">(</span><span class="n">String</span> <span class="n">sql</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">query</span><span class="o">(</span><span class="n">String</span> <span class="n">sql</span><span class="o">){...}</span>
+    <span class="c1">// 通过对象信息实现增删查改</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">insert</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">update</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">delete</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">deleteById</span><span class="o">(</span><span class="n">Object</span> <span class="n">id</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">query</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">){...}</span>
+    <span class="kd">public</span> <span class="n">T</span> <span class="nf">queryById</span><span class="o">(</span><span class="n">Object</span> <span class="n">id</span><span class="o">){...}</span>
+    <span class="c1">// 自定义 SQL 的实现，模仿 mybatis 的 xml 动态 SQL，但是不是用 xml 文件的方式</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">excuteQuery</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">excuteQuery</span><span class="o">(</span><span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">excute</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{...}</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">excute</span><span class="o">(</span><span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{...}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-一个类信息收集器">一个类信息收集器</h3>
+
+<p>想要做到面向对象的数据库封装，就要把数据的最小单元和程序的最小单元关联起来，这两个单元都是独立的整体，再分割就会出现信息失真或不对称的情况。数据的最小单元就是表的单行记录，程序最小单元是实体类的单个对象，但是数据不一定有，对象需要实例化，需要运行起来才能提供信息。因此，这个最小单元要静态化，那就是数据库的表结构和实体类的信息关联起来。</p>
+
+<p>表结构能提供的信息有表名、表列名、列属性（类型、是否为空、默认值），实体类能提供的信息有类名、类变量名、类变量名属性（变量类型），似乎大部分都能对应上，但是属性部分还不能对应上，比如是否为空、默认值，而且为了良好的 Java 编码规范，有些东西和数据库的一些信息是不能完全对应的，比如通常 java 的命名规范一般不允许带下划线，而是用驼峰命名，而数据库的表和字段确经常用下划线分割单词（主要由于很多数据库不区分表名和字段名的大小写，甚至有些数据库不支持表名和字段名的大写）这就非常尴尬了，所以，这种差异化的对应就需要配置。并且，为了增加扩展性，程序单元的实体类的信息往往要比数据单元的表结构信息多一些，比如可能会有非表字段的属性（占位符中非表字段的传入属性和结果集中非表字段的接收属性），</p>
+
+<p>ibatis、hibernate 就用到了这些，但是用的是 xml 文件，而且一旦配置出错还非常容易影响编译，并且不容易定位问题。mybatis+spring 的 xml 和 java 注解让系统变得非常灵活，但是依然不能彻底的去掉 xml 文件，而且 xml 中如果出现一个小小的分号或空格都有可能引发问题，要是只用 java 注解就能解决掉的话就完美了。</p>
+
+<p>综上，想要实现这些适配，需要几个基础的注解：表名注解、主键注解、表字段注解、非表字段标识注解、自定义 SQL 注解（多种）。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 表名注解类
+ * @author 欧阳洁
+ * @create 2017-09-30 11:16
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteTable</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * Sqlite 的 ID 注解类
+ * @author 欧阳洁
+ * @create 2017-09-30 11:20
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteID</span> <span class="o">{</span>
+    <span class="cm">/* 主键列名，默认空*/</span>
+    <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+    <span class="cm">/* 主键默认类型，默认 integer 类型 */</span>
+    <span class="n">String</span> <span class="nf">type</span><span class="o">()</span> <span class="k">default</span> <span class="s">"integer"</span><span class="o">;</span>
+    <span class="cm">/* 主键是否自增长，默认是 true */</span>
+    <span class="kt">boolean</span> <span class="nf">autoincrement</span><span class="o">()</span> <span class="k">default</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * Sqlite 的表（列）字段注解类
+ * @author 欧阳洁
+ * @create 2017-09-30 11:20
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteColumn</span> <span class="o">{</span>
+    <span class="cm">/* 列名，默认空 */</span>
+    <span class="n">String</span> <span class="nf">name</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+    <span class="cm">/* 主键默认类型，默认最大 20 位长度的字符串 */</span>
+    <span class="n">String</span> <span class="nf">type</span><span class="o">()</span> <span class="k">default</span> <span class="s">"char(20)"</span><span class="o">;</span>
+    <span class="cm">/* 主键是否自增长，默认是 true */</span>
+    <span class="kt">boolean</span> <span class="nf">notNull</span><span class="o">()</span> <span class="k">default</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 非表字段注解
+ * @author 欧阳洁
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteTransient</span> <span class="o">{</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 自定义 SQL 注解类
+ * @author 欧阳洁
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteSql</span> <span class="o">{</span>
+    <span class="cm">/* 自定义的 Sql 语句，带占位符的 Sql */</span>
+    <span class="n">String</span> <span class="nf">sql</span><span class="o">();</span>
+    <span class="cm">/* 占位符顺序对应的参数顺序，默认不带参数 */</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="nf">params</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>在上述的这些注解中，主键注解、表字段注解、非表字段标识注解其实都可以归为表字段注解，只要稍微添加某些属性就可以实现其他两个注解的功能，但是为了使用的方便性和程序的可读性，我牺牲了顶层代码的简易性，对这三个注解都做了区分和处理。而自定义 SQL 注解应该类似于 mybatis 里面的 xml 标签，@SqliteSql 这个注解类只是实现了基本的（select、insert、delete、update）标签，搭配 SqliteBaseDao 里面的基本方法就可以轻松实现简单的 mapper 功能，而那些复杂的 if else、choose when 标签则需要例外些其他的辅助标签搭配使用，比如需求最多的动态 where，可以定义类似于@SqliteSqlWhereIf，这样就可以简单的实现 if 标签，并且通过 testId 和 parentTestId 还可以实现 if 标签的嵌套功能，然后利用 java8 的新特性@Repeatable 实现重复注解，或者直接定义一个集合注解（这个看着不是特别美观）就可轻松的实现判断条件非嵌套动态生成各种 sql。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">SqliteBaseDao</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="c1">// 自定义 SQL 的实现，模仿 mybatis 的 xml 动态 SQL，但是不是用 xml 文件的方式</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">excuteQuery</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{...}</span>  <span class="c1">//对应 select 标签</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">excuteQuery</span><span class="o">(</span><span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{...}</span>  <span class="c1">//对应 select 标签</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">excute</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{...}</span>   <span class="c1">//对应 insert、update、delete 标签</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">excute</span><span class="o">(</span><span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{...}</span>   <span class="c1">//对应 insert、update、delete 标签</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 自定义 SQL 注解类，实现 SqliteSqlWhereIf 的重复注解
+ * @author 欧阳洁
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteSqlWhereIfs</span> <span class="o">{</span>
+    <span class="n">SqliteSqlWhereIf</span><span class="o">[]</span> <span class="nf">value</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="cm">/**
+ * 自定义 SQL 注解类，条件判断注解，用于生成动态 SQL
+ * @author 欧阳洁
+ */</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Target</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="o">{</span><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">ElementType</span><span class="o">.</span><span class="na">METHOD</span><span class="o">})</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Retention</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">annotation</span><span class="o">.</span><span class="na">Repeatable</span><span class="o">(</span><span class="n">SqliteSqlWhereIfs</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="n">SqliteSqlWhereIf</span> <span class="o">{</span>
+    <span class="cm">/* 判断条件标识 ID */</span>
+    <span class="kt">int</span> <span class="nf">testId</span><span class="o">();</span>
+    <span class="cm">/* 所属层级，默认 0，最外层 */</span>
+    <span class="kt">int</span> <span class="nf">parentTestId</span><span class="o">()</span> <span class="k">default</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="cm">/* 判断条件类型，==、&gt;、&lt;、&gt;=、&lt;=、eq、ne */</span>
+    <span class="n">String</span> <span class="nf">testType</span><span class="o">()</span> <span class="k">default</span> <span class="s">"eq"</span><span class="o">;</span>
+    <span class="cm">/* 判断字段名 */</span>
+    <span class="n">String</span> <span class="nf">testName</span><span class="o">();</span>
+    <span class="cm">/* 符合条件的值 */</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="nf">testTrueValue</span><span class="o">();</span>
+    <span class="cm">/* 符合条件对应的动态 SQL */</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="nf">testTrueSql</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+    <span class="cm">/* 占位符顺序对应的参数顺序，默认不带参数 */</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="nf">params</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="err">例如：</span>
+<span class="nd">@SqliteSql</span><span class="o">(</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"select * from this.tableName where 1=1"</span><span class="o">)</span>
+<span class="nd">@SqliteSqlWhereIf</span><span class="o">(</span><span class="n">testId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">testType</span><span class="o">=</span><span class="s">"eq"</span><span class="o">,</span><span class="n">testName</span><span class="o">=</span><span class="s">"searchType"</span><span class="o">,</span><span class="n">testTrueValue</span><span class="o">={</span><span class="s">"2"</span><span class="o">},</span><span class="n">testTrueSql</span><span class="o">=</span><span class="s">" and create_time&gt;datetime('now') "</span><span class="o">)</span>
+<span class="nd">@SqliteSqlWhereIf</span><span class="o">(</span><span class="n">testId</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span><span class="n">testType</span><span class="o">=</span><span class="s">"ne"</span><span class="o">,</span><span class="n">testName</span><span class="o">=</span><span class="s">"name"</span><span class="o">,</span><span class="n">testTrueValue</span><span class="o">={</span><span class="s">""</span><span class="o">},</span><span class="n">testTrueSql</span><span class="o">=</span><span class="s">" and name like '%'||?||'%' "</span><span class="o">,</span><span class="n">parentTestId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">params</span><span class="o">={</span><span class="s">"name"</span><span class="o">})</span>
+<span class="nd">@SqliteSqlWhereIf</span><span class="o">(</span><span class="n">testId</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span><span class="n">testType</span><span class="o">=</span><span class="s">"eq"</span><span class="o">,</span><span class="n">testName</span><span class="o">=</span><span class="s">"author"</span><span class="o">,</span><span class="n">testTrueValue</span><span class="o">={</span><span class="s">""</span><span class="o">},</span><span class="n">testTrueSql</span><span class="o">=</span><span class="s">" and author=? or name=? "</span><span class="o">,</span><span class="n">parentTestId</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span><span class="n">params</span><span class="o">={</span><span class="s">"author"</span><span class="o">,</span><span class="s">"author"</span><span class="o">})</span>
+<span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">XXX</span><span class="o">&gt;</span> <span class="nf">method1</span><span class="o">(</span><span class="n">XXX</span> <span class="n">entity</span><span class="o">){</span> <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">excuteQuery</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span> <span class="o">}</span>
+</code></pre>
+</div>
+
+<p>于是，类信息收集器能做成静态的吗，不能。因为每个表的信息不同，就会对应不同的类信息，如果我们做成静态的，那么就会产生很多无意义的重复代码，我们要用对象存储他，并且是一个表用一个对象去存储。这样，我们就可以准确定义一个类信息收集器的收集内容了，如下所示：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 实体类 T 的信息收集器
+ * Sqlite 的 Sql 语句生成器
+ * @author 欧阳洁
+ * @create 2017-09-30 10:56
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteSqlHelper</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">targetClass</span><span class="o">;</span><span class="c1">//实体类</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">tableName</span><span class="o">;</span><span class="c1">//表名</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">idName</span><span class="o">;</span><span class="c1">//主键名</span>
+    <span class="kd">private</span> <span class="n">Field</span> <span class="n">idField</span><span class="o">;</span><span class="c1">//主键变量属性</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Field</span><span class="o">&gt;</span> <span class="n">columnFields</span><span class="o">;</span><span class="c1">//表列名对应的变量属性集合</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">columnMap</span><span class="o">;</span><span class="c1">//表列名和字段映射 map</span>
+
+    <span class="cm">/**
+     * 构造函数
+     * @param targetClass
+     */</span>
+    <span class="kd">public</span> <span class="nf">SqliteSqlHelper</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">targetClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tableName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getTableNameForClass</span><span class="o">(</span><span class="n">targetClass</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">targetClass</span> <span class="o">=</span> <span class="n">targetClass</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">columnFields</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Field</span><span class="o">&gt;();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">columnMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">getColumnFields</span><span class="o">();</span><span class="c1">//表列名对应的变量属性相关信息，包括表列名和字段映射</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-一个-sql-生成器">一个 SQL 生成器</h3>
+
+<p>和数据库沟通就需要使用相应的 SQL 语言，而通用的关系型数据库（oracle、mysql、sql server 等），甚至是非关系型的数据库 NOSQL（elasticsearch、mongodb 等），绝大部分交互无非就是增删查改，而 SQL 的增删查改语言几乎是通用的。</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="o">#</span> <span class="err">建表</span>
+    <span class="k">create</span> <span class="k">table</span> <span class="n">t_test_table</span><span class="p">(</span>
+        <span class="n">id</span> <span class="n">integer</span> <span class="k">primary</span> <span class="k">key</span> <span class="n">autoincrement</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+        <span class="n">name</span> <span class="n">char</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+        <span class="n">author</span> <span class="n">char</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span><span class="p">,</span>
+        <span class="n">article</span> <span class="n">text</span><span class="p">,</span>
+        <span class="n">create_time</span> <span class="n">char</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">not</span> <span class="k">null</span>
+    <span class="p">);</span>
+<span class="o">#</span> <span class="err">新增</span>
+    <span class="k">insert</span> <span class="k">into</span> <span class="n">t_test_table</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="n">author</span><span class="p">,</span> <span class="n">article</span><span class="p">,</span><span class="n">create_time</span><span class="p">)</span>
+        <span class="k">values</span> <span class="p">(</span><span class="nv">"test11"</span><span class="p">,</span><span class="nv">"petter"</span><span class="p">,</span><span class="nv">"article1"</span><span class="p">,</span><span class="nv">"2017-09-29 17:01:22"</span><span class="p">);</span>
+<span class="o">#</span> <span class="err">查询</span>
+    <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">t_test_table</span><span class="p">;</span>
+    <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">t_test_table</span> <span class="k">where</span> <span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">修改</span>
+    <span class="k">update</span> <span class="n">t_test_table</span>
+        <span class="k">set</span> <span class="n">name</span> <span class="o">=</span> <span class="nv">"test11_修改"</span><span class="p">,</span> <span class="n">article</span> <span class="o">=</span> <span class="nv">"article1_修改"</span><span class="p">,</span> <span class="n">create_time</span> <span class="o">=</span> <span class="nv">"2017-09-29 17:01:27"</span>
+            <span class="k">where</span> <span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">删除</span>
+    <span class="k">delete</span> <span class="k">from</span> <span class="n">t_test_table</span> <span class="k">where</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>这里多了个建表 SQL，这里是为了实现自动化部署数据库用的，相当于程序驱动数据，让更多主动层面转移到程序代码这一层。当我们为我们的业务新增一个数据实体时候，程序就能自动的去生成规范的数据库，免去了繁琐的手动创建以及容易弄错的字段类型方面的细节，如果封装的好的话，迭代更新就能免去 SQL 脚本了。扩展一下的话，在表名注解里面添加数据库的链接属性还可以实现平滑分库的功能（这个可以，对于 sqlite 这种小型数据库，如果能实现分库的话，那就不再是小型数据库了，当然本文的例子还是以单数据库为例）。</p>
+
+<p>而且建表的 sql 生成比较简单，只要单独的根据实体类的信息就能直接生成，如下：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">#</span> <span class="n">SqliteSqlHelper</span><span class="o">.</span><span class="na">java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteSqlHelper</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 创建创建表的 sql 语句
+     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">createTableSql</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">StringBuffer</span> <span class="n">sql</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="s">"create table if not exists "</span><span class="o">);</span>
+        <span class="n">sql</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">tableName</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">"("</span><span class="o">);</span>
+        <span class="kt">boolean</span> <span class="n">useCumma</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Field</span> <span class="n">field</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">columnFields</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">useCumma</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sql</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">","</span><span class="o">);</span><span class="c1">//第一次不用逗号</span>
+            <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+                <span class="n">useCumma</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span>
+            
+            <span class="n">String</span> <span class="n">columnName</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">columnType</span> <span class="o">=</span> <span class="s">"char(20)"</span><span class="o">;</span>
+            <span class="n">String</span> <span class="n">notNull</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+            <span class="n">SqliteID</span> <span class="n">id</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">SqliteID</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">columnName</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">id</span><span class="o">.</span><span class="na">name</span><span class="o">())</span> <span class="o">?</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">:</span> <span class="n">id</span><span class="o">.</span><span class="na">name</span><span class="o">();</span>
+                <span class="n">columnType</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">type</span><span class="o">();</span>
+                <span class="c1">//主键默认不为空，如果自增长默认自增长</span>
+                <span class="n">notNull</span> <span class="o">=</span> <span class="n">id</span><span class="o">.</span><span class="na">autoincrement</span><span class="o">()</span> <span class="o">?</span> <span class="s">" primary key autoincrement not null"</span> <span class="o">:</span> <span class="s">" primary key not null"</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">SqliteColumn</span> <span class="n">column</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">SqliteColumn</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">column</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">columnName</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">column</span><span class="o">.</span><span class="na">name</span><span class="o">())</span> <span class="o">?</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">:</span> <span class="n">column</span><span class="o">.</span><span class="na">name</span><span class="o">();</span>
+                    <span class="n">columnType</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="na">type</span><span class="o">();</span>
+                    <span class="n">notNull</span> <span class="o">=</span> <span class="n">column</span><span class="o">.</span><span class="na">notNull</span><span class="o">()</span> <span class="o">?</span> <span class="s">" not null"</span> <span class="o">:</span> <span class="s">""</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">sql</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">columnName</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="s">" "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">columnType</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="s">" "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">notNull</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">sql</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">")"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">sql</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+
+<span class="err">#</span> <span class="n">SqliteBaseDao</span><span class="o">.</span><span class="na">java</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">SqliteBaseDao</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">tableName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Class</span> <span class="n">entityClazz</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">SqliteSqlHelper</span> <span class="n">sqlHelper</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">SqliteBaseDao</span><span class="o">(</span><span class="n">Class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">entityClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">sqlHelper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SqliteSqlHelper</span><span class="o">(</span><span class="n">entityClass</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tableName</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">sqlHelper</span><span class="o">.</span><span class="na">getTableName</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">entityClazz</span> <span class="o">=</span> <span class="n">entityClass</span><span class="o">;</span>
+        <span class="c1">//调用该方法就能在使用时检查和创建表，可以通过配置信息判断是否执行，达到开关控制的效果</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">existOrCreateTable</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 检查表是否存在，不存在则创建
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">existOrCreateTable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">sqlHelper</span><span class="o">.</span><span class="na">createTableSql</span><span class="o">();</span>
+        <span class="n">SqliteHelper</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>同理，增删查改，也是通过类的信息进行 sql 的组装，但是却依赖调用入参实现动态 sql 生成。就以查询为例，默认的动态 sql 生成，基于传入的实体类对象里面的值，一般为空的不做处理，不为空的条件用 and 做连接起来形成动态的查询 SQL。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">#</span> <span class="n">SqliteSqlHelper</span><span class="o">.</span><span class="na">java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteSqlHelper</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 创建查询语句
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">createSelect</span><span class="o">(</span><span class="n">T</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">param</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;();</span>
+        <span class="n">StringBuffer</span> <span class="n">sqlBuffer</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+        <span class="n">sqlBuffer</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"SELECT * FROM "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">tableName</span><span class="o">);</span>
+        <span class="n">finishWhereOfAnd</span><span class="o">(</span><span class="n">sqlBuffer</span><span class="o">,</span> <span class="n">param</span><span class="o">,</span> <span class="n">target</span><span class="o">);</span>
+    
+        <span class="n">target</span><span class="o">.</span><span class="na">setCurrentSql</span><span class="o">(</span><span class="n">sqlBuffer</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+        <span class="n">target</span><span class="o">.</span><span class="na">setCurrentParam</span><span class="o">(</span><span class="n">param</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 补全用 and 连接的 sql 语句
+     * @param sqlBuffer
+     * @param param
+     * @param target
+     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">finishWhereOfAnd</span><span class="o">(</span><span class="n">StringBuffer</span> <span class="n">sqlBuffer</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">param</span><span class="o">,</span> <span class="n">T</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">sqlBuffer</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" WHERE 1=1 "</span><span class="o">);</span>
+        <span class="n">Object</span> <span class="n">idValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="k">this</span><span class="o">.</span><span class="na">idField</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">idValue</span> <span class="o">=</span> <span class="n">readField</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">idField</span><span class="o">,</span> <span class="n">target</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">idValue</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">sqlBuffer</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">idName</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="s">"=?"</span><span class="o">);</span>
+            <span class="n">param</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">idValue</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Field</span> <span class="n">field</span> <span class="o">:</span> <span class="k">this</span><span class="o">.</span><span class="na">columnFields</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="n">Modifier</span><span class="o">.</span><span class="na">isStatic</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getModifiers</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="n">Object</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="n">readField</span><span class="o">(</span><span class="n">field</span><span class="o">,</span> <span class="n">target</span><span class="o">);</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">currentValue</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">idName</span><span class="o">,</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span> <span class="o">{</span>
+                        <span class="n">String</span> <span class="n">columnName</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">();</span>
+                        <span class="n">SqliteColumn</span> <span class="n">sqliteColumn</span> <span class="o">=</span> <span class="n">field</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">SqliteColumn</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">sqliteColumn</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">columnName</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">sqliteColumn</span><span class="o">.</span><span class="na">name</span><span class="o">())</span> <span class="o">?</span> <span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">()</span> <span class="o">:</span> <span class="n">sqliteColumn</span><span class="o">.</span><span class="na">name</span><span class="o">();</span>
+                        <span class="o">}</span>
+                        <span class="n">sqlBuffer</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">" and "</span><span class="o">).</span><span class="na">append</span><span class="o">(</span><span class="n">columnName</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">()).</span><span class="na">append</span><span class="o">(</span><span class="s">"=?"</span><span class="o">);</span>
+                        <span class="n">param</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">currentValue</span><span class="o">);</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>对于自定义 SQL 的获取和动态组装生成，它相对其他类的 SQL 就要复杂一些，因为这个注解不是在实体类中，而是在 Dao 类中，而且是一种用于方法的注解。想要知道如何获取这类注解的信息，就需要了解 java 程序的一些运行原理。</p>
+
+<blockquote>
+  <p>线程栈区的方法栈：简而言之，就是每个运行中的程序会有一个线程，而调用的方法、调用方法调用的方法、调用方法调用的方法调用的方法。.. 他们会形成该线程的方法栈，进行中的方法都会放入这个栈中，这样我们就可以在运行时候获取到对应的方法了。</p>
+</blockquote>
+
+<p>然而，我们要使得注解和编码更加简洁易懂，我们需要把这部分获取的代码放到 Dao 类继承的基类（SqliteBaseDao）中，通过基类获取子类的某个方法的注解信息。虽然基类获取子类方法信息与常规程序设计有较大差异，但是只有这样才能实现优美的封装。下面为自定义查询部分代码（增删改同理）：</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">#</span> <span class="n">SqliteSqlHelper</span><span class="o">.</span><span class="na">java</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteSqlHelper</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 创建自定义查询语句
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">convertSelfSql</span><span class="o">(</span><span class="n">StackTraceElement</span> <span class="n">daoMethodInfo</span><span class="o">,</span> <span class="n">T</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">daoMethodInfo</span><span class="o">)</span> <span class="o">{</span><span class="c1">//为空用默认的查询语句</span>
+            <span class="n">createSelect</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">getMethod</span><span class="o">(</span><span class="n">daoMethodInfo</span><span class="o">.</span><span class="na">getClassName</span><span class="o">(),</span> <span class="n">daoMethodInfo</span><span class="o">.</span><span class="na">getMethodName</span><span class="o">(),</span> <span class="n">target</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">method</span><span class="o">)</span> <span class="o">{</span><span class="c1">//为空用默认的查询语句</span>
+            <span class="n">createSelect</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">SqliteSql</span> <span class="n">sqliteSql</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">SqliteSql</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">sqliteSql</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">param</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;();</span>
+            <span class="n">String</span><span class="o">[]</span> <span class="n">paramNameArr</span> <span class="o">=</span> <span class="n">sqliteSql</span><span class="o">.</span><span class="na">params</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">paramNameArr</span> <span class="o">&amp;&amp;</span> <span class="n">paramNameArr</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">Field</span><span class="o">[]</span> <span class="n">fieldArray</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">targetClass</span><span class="o">.</span><span class="na">getDeclaredFields</span><span class="o">();</span>
+                <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">paramName</span> <span class="o">:</span> <span class="n">paramNameArr</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">Object</span> <span class="n">value</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="k">for</span> <span class="o">(</span><span class="n">Field</span> <span class="n">field</span> <span class="o">:</span> <span class="n">fieldArray</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">paramName</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">field</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span> <span class="o">{</span>
+                            <span class="n">value</span> <span class="o">=</span> <span class="n">readField</span><span class="o">(</span><span class="n">field</span><span class="o">,</span> <span class="n">target</span><span class="o">);</span>
+                            <span class="k">break</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="n">param</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+                <span class="o">}</span>
+
+            <span class="o">}</span>
+            <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="n">sqliteSql</span><span class="o">.</span><span class="na">sql</span><span class="o">(),</span> <span class="s">"this.tableName"</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">tableName</span><span class="o">);</span>
+            <span class="c1">//TODO 此处可以读取自定义 SQL 的辅助注解，像上面提到的 SqliteSqlWhereIf 注解，实现动态 SQL</span>
+            <span class="n">target</span><span class="o">.</span><span class="na">setCurrentSql</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
+            <span class="n">target</span><span class="o">.</span><span class="na">setCurrentParam</span><span class="o">(</span><span class="n">param</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 创建自定义查询语句，参数随机
+     */</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">convertSelfSql</span><span class="o">(</span><span class="n">StackTraceElement</span> <span class="n">daoMethodInfo</span><span class="o">,</span> <span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">daoMethodInfo</span><span class="o">)</span> <span class="o">{</span><span class="c1">//为空不做处理</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"未获取到自定义的语句！"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">classArr</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">params</span> <span class="o">&amp;&amp;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">classArr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Class</span><span class="o">&lt;?&gt;[</span><span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="n">classArr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">getClass</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">getMethod</span><span class="o">(</span><span class="n">daoMethodInfo</span><span class="o">.</span><span class="na">getClassName</span><span class="o">(),</span> <span class="n">daoMethodInfo</span><span class="o">.</span><span class="na">getMethodName</span><span class="o">(),</span> <span class="n">classArr</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">method</span><span class="o">)</span> <span class="o">{</span><span class="c1">//为空不做处理</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"未获取到自定义的语句！"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">SqliteSql</span> <span class="n">sqliteSql</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">getAnnotation</span><span class="o">(</span><span class="n">SqliteSql</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="c1">//TODO 此处可以读取自定义 SQL 的辅助注解，像上面提到的 SqliteSqlWhereIf 注解，实现动态 SQL</span>
+        <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="n">sqliteSql</span><span class="o">.</span><span class="na">sql</span><span class="o">(),</span> <span class="s">"this.tableName"</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">tableName</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">sql</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+
+<span class="err">#</span> <span class="n">SqliteBaseDao</span><span class="o">.</span><span class="na">java</span>
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">SqliteBaseDao</span><span class="o">&lt;</span><span class="n">T</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 通过自定义注解执行查询的语句
+     */</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">excuteQuery</span><span class="o">(</span><span class="n">T</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//[0] 为 getStackTrace 方法，[1] 当前的 excuteQuery 方法，[2] 为调用 excuteQuery 方法的方法</span>
+        <span class="n">StackTraceElement</span> <span class="n">parrentMethodInfo</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getStackTrace</span><span class="o">()[</span><span class="mi">2</span><span class="o">];</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">sqlHelper</span><span class="o">.</span><span class="na">convertSelfSql</span><span class="o">(</span><span class="n">parrentMethodInfo</span><span class="o">,</span> <span class="n">entity</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">jsonStr</span> <span class="o">=</span> <span class="n">SqliteHelper</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">entity</span><span class="o">.</span><span class="na">getCurrentSql</span><span class="o">(),</span> <span class="n">entity</span><span class="o">.</span><span class="na">getCurrentParam</span><span class="o">(),</span> <span class="k">this</span><span class="o">.</span><span class="na">getColumMap</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">jsonStr</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">jsonStr</span><span class="o">,</span> <span class="n">entity</span><span class="o">.</span><span class="na">getClass</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">result</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 通过自定义注解执行查询的语句
+     */</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">excuteQuery</span><span class="o">(</span><span class="n">Object</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//[0] 为 getStackTrace 方法，[1] 当前的 excuteQuery 方法，[2] 为调用 excuteQuery 方法的方法</span>
+        <span class="n">StackTraceElement</span> <span class="n">parrentMethodInfo</span> <span class="o">=</span> <span class="n">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getStackTrace</span><span class="o">()[</span><span class="mi">2</span><span class="o">];</span>
+        <span class="n">String</span> <span class="n">sql</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">sqlHelper</span><span class="o">.</span><span class="na">convertSelfSql</span><span class="o">(</span><span class="n">parrentMethodInfo</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;</span> <span class="n">paramList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">Object</span><span class="o">&gt;();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">params</span> <span class="o">&amp;&amp;</span> <span class="n">params</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">o</span> <span class="o">:</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">paramList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">o</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">String</span> <span class="n">jsonStr</span> <span class="o">=</span> <span class="n">SqliteHelper</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">sql</span><span class="o">,</span> <span class="n">paramList</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">getColumMap</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">jsonStr</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getInstance</span><span class="o">(</span><span class="n">jsonStr</span><span class="o">,</span> <span class="k">this</span><span class="o">.</span><span class="na">entityClazz</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">result</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="o">...</span>    
+<span class="o">}</span>
+
+<span class="err">#</span> <span class="err">实体</span> <span class="n">DAO</span> <span class="err">中使用如下</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestTableDao</span> <span class="kd">extends</span> <span class="n">SqliteBaseDao</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="nd">@SqliteSql</span><span class="o">(</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"select t.create_time publish_time,t.* from this.tableName t where name like '%'||?||'%'"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"name"</span><span class="o">})</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="nf">getByName</span><span class="o">(</span><span class="n">TestTable</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//List&lt;T&gt; super.excuteQuery(T entity)，通过 params 上的参数顺序在 entity 中获取，并依次填充占位符</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">excuteQuery</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="nd">@SqliteSql</span><span class="o">(</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"select * from this.tableName where name like '%'||?||'%' or id=?"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="nf">getByNameOrId</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//List&lt;T&gt; super.excuteQuery(Object... params)，这里的参数顺序对应自定义的 SQL 的占位符顺序</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">excuteQuery</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>另外，自定义 SQL 注解对于像 oracle 这样的存储过程和函数占比较大的数据库，调用存储过程可是无往不利，不过就不知道占位符返回集合的存储过程或函数，方不方便数据的填充组装（TODO）。</p>
+
+<h3 id="heading-一个数据组装器">一个数据组装器</h3>
+
+<p>上面说到数据的组装，这也是比较关键的一个环节，只有这一步 OK 了，这个封装才算 OK。总所周知，数据库表字段类型五花八门，想要很好的和 java 的类型对应上，确实要花费一点精力。这里为了节省时间和篇幅，个人取了个巧，将数据统一转化为 JSON，然后统一通过 json 转对象。从代码上省去了复杂的类型对应，也摒弃了一个个取值，然后通过反射对应写值到对象属性里面的不安全操作及不确定异常，然而代价可能会对转化效率有影响。所以，关键就是需要一种不影响速度的 json 转化，fastjson 基本满足条件。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">#</span> <span class="n">SqliteHelper</span><span class="o">.</span><span class="na">java</span>
+<span class="cm">/**
+ * 根据结果集返回数据 json
+ */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getDataJson</span><span class="o">(</span><span class="n">ResultSet</span> <span class="n">rs</span><span class="o">,</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">columnMap</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">nameArr</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;&gt;</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;&gt;();</span>
+    <span class="kt">int</span> <span class="n">rows</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">next</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">rows</span><span class="o">++</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">nameArr</span> <span class="o">=</span> <span class="n">getNameArr</span><span class="o">(</span><span class="n">rs</span><span class="o">);</span><span class="c1">// 获取列名</span>
+        <span class="o">}</span>
+
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">one</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nameArr</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">nameKey</span> <span class="o">=</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">columnMap</span> <span class="o">?</span> <span class="n">nameArr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">columnMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">nameArr</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+            <span class="n">nameKey</span> <span class="o">=</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">nameKey</span> <span class="o">?</span> <span class="n">nameArr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">nameKey</span><span class="o">;</span>
+            <span class="n">one</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">nameKey</span><span class="o">,</span> <span class="n">rs</span><span class="o">.</span><span class="na">getObject</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">one</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">String</span> <span class="n">dataStr</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getJsonList</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行查询语句结果==&gt; "</span> <span class="o">+</span> <span class="n">dataStr</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">dataStr</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">#</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">java</span>
+<span class="cm">/**
+ * 转换 List&lt;Object&gt; 为 Json 字符串
+ */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getJsonList</span><span class="o">(</span><span class="n">List</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">list</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="s">"[]"</span><span class="o">;</span>
+    <span class="n">StringBuffer</span> <span class="n">jsonBuf</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">(</span><span class="s">"["</span><span class="o">);</span>
+    <span class="kt">boolean</span> <span class="n">flag</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">obj</span> <span class="o">:</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">flag</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">jsonBuf</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">","</span><span class="o">);</span>
+        <span class="o">}</span><span class="k">else</span><span class="o">{</span>
+            <span class="n">flag</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">String</span> <span class="n">jsonOne</span> <span class="o">=</span> <span class="n">getJsonObject</span><span class="o">(</span><span class="n">obj</span><span class="o">);</span>
+        <span class="n">jsonBuf</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">jsonOne</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="n">jsonBuf</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"]"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">jsonBuf</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getJsonObject</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">String</span> <span class="n">json</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">JSONObject</span><span class="o">.</span><span class="na">fromObject</span><span class="o">(</span><span class="n">object</span><span class="o">));</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="k">return</span> <span class="s">"{}"</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="cm">/**
+ * json 字符串转对象，转对集合
+ * @param jsonString json 字符串
+ * @param clazz 对象 class，如果要转化为 List&lt;ObjectA&gt; 传入 ObjectA.class
+ * @return Object [返回类型说明]
+ * @throws throws [违例类型] [违例说明]
+ * @see [类、类#方法、类#成员]T
+ */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">T</span> <span class="nf">getInstance</span><span class="o">(</span><span class="n">String</span> <span class="n">jsonString</span><span class="o">,</span> <span class="n">Class</span> <span class="n">clazz</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">jsonString</span><span class="o">))</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="s">"[]"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">trim</span><span class="o">(</span><span class="n">jsonString</span><span class="o">)))</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">Object</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="n">JSONTokener</span><span class="o">(</span><span class="n">jsonString</span><span class="o">).</span><span class="na">nextValue</span><span class="o">();</span><span class="c1">//字符串 转 json 类型对象</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">json</span> <span class="k">instanceof</span> <span class="n">JSONObject</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">//这种   {"XXX": "101",{},[]} 对象</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">T</span><span class="o">)</span> <span class="n">SqliteJsonMapper</span><span class="o">.</span><span class="na">nonDefaultMapper</span><span class="o">().</span><span class="na">fromJson</span><span class="o">(</span><span class="n">json</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">clazz</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="c1">//如果集合不为 null 则是返回成功，则需要修改数据的时间</span>
+        <span class="c1">//创建转换 json 的需要转换的集合类型   [{},{}]</span>
+        <span class="n">JavaType</span> <span class="n">javaType</span> <span class="o">=</span> <span class="n">SqliteJsonMapper</span><span class="o">.</span><span class="na">nonDefaultMapper</span><span class="o">().</span><span class="na">contructCollectionType</span><span class="o">(</span><span class="n">List</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">clazz</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">SqliteJsonMapper</span><span class="o">.</span><span class="na">nonDefaultMapper</span><span class="o">().</span><span class="na">fromJson</span><span class="o">(</span><span class="n">jsonString</span><span class="o">,</span> <span class="n">javaType</span><span class="o">);</span><span class="c1">//反序列化复杂 List</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-验证和测试">验证和测试</h2>
+
+<h3 id="heading-定义表结构实体">定义表结构实体</h3>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 测试表对应实体类
+ * @author 欧阳洁
+ * @create 2017-09-30 9:44
+ **/</span>
+<span class="nd">@SqliteTable</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"t_test_table"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestTable</span> <span class="kd">extends</span> <span class="n">SqliteBaseEntity</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 主键
+     */</span>
+    <span class="nd">@SqliteID</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">;</span>
+    <span class="cm">/**
+     * 名称
+     */</span>
+    <span class="nd">@SqliteColumn</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">"char(100)"</span><span class="o">,</span> <span class="n">notNull</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="cm">/**
+     * 作者
+     */</span>
+    <span class="nd">@SqliteColumn</span><span class="o">(</span><span class="n">notNull</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+    <span class="cm">/**
+     * 正文
+     */</span>
+    <span class="nd">@SqliteColumn</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">"text"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">article</span><span class="o">;</span>
+    <span class="cm">/**
+     * 创建时间
+     */</span>
+    <span class="nd">@SqliteColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"create_time"</span><span class="o">,</span><span class="n">type</span> <span class="o">=</span> <span class="s">"char(20)"</span><span class="o">,</span> <span class="n">notNull</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">createTime</span><span class="o">;</span>
+    <span class="cm">/**
+     * 查询类型 （非表字段）
+     */</span>
+    <span class="nd">@SqliteTransient</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">searchType</span><span class="o">;</span>
+    <span class="cm">/**
+     * 发布时间 （非表字段）
+     * 注：这里不使用 SqliteColumn 主键，默认的列名为 publishtime
+     */</span>
+    <span class="nd">@SqliteTransient</span>
+    <span class="nd">@SqliteColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"publish_time"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">publishTime</span><span class="o">;</span>
+
+    <span class="c1">//get、set 此处省略</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-定义实体对应的-dao">定义实体对应的 Dao</h3>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * Sqlite[t_test_table] 的 dao
+ * @author 欧阳洁
+ * @create 2017-09-29 17:17
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestTableDao</span> <span class="kd">extends</span> <span class="n">SqliteBaseDao</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 构造函数
+     */</span>
+    <span class="kd">public</span> <span class="nf">TestTableDao</span><span class="o">()</span> <span class="o">{</span><span class="c1">// 必须要对应实现父类的构造方法</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">TestTable</span><span class="o">.</span><span class="na">class</span><span class="o">);</span><span class="c1">// 表实体对应类</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 根据名称模糊查找数据
+     * @param entity
+     * @return
+     */</span>
+    <span class="nd">@SqliteSql</span><span class="o">(</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"select t.create_time publish_time,t.* from this.tableName t where name like '%'||?||'%'"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"name"</span><span class="o">})</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="nf">getByName</span><span class="o">(</span><span class="n">TestTable</span> <span class="n">entity</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//List&lt;T&gt; super.excuteQuery(T entity)，通过 params 上的参数顺序在 entity 中获取，并依次填充占位符</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">excuteQuery</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 根据名称模糊查找数据并包含 id 查找
+     * @param name
+     * @param id
+     * @return
+     */</span>
+    <span class="nd">@SqliteSql</span><span class="o">(</span><span class="n">sql</span> <span class="o">=</span> <span class="s">"select * from this.tableName where name like '%'||?||'%' or id=?"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="nf">getByNameOrId</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//List&lt;T&gt; super.excuteQuery(Object... params)，这里的参数顺序对应自定义的 SQL 的占位符顺序</span>
+        <span class="k">return</span> <span class="kd">super</span><span class="o">.</span><span class="na">excuteQuery</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-定义-dao-对应的-service">定义 Dao 对应的 Service</h3>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * Sqlite[t_test_table] 的 service
+ * @author 欧阳洁
+ * @create 2017-09-30 15:16
+ */</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestTableService</span> <span class="kd">extends</span> <span class="n">SqliteBaseService</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">,</span> <span class="n">TestTableDao</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">TestTableService</span><span class="o">()</span> <span class="o">{</span><span class="c1">// 必须要对应实现父类的构造方法</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">TestTableDao</span><span class="o">.</span><span class="na">class</span><span class="o">);</span><span class="c1">// 对应的 Dao 类</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="nf">getByName</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">TestTable</span> <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTable</span><span class="o">();</span>
+        <span class="n">entity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getBaseDao</span><span class="o">().</span><span class="na">getByName</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="nf">getByNameOrId</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">getBaseDao</span><span class="o">().</span><span class="na">getByNameOrId</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-单元测试">单元测试</h3>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">//默认的方法测试，包括初始化检查表是否存在并构建、对象插入、对象查询（主键穿透查询）</span>
+<span class="err">————————————————————————————————————————</span><span class="o">&lt;</span><span class="n">SqliteTest</span><span class="o">.</span><span class="na">java</span><span class="o">&gt;</span><span class="err">—————————————————————————————————————</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test2</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">TestTableService</span> <span class="n">sqliteService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTableService</span><span class="o">();</span><span class="c1">//没有使用 spring 注入，暂时自己构建</span>
+    <span class="n">TestTable</span> <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTable</span><span class="o">();</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"test1"</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setAuthor</span><span class="o">(</span><span class="s">"petter"</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setArticle</span><span class="o">(</span><span class="s">"article1"</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="n">MyDate</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
+    <span class="n">sqliteService</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"title2"</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setAuthor</span><span class="o">(</span><span class="s">"bob"</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setArticle</span><span class="o">(</span><span class="s">"article2"</span><span class="o">);</span>
+    <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="n">MyDate</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
+    <span class="n">sqliteService</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+
+    <span class="n">TestTable</span> <span class="n">queryEntity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTable</span><span class="o">();</span>
+    <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">queryEntity</span><span class="o">);</span>
+    <span class="n">queryEntity</span><span class="o">.</span><span class="na">setAuthor</span><span class="o">(</span><span class="s">"petter"</span><span class="o">);</span>
+    <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">queryEntity</span><span class="o">);</span>
+    <span class="n">queryEntity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"test"</span><span class="o">);</span>
+    <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">queryEntity</span><span class="o">);</span>
+    <span class="n">queryEntity</span><span class="o">.</span><span class="na">setId</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">queryEntity</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>test2() 测试结果：</p>
+<blockquote>
+  <p>执行非查询语句==&gt; create table if not exists t_test_table(id integer  primary key autoincrement not null,name char(100)  not null,author char(20)  not null,article text ,<font color="red">create_time</font> char(20)  not null)
+执行非查询语句影响行数==&gt; 0
+执行非查询语句==&gt; INSERT INTO t_test_table(name,author,article,create_time)values(?,?,?,?)
+执行非查询语句影响行数==&gt; 1
+执行非查询语句==&gt; INSERT INTO t_test_table(name,author,article,create_time)values(?,?,?,?)
+执行非查询语句影响行数==&gt; 1
+执行查询语句==&gt; SELECT * FROM t_test_table WHERE 1=1 
+执行查询语句结果==&gt; [{"id":1,"name":"test1","author":"petter","article":"article1","<font color="red">createTime</font>":"2018-02-20 22:54:32"},{"id":2,"name":"title2","author":"bob","article":"article2","<font color="red">createTime</font>":"2018-02-20 22:54:32"}]
+执行查询语句==&gt; SELECT * FROM t_test_table WHERE 1=1  and author=?
+执行查询语句结果==&gt; [{"id":1,"name":"test1","author":"petter","article":"article1","<font color="red">createTime</font>":"2018-02-20 22:54:32"}]
+执行查询语句==&gt; SELECT * FROM t_test_table WHERE 1=1  and name=? and author=?
+执行查询语句结果==&gt; []
+执行查询语句==&gt; SELECT * FROM t_test_table WHERE 1=1  and id=?
+执行查询语句结果==&gt; [{"id":1,"name":"test1","author":"petter","article":"article1","<font color="red">createTime</font>":"2018-02-20 22:54:32"}]</p>
+</blockquote>
+
+<hr />
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">//自定义的 SQL 查询测试，包含自定义 SQL、结果集中额外列对应填充和查询对象属性值定位获取</span>
+<span class="err">——————————————————————————————————————</span><span class="o">&lt;</span><span class="n">SqliteTest</span><span class="o">.</span><span class="na">java</span><span class="o">&gt;</span><span class="err">——————————————————————————————————————</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test3</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">TestTableService</span> <span class="n">sqliteService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTableService</span><span class="o">();</span><span class="c1">//没有使用 spring 注入，暂时自己构建</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">sqliteService</span><span class="o">.</span><span class="na">getByName</span><span class="o">(</span><span class="s">"test"</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>test3() 测试结果：</p>
+<blockquote>
+  <p>执行非查询语句==&gt; create table if not exists t_test_table(id integer  primary key autoincrement not null,name char(100)  not null,author char(20)  not null,article text ,create_time char(20)  not null)
+执行非查询语句影响行数==&gt; 0
+执行查询语句==&gt; select t.create_time publish_time,t.* from t_test_table t where name like '%'||?||'%'
+执行查询语句结果==&gt; [{"<font color="red">publishTime</font>":"2018-02-20 22:36:18","id":1,"name":"test1","author":"petter","article":"article1","createTime":"2018-02-20 22:36:18"}]</p>
+</blockquote>
+
+<hr />
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">//自定义的 SQL 查询测试，这里直接撇开了实体类，可以任意的传参了，甚至调用存储过程或函数只需要一行注解就够了</span>
+<span class="err">———————————————————————————————————————</span><span class="o">&lt;</span><span class="n">SqliteTest</span><span class="o">.</span><span class="na">java</span><span class="o">&gt;</span><span class="err">—————————————————————————————————————</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">test4</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">TestTableService</span> <span class="n">sqliteService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTableService</span><span class="o">();</span><span class="c1">//没有使用 spring 注入，暂时自己构建</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="n">sqliteService</span><span class="o">.</span><span class="na">getByNameOrId</span><span class="o">(</span><span class="s">"title"</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<blockquote>
+  <p>执行非查询语句==&gt; create table if not exists t_test_table(id integer  primary key autoincrement not null,name char(100)  not null,author char(20)  not null,article text ,create_time char(20)  not null)
+执行非查询语句影响行数==&gt; 0
+执行查询语句==&gt; select * from t_test_table where name like '%'||?||'%' or id=?
+执行查询语句结果==&gt; [{"id":1,"name":"test1","author":"petter","article":"article1","createTime":"2018-02-20 22:36:18"},{"id":2,"name":"title2","author":"bob","article":"article2","createTime":"2018-02-20 22:36:19"}]</p>
+</blockquote>
+
+<h2 id="heading-源码">源码</h2>
+
+<ul>
+  <li>Git 地址：<a href="https://github.com/petterobam/my-sqlite">https://github.com/petterobam/my-sqlite</a></li>
+  <li>Git-wiki：<a href="https://github.com/petterobam/my-sqlite/wiki/">https://github.com/petterobam/my-sqlite/wiki/</a></li>
+  <li>Git 检出地址：https://github.com/petterobam/my-sqlite.git</li>
+  <li>源码下载：<a href="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/oyjie.cn/upload/2018/02/rpdd0gs1vkhrvr3rlhh4khq8i6.rar">点击下载</a></li>
+</ul>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2017/12/10/svn-merge-packge/" title="上一篇 '关于代码提交、定版合并和打单包总结'"> ← 关于代码提交、定版合并和打单包总结</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2018/04/01/sqlite-split-db-table/" title="下一篇 'Sqlite 封装之分库与分表'">Sqlite 封装之分库与分表 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-number="7"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

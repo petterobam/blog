@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Git 学习笔记 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Git 学习笔记" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="```git git clone https://github.com/petterobam/my-sqlite.git cd my-sqlite/ git status git add . git status git commit -m &quot;提交备注&quot; git pull git push git config –global credential.helper store push你的代码 (git push), 这时会让你输入用户名和密码, 这一步输入的用户名密码会被记住, 下次再push代码时就不用输入用户名密码!这一步会在用户目录下生成文件.git-credential记录用户名密码的信息" />
+<meta property="og:description" content="```git git clone https://github.com/petterobam/my-sqlite.git cd my-sqlite/ git status git add . git status git commit -m &quot;提交备注&quot; git pull git push git config –global credential.helper store push你的代码 (git push), 这时会让你输入用户名和密码, 这一步输入的用户名密码会被记住, 下次再push代码时就不用输入用户名密码!这一步会在用户目录下生成文件.git-credential记录用户名密码的信息" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-09-02T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"```git git clone https://github.com/petterobam/my-sqlite.git cd my-sqlite/ git status git add . git status git commit -m &quot;提交备注&quot; git pull git push git config –global credential.helper store push你的代码 (git push), 这时会让你输入用户名和密码, 这一步输入的用户名密码会被记住, 下次再push代码时就不用输入用户名密码!这一步会在用户目录下生成文件.git-credential记录用户名密码的信息","@type":"BlogPosting","url":"/learner_posts/skill/Git/","headline":"Git 学习笔记","dateModified":"2018-09-02T00:00:00+00:00","datePublished":"2018-09-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/learner_posts/skill/Git/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/blog/learner/static/css/learn.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/stylesheets/prism.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <header>
+                            <h1 id="big-title">Git 学习笔记</h1>
+                        </header>
+                        <div class="main-content">
+                            <!-- 新增导航目录 -->
+                            
+<link rel="stylesheet" href="/assets/stylesheets/nav.css" type="text/css"/>
+<div class="nav-container">
+    <nav>
+        <div class="menubar expand button_active" id="mediaMenubar">
+        目录<span class="small-title">（点击收起）</span>
+        </div>
+        <div id="java-nav-directory"></div>
+        <div id="js-nav-directory"></div>
+    </nav>
+</div>
+<script defer type="text/javascript" src="/assets/javascripts/plugin/nav.js"></script>
+
+                            <div id="article-container" class="article-container">
+                                <article id="article-content">
+                                    <pre><code class="language-git">git clone https://github.com/petterobam/my-sqlite.git
+cd my-sqlite/
+git status
+git add .
+git status
+git commit -m "提交备注"
+git pull
+git push
+git config --global credential.helper store
+push你的代码 (git push), 这时会让你输入用户名和密码, 这一步输入的用户名密码会被记住, 下次再push代码时就不用输入用户名密码!这一步会在用户目录下生成文件.git-credential记录用户名密码的信息
+
+git init
+git remote add origin git@github.com:petterobam/database-oop.git
+补充提交
+git commit -m 'initial commit'
+git add forgotten_file
+git commit --amend
+
+撤销add 所有
+git reset HEAD
+git reset HEAD 文件名
+</code></pre>
+
+<h2 id="heading-设置全局用户">设置全局用户</h2>
+<pre><code class="language-git">$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+</code></pre>
+
+<h2 id="heading-自定义全局编辑器">自定义全局编辑器</h2>
+<pre><code class="language-git">$ git config --global core.editor emacs
+</code></pre>
+
+<h2 id="heading-查看git配置信息">查看git配置信息</h2>
+<pre><code class="language-git">$ git config --list
+user.name=John Doe
+user.email=johndoe@example.com
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+...
+</code></pre>
+
+<h2 id="heading-检查git某一项配置">检查git某一项配置</h2>
+<pre><code class="language-git">$ git config user.name
+John Doe
+</code></pre>
+
+<h2 id="heading-获取命令帮助说明">获取命令帮助说明</h2>
+<pre><code class="language-git">$ git help &lt;verb&gt;
+$ git &lt;verb&gt; --help
+$ man git-&lt;verb&gt;
+</code></pre>
+
+<pre><code class="language-git">$ git help config
+</code></pre>
+
+<h2 id="heading-已有项目中初始化仓库">已有项目中初始化仓库</h2>
+<pre><code class="language-git">$ git init
+</code></pre>
+
+<h2 id="heading-添加提交">添加提交</h2>
+<pre><code class="language-git">$ git add *.c
+$ git add LICENSE
+$ git commit -m 'initial project version'
+</code></pre>
+
+<h2 id="heading-克隆现有项目">克隆现有项目</h2>
+<pre><code class="language-git">$ git clone https://github.com/libgit2/libgit2
+$ git clone user@server:path/to/repo.git
+</code></pre>
+
+<h2 id="heading-检查当前文件状态">检查当前文件状态</h2>
+<pre><code class="language-git">$ git status
+On branch master
+nothing to commit, working directory clean
+</code></pre>
+
+<pre><code class="language-git">$ git status
+On branch master
+Untracked files:
+  (use "git add &lt;file&gt;..." to include in what will be committed)
+
+    README.md
+
+nothing added to commit but untracked files present (use "git add" to track)
+</code></pre>
+
+<pre><code class="language-git">$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD &lt;file&gt;..." to unstage)
+
+    new file:   README.md
+</code></pre>
+
+<h2 id="heading-状态概览">状态概览</h2>
+<pre><code class="language-git">$ git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+</code></pre>
+
+<h2 id="heading-查看改变的部分">查看改变的部分</h2>
+<pre><code class="language-git">$ git diff
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 8ebb991..643e24f 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -65,7 +65,8 @@ branch directly, things can get messy.
+ Please include a nice description of your changes when you submit your PR;
+ if we have to read the whole diff to figure out why you're contributing
+ in the first place, you're less likely to get feedback and have your change
+-merged in.
++merged in. Also, split your changes into comprehensive chunks if your patch is
++longer than a dozen lines.
+
+ If you are starting to work on a particular area, feel free to submit a PR
+ that highlights your work in progress (and note in the PR title that it's
+</code></pre>
+
+<h2 id="heading-list查看改变的部分">list查看改变的部分</h2>
+
+<pre><code class="language-git">$ git diff --cached
+diff --git a/CONTRIBUTING.md b/CONTRIBUTING.md
+index 8ebb991..643e24f 100644
+--- a/CONTRIBUTING.md
++++ b/CONTRIBUTING.md
+@@ -65,7 +65,8 @@ branch directly, things can get messy.
+ Please include a nice description of your changes when you submit your PR;
+ if we have to read the whole diff to figure out why you're contributing
+ in the first place, you're less likely to get feedback and have your change
+-merged in.
++merged in. Also, split your changes into comprehensive chunks if your patch is
++longer than a dozen lines.
+
+ If you are starting to work on a particular area, feel free to submit a PR
+ that highlights your work in progress (and note in the PR title that it's
+
+	- 高版本list查看改变的部分
+	$ git diff --staged
+	diff --git a/README b/README
+	new file mode 100644
+	index 0000000..03902a1
+	--- /dev/null
+	+++ b/README
+	@@ -0,0 +1 @@
+	+My Project
+</code></pre>
+
+<h2 id="heading-代码提交">代码提交</h2>
+<pre><code class="language-git">$ git commit
+</code></pre>
+
+<h2 id="heading-提交带上备注">提交带上备注</h2>
+<pre><code class="language-git">$ git commit -m "Story 182: Fix benchmarks for speed"
+</code></pre>
+
+<h2 id="heading-直接提交含git-add">直接提交(含git add)</h2>
+<pre><code class="language-git">跳过缓存区，不用git add命令，直接提交
+$ git commit -a -m 'added new benchmarks'
+</code></pre>
+
+<h2 id="heading-将文件移出版本管理">将文件移出版本管理</h2>
+<pre><code class="language-git">$ git rm README.md
+$ git rm --cached README.md
+$ git rm log/\*.log
+</code></pre>
+
+<h2 id="heading-移动文件重命名某个文件">移动文件，重命名某个文件</h2>
+<pre><code class="language-git">$ git mv file_from file_to
+</code></pre>
+
+<h2 id="heading-查看提交日志">查看提交日志</h2>
+<pre><code class="language-git">$ git log
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Sat Mar 15 16:40:33 2008 -0700
+
+    removed unnecessary test
+
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Sat Mar 15 10:31:28 2008 -0700
+
+    first commit
+</code></pre>
+
+<h2 id="heading-显示详细提交记录数量">显示详细提交记录数量</h2>
+
+<pre><code class="language-git">$ git log -p -2
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+diff --git a/Rakefile b/Rakefile
+index a874b73..8f94139 100644
+--- a/Rakefile
++++ b/Rakefile
+@@ -5,7 +5,7 @@ require 'rake/gempackagetask'
+ spec = Gem::Specification.new do |s|
+     s.platform  =   Gem::Platform::RUBY
+     s.name      =   "simplegit"
+-    s.version   =   "0.1.0"
++    s.version   =   "0.1.1"
+     s.author    =   "Scott Chacon"
+     s.email     =   "schacon@gee-mail.com"
+     s.summary   =   "A simple gem for using Git in Ruby code."
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Sat Mar 15 16:40:33 2008 -0700
+
+    removed unnecessary test
+
+diff --git a/lib/simplegit.rb b/lib/simplegit.rb
+index a0a60ae..47c6340 100644
+--- a/lib/simplegit.rb
++++ b/lib/simplegit.rb
+@@ -18,8 +18,3 @@ class SimpleGit
+     end
+
+ end
+-
+-if $0 == __FILE__
+-  git = SimpleGit.new
+-  puts git.show
+-end
+</code></pre>
+
+<h2 id="heading-提交日志统计信息">提交日志统计信息</h2>
+<pre><code class="language-git">$ git log --stat
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+
+ Rakefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Sat Mar 15 16:40:33 2008 -0700
+
+    removed unnecessary test
+
+ lib/simplegit.rb | 5 -----
+ 1 file changed, 5 deletions(-)
+
+commit a11bef06a3f659402fe7563abf99ad00de2209e6
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Sat Mar 15 10:31:28 2008 -0700
+
+    first commit
+
+ README           |  6 ++++++
+ Rakefile         | 23 +++++++++++++++++++++++
+ lib/simplegit.rb | 25 +++++++++++++++++++++++++
+ 3 files changed, 54 insertions(+)
+</code></pre>
+
+<h2 id="heading-提交日志每次记录一行展示">提交日志每次记录一行展示</h2>
+<pre><code class="language-git">$ git log --pretty=oneline
+ca82a6dff817ec66f44342007202690a93763949 changed the version number
+085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7 removed unnecessary test
+a11bef06a3f659402fe7563abf99ad00de2209e6 first commit
+</code></pre>
+
+<h2 id="heading-定义日志浏览输出格式">定义日志浏览输出格式</h2>
+<pre><code class="language-git">$ git log --pretty=format:"%h - %an, %ar : %s"
+ca82a6d - Scott Chacon, 6 years ago : changed the version number
+085bb3b - Scott Chacon, 6 years ago : removed unnecessary test
+a11bef0 - Scott Chacon, 6 years ago : first commit
+-------------------------------------------------
+%H	提交对象（commit）的完整哈希字串
+%h	提交对象的简短哈希字串
+%T	树对象（tree）的完整哈希字串
+%t	树对象的简短哈希字串
+%P	父对象（parent）的完整哈希字串
+%p	父对象的简短哈希字串
+%an	作者（author）的名字
+%ae	作者的电子邮件地址
+%ad	作者修订日期（可以用 --date= 选项定制格式）
+%ar	作者修订日期，按多久以前的方式显示
+%cn	提交者（committer）的名字
+%ce	提交者的电子邮件地址
+%cd	提交日期提交日期
+%cr	提交日期，按多久以前的方式显示
+%s	提交说明
+-------------------------------------------------
+</code></pre>
+
+<h2 id="heading-日志浏览截止时间或范围">日志浏览截止时间或范围</h2>
+<pre><code class="language-git">$ git log --since=2.weeks
+</code></pre>
+
+<h2 id="heading-日志浏览根据作者筛选">日志浏览根据作者筛选</h2>
+<pre><code class="language-git">$ git log --author=bob
+</code></pre>
+
+<pre><code class="language-git">-------------------------------------------------
+-(n)	仅显示最近的 n 条提交
+--since, --after	仅显示指定时间之后的提交。
+--until, --before	仅显示指定时间之前的提交。
+--author	仅显示指定作者相关的提交。
+--committer	仅显示指定提交者相关的提交。
+--grep	仅显示含指定关键字的提交
+-S	仅显示添加或移除了某个关键字的提交
+-------------------------------------------------
+</code></pre>
+
+<h2 id="heading-尝试重提">尝试重提</h2>
+<pre><code class="language-git">尝试重提上一个还未push的提交
+$ git commit --amend
+然后可以git add或git commit 重新写注释
+</code></pre>
+
+<h2 id="heading-撤销git-add">撤销git add</h2>
+<pre><code class="language-git">$ git reset HEAD CONTRIBUTING.md
+</code></pre>
+
+<h2 id="heading-还原某个文件到上一个版本">还原某个文件到上一个版本</h2>
+<pre><code class="language-git">$ git checkout -- CONTRIBUTING.md
+</code></pre>
+
+<h2 id="heading-查看远程仓库信息">查看远程仓库信息</h2>
+<pre><code class="language-git">$ git clone https://github.com/schacon/ticgit
+$ cd ticgit
+$ git remote -v
+origin    git@github.com:mojombo/grit.git (fetch)
+origin    git@github.com:mojombo/grit.git (push)
+</code></pre>
+
+<h2 id="heading-添加远程仓库版本">添加远程仓库版本</h2>
+<pre><code class="language-git">$ git remote add pb https://github.com/paulboone/ticgit
+$ git remote -v
+origin	https://github.com/schacon/ticgit (fetch)
+origin	https://github.com/schacon/ticgit (push)
+pb	https://github.com/paulboone/ticgit (fetch)
+pb	https://github.com/paulboone/ticgit (push)
+</code></pre>
+
+<h2 id="heading-拉取分支但本地没有的信息">拉取分支但本地没有的信息</h2>
+<pre><code class="language-git">$ git fetch pb
+remote: Counting objects: 43, done.
+remote: Compressing objects: 100% (36/36), done.
+remote: Total 43 (delta 10), reused 31 (delta 5)
+Unpacking objects: 100% (43/43), done.
+From https://github.com/paulboone/ticgit
+ * [new branch]      master     -&gt; pb/master
+ * [new branch]      ticgit     -&gt; pb/ticgit
+</code></pre>
+
+<h2 id="heading-将内容提交到远程仓库">将内容提交到远程仓库</h2>
+<pre><code class="language-git">git push [remote-name] [branch-name]
+$ git push origin master
+</code></pre>
+
+<h2 id="heading-查看远程仓库">查看远程仓库</h2>
+<pre><code class="language-git">$ git remote show origin
+$ git remote show origin
+* remote origin
+  Fetch URL: https://github.com/schacon/ticgit
+  Push  URL: https://github.com/schacon/ticgit
+  HEAD branch: master
+  Remote branches:
+    master                               tracked
+    dev-branch                           tracked
+  Local branch configured for 'git pull':
+    master merges with remote master
+  Local ref configured for 'git push':
+    master pushes to master (up to date)
+</code></pre>
+
+<h2 id="heading-远程仓库重命名">远程仓库重命名</h2>
+<pre><code class="language-git">$ git remote rename pb paul
+$ git remote
+origin
+paul
+</code></pre>
+
+<h2 id="heading-远程仓库删除">远程仓库删除</h2>
+<pre><code class="language-git">$ git remote rm paul
+$ git remote
+origin
+</code></pre>
+
+<h2 id="heading-列出已有标签">列出已有标签</h2>
+<pre><code class="language-git">$ git tag
+v0.1
+v1.3
+
+$ git tag -l 'v1.8.5*'
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+v1.8.5-rc3
+v1.8.5.1
+v1.8.5.2
+v1.8.5.3
+v1.8.5.4
+v1.8.5.5
+</code></pre>
+
+<h2 id="heading-创建附注标签">创建附注标签</h2>
+<pre><code class="language-git">$ git tag -a v1.4 -m 'my version 1.4'
+$ git tag
+v0.1
+v1.3
+v1.4
+</code></pre>
+
+<pre><code class="language-git">$ git show v1.4
+tag v1.4
+Tagger: Ben Straub &lt;ben@straub.cc&gt;
+Date:   Sat May 3 20:19:12 2014 -0700
+
+my version 1.4
+
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+</code></pre>
+
+<h2 id="heading-创建轻量标签">创建轻量标签</h2>
+<pre><code class="language-git">$ git tag v1.4-lw
+$ git tag
+v0.1
+v1.3
+v1.4
+v1.4-lw
+v1.5
+</code></pre>
+
+<pre><code class="language-git">$ git show v1.4-lw
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Mon Mar 17 21:52:11 2008 -0700
+
+    changed the version number
+</code></pre>
+
+<h2 id="heading-给某次提交记录打标签">给某次提交记录打标签</h2>
+<pre><code class="language-git">$ git tag -a v1.2 9fceb02
+$ git show v1.2
+tag v1.2
+Tagger: Scott Chacon &lt;schacon@gee-mail.com&gt;
+Date:   Mon Feb 9 15:32:16 2009 -0800
+
+version 1.2
+commit 9fceb02d0ae598e95dc970b74767f19372d61af8
+Author: Magnus Chacon &lt;mchacon@gee-mail.com&gt;
+Date:   Sun Apr 27 20:43:35 2008 -0700
+
+    updated rakefile
+...
+</code></pre>
+
+<h2 id="heading-共享标签到远程仓库">共享标签到远程仓库</h2>
+<pre><code class="language-git">$ git push origin v1.5
+</code></pre>
+
+<pre><code class="language-git">$ git push origin --tags
+</code></pre>
+
+<h2 id="heading-检出标签">检出标签</h2>
+<pre><code class="language-git">git checkout -b [branchname] [tagname]
+$ git checkout -b version2 v2.0.0
+Switched to a new branch 'version2'
+</code></pre>
+
+<h2 id="heading-为git命令设置别名">为git命令设置别名</h2>
+<pre><code class="language-git">$ git config --global alias.co checkout
+$ git config --global alias.br branch
+$ git config --global alias.ci commit
+$ git config --global alias.st status
+
+$ git config --global alias.unstage 'reset HEAD --'
+$ git unstage fileA
+等同于 git reset HEAD -- fileA
+
+$ git config --global alias.last 'log -1 HEAD'
+$ git last
+commit 66938dae3329c7aebe598c2246a8e6af90d04646
+Author: Josh Goebel &lt;dreamer3@example.com&gt;
+Date:   Tue Aug 26 19:48:51 2008 +0800
+
+    test for current head
+
+    Signed-off-by: Scott Chacon &lt;schacon@example.com&gt;
+
+$ git config --global alias.visual '!gitk'
+git config --global gui.encoding utf-8
+</code></pre>
+
+<h2 id="heading-切换分支">切换分支</h2>
+<pre><code class="language-git">$ git checkout [barcher-name]
+</code></pre>
+
+<h2 id="heading-在某个问题上建立一个分支">在某个问题上建立一个分支</h2>
+<pre><code class="language-git">比如：问题##53
+$ git checkout -b iss53
+或者
+$ git branch iss53
+$ git checkout iss53
+
+比如有个紧急问题分支，先切换到紧急分支
+$ git checkout -b hotfix
+</code></pre>
+
+<h2 id="heading-将紧急分支merge到主干">将紧急分支merge到主干</h2>
+<pre><code class="language-git">$ git checkout master
+$ git merge hotfix
+</code></pre>
+
+<h2 id="heading-紧急分支切换回来继续工作">紧急分支切换回来继续工作</h2>
+<pre><code class="language-git">解决问题后删除紧急分支，然后切换回来继续解决原来问题
+$ git branch -d hotfix
+$ git checkout iss53
+$ git checkout master
+Switched to branch 'master'
+$ git merge iss53
+Merge made by the 'recursive' strategy.
+index.html |    1 +
+1 file changed, 1 insertion(+)
+$ git branch -d iss53
+</code></pre>
+
+<h2 id="heading-merge冲突解决">merge冲突解决</h2>
+<pre><code class="language-git">图形化界面
+$ git mergetool
+</code></pre>
+
+<h2 id="heading-分支管理">分支管理</h2>
+<pre><code class="language-git">$ git branch
+  iss53
+* master
+  testing
+
+$ git branch -v
+  iss53   93b412c fix javascript issue
+* master  7a98805 Merge branch 'iss53'
+  testing 782fd34 add scott to the author list in the readmes
+
+$ git branch --merged
+查看合并过的分支
+在这个列表中分支名字前没有 * 号的分支通常可以使用 git branch -d 删除掉
+
+$ git branch --no-merged
+查看未合并过的分支
+</code></pre>
+
+<h2 id="heading-远程分支">远程分支</h2>
+<pre><code class="language-git">“origin” 并无特殊含义
+远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。 同时 “master” 是当你运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用，“origin” 是当你运行 git clone 时默认的远程仓库名字。 如果你运行 git clone -o booyah，那么你默认的远程分支名字将会是 booyah/master。
+
+$ git push origin serverfix
+将分支推送到远程仓库
+
+$ git fetch origin
+remote: Counting objects: 7, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From https://github.com/schacon/simplegit
+ * [new branch]      serverfix    -&gt; origin/serverfix
+
+可以运行 git merge origin/serverfix 将这些工作合并到当前所在的分支。 如果想要在自己的 serverfix 分支上工作，可以将其建立在远程跟踪分支之上：
+$ git checkout -b serverfix origin/serverfix
+</code></pre>
+
+<h2 id="heading-跟踪分支">跟踪分支</h2>
+<pre><code class="language-git">$ git checkout --track origin/serverfix
+如果想要将本地分支与远程分支设置为不同名字，你可以轻松地增加一个不同名字的本地分支的上一个命令：
+$ git checkout -b sf origin/serverfix
+</code></pre>
+
+<h2 id="heading-拉取分支">拉取分支</h2>
+<pre><code class="language-git">git pull 的魔法经常令人困惑所以通常单独显式地使用 fetch 与 merge
+</code></pre>
+
+<h2 id="heading-删除远程分支">删除远程分支</h2>
+<pre><code class="language-git">假设你已经通过远程分支做完所有的工作了 - 也就是说你和你的协作者已经完成了一个特性并且将其合并到了远程仓库的 master 分支（或任何其他稳定代码分支）。 可以运行带有 --delete 选项的 git push 命令来删除一个远程分支。 如果想要从服务器上删除 serverfix 分支，运行下面的命令：
+$ git push origin --delete serverfix
+</code></pre>
+
+<h2 id="heading-变基">变基</h2>
+<pre><code class="language-git">你可以使用 rebase 命令将提交到某一分支上的所有修改都移至另一分支上，就好像“重新播放”一样。
+
+$ git checkout experiment
+$ git rebase master
+
+快进合并 master 分支，使之包含来自 client 分支的修改
+$ git rebase master server
+
+变基的风险
+呃，奇妙的变基也并非完美无缺，要用它得遵守一条准则：
+不要对在你的仓库外有副本的分支执行变基。
+</code></pre>
+
+<h2 id="heading-官方文档">官方文档</h2>
+
+<p>https://git-scm.com/book/zh/v2</p>
+
+                                </article>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 评论组件 -->
+                <!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='learn']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+    
+    
+    <script src="/assets/javascripts/prism.js"></script>
+</body>
+
+</html>
+

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>仿TensorFlow懒执行编程和注解自编排 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="仿TensorFlow懒执行编程和注解自编排" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="TensorFlow上下文，简单基于注解JavaBean实现的图计算编排功能，可以将过程值存储，用于复杂计算或组装。" />
+<meta property="og:description" content="TensorFlow上下文，简单基于注解JavaBean实现的图计算编排功能，可以将过程值存储，用于复杂计算或组装。" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-12-27T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"TensorFlow上下文，简单基于注解JavaBean实现的图计算编排功能，可以将过程值存储，用于复杂计算或组装。","@type":"BlogPosting","url":"/blog/2021/12/27/java-like-tensor-flow-to-run/","headline":"仿TensorFlow懒执行编程和注解自编排","dateModified":"2021-12-27T00:00:00+00:00","datePublished":"2021-12-27T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2021/12/27/java-like-tensor-flow-to-run/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="TensorFlow,图计算,复杂业务上下文" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">仿TensorFlow懒执行编程和注解自编排</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2021-12-27T00:00:00+00:00" datetime="2021-12-27T00:00:00+00:00">December 27, 2021 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：1389 字，&nbsp;预计阅读时间：13 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#实践" title="实践">
+            实践 <span>2</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#探索" title="探索">
+            探索 <span>1</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#TensorFlow" title="TensorFlow">TensorFlow <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#图计算" title="图计算">图计算 <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#复杂业务上下文" title="复杂业务上下文">复杂业务上下文 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <p>名为【仿TensorFlow懒执行编程和注解自编排】，在我的个人代办里面。
+依稀记得是很久前学习 TensorFlow 的一个想法，年尾翻到，简要 finish 一下这个 idea，属于一种临时简要的探索实践。</p>
+
+<h1 id="heading-背景">背景</h1>
+
+<p>PS：<a href="https://tensorflow.google.cn/learn?hl=zh-cn">什么是 TensorFlow？</a></p>
+
+<p>TensorFlow 里面有个图计算，先编排好计算流程，最后点执行直接渲染节点数据。我觉得这种功能可以用 Java 实现，于是就简单写了这个应用。</p>
+
+<p>下面我们来简单看下图计算模型是怎么样的渲染流程：</p>
+
+<h2 id="heading-图计算">图计算</h2>
+
+<blockquote>
+  <p>如下有计算模型</p>
+</blockquote>
+
+<p><img src="https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/12335286877/e538/3808/de63/9d9bbe5efe132a20b6e26f7019f19b30.png" alt="计算模型" /></p>
+
+<blockquote>
+  <p>getFive 渲染流程</p>
+</blockquote>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>getFive 的时候，会回溯计算 five 需要的值 second 和 fourth，
+发现 second 的值需要通过 first、origin2 计算，origin2 是已知的值，
+然后需要计算 first = origin1 + origin2，然后 second = first + origin2
+依次回溯递推，依次将 first、second、third、fourth、five 全部计算出来，并赋值。
+</code></pre>
+</div>
+
+<p><img src="https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/12335286883/08c8/6cd1/27ec/582cd32d1e65925e4b70bbe3184310b2.png" alt="getFive" /></p>
+
+<hr />
+
+<p>通过 getFive 的动作，我们发现原来的模型被渲染成了下面这样。</p>
+
+<p><img src="https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/12335289339/0dfa/2eeb/8947/798876c93c9c78e9c5eb0f9b46bbe258.png" alt="getFiveFinish" /></p>
+
+<hr />
+
+<p>当节点被计算赋值后（变成绿色的那种）就可以直接被使用，如上，再 getSix 时候，直接可以根据 third 的值进行计算。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>PS： 那这种模型是否可用于业务代码呢？
+1、复杂业务代码组装（过程变量可复用，自动化执行需要的步骤）
+2、构建业务上下文，用于复杂业务处理支撑
+3、对外提供简化版业务上下文，调用方按需直接获取，依赖按需加载，降低编码复杂度
+</code></pre>
+</div>
+
+<h1 id="heading-java-实现并应用">Java 实现并应用</h1>
+
+<p>本来是想模拟 lombok 实现静态代码生成注入，这样可读性和性能会更好，不过先简单实现，后续有时间再研究和优化。</p>
+
+<p>代码只有一两百行，感兴趣参见： <a href="https://github.com/petterobam/TensorFlow-Context">https://github.com/petterobam/TensorFlow-Context</a></p>
+
+<h2 id="heading-依赖">依赖</h2>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.github.petterobam<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>tensor-flow-context<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre>
+</div>
+
+<h2 id="heading-定义计算模型">定义计算模型</h2>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">PS</span><span class="err">：计算模型定义需要在</span> <span class="n">Spring</span> <span class="err">扫包范围</span>
+
+<span class="nd">@Data</span>
+<span class="nd">@EnableTensorFlow</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TfGetExampleContext</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">origin1</span> <span class="o">=</span> <span class="mi">10</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">origin2</span> <span class="o">=</span> <span class="mi">20</span><span class="o">;</span>
+    <span class="cm">/**
+     * 本地方法
+     */</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Local</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"add"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"origin1"</span><span class="o">,</span> <span class="s">"origin2"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">first</span><span class="o">;</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Local</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"add"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"first"</span><span class="o">,</span> <span class="s">"origin2"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">second</span><span class="o">;</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Local</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"sub"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"origin1"</span><span class="o">,</span> <span class="s">"origin2"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">third</span><span class="o">;</span>
+    <span class="cm">/**
+     * 静态方法
+     */</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Static</span><span class="o">,</span> <span class="n">classType</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"negateExact"</span><span class="o">,</span> <span class="n">paramTypes</span> <span class="o">=</span> <span class="o">{</span><span class="kt">int</span><span class="o">.</span><span class="na">class</span><span class="o">},</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"third"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">forth</span><span class="o">;</span>
+
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Local</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"add"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"second"</span><span class="o">,</span> <span class="s">"forth"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">five</span><span class="o">;</span>
+    <span class="cm">/**
+     * Spring Bean 的方法
+     */</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Spring</span><span class="o">,</span> <span class="n">classType</span> <span class="o">=</span> <span class="n">TfGetExampleService</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"calculate1"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"third"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">six</span><span class="o">;</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Spring</span><span class="o">,</span> <span class="n">springName</span> <span class="o">=</span> <span class="s">"tfGetExampleService"</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"calculate2"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"third"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">seven</span><span class="o">;</span>
+    <span class="cm">/**
+     * 自身入参
+     */</span>
+    <span class="nd">@TensorFlowGet</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="n">ServiceType</span><span class="o">.</span><span class="na">Spring</span><span class="o">,</span> <span class="n">springName</span> <span class="o">=</span> <span class="s">"tfGetExampleService"</span><span class="o">,</span> <span class="n">methodName</span> <span class="o">=</span> <span class="s">"fetchOrigins"</span><span class="o">,</span> <span class="n">params</span> <span class="o">=</span> <span class="o">{</span><span class="s">"this"</span><span class="o">})</span>
+    <span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">originDatas</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">add</span><span class="o">(</span><span class="n">Integer</span> <span class="n">a</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">a</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">a</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">b</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">sub</span><span class="o">(</span><span class="n">Integer</span> <span class="n">c</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">c</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">b</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">b</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TfGetExampleService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">calculate1</span><span class="o">(</span><span class="n">Integer</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">val</span> <span class="o">*</span> <span class="n">val</span> <span class="o">*</span> <span class="n">val</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Integer</span> <span class="nf">calculate2</span><span class="o">(</span><span class="n">Integer</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">val</span> <span class="o">+</span> <span class="n">val</span> <span class="o">+</span> <span class="n">val</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="nf">fetchOrigins</span><span class="o">(</span><span class="n">TfGetExampleContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="n">res</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"origin1"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getOrigin1</span><span class="o">());</span>
+        <span class="n">res</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"origin2"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getOrigin2</span><span class="o">());</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-如何使用">如何使用？</h2>
+
+<p>示例： <a href="http://127.0.0.1:7600/test/tf/context?origin1=87&amp;origin2=23">http://127.0.0.1:7600/test/tf/context?origin1=87&amp;origin2=23</a></p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/test/tf/context"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="n">Object</span> <span class="nf">testTfContext</span><span class="o">(</span><span class="n">Integer</span> <span class="n">origin1</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">origin2</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">InstantiationException</span><span class="o">,</span> <span class="n">IllegalAccessException</span> <span class="o">{</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="n">TfGetExampleContext</span> <span class="n">context</span> <span class="o">=</span> <span class="n">TensorFlowUtil</span><span class="o">.</span><span class="na">fetchTensorFlowContext</span><span class="o">(</span><span class="n">TfGetExampleContext</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">context</span><span class="o">.</span><span class="na">setOrigin1</span><span class="o">(</span><span class="n">origin1</span><span class="o">);</span>
+    <span class="n">context</span><span class="o">.</span><span class="na">setOrigin2</span><span class="o">(</span><span class="n">origin2</span><span class="o">);</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">res1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"five"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getFive</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getFirst</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"second"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getSecond</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"third"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getThird</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"seven"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getSeven</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"fourth"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getForth</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"six"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getSix</span><span class="o">());</span>
+    <span class="n">res1</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"originDatas"</span><span class="o">,</span> <span class="n">context</span><span class="o">.</span><span class="na">getOriginDatas</span><span class="o">());</span>
+    <span class="n">res</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"data1"</span><span class="o">,</span> <span class="n">res1</span><span class="o">);</span>
+
+    <span class="n">TfGetExampleContext</span> <span class="n">context2</span> <span class="o">=</span> <span class="n">TensorFlowUtil</span><span class="o">.</span><span class="na">fetchTensorFlowContext</span><span class="o">(</span><span class="n">TfGetExampleContext</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="n">context2</span><span class="o">.</span><span class="na">setOrigin2</span><span class="o">(</span><span class="n">origin1</span><span class="o">);</span>
+    <span class="n">context2</span><span class="o">.</span><span class="na">setOrigin1</span><span class="o">(</span><span class="n">origin2</span><span class="o">);</span>
+    <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Object</span><span class="o">&gt;</span> <span class="n">res2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"five"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getFive</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"first"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getFirst</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"second"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getSecond</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"third"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getThird</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"seven"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getSeven</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"fourth"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getForth</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"six"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getSix</span><span class="o">());</span>
+    <span class="n">res2</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"originDatas"</span><span class="o">,</span> <span class="n">context2</span><span class="o">.</span><span class="na">getOriginDatas</span><span class="o">());</span>
+    <span class="n">res</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="s">"data2"</span><span class="o">,</span> <span class="n">res2</span><span class="o">);</span>
+    <span class="n">log</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"TensorFlowGet for Context finish！"</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-计算结果">计算结果</h2>
+
+<div class="language-json highlighter-rouge"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nt">"data2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"six"</span><span class="p">:</span><span class="w"> </span><span class="mi">262144</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"third"</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"originDatas"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"origin2"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"origin1"</span><span class="p">:</span><span class="w"> </span><span class="mi">87</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"seven"</span><span class="p">:</span><span class="w"> </span><span class="mi">192</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"fourth"</span><span class="p">:</span><span class="w"> </span><span class="mi">-64</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"five"</span><span class="p">:</span><span class="w"> </span><span class="mi">69</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"first"</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"second"</span><span class="p">:</span><span class="w"> </span><span class="mi">133</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nt">"data1"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nt">"six"</span><span class="p">:</span><span class="w"> </span><span class="mi">-262144</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"third"</span><span class="p">:</span><span class="w"> </span><span class="mi">-64</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"originDatas"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nt">"origin2"</span><span class="p">:</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w">
+            </span><span class="nt">"origin1"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nt">"seven"</span><span class="p">:</span><span class="w"> </span><span class="mi">-192</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"fourth"</span><span class="p">:</span><span class="w"> </span><span class="mi">64</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"five"</span><span class="p">:</span><span class="w"> </span><span class="mi">261</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"first"</span><span class="p">:</span><span class="w"> </span><span class="mi">110</span><span class="p">,</span><span class="w">
+        </span><span class="nt">"second"</span><span class="p">:</span><span class="w"> </span><span class="mi">197</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+</div>
+
+<blockquote>
+  <p>示例 - data1</p>
+</blockquote>
+
+<p><img src="https://p5.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/12344870473/0ce2/f2f5/b735/f8dd5fc599aa91b5f09e5214e69caa43.png" alt="示例1" /></p>
+
+<blockquote>
+  <p>示例 - data2</p>
+</blockquote>
+
+<p><img src="https://p6.music.126.net/obj/wonDlsKUwrLClGjCm8Kx/12344879560/dbbd/8aa9/764d/62baa856e7df65bddad0b9425ecdb39b.png" alt="示例2" /></p>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2021/12/20/some-app-scene-count/" title="上一篇 '【专题】应用计数案例归纳和总结'"> ← 【专题】应用计数案例归纳和总结</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2022/03/08/problems-of-logs-conflict-in-maven-project/" title="下一篇 '【经验】日志框架冲突排查与常规日志依赖梳理'">【经验】日志框架冲突排查与常规日志依赖梳理 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

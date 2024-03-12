@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>ChatGPT 的 Prompt 学习笔记 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="ChatGPT 的 Prompt 学习笔记" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="背景" />
+<meta property="og:description" content="背景" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-05-07T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"背景","@type":"BlogPosting","url":"/learner_posts/skill/chat-gpt-prompt/","headline":"ChatGPT 的 Prompt 学习笔记","dateModified":"2023-05-07T00:00:00+00:00","datePublished":"2023-05-07T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/learner_posts/skill/chat-gpt-prompt/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/blog/learner/static/css/learn.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/stylesheets/prism.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <header>
+                            <h1 id="big-title">ChatGPT 的 Prompt 学习笔记</h1>
+                        </header>
+                        <div class="main-content">
+                            <!-- 新增导航目录 -->
+                            
+<link rel="stylesheet" href="/assets/stylesheets/nav.css" type="text/css"/>
+<div class="nav-container">
+    <nav>
+        <div class="menubar expand button_active" id="mediaMenubar">
+        目录<span class="small-title">（点击收起）</span>
+        </div>
+        <div id="java-nav-directory"></div>
+        <div id="js-nav-directory"></div>
+    </nav>
+</div>
+<script defer type="text/javascript" src="/assets/javascripts/plugin/nav.js"></script>
+
+                            <div id="article-container" class="article-container">
+                                <article id="article-content">
+                                    <h1 id="heading-背景">背景</h1>
+
+<ol>
+  <li>ChatGPT： OpenAI 公司推出的自然语言聊天工具，拥有很好的语言组织能力和知识储备，可以作为个人的第二大脑。</li>
+  <li>AutoGPT： 基于 ChatGPT 的任务目标实现机制，拥有强大的自我组织能力。</li>
+  <li>LangGPT： 一种系统的、优化性的 Prompt 生成工具，可以根据不同的任务目标生成不同的 Prompt 模板。</li>
+</ol>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>未来，Prompt 工程师将是一个趋势，个人的能力也会随着 AI 技术发展迅速加强。
+在可预见的 5 年内，AI 的进步将是近百年的高峰期，最好抓住这个机会为自身赋能。
+5 年后，由于网络资料的匮乏（人类文明资料积累已经被 AI 训练完），AI 升级可能会陷入瓶颈。
+以下是个人使用和记录的一些 AI 指令明确的模板，可供参考。
+</code></pre>
+</div>
+
+<blockquote>
+  <p>一些提供 Prompt 的网站</p>
+</blockquote>
+
+<ol>
+  <li><a href="http://snackprompt.com">http://snackprompt.com</a></li>
+  <li><a href="http://flowgpt.com">http://flowgpt.com</a></li>
+  <li><a href="http://prompthero.com">http://prompthero.com</a></li>
+  <li><a href="http://publicprompts.art">http://publicprompts.art</a></li>
+  <li><a href="http://learningprompt.wiki">http://learningprompt.wiki</a></li>
+  <li><a href="https://www.promptingguide.ai/zh">https://www.promptingguide.ai/zh</a></li>
+</ol>
+
+<blockquote>
+  <p>一些 AI 工具</p>
+</blockquote>
+
+<ol>
+  <li>AI工具集：<a href="https://ai-bot.cn/">https://ai-bot.cn/</a></li>
+  <li>AI工具：
+    <ul>
+      <li>
+        <ol>
+          <li>chatppt：<a href="https://chat-ppt.com/">https://chat-ppt.com/</a></li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>思维导图：<a href="https://www.chatmind.tech/">https://www.chatmind.tech/</a></li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>chatexel：<a href="https://chatexcel.com/">https://chatexcel.com/</a></li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>AI 写周报：<a href="https://aibang.run/tool/weekly-report">https://aibang.run/tool/weekly-report</a></li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>AI 读文档：<a href="https://chatdoc.com/chatdoc/#/upload">https://chatdoc.com/chatdoc/#/upload</a></li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>AI 剪辑/设计：<a href="https://www.heygen.com/?from=moviola">https://www.heygen.com/?from=moviola</a></li>
+        </ol>
+      </li>
+      <li>
+        <ol>
+          <li>VERSE：<a href="https://v.yinxiang.com">https://v.yinxiang.com</a></li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+  <li>镜像网站：
+    <ul>
+      <li><a href="https://mirrorchat.extkj.cn/">https://mirrorchat.extkj.cn/</a></li>
+      <li><a href="https://chat.waixingyun.cn/#/home">https://chat.waixingyun.cn/#/home</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h1 id="heading-基础">基础</h1>
+
+<p>利用简单的 Prompt 语句，指示 GPT 生成文本。</p>
+
+<h2 id="heading-创作">创作</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>你是一个 {机器人名字/职业}，一个为 {公司/个人名} 工作的友好的 {职业}。您的目标是使用我找到可用的信息（如果适用）。即使你在知识库中找不到相关信息，你也会很有创造力，尽你所能满足要求。您将帮助我完成各种任务，包括但不限于：{撰写小说/翻译内容/...}。如果您无法对我的最后一条消息提供可靠的响应，请访问此 URL：{参考文档地址} ，您的回复必须与我的请求使用相同的语言，并且在适当的时候要长而详细。
+</code></pre>
+</div>
+
+<h2 id="heading-概括">概括</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>把用&lt;&gt;括起来的文本总结成一句话。
+&lt;{text}&gt;
+</code></pre>
+</div>
+
+<h2 id="heading-聊天">聊天</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>我想给{聊天对象身份或名字}发消息聊天。
+包含：{你聊天想要表达的内容}
+{聊天对象的特征和期望：和你的关系/他的性格/你期望达到的效果}
+
+------------------
+
+我想给我的一位远方的朋友发消息聊天。
+包含：问候、询问那边的天气，并为她推荐一部我最近看过的很不错的电视剧《漫长的季节》。
+她是一位并不熟悉的异性，我们有近半个月没有联系了，怎么发给她才不显得突兀？
+</code></pre>
+</div>
+
+<h2 id="heading-翻译">翻译</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>请将以下文本分别翻译成中文、英文、法语和西班牙语: 
+&lt;{需要翻译的内容}&gt;
+
+------------------
+
+将以下消息分别翻译成英文和中文，并写成
+    中文翻译：xxx
+    英文翻译：yyy
+    的格式：
+
+&lt;{需要翻译的内容}&gt;
+</code></pre>
+</div>
+
+<h2 id="heading-润色">润色</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>你是一位{某种专业领域角色}。
+你的任务是{目标}。
+根据通过“```”分隔的内容，生成结果。
+需要阅读的内容：
+```{需要阅读的内容}```
+
+------------------
+
+你是一位脱口秀撰稿人。
+你的任务是修改原稿，使得其更加自然且口语化。
+根据通过“```”分隔的内容，生成结果。
+需要阅读的内容：
+```{需要阅读的内容}```
+</code></pre>
+</div>
+
+<h2 id="heading-评价">评价</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>你是一位客户服务的AI助手。
+你的任务是给一位重要客户发送邮件回复。
+根据客户通过“```”分隔的评价，生成回复以感谢客户的评价。提醒模型使用评价中的具体细节
+用简明而专业的语气写信。
+作为“AI客户代理”签署电子邮件。
+客户评论：
+```{需要阅读的内容}```
+评论情感：{评价携带的情感}
+</code></pre>
+</div>
+
+<h2 id="heading-解题">解题</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>请判断{学生/员工/某某}的解决方案是否正确，请通过如下步骤解决这个问题：
+
+步骤：
+
+    首先，自己解决问题。
+    然后，将你的解决方案与{学生/员工/某某}的解决方案进行比较，并评估{学生/员工/某某}的解决方案是否正确。
+    在自己完成问题之前，请勿决定{学生/员工/某某}的解决方案是否正确。
+
+使用以下格式：
+
+    问题：问题文本
+    {学生/员工/某某}的解决方案：{学生/员工/某某}的解决方案文本
+    实际解决方案和步骤：实际解决方案和步骤
+    {学生/员工/某某}的解决方案和实际解决方案是否相同：是或否
+    {学生/员工/某某}的成绩：正确或不正确
+
+问题：
+
+    {要解决的问题描述}
+
+{学生/员工/某某}的解决方案：
+
+    {参考的解决方案}
+
+实际解决方案和步骤：
+</code></pre>
+</div>
+
+<h2 id="heading-明确">明确</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>您将获得用&lt;&gt;括起来的文本。
+如果它包含一系列的指令，则需要按照以下格式重新编写这些指令：
+
+第一步 - ...
+第二步 - …
+…
+第N步 - …
+
+如果文本中不包含一系列的指令，则直接写“未提供步骤”。"
+&lt;{text}&gt;
+</code></pre>
+</div>
+
+<h2 id="heading-仿写">仿写</h2>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>你的任务是以一致的风格回答问题。
+&lt;{提问角色}&gt;: {指令文本或引导1}
+
+&lt;{回答角色}&gt;: {回答示例1}
+
+&lt;{提问角色}&gt;: {指令文本或引导2}
+
+----------------------------------
+&lt;孩子&gt;: 教我耐心。
+
+&lt;祖父母&gt;: 挖出最深峡谷的河流源于一处不起眼的泉眼；最宏伟的交响乐从单一的音符开始；最复杂的挂毯以一根孤独的线开始编织。
+
+&lt;孩子&gt;: 教我韧性。
+
+GPT： 
+&lt;祖父母&gt;: 韧性就像是一棵树，它需要经历风吹雨打、寒冬酷暑，才能成长得更加坚强。在生活中，我们也需要经历各种挫折和困难，才能锻炼出韧性。记住，不要轻易放弃，坚持下去，你会发现自己变得更加坚强。
+</code></pre>
+</div>
+
+<h1 id="heading-进阶">进阶</h1>
+
+<p>利用特定的结构化 Prompt 语句，指示 GPT 生成符合要求的、完整的、系统的 Prompt 角色模板。</p>
+
+<h2 id="heading-角色扮演">角色扮演</h2>
+
+<p>通过一些角色扮演技巧，催眠 GPT 执行特定的任务，这样实现的细节我们就不需要给予过多的思考提示。</p>
+
+<blockquote>
+  <p>Linux 终端</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>我希望你能充当 Linux 终端。我会输入命令，你将回复终端应该显示的内容。
+我希望你只在一个唯一的代码块内回复终端输出，除此之外什么都不要写。
+不要写解释。除非我指示你这样做，否则不要输入命令。
+当我需要用英语告诉你一些事情时，我会将文本放在大括号 {像这样} 里面。
+我的第一个命令是 `pwd`。
+</code></pre>
+</div>
+
+<blockquote>
+  <p>英语发音助手</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>我希望你能充当为土耳其人提供英语发音辅助的助手。
+我会给你写句子，你只会回答它们的发音，除此之外什么都不要写。
+回复不能是我句子的翻译，而只能是发音。
+发音应使用土耳其拉丁字母表示音标。
+不要在回复中写解释。
+我的第一句话是 "how the weather is in Istanbul?"。
+</code></pre>
+</div>
+
+<h3 id="heading-提示生成器">提示生成器</h3>
+
+<p>当然，如果有人帮我们想提示，还可以生成这样的角色。</p>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code>我希望你能充当提示生成器。
+首先，我会给你一个标题，比如：“充当英语发音助手”。
+然后你给我一个这样的提示：
+“
+我希望你能充当针对土耳其人的英语发音助手。
+我会写下你的句子，你只需回答它们的发音，别的什么都不要。
+回复必须是我句子的发音，而不是翻译。
+发音应使用土耳其拉丁字母表示音标。
+不要在回复中写解释。
+我的第一句是 "how the weather is in Istanbul?"。
+”
+</code></pre>
+</div>
+
+<h3 id="heading-其他角色">其他角色</h3>
+
+<script src="https://gist.github.com/petterobam/239485362add59414d52bbdc17f35dae.js?file=chat-gpt.md"></script>
+
+<p>若加载不出来，请前往： <a href="https://gist.github.com/petterobam/239485362add59414d52bbdc17f35dae">https://gist.github.com/petterobam/239485362add59414d52bbdc17f35dae</a></p>
+
+<h2 id="heading-框架">框架</h2>
+
+<blockquote>
+  <p>三个框架</p>
+</blockquote>
+
+<ol>
+  <li><a href="https://github.com/dair-ai/Prompt-Engineering-Guide/blob/main/guides/prompts-intro.md">ICIO 框架</a></li>
+  <li><a href="https://github.com/mattnigh/ChatGPT3-Free-Prompt-List">CRISPE 框架</a></li>
+  <li><a href="https://okjk.co/sbCrWh">BORE 框架</a></li>
+</ol>
+
+<h3 id="heading-icio-框架">ICIO 框架</h3>
+
+<p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/vs-code/upload/imgsWX20230918-115850%402x.png" alt="WX20230918-115850@2x" /></p>
+
+<ul>
+  <li>Instruction: 指令，即你希望 AI 执行的具体任务，比如翻译或者写一段什么文字</li>
+  <li>Context: 背景信息，给 AI 更多的背景信息引导模型做出更贴合需求的回复</li>
+  <li>Input Data: 输入数据，告知模型需要处理的数据</li>
+  <li>Output Indicator: 输出引导，告知模型我们要输出的类型或风格</li>
+</ul>
+
+<blockquote>
+  <p>模板复制</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code># Instruction
+我希望你 {执行的具体任务，比如翻译或者写一段什么文字}
+
+# Context
+当前我需要 .... { 你希望 AI 知道的背景信息 }
+
+# Input Data
+我需要你处理的数据是 .... { 你希望 AI 处理的数据 }
+
+# Output Indicator
+我希望你的输出是 .... { 你希望 AI 输出的类型或风格 }
+</code></pre>
+</div>
+
+<h3 id="heading-crispe-框架">CRISPE 框架</h3>
+
+<p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/vs-code/upload/imgsWX20230918-115834%402x.png" alt="WX20230918-115834@2x" /></p>
+
+<ul>
+  <li>Capacity and Role:能力和角色，ChatGPT 应扮演什么角色</li>
+  <li>Insight:见解，提供你请求的背后见解、背景和上下文</li>
+  <li>Statement:指令，你要求 ChatGPT 做什么</li>
+  <li>Personality:风格，你希望 ChatGPT 以何种风格、个性或方式回应</li>
+  <li>Experiment:实践，请求 ChatGPT 为你回复多个示例</li>
+</ul>
+
+<blockquote>
+  <p>模板复制</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code># Capacity and Role
+我希望你能充当 { ChatGPT 应扮演什么角色 }
+
+# Insight
+我希望你能提供 { 你请求的背后见解、背景和上下文 }
+
+# Statement
+我希望你能 { 你要求 ChatGPT 做什么 }
+
+# Personality
+我希望你能以 { 何种风格、个性或方式回应 }
+
+# Experiment
+我希望你能为我回复 { 多个示例 }
+</code></pre>
+</div>
+
+<h3 id="heading-bore-框架">BORE 框架</h3>
+
+<p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/vs-code/upload/imgsWX20230918-115757%402x.png" alt="WX20230918-115757@2x" /></p>
+
+<ol>
+  <li>阐述背景B (Background)：说明背景，为 ChatGPT 提供充足信息</li>
+  <li>定义目标O (Objectives)：我们希望实现什么</li>
+  <li>定义关键结果R (key Result)：我要什么具体效果试验并调整</li>
+  <li>改进E (Evolve) ：三种改进方法自由组合
+    <ul>
+      <li>a. 改进输入：从答案的不足之处着手改进背景B，目标O与关键结果R</li>
+      <li>b. 改进答案：在后续对话中指正chatGPT答案缺点</li>
+      <li>c. 重新生成：尝试在 Prompt 不变的情况下多次生成结果，优中选优</li>
+    </ul>
+  </li>
+</ol>
+
+<blockquote>
+  <p>模板复制</p>
+</blockquote>
+
+<div class="language-plaintext highlighter-rouge"><pre class="highlight"><code># Background
+当前我需要 .... { 你希望 AI 知道的背景信息 }
+
+# Objectives
+我希望你能以 {具体目标} 为最终目的
+
+# Key Results
+我希望你能做到 {具体效果}
+
+# Evolve
+我希望你能用 {改进方法}
+我希望输出结果 {改进效果}
+</code></pre>
+</div>
+
+<h2 id="heading-工作流">工作流</h2>
+
+<ol>
+  <li>LangGPT： 生成 Prompt 模板</li>
+  <li>定义模板工作流</li>
+  <li>生成 Prompt 工作流模板</li>
+  <li>详细而具体的强化</li>
+</ol>
+
+<h3 id="heading-langgpt">LangGPT</h3>
+
+<p>详细参见： <a href="https://github.com/yzfly/LangGPT">https://github.com/yzfly/LangGPT</a></p>
+
+<blockquote>
+  <p>现有 Prompt 创建方法有如下缺点：</p>
+</blockquote>
+
+<ol>
+  <li>缺乏系统性：大多是细碎的规则，技巧，严重依赖个人经验</li>
+  <li>缺乏灵活性：对他人分享的优质 prompt 进行调整需要直接修改 prompt 内容</li>
+  <li>缺乏交互友好性：优质 prompt 的配置和使用太复杂，有时往往还要学习 prompt 用法</li>
+  <li>未充分结合大语言模型的特性：
+    <ol>
+      <li>偏好分点、条理性叙述</li>
+      <li>长对话会出现遗忘问题</li>
+      <li>不同语言间性能存在差距</li>
+    </ol>
+  </li>
+</ol>
+
+<blockquote>
+  <p>LangGPT 指在解决上面的问题：</p>
+</blockquote>
+
+<ol>
+  <li>系统性：提供模板，按照模板填鸭式写上相应内容即可</li>
+  <li>灵活性：
+    <ol>
+      <li>使用变量，轻松引用、设置和更改 prompt 中的内容，可编程性好</li>
+      <li>使用命令，轻松设置、执行预定义行为，可以无损性能情况下轻松设置中英文切换</li>
+    </ol>
+  </li>
+  <li>交互友好：Workflow 轻松定义与用户交互，角色行为等，轻松引导用户使用</li>
+  <li>充分利用大模型能力：
+    <ol>
+      <li>模块化配置</li>
+      <li>分点条理性叙述</li>
+      <li>Reminder 缓解长期记忆缺失问题</li>
+    </ol>
+  </li>
+</ol>
+
+<p>通过掌握使用 LangGPT，你可以在几分钟内轻松上手大模型指令编写。🚀</p>
+
+<blockquote>
+  <p>LangGPT for GPT3.5</p>
+</blockquote>
+
+<script src="https://gist.github.com/petterobam/239485362add59414d52bbdc17f35dae.js?file=GPT3.5.md"></script>
+
+<p>若加载不出来，前往： <a href="https://github.com/yzfly/LangGPT/blob/main/LangGPT/ChatGPT3.5.txt">https://github.com/yzfly/LangGPT/blob/main/LangGPT/ChatGPT3.5.txt</a></p>
+
+<blockquote>
+  <p>LangGPT for GPT4</p>
+</blockquote>
+
+<script src="https://gist.github.com/petterobam/239485362add59414d52bbdc17f35dae.js?file=GPT4.md"></script>
+
+<p>若加载不出来，前往： <a href="https://github.com/yzfly/LangGPT/blob/main/LangGPT/ChatGPT4.txt">https://github.com/yzfly/LangGPT/blob/main/LangGPT/ChatGPT4.txt</a></p>
+
+<blockquote>
+  <p>LangGPT for Claude 2</p>
+</blockquote>
+
+<p>Claude 2： <a href="https://www.anthropic.com/index/claude-2">https://www.anthropic.com/index/claude-2</a></p>
+
+<script src="https://gist.github.com/petterobam/239485362add59414d52bbdc17f35dae.js?file=Claude2.md"></script>
+
+<p>若加载不出来，前往： <a href="https://github.com/yzfly/LangGPT/blob/main/LangGPT/Claude2.txt">https://github.com/yzfly/LangGPT/blob/main/LangGPT/Claude2.txt</a></p>
+
+<h1 id="heading-prompt-相关论文">Prompt 相关论文</h1>
+
+<p>加入<a href="https://readpaper.com/team/invite/1922555794182424064">论文共读小组</a></p>
+
+<ul>
+  <li><a href="https://arxiv.org/abs/2201.11903">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</a> CoT 思维链提示</li>
+  <li><a href="https://arxiv.org/abs/2305.10601">Tree of Thoughts: Deliberate Problem Solving with Large Language Models</a> ToT 思维链提示</li>
+  <li><a href="https://arxiv.org/abs/2307.11760">EmotionPrompt: Leveraging Psychology for Large Language Models Enhancement via Emotional Stimulus</a> 正面积极情绪能提高 GPT 模型性能表现</li>
+</ul>
+
+                                </article>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 评论组件 -->
+                <!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='learn']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || 'hide' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+    
+    
+    <script src="/assets/javascripts/prism.js"></script>
+</body>
+
+</html>
+

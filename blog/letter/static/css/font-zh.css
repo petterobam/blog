@@ -1,0 +1,43 @@
+@font-face {
+  /* 信笺体 */
+  font-family: "Letter";
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/letter.eot");
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/letter.eot?#iefix") format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/letter.woff") format("woff"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/letter.ttf") format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/letter.svg") format("svg");
+}
+@font-face {
+  /* 爱情体 */
+  font-family: "Love";
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/love.eot");
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/love.woff") format("woff"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/love.ttf") format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/love.svg") format("svg");
+}
+@font-face {
+  /* 迷你硬体信体 */
+  font-family: "MiniBlockLetters";
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-block-letters.eot");
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-block-letters.woff") format("woff"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-block-letters.ttf") format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-block-letters.svg") format("svg");
+}
+@font-face {
+  /* 迷你简体丫丫 */
+  font-family: "MiniSimpleYY";
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-simple-yy.eot");
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-simple-yy.woff") format("woff"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-simple-yy.ttf") format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/mini-simple-yy.svg") format("svg");
+}
+@font-face {
+  /* 庞中华钢笔简体 */
+  font-family: "PengzhonghuaPencil";
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/pengzhonghua-pencil.eot");
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/pengzhonghua-pencil.woff") format("woff"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/pengzhonghua-pencil.ttf") format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/zh/pengzhonghua-pencil.svg") format("svg");
+}
+
+

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Apache Poi Word 学习笔记 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Apache Poi Word 学习笔记" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="本章节出自【Apache POI Word(docx) 入门示例教程】" />
+<meta property="og:description" content="本章节出自【Apache POI Word(docx) 入门示例教程】" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-22T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"本章节出自【Apache POI Word(docx) 入门示例教程】","@type":"BlogPosting","url":"/learner_posts/programming/ApachePoiWord/","headline":"Apache Poi Word 学习笔记","dateModified":"2021-09-22T00:00:00+00:00","datePublished":"2021-09-22T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/learner_posts/programming/ApachePoiWord/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/blog/learner/static/css/learn.css" type="text/css"/>
+    <link rel="stylesheet" href="/assets/stylesheets/prism.css"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <header>
+                            <h1 id="big-title">Apache Poi Word 学习笔记</h1>
+                        </header>
+                        <div class="main-content">
+                            <!-- 新增导航目录 -->
+                            
+<link rel="stylesheet" href="/assets/stylesheets/nav.css" type="text/css"/>
+<div class="nav-container">
+    <nav>
+        <div class="menubar expand button_active" id="mediaMenubar">
+        目录<span class="small-title">（点击收起）</span>
+        </div>
+        <div id="java-nav-directory"></div>
+        <div id="js-nav-directory"></div>
+    </nav>
+</div>
+<script defer type="text/javascript" src="/assets/javascripts/plugin/nav.js"></script>
+
+                            <div id="article-container" class="article-container">
+                                <article id="article-content">
+                                    <p>本章节出自<a href="http://deepoove.com/poi-tl/apache-poi-guide.html">【Apache POI Word(docx) 入门示例教程】</a></p>
+
+<h2 id="heading-文档xwpfdocument">文档XWPFDocument</h2>
+<p>XWPFDocument是对 .docx 文档操作的高级封装API。</p>
+
+<h3 id="heading-创建新文档">创建新文档</h3>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">XWPFDocument</span> <span class="n">doc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XWPFDocument</span><span class="o">();</span>
+</code></pre>
+</div>
+<h3 id="heading-读取已有文档段落表格图片">读取已有文档：段落、表格、图片</h3>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">XWPFDocument</span> <span class="n">doc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">XWPFDocument</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"./deepoove.docx"</span><span class="o">));</span>
+</code></pre>
+</div>
+<p>接下来我们就可以读取文档内容，包括段落、表格、图片等：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 段落</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFParagraph</span><span class="o">&gt;</span> <span class="n">paragraphs</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getParagraphs</span><span class="o">();</span>
+<span class="c1">// 表格</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFTable</span><span class="o">&gt;</span> <span class="n">tables</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getTables</span><span class="o">();</span>
+<span class="c1">// 图片</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFPictureData</span><span class="o">&gt;</span> <span class="n">allPictures</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getAllPictures</span><span class="o">();</span>
+<span class="c1">// 页眉</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFHeader</span><span class="o">&gt;</span> <span class="n">headerList</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getHeaderList</span><span class="o">();</span>
+<span class="c1">// 页脚</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFFooter</span><span class="o">&gt;</span> <span class="n">footerList</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getFooterList</span><span class="o">();</span>
+</code></pre>
+</div>
+<h3 id="heading-生成文档">生成文档</h3>
+<p>通过传入一个OutStream，将文档写入流：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="k">try</span> <span class="o">(</span><span class="n">FileOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="s">"simple.docx"</span><span class="o">))</span> <span class="o">{</span>
+    <span class="n">doc</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">out</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+<h2 id="heading-段落xwpfparagraph">段落XWPFParagraph</h2>
+<p>段落是构成Word文档的一个基本单元。</p>
+
+<h3 id="heading-创建新段落">创建新段落</h3>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">XWPFParagraph</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">createParagraph</span><span class="o">();</span>
+</code></pre>
+</div>
+<h3 id="heading-设置段落格式">设置段落格式</h3>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 对齐方式</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">setAlignment</span><span class="o">(</span><span class="n">ParagraphAlignment</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+<span class="c1">// 边框</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">setBorderBottom</span><span class="o">(</span><span class="n">Borders</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">);</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">setBorderTop</span><span class="o">(</span><span class="n">Borders</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">);</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">setBorderRight</span><span class="o">(</span><span class="n">Borders</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">);</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">setBorderLeft</span><span class="o">(</span><span class="n">Borders</span><span class="o">.</span><span class="na">DOUBLE</span><span class="o">);</span>
+<span class="n">p1</span><span class="o">.</span><span class="na">setBorderBetween</span><span class="o">(</span><span class="n">Borders</span><span class="o">.</span><span class="na">SINGLE</span><span class="o">);</span>
+</code></pre>
+</div>
+<h3 id="heading-基本元素xwpfrun">基本元素XWPFRun</h3>
+<p>创建好段落后，我们就可以通过相关API处理段落内的文本和图片了。XWPFRun是段落的基本组成单元，它可以是一个文本，也可以是一张图片。</p>
+
+<h3 id="heading-段落文本">段落文本</h3>
+<h4 id="heading-读取段落内容">读取段落内容</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 获取文字</span>
+<span class="n">String</span> <span class="n">text</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+
+<span class="c1">// 获取段落内所有XWPFRun</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFRun</span><span class="o">&gt;</span> <span class="n">runs</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="na">getRuns</span><span class="o">();</span>
+</code></pre>
+</div>
+<h4 id="heading-创建xwpfrun文本">创建XWPFRun文本</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 段落末尾创建XWPFRun</span>
+<span class="n">XWPFRun</span> <span class="n">run</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="na">createRun</span><span class="o">();</span>
+<span class="n">run</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"为这个段落追加文本"</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-插入xwpfrun文本">插入XWPFRun文本</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 段落起始插入XWPFRun</span>
+<span class="n">XWPFRun</span> <span class="n">insertNewRun</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="na">insertNewRun</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+<span class="n">insertNewRun</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"在段落起始位置插入这段文本"</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-修改xwpfrun文本">修改XWPFRun文本</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFRun</span><span class="o">&gt;</span> <span class="n">runs</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="na">getRuns</span><span class="o">();</span>
+<span class="c1">// setText默认为追加文本，参数0表示设置第0个位置的文本，覆盖上一次设置</span>
+<span class="n">runs</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="s">"追加文本"</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="n">runs</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="s">"修改文本"</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-样式颜色字体">样式：颜色、字体</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 颜色</span>
+<span class="n">run</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="s">"00ff00"</span><span class="o">);</span>
+<span class="c1">// 斜体</span>
+<span class="n">run</span><span class="o">.</span><span class="na">setItalic</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="c1">// 粗体</span>
+<span class="n">run</span><span class="o">.</span><span class="na">setBold</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="c1">// 字体</span>
+<span class="n">run</span><span class="o">.</span><span class="na">setFontFamily</span><span class="o">(</span><span class="s">"Courier"</span><span class="o">);</span>
+<span class="c1">// 下划线</span>
+<span class="n">run</span><span class="o">.</span><span class="na">setUnderline</span><span class="o">(</span><span class="n">UnderlinePatterns</span><span class="o">.</span><span class="na">DOT_DOT_DASH</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-文本换行">文本换行</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">run</span><span class="o">.</span><span class="na">addCarriageReturn</span><span class="o">();</span>
+</code></pre>
+</div>
+<h3 id="heading-段落图片">段落图片</h3>
+<h4 id="heading-提取图片xwpfpicture">提取图片XWPFPicture</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">List</span><span class="o">&lt;</span><span class="n">XWPFPictureData</span><span class="o">&gt;</span> <span class="n">allPictures</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">getAllPictures</span><span class="o">();</span>
+<span class="n">XWPFPicture</span> <span class="n">pciture</span> <span class="o">=</span> <span class="n">allPictures</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+<span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="n">pciture</span><span class="o">.</span><span class="na">getPictureData</span><span class="o">().</span><span class="na">getData</span><span class="o">();</span>
+<span class="c1">// 接下来就可以将图片字节数组写入输出流</span>
+</code></pre>
+</div>
+<h4 id="heading-创建xwpfrun图片">创建XWPFRun图片</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.apache.poi.util.Units</span><span class="o">;</span>
+
+<span class="n">InputStream</span> <span class="n">stream</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"./sayi.png"</span><span class="o">);</span>
+<span class="n">XWPFRun</span> <span class="n">run</span> <span class="o">=</span> <span class="n">paragraph</span><span class="o">.</span><span class="na">createRun</span><span class="o">();</span>
+<span class="n">run</span><span class="o">.</span><span class="na">addPicture</span><span class="o">(</span><span class="n">stream</span><span class="o">,</span> <span class="n">XWPFDocument</span><span class="o">.</span><span class="na">PICTURE_TYPE_PNG</span><span class="o">,</span> <span class="s">"Generated"</span><span class="o">,</span> <span class="n">Units</span><span class="o">.</span><span class="na">toEMU</span><span class="o">(</span><span class="mi">256</span><span class="o">),</span> <span class="n">Units</span><span class="o">.</span><span class="na">toEMU</span><span class="o">(</span><span class="mi">256</span><span class="o">));</span>
+</code></pre>
+</div>
+<h2 id="heading-表格xwpftable">表格XWPFTable</h2>
+<p>表格是构成Word文档的另一个重要基本元素。</p>
+
+<h3 id="heading-创建新表格">创建新表格</h3>
+<p>创建一个三行三列的表格：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">XWPFTable</span> <span class="n">table</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">createTable</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">3</span><span class="o">);</span>
+</code></pre>
+</div>
+<h3 id="heading-设置单元格文本">设置单元格文本</h3>
+<p>表格是由表格行XWPFRow构成，每行是由单元格XWPFCell构成，每个单元格内部又是由许多XWPFParagraph段落构成。</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">table</span><span class="o">.</span><span class="na">getRow</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">getCell</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="s">"EXAMPLE OF TABLE"</span><span class="o">);</span>
+</code></pre>
+</div>
+<p>上面这一段代码和下面这一段代码是等价的：</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">XWPFParagraph</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">getRow</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getCell</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">addParagraph</span><span class="o">();</span>
+<span class="n">XWPFRun</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="na">createRun</span><span class="o">();</span>
+<span class="n">r1</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">"EXAMPLE OF TABLE"</span><span class="o">);</span>
+</code></pre>
+</div>
+<h3 id="heading-设置单元格图片">设置单元格图片</h3>
+<p>图片操作其实就是获取段落，然后等同操作段落中的图片。</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">XWPFParagraph</span> <span class="n">p1</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="na">getRow</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">getCell</span><span class="o">(</span><span class="mi">0</span><span class="o">).</span><span class="na">addParagraph</span><span class="o">();</span>
+<span class="n">XWPFRun</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">p1</span><span class="o">.</span><span class="na">createRun</span><span class="o">();</span>
+<span class="c1">// 同段落图片</span>
+</code></pre>
+</div>
+<h3 id="heading-设置单元格样式背景色对齐方式">设置单元格样式：背景色、对齐方式</h3>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 背景色</span>
+<span class="n">cell</span><span class="o">.</span><span class="na">setColor</span><span class="o">(</span><span class="n">cellStyle</span><span class="o">.</span><span class="na">getBackgroundColor</span><span class="o">());</span>
+
+<span class="c1">// 获取单元格段落后设置对齐方式</span>
+<span class="n">XWPFParagraph</span> <span class="n">addParagraph</span> <span class="o">=</span> <span class="n">cell</span><span class="o">.</span><span class="na">addParagraph</span><span class="o">();</span>
+<span class="n">addParagraph</span><span class="o">.</span><span class="na">setAlignment</span><span class="o">(</span><span class="n">ParagraphAlignment</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+</code></pre>
+</div>
+<h2 id="heading-poi-tlword模板引擎">poi-tl：Word模板引擎</h2>
+<p>poi-tl（poi template language）是基于Apache POI的Word模板引擎，完整的文档参见poi-tl官方文档，本小节不打算介绍模板引擎，主要讲解如何使用poi-tl里面对poi的增强API。</p>
+
+<h3 id="heading-tabletools">TableTools</h3>
+<p>TableTools 提供了若干操作表格的方法。</p>
+
+<h4 id="heading-同一行单元格合并某几列">同一行单元格合并某几列</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 合并第一行的第0列到第8列单元格</span>
+<span class="n">TableTools</span><span class="o">.</span><span class="na">mergeCellsHorizonal</span><span class="o">(</span><span class="n">table</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">8</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-同一列单元格合并某几行">同一列单元格合并某几行</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 合并第0列的第一行到第九行的单元格</span>
+<span class="n">TableTools</span><span class="o">.</span><span class="na">mergeCellsVertically</span><span class="o">(</span><span class="n">table</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">9</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-表格宽度">表格宽度</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 设置表格宽度为A4纸最大宽度</span>
+<span class="n">TableTools</span><span class="o">.</span><span class="na">widthTable</span><span class="o">(</span><span class="n">table</span><span class="o">,</span> <span class="n">MiniTableRenderData</span><span class="o">.</span><span class="na">WIDTH_A4_FULL</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-表格样式">表格样式</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 设置表格居中</span>
+<span class="n">TableStyle</span> <span class="n">style</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TableStyle</span><span class="o">();</span>
+<span class="n">style</span><span class="o">.</span><span class="na">setAlign</span><span class="o">(</span><span class="n">STJc</span><span class="o">.</span><span class="na">CENTER</span><span class="o">);</span>
+<span class="n">TableTools</span><span class="o">.</span><span class="na">styleTable</span><span class="o">(</span><span class="n">table</span><span class="o">,</span> <span class="n">style</span><span class="o">);</span>
+</code></pre>
+</div>
+<h3 id="heading-nicexwpfdocument">NiceXWPFDocument</h3>
+<p>NiceXWPFDocument 是对原生 XWPFDocument 的增强。</p>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">NiceXWPFDocument</span> <span class="n">doc</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NiceXWPFDocument</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"./deepoove.docx"</span><span class="o">));</span>
+</code></pre>
+</div>
+<h4 id="heading-某个位置插入表格">某个位置插入表格</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 在某个run位置插入10行10列的表格</span>
+<span class="c1">// XWPFRun run = ...</span>
+<span class="n">XWPFTable</span> <span class="n">table</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="na">insertNewTable</span><span class="o">(</span><span class="n">run</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">10</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-某个位置插入段落">某个位置插入段落</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// 在某个run位置插入段落</span>
+<span class="c1">// XWPFRun run = ...</span>
+<span class="n">doc</span><span class="o">.</span><span class="na">insertNewParagraph</span><span class="o">(</span><span class="n">run</span><span class="o">);</span>
+</code></pre>
+</div>
+<h4 id="heading-word合并">Word合并</h4>
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="n">NiceXWPFDocument</span> <span class="n">main</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NiceXWPFDocument</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"main.docx"</span><span class="o">));</span>
+
+<span class="n">NiceXWPFDocument</span> <span class="n">sub</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NiceXWPFDocument</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"sub.docx"</span><span class="o">));</span>
+
+<span class="c1">// 合并两个文档</span>
+<span class="n">NiceXWPFDocument</span> <span class="n">newDoc</span> <span class="o">=</span> <span class="n">main</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">sub</span><span class="o">);</span>
+
+<span class="c1">// 生成新文档</span>
+<span class="n">FileOutputStream</span> <span class="n">out</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FileOutputStream</span><span class="o">(</span><span class="s">"new_doc.docx"</span><span class="o">);</span>
+<span class="n">newDoc</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">out</span><span class="o">);</span>
+<span class="n">newDoc</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+<span class="n">newDoc</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</code></pre>
+</div>
+
+                                </article>
+                            </div>
+                            <div style="clear: both;"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 评论组件 -->
+                <!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='learn']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+    
+    
+    <script src="/assets/javascripts/prism.js"></script>
+</body>
+
+</html>
+

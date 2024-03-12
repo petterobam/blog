@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="Hadoop + Pig + Jython + AmMap + ElasticSearch 实践记录" />
+<meta property="og:description" content="Hadoop + Pig + Jython + AmMap + ElasticSearch 实践记录" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-10T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"Hadoop + Pig + Jython + AmMap + ElasticSearch 实践记录","@type":"BlogPosting","url":"/blog/2019/08/10/Hadoop-Pig-Jython-AmMap-ElasticSearch/","headline":"一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch","dateModified":"2019-08-10T00:00:00+00:00","datePublished":"2019-08-10T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2019/08/10/Hadoop-Pig-Jython-AmMap-ElasticSearch/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="Hadoop,Pig,Jython,AmMap,ElasticSearch" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2019-08-10T00:00:00+00:00" datetime="2019-08-10T00:00:00+00:00">August 10, 2019 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：2315 字，&nbsp;预计阅读时间：23 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#实践" title="实践">
+            实践 <span>2</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#整理" title="整理">
+            整理 <span>20</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#AmMap" title="AmMap">AmMap <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#ElasticSearch" title="ElasticSearch">ElasticSearch <span>2</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#Hadoop" title="Hadoop">Hadoop <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#Jython" title="Jython">Jython <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#Pig" title="Pig">Pig <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h2 id="heading-背景">背景</h2>
+
+<p>实践参考：https://github.com/phodal/ideabook</p>
+
+<p>我有一个 <del>2G 左右</del> 很大的网站访问日志。我想看看访问网站的人都来自哪里，于是我想开始想办法来分析这日志，这是一个 Web 生成的界面，通过 Elastic.js 向搜索引擎查询数据，将再这些数据渲染到地图上。</p>
+
+<p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/images/practice/access-map.png" alt="Demo" /></p>
+
+<p>Hadoop + Pig + Jython + AmMap + ElasticSearch</p>
+
+<p>使用的技术栈有上面这些，他们的简介如下：</p>
+
+<ul>
+  <li>Hadoop 是一个由 Apache 基金会所开发的分布式系统基础架构。用户可以在不了解分布式底层细节的情况下，开发分布式程序。充分利用集群的威力进行高速运算和存储。</li>
+  <li>Pig 是一个基于 Hadoop 的大规模数据分析平台，它提供的 SQL-LIKE 语言叫 Pig Latin，该语言的编译器会把类 SQL 的数据分析请求转换为一系列经过优化处理的 MapReduce 运算。</li>
+  <li>Jython 是一种完整的语言，而不是一个 Java 翻译器或仅仅是一个 Python 编译器，它是一个 Python 语言在 Java 中的完全实现。Jython 也有很多从 CPython 中继承的模块库。</li>
+  <li>AmMap 是用于创建交互式 Flash 地图的工具。您可以使用此工具来显示您的办公室地点，您的行程路线，创建您的经销商地图等。</li>
+  <li>ElasticSearch 是一个基于 Lucene 构建的开源，分布式，RESTful 搜索引擎。 设计用于云计算中，能够达到搜索实时、稳定、可靠和快速，并且安装使用方便。</li>
+</ul>
+
+<h2 id="heading-步骤">步骤</h2>
+
+<p>总的步骤并不是很复杂，可以分为：</p>
+
+<ul>
+  <li>搭建基础设施</li>
+  <li>解析 access.log</li>
+  <li>转换 IP 为 GEO 信息</li>
+  <li>展示数据到地图上</li>
+</ul>
+
+<h3 id="heading-step-1-搭建基础设施">Step 1: 搭建基础设施</h3>
+
+<p>在这一些系列的实战中，比较麻烦的就是安装这些工具，我们需要安装上面提到的一系列工具。对于不同的系统来说，都有相似的安装工具：</p>
+
+<ul>
+  <li>Windows 上可以使用 Chocolatey</li>
+  <li>Ubuntu / Mint 上可以使用 aptitude</li>
+  <li>CentOS / OpenSUSE 上可以使用 yum 安装</li>
+  <li>Mac OS 上可以使用 brew 安装</li>
+</ul>
+
+<p>如下是 Mac OS 下安装 Hadoop、Pig、Elasticsearch、Jython 的方式</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code>brew install hadoop
+brew install pig
+brew install elasticsearch
+brew install jython
+</code></pre>
+</div>
+<p>对于其他操作系统也可以使用相似的方法来安装。</p>
+
+<p>Hadoop 安装完还要配置本地单机模式，ssh 免登陆访问等，请自行百度</p>
+
+<p>针对这些工具，可以配置一些启动关闭快捷命令：</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="nb">alias </span>es-start<span class="o">=</span><span class="s1">'brew services start elasticsearch'</span>
+<span class="nb">alias </span>es-stop<span class="o">=</span><span class="s1">'brew services stop elasticsearch'</span>
+<span class="nb">alias </span>kibana-start<span class="o">=</span><span class="s1">'brew services start kibana'</span>
+<span class="nb">alias </span>kibana-stop<span class="o">=</span><span class="s1">'brew services stop kibana'</span>
+<span class="nb">alias </span>hadoop-start-all<span class="o">=</span><span class="s1">'sh /usr/local/Cellar/hadoop/3.1.2/sbin/start-all.sh'</span>
+<span class="nb">alias </span>hadoop-stop-all<span class="o">=</span><span class="s1">'sh /usr/local/Cellar/hadoop/3.1.2/sbin/stop-all.sh'</span>
+</code></pre>
+</div>
+
+<p>接着我们还需要安装一个 Hadoop 的插件，用于连接 Hadoop 和 ElasticSearch。</p>
+
+<p>下载地址：<a href="https://github.com/elastic/elasticsearch-hadoop">https://github.com/elastic/elasticsearch-hadoop</a></p>
+
+<p>复制其中的 elasticsearch-hadoop-pig-*.jar 到你的 pig 库的目录，如我的是：/usr/local/Cellar/pig/0.17.0，这里我的文件名是：elasticsearch-hadoop-pig-7.3.0.jar。</p>
+
+<p>下面我们就可以尝试去解析我们的日志了。</p>
+
+<h3 id="heading-step-2-解析-accesslog"><em>Step 2:</em> 解析 access.log</h3>
+
+<p>在开始解析之前，先让我们来看看几条 Nginx 的日志：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>10.95.30.42 - - [17/Jul/2019:00:00:29 +0800] "GET /v-dist/static/css/app.96cc1435284192fe5e4b4a4164f2660b.min.css HTTP/1.1" 200 217190
+10.95.30.42 - - [17/Jul/2019:00:00:29 +0800] "GET /v-dist/static/js/vendor.1336ea68444e0be86ffd.min.js HTTP/1.1" 200 782353
+</code></pre>
+</div>
+
+<p>而上面的日志实际上是有对应的格式的，这个格式写在我们的 Nginx 配置文件中。如下是上面的日志的格式：</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>log_format  access $remote_addr - $remote_user [$time_local] "$request" $status $body_bytes_sent;
+</code></pre>
+</div>
+
+<p>在最前面的是访问者的 IP 地址，然后是访问者的当地时间、请求的类型、状态码、访问的 URL、用户的 User Agent 等等。随后，我们就可以针对上面的格式编写相应的程序，这些代码如下所示：</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="c1">-- register file:/usr/local/Cellar/pig/0.17.0/libexec/lib/piggybank.jar;</span>
+<span class="c1">-- register file:/usr/local/Cellar/pig/0.17.0/libexec/lib/elasticsearch-hadoop-pig-7.3.0.jar;</span>
+<span class="n">register</span> <span class="s1">'file:/usr/local/Cellar/pig/0.17.0/libexec/lib/*.jar'</span><span class="p">;</span>
+
+<span class="n">RAW_LOGS</span> <span class="o">=</span> <span class="k">LOAD</span> <span class="s1">'access/localhost_access_log.2019-07-17-02.txt'</span> <span class="k">USING</span> <span class="n">TextLoader</span> <span class="k">as</span> <span class="p">(</span><span class="n">line</span><span class="p">:</span><span class="n">chararray</span><span class="p">);</span>
+<span class="c1">-- Dump RAW_LOGS;</span>
+<span class="n">LOGS_BASE</span> <span class="o">=</span> <span class="n">FOREACH</span> <span class="n">RAW_LOGS</span> <span class="n">GENERATE</span>
+    <span class="n">FLATTEN</span><span class="p">(</span>
+      <span class="n">REGEX_EXTRACT_ALL</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'(</span><span class="se">\\</span><span class="s1">S+) - - </span><span class="se">\\</span><span class="s1">[([^</span><span class="se">\\</span><span class="s1">[]+)</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">s+"([^"]+)"</span><span class="se">\\</span><span class="s1">s+(</span><span class="se">\\</span><span class="s1">d+)</span><span class="se">\\</span><span class="s1">s+(</span><span class="se">\\</span><span class="s1">d+|-)</span><span class="se">\\</span><span class="s1">s*'</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">AS</span> <span class="p">(</span>
+        <span class="n">ip</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="k">timestamp</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="n">bytes</span><span class="p">:</span> <span class="n">chararray</span>
+    <span class="p">);</span>
+<span class="c1">-- STORE LOGS_BASE INTO 'nginx/log_base' USING org.elasticsearch.hadoop.pig.EsStorage('es.http.timeout = 5m', 'es.index.auto.create = true');</span>
+<span class="c1">-- STORE LOGS_BASE INTO 'data/demo-LOGS_BASE' USING PigStorage (',');</span>
+<span class="c1">-- STORE LOGS_BASE INTO 'data/demo-LOGS_BASE';</span>
+
+<span class="c1">-- Dump LOGS_BASE;</span>
+<span class="c1">-- A = FOREACH LOGS_BASE GENERATE ToDate(timestamp, 'dd/MMM/yyyy:HH:mm:ss Z', 'Asia/Singapore') as date, ip, url,(int)status,(bytes == '-' ? 0 : (int)bytes) as bytes;</span>
+<span class="c1">-- JDK1.8 默认时区无法转化这种格式的 （17/Jul/2019:00:00:29 +0800） ，试了上百个时区，不知道具体是哪个时区，http://joda-time.sourceforge.net/timezones.html</span>
+<span class="n">A</span> <span class="o">=</span> <span class="n">FOREACH</span> <span class="n">LOGS_BASE</span> <span class="n">GENERATE</span> <span class="n">ToDate</span><span class="p">(</span><span class="k">timestamp</span><span class="p">,</span> <span class="s1">'dd/MMM/yyyy:HH:mm:ss Z'</span><span class="p">,</span> <span class="s1">'Etc/GMT+8'</span><span class="p">)</span> <span class="k">as</span> <span class="n">date</span><span class="p">,</span> <span class="n">ip</span><span class="p">,</span> <span class="n">url</span><span class="p">,(</span><span class="n">int</span><span class="p">)</span><span class="n">status</span><span class="p">,(</span><span class="n">bytes</span> <span class="o">==</span> <span class="s1">'-'</span> <span class="o">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span><span class="n">bytes</span><span class="p">)</span> <span class="k">as</span> <span class="n">bytes</span><span class="p">;</span>
+<span class="c1">-- Dump A;</span>
+<span class="c1">-- B = GROUP A BY (timestamp);</span>
+<span class="c1">-- C = FOREACH B GENERATE FLATTEN(group) as (timestamp), COUNT(A) as count;</span>
+<span class="c1">-- D = ORDER C BY timestamp,count desc;</span>
+<span class="c1">-- STORE A INTO 'nginx/log' USING org.elasticsearch.hadoop.pig.EsStorage();</span>
+<span class="n">STORE</span> <span class="n">A</span> <span class="k">INTO</span> <span class="s1">'data/demo-A'</span> <span class="k">USING</span> <span class="n">PigStorage</span> <span class="p">(</span><span class="s1">','</span><span class="p">);</span>
+
+<span class="c1">-- 运行以下命令</span>
+<span class="c1">-- pig -x local demo.pig &gt; output/demo/log-`date "+%Y%m%d%H%M%S"`.log 2&gt;&amp;1</span>
+</code></pre>
+</div>
+
+<p>Pig 的学习请参考：https://www.w3cschool.cn/apache_pig/?</p>
+
+<h3 id="heading-step-3-转换-ip-为-geo-信息"><em>Step 3:</em> 转换 IP 为 GEO 信息</h3>
+
+<p><del>在简单地完成了一个 Demo 之后，我们就可以将 IP 转换为 GEO 信息了，这里我们需要用到一个名为 pygeoip 的库。GeoIP 是一个根据 IP 地址查询位置的 API 的集成。它支持对国家、地区、城市、纬度和经度的查询。实际上，就是在一个数据库中有对应的国家和地区的 IP 段，根据这个 IP 段，我们就可以获取对应的地理位置。</del></p>
+
+<p>因为 geoip 升级了，下不了离线数据库，替换成 geoip2</p>
+
+<p>由于使用 Java 来实现这个功能比较麻烦，这里我们就使用 Jython 来实现。大部分的过程和上面都是一样的，除了注册了一个自定义的库，并在这个库里使用了解析 GEO 的方法，代码如下所示：</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="c1">-- demo2.pig</span>
+<span class="n">register</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">Cellar</span><span class="o">/</span><span class="n">pig</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span><span class="mi">17</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">piggybank</span><span class="p">.</span><span class="n">jar</span><span class="p">;</span>
+<span class="n">register</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">Cellar</span><span class="o">/</span><span class="n">pig</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span><span class="mi">17</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">-</span><span class="n">hadoop</span><span class="o">-</span><span class="n">pig</span><span class="o">-</span><span class="mi">7</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">jar</span><span class="p">;</span>
+<span class="n">register</span> <span class="n">utils2</span><span class="p">.</span><span class="n">py</span> <span class="k">using</span> <span class="n">jython</span> <span class="k">as</span> <span class="n">utils</span><span class="p">;</span>
+
+<span class="n">RAW_LOGS</span> <span class="o">=</span> <span class="k">LOAD</span> <span class="s1">'access/localhost_access_log.2019-07-17-02.txt'</span> <span class="k">USING</span> <span class="n">TextLoader</span> <span class="k">as</span> <span class="p">(</span><span class="n">line</span><span class="p">:</span><span class="n">chararray</span><span class="p">);</span>
+
+<span class="n">LOGS_BASE</span> <span class="o">=</span> <span class="n">FOREACH</span> <span class="n">RAW_LOGS</span> <span class="n">GENERATE</span>
+    <span class="n">FLATTEN</span><span class="p">(</span>
+      <span class="n">REGEX_EXTRACT_ALL</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'(</span><span class="se">\\</span><span class="s1">S+) - - </span><span class="se">\\</span><span class="s1">[([^</span><span class="se">\\</span><span class="s1">[]+)</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">s+"([^"]+)"</span><span class="se">\\</span><span class="s1">s+(</span><span class="se">\\</span><span class="s1">d+)</span><span class="se">\\</span><span class="s1">s+(</span><span class="se">\\</span><span class="s1">d+|-)</span><span class="se">\\</span><span class="s1">s*'</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">AS</span> <span class="p">(</span>
+        <span class="n">ip</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="k">timestamp</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="n">status</span><span class="p">:</span> <span class="n">chararray</span><span class="p">,</span>
+        <span class="n">bytes</span><span class="p">:</span> <span class="n">chararray</span>
+    <span class="p">);</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">FOREACH</span> <span class="n">LOGS_BASE</span> <span class="n">GENERATE</span> <span class="k">timestamp</span> <span class="k">as</span> <span class="n">date</span><span class="p">,</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_country</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="k">as</span> <span class="n">country</span><span class="p">,</span>
+    <span class="n">utils</span><span class="p">.</span><span class="n">get_city</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="k">as</span> <span class="n">city</span><span class="p">,</span> <span class="n">utils</span><span class="p">.</span><span class="n">get_geo</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="k">as</span> <span class="k">location</span><span class="p">,</span><span class="n">ip</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">,</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span><span class="n">status</span><span class="p">,(</span><span class="n">bytes</span> <span class="o">==</span> <span class="s1">'-'</span> <span class="o">?</span> <span class="mi">0</span> <span class="p">:</span> <span class="p">(</span><span class="n">int</span><span class="p">)</span><span class="n">bytes</span><span class="p">)</span> <span class="k">as</span> <span class="n">bytes</span><span class="p">;</span>
+
+<span class="n">STORE</span> <span class="n">A</span> <span class="k">INTO</span> <span class="s1">'nginx_access/log'</span> <span class="k">USING</span> <span class="n">org</span><span class="p">.</span><span class="n">elasticsearch</span><span class="p">.</span><span class="n">hadoop</span><span class="p">.</span><span class="n">pig</span><span class="p">.</span><span class="n">EsStorage</span><span class="p">();</span>
+
+<span class="n">B</span> <span class="o">=</span> <span class="k">GROUP</span> <span class="n">A</span> <span class="k">BY</span> <span class="p">(</span><span class="n">country</span><span class="p">,</span><span class="n">city</span><span class="p">,</span><span class="k">location</span><span class="p">);</span>
+<span class="k">C</span> <span class="o">=</span> <span class="n">FOREACH</span> <span class="n">B</span> <span class="n">GENERATE</span> <span class="n">FLATTEN</span><span class="p">(</span><span class="k">group</span><span class="p">),</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">A</span><span class="p">.</span><span class="k">location</span><span class="p">)</span> <span class="k">as</span> <span class="n">counts</span><span class="p">;</span>
+
+<span class="n">STORE</span> <span class="k">C</span> <span class="k">INTO</span> <span class="s1">'data/demo2-C1'</span> <span class="k">USING</span> <span class="n">PigStorage</span><span class="p">(</span><span class="s1">','</span><span class="p">);</span>
+
+<span class="c1">-- pig -x local demo2.pig &gt; output/demo2/log-`date +%Y%m%d%H%M%S`.log 2&gt;&amp;1</span>
+
+<span class="c1">-- demo4.pig</span>
+<span class="n">register</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">Cellar</span><span class="o">/</span><span class="n">pig</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span><span class="mi">17</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">piggybank</span><span class="p">.</span><span class="n">jar</span><span class="p">;</span>
+<span class="n">register</span> <span class="n">file</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">Cellar</span><span class="o">/</span><span class="n">pig</span><span class="o">/</span><span class="mi">0</span><span class="p">.</span><span class="mi">17</span><span class="p">.</span><span class="mi">0</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">elasticsearch</span><span class="o">-</span><span class="n">hadoop</span><span class="o">-</span><span class="n">pig</span><span class="o">-</span><span class="mi">7</span><span class="p">.</span><span class="mi">3</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="n">jar</span><span class="p">;</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="k">LOAD</span> <span class="s1">'data/demo2-C1'</span> <span class="k">USING</span> <span class="n">PigStorage</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span> <span class="k">as</span> <span class="p">(</span><span class="n">country</span><span class="p">:</span><span class="n">chararray</span><span class="p">,</span><span class="n">city</span><span class="p">:</span><span class="n">chararray</span><span class="p">,</span><span class="n">longitude</span><span class="p">:</span><span class="n">float</span><span class="p">,</span><span class="n">latitude</span><span class="p">:</span><span class="n">float</span><span class="p">,</span><span class="n">counts</span><span class="p">:</span><span class="n">int</span><span class="p">);</span>
+<span class="n">B</span> <span class="o">=</span> <span class="n">FILTER</span> <span class="n">A</span> <span class="k">BY</span> <span class="n">counts</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+<span class="n">STORE</span> <span class="n">B</span> <span class="k">INTO</span> <span class="s1">'nginx_access_city/log_city_sum'</span> <span class="k">USING</span> <span class="n">org</span><span class="p">.</span><span class="n">elasticsearch</span><span class="p">.</span><span class="n">hadoop</span><span class="p">.</span><span class="n">pig</span><span class="p">.</span><span class="n">EsStorage</span><span class="p">();</span>
+
+<span class="c1">-- pig -x local demo4.pig &gt; output/demo4/log-`date +%Y%m%d%H%M%S`.log 2&gt;&amp;1</span>
+</code></pre>
+</div>
+
+<p>在第三行里，我们注册了 <del>utils.py</del> utils2.py 并将其中的函数作为 utils。接着在倒数第二行里，我们执行了四个 utils 函数。即：</p>
+
+<ul>
+  <li>get_country 从 IP 中解析出国家</li>
+  <li>get_city 从 IP 中解析出城市</li>
+  <li>get_geo 从 IP 中解析出经纬度信息</li>
+</ul>
+
+<p>其对应的 Python 代码如下所示：</p>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="c"># -*- coding:utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'/Users/ouyangjie/Library/Python/3.7/lib/python/site-packages'</span><span class="p">)</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">'/Library/Frameworks/Python.framework/Versions/3.7/lib/python3.7/site-packages'</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">geoip2.database</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">geoip2</span><span class="o">.</span><span class="n">database</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="s">'GeoLite2-City_20190813/GeoLite2-City.mmdb'</span><span class="p">)</span>
+
+<span class="nd">@outputSchema</span><span class="p">(</span><span class="s">'city:chararray'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_city</span><span class="p">(</span><span class="n">ip</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">city</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">city</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="nd">@outputSchema</span><span class="p">(</span><span class="s">'country:chararray'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_country</span><span class="p">(</span><span class="n">ip</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">city</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">country</span><span class="o">.</span><span class="n">name</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+<span class="nd">@outputSchema</span><span class="p">(</span><span class="s">'location:chararray'</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_geo</span><span class="p">(</span><span class="n">ip</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">reader</span><span class="o">.</span><span class="n">city</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+        <span class="n">location</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">location</span>
+        <span class="n">geo</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span> <span class="o">+</span> <span class="s">","</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">location</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">geo</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+</code></pre>
+</div>
+
+<p>代码相应的简单，和一般的 Python 代码也没有啥区别。这里一些用户自定义函数，在函数的最前面有一个 outputSchema，用于 jython 返回输出的结果。</p>
+
+<h3 id="heading-step-4-展示数据到地图上"><em>Step 4:</em> 展示数据到地图上</h3>
+
+<p>现在，我们终于可以将数据转化到可视化界面了。开始之前，我们需要几个库</p>
+
+<ul>
+  <li>jquery 地球人都知道</li>
+  <li>elasticsearch.jquery 即用于搜索功能</li>
+  <li>ammap 用于制作交互地图</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 我们用 bower 去获取我们需要的 js 脚本</span>
+npm install -g bower
+mkdir js
+<span class="nb">cd </span>js
+bower init
+<span class="c"># 一路回车</span>
+bower install jquery
+bower install elasticsearch
+bower install ammap
+</code></pre>
+</div>
+
+<p>添加这些库到 html 文件里：</p>
+
+<div class="language-html highlighter-rouge"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"en"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"ie=edge"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Access-Map<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/bower_components/jquery/dist/jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/bower_components/elasticsearch/elasticsearch.jquery.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/bower_components/ammap/dist/ammap/ammap.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/bower_components/ammap/dist/ammap/maps/js/worldLow.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"js/bower_components/ammap/dist/ammap/themes/black.js"</span> <span class="na">type=</span><span class="s">"text/javascript"</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"mapdiv"</span> <span class="na">style=</span><span class="s">"width: 100%; background-color:#eeeeee; height: 500px;"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre>
+</div>
+
+<p>生成过程大致如下所示：</p>
+
+<ul>
+  <li>获取不同国家的全名</li>
+  <li><del>查找 ElasticSearch 搜索引擎中的数据，并计算访问量</del> (ES SDL 参考：http://doc.codingdict.com/elasticsearch/1/)</li>
+  <li>直接从 ES 取 pig 处理好的访问量数据（见 Step 3 的 demo4.pig）</li>
+  <li>再将数据渲染到地图上</li>
+</ul>
+
+<p>对应的 js 渲染代码如下所示：</p>
+<div class="language-js highlighter-rouge"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">es</span><span class="p">.</span><span class="nx">Client</span><span class="p">({</span>
+    <span class="na">hosts</span><span class="p">:</span> <span class="s1">'http://localhost:9200'</span>
+<span class="p">});</span>
+
+<span class="c1">// 创建 ElasticSearch 搜索条件</span>
+<span class="kd">var</span> <span class="nx">query</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">index</span><span class="p">:</span> <span class="s1">'nginx_access_city'</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="s1">'log_city_sum'</span><span class="p">,</span>
+    <span class="na">size</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+    <span class="na">body</span><span class="p">:</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="c1">// 初始化</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ready</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">generate_info</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="c1">// 根据数据中的国家名，来计算不同国家的访问量大小。</span>
+<span class="kd">var</span> <span class="nx">generate_info</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="kr">debugger</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">mapDatas</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">search</span><span class="p">(</span><span class="nx">query</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">results</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">results</span><span class="p">.</span><span class="nx">hits</span><span class="p">.</span><span class="nx">hits</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">index</span><span class="p">,</span> <span class="nx">item</span><span class="p">){</span>
+            <span class="nx">source</span> <span class="o">=</span> <span class="nx">item</span><span class="p">[</span><span class="s2">"_source"</span><span class="p">];</span>
+            <span class="kd">var</span> <span class="nx">mapData</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="nx">source</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nx">mapData</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="na">code</span><span class="p">:</span> <span class="nx">source</span><span class="p">.</span><span class="nx">city</span><span class="p">,</span>
+                    <span class="na">name</span><span class="p">:</span> <span class="nx">source</span><span class="p">.</span><span class="nx">country</span><span class="p">,</span>
+                    <span class="na">longitude</span><span class="p">:</span><span class="nx">source</span><span class="p">.</span><span class="nx">longitude</span><span class="p">,</span>
+                    <span class="na">latitude</span><span class="p">:</span><span class="nx">source</span><span class="p">.</span><span class="nx">latitude</span><span class="p">,</span>
+                    <span class="na">value</span><span class="p">:</span> <span class="nx">source</span><span class="p">.</span><span class="nx">counts</span><span class="p">,</span>
+                    <span class="na">color</span><span class="p">:</span> <span class="s2">"#eea638"</span>
+                <span class="p">};</span>
+            <span class="p">}</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">mapData</span> <span class="o">!==</span> <span class="kc">undefined</span><span class="p">){</span>
+                <span class="nx">mapDatas</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">mapData</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">});</span>
+        <span class="nx">create_map</span><span class="p">(</span><span class="nx">mapDatas</span><span class="p">);</span>
+    <span class="p">});</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">create_map</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">mapData</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">map</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">minBulletSize</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">maxBulletSize</span> <span class="o">=</span> <span class="mi">70</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">min</span> <span class="o">=</span> <span class="kc">Infinity</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">max</span> <span class="o">=</span> <span class="o">-</span><span class="kc">Infinity</span><span class="p">;</span>
+
+    <span class="nx">AmCharts</span><span class="p">.</span><span class="nx">theme</span> <span class="o">=</span> <span class="nx">AmCharts</span><span class="p">.</span><span class="nx">themes</span><span class="p">.</span><span class="nx">black</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">mapData</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">mapData</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&lt;</span> <span class="nx">min</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">min</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">value</span> <span class="o">&gt;</span> <span class="nx">max</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">max</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nx">map</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AmCharts</span><span class="p">.</span><span class="nx">AmMap</span><span class="p">();</span>
+    <span class="nx">map</span><span class="p">.</span><span class="nx">pathToImages</span> <span class="o">=</span> <span class="s2">"js/bower_components/ammap/dist/ammap/images/"</span><span class="p">;</span>
+
+    <span class="nx">map</span><span class="p">.</span><span class="nx">areasSettings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">unlistedAreasColor</span><span class="p">:</span> <span class="s2">"#FFFFFF"</span><span class="p">,</span>
+        <span class="na">unlistedAreasAlpha</span><span class="p">:</span> <span class="mf">0.1</span>
+    <span class="p">};</span>
+
+    <span class="nx">map</span><span class="p">.</span><span class="nx">imagesSettings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">balloonText</span><span class="p">:</span> <span class="s2">"&lt;span style='font-size:14px;'&gt;&lt;b&gt;[[title]]&lt;/b&gt;: [[value]]&lt;/span&gt;"</span><span class="p">,</span>
+        <span class="na">alpha</span><span class="p">:</span> <span class="mf">0.6</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">dataProvider</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="na">mapVar</span><span class="p">:</span> <span class="nx">AmCharts</span><span class="p">.</span><span class="nx">maps</span><span class="p">.</span><span class="nx">worldLow</span><span class="p">,</span>
+        <span class="na">images</span><span class="p">:</span> <span class="p">[]</span>
+    <span class="p">};</span>
+
+    <span class="kd">var</span> <span class="nx">maxSquare</span> <span class="o">=</span> <span class="nx">maxBulletSize</span> <span class="o">*</span> <span class="nx">maxBulletSize</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">minSquare</span> <span class="o">=</span> <span class="nx">minBulletSize</span> <span class="o">*</span> <span class="nx">minBulletSize</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span><span class="p">;</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">mapData</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">dataItem</span> <span class="o">=</span> <span class="nx">mapData</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">dataItem</span><span class="p">.</span><span class="nx">value</span><span class="p">;</span>
+        <span class="c1">// calculate size of a bubble</span>
+        <span class="kd">var</span> <span class="nx">square</span> <span class="o">=</span> <span class="p">(</span><span class="nx">value</span> <span class="o">-</span> <span class="nx">min</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">max</span> <span class="o">-</span> <span class="nx">min</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="nx">maxSquare</span> <span class="o">-</span> <span class="nx">minSquare</span><span class="p">)</span> <span class="o">+</span> <span class="nx">minSquare</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">square</span> <span class="o">&lt;</span> <span class="nx">minSquare</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">square</span> <span class="o">=</span> <span class="nx">minSquare</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">size</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">sqrt</span><span class="p">(</span><span class="nx">square</span> <span class="o">/</span> <span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">PI</span> <span class="o">*</span> <span class="mi">2</span><span class="p">));</span>
+        <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">dataItem</span><span class="p">.</span><span class="nx">code</span><span class="p">;</span>
+
+        <span class="nx">dataProvider</span><span class="p">.</span><span class="nx">images</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+            <span class="na">type</span><span class="p">:</span> <span class="s2">"circle"</span><span class="p">,</span>
+            <span class="na">width</span><span class="p">:</span> <span class="nx">size</span><span class="p">,</span>
+            <span class="na">height</span><span class="p">:</span> <span class="nx">size</span><span class="p">,</span>
+            <span class="na">color</span><span class="p">:</span> <span class="nx">dataItem</span><span class="p">.</span><span class="nx">color</span><span class="p">,</span>
+            <span class="na">longitude</span><span class="p">:</span> <span class="nx">dataItem</span><span class="p">.</span><span class="nx">longitude</span><span class="p">,</span>
+            <span class="na">latitude</span><span class="p">:</span> <span class="nx">dataItem</span><span class="p">.</span><span class="nx">latitude</span><span class="p">,</span>
+            <span class="na">title</span><span class="p">:</span> <span class="nx">dataItem</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+            <span class="na">value</span><span class="p">:</span> <span class="nx">value</span>
+        <span class="p">});</span>
+    <span class="p">}</span>
+
+    <span class="nx">map</span><span class="p">.</span><span class="nx">dataProvider</span> <span class="o">=</span> <span class="nx">dataProvider</span><span class="p">;</span>
+
+    <span class="nx">map</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">"mapdiv"</span><span class="p">);</span>
+<span class="p">};</span>  
+</code></pre>
+</div>
+
+<p>PS：如果执行时候渲染 HTML 页面查询 ES 有跨域访问问题，需要先解决 ES 跨域配置</p>
+
+<h2 id="heading-源码">源码</h2>
+
+<p>实践源码：<a href="https://github.com/petterobam/practice-lab">https://github.com/petterobam/practice-lab</a></p>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2019/06/14/fastjson-enjoy/" title="上一篇 'Fastjson 的使用研究'"> ← Fastjson 的使用研究</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2019/09/06/word-right-voice-for-it/" title="下一篇 '【转】中国程序员容易发音错误的单词'">【转】中国程序员容易发音错误的单词 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

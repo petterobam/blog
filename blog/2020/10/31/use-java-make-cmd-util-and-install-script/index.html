@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>用 Java 制作命令行工具并提供自动安装脚本 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="用 Java 制作命令行工具并提供自动安装脚本" />
+<meta name="author" content="欧阳Boy_Petter" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="【2020-10-31】用 Java 制作命令行工具和自动安装脚本" />
+<meta property="og:description" content="【2020-10-31】用 Java 制作命令行工具和自动安装脚本" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-10-31T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"【2020-10-31】用 Java 制作命令行工具和自动安装脚本","@type":"BlogPosting","url":"/blog/2020/10/31/use-java-make-cmd-util-and-install-script/","headline":"用 Java 制作命令行工具并提供自动安装脚本","dateModified":"2020-10-31T00:00:00+00:00","datePublished":"2020-10-31T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2020/10/31/use-java-make-cmd-util-and-install-script/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="命令行工具,静态多态反射" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">用 Java 制作命令行工具并提供自动安装脚本</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2020-10-31T00:00:00+00:00" datetime="2020-10-31T00:00:00+00:00">October 31, 2020 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">欧阳Boy_Petter</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：1691 字，&nbsp;预计阅读时间：16 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#工具制作" title="工具制作">
+            工具制作 <span>1</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#整理" title="整理">
+            整理 <span>20</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#命令行工具" title="命令行工具">命令行工具 <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#静态多态反射" title="静态多态反射">静态多态反射 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h1 id="heading-命令行应用特征">命令行应用特征</h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>入口唯一：API 唯一
+一行入参：线性传参
+文本出参：Console 输出
+</code></pre>
+</div>
+
+<h2 id="heading-入口唯一api-唯一">入口唯一（API 唯一）</h2>
+
+<p>指令格式：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">command</span> <span class="o">[</span>options] <span class="o">[</span>arguments]
+
+↓变式 1
+
+<span class="gp">$ </span><span class="nb">command</span> <span class="o">[</span>option1] <span class="o">[</span>argument1] <span class="o">[</span>option2] <span class="o">[</span>argument2] ... <span class="o">[</span>optionN] <span class="o">[</span>argumentN]
+
+↓变式 2
+
+<span class="gp">$ </span><span class="nb">command</span> <span class="o">[</span>option1] <span class="o">[</span>argument1] <span class="o">[</span>argument2] ... <span class="o">[</span>argumentN] <span class="o">[</span>option2] <span class="o">[</span>argument1] <span class="o">[</span>argument2] ... <span class="o">[</span>argumentN]
+
+↓
+
+...
+</code></pre>
+</div>
+
+<p>通常，一个命令被开发出来，只会有一种格式，而所有变化都在 <code class="highlighter-rouge">[options]</code> 和 <code class="highlighter-rouge">[arguments]</code> 里面，它们组合理论上可以产生无限种变化。</p>
+<div class="highlighter-rouge"><pre class="highlight"><code>[options] 动作/业务/行为
+[arguments] 变量/参数
+</code></pre>
+</div>
+
+<h2 id="heading-一行入参线性传参">一行入参（线性传参）</h2>
+
+<p>由于换行就会执行命令，所以传入的参数只有一维的结构，故【线性传参】。</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">command</span> <span class="o">[</span>options] <span class="o">[</span>arguments]
+<span class="o">[</span>options] 特殊参数，定制化动作/业务/行为
+<span class="o">[</span>arguments] 普通参数，依赖 <span class="o">[</span>options]
+</code></pre>
+</div>
+
+<p>参数分隔：通过空格可以天然分隔参数，从而实现<code class="highlighter-rouge">【线性传参】-&gt;【参数数组】</code>，若单个参数里面有空格，则用英文引号括起来。</p>
+
+<h2 id="heading-文本出参console-输出">文本出参（Console 输出）</h2>
+
+<p>命令是在控制台执行的，不管是什么样的控制台，由于没有特殊的作图或制表语法，所有的输出都是字符集的一个组合。</p>
+
+<p>而二维的字符集能够产生什么样的输出，很多时候需要我们的想象力，比如表格的输出： ↓</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>util -tt title1,title2,t3 text1,text2,t3 longlongcontext,test1,te2
+ 工具类型：文字表格【-tt】
+ 分隔符：【,】
+ +----------------+-------+----+
+ |title1          |title2 |t3  |
+ +----------------+-------+----+
+ |text1           |text2  |t3  |
+ +----------------+-------+----+
+ |longlongcontext |test1  |te2 |
+ +----------------+-------+----+
+
+<span class="gp">$ </span>util -tt -s <span class="s2">"#"</span> title1#title2#t3 text1#text2#t3 <span class="s2">"longlongcontext#test1#content with space"</span>
+ 工具类型：文字表格【-tt】
+ 动作：自定义分隔符【-s】
+ 分隔符：【#】
+ +----------------+-------+-------------------+
+ |title1          |title2 |t3                 |
+ +----------------+-------+-------------------+
+ |text1           |text2  |t3                 |
+ +----------------+-------+-------------------+
+ |longlongcontext |test1  |content with space |
+ +----------------+-------+-------------------+
+</code></pre>
+</div>
+
+<h1 id="heading-java-实现">Java 实现</h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>可执行文件：Jar
+main 函数接收参数
+预处理
+Maven 打包
+</code></pre>
+</div>
+
+<h2 id="heading-可执行文件jar">可执行文件（Jar）</h2>
+
+<p>打一个可执行的 Jar，通过命令执行：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code>java -jar 包名。jar
+</code></pre>
+</div>
+
+<p>当然也可以把 Jar 打包成可执行文件：<a href="https://www.ej-technologies.com/download/exe4j/files">exe4j</a></p>
+
+<h2 id="heading-main-函数接收参数">main 函数接收参数</h2>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// excute cmd</span>
+    <span class="n">MainApp</span><span class="o">.</span><span class="na">excute</span><span class="o">(</span><span class="n">params</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="err">$</span> <span class="n">java</span> <span class="o">-</span><span class="n">jar</span> <span class="err">包名。</span><span class="n">jar</span> <span class="err">$参数</span> <span class="mi">1</span> <span class="err">$参数</span> <span class="mi">2</span> <span class="s">"$参数 3"</span> <span class="o">...</span>
+
+<span class="err">↓</span>
+
+<span class="n">MainApp</span><span class="o">.</span><span class="na">excute</span><span class="o">(</span><span class="k">new</span> <span class="n">String</span><span class="o">[]{</span> <span class="s">"$参数 1"</span> <span class="s">"$参数 2"</span> <span class="s">"$参数 3"</span> <span class="o">...</span> <span class="o">})</span>
+</code></pre>
+</div>
+
+<h2 id="heading-预处理">预处理</h2>
+
+<p>所谓的预处理就是把普通参数进行提取，归类为 [options] 对 [agraments] 的映射。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">$</span> <span class="n">java</span> <span class="o">-</span><span class="n">jar</span> <span class="err">包名。</span><span class="n">jar</span> <span class="o">[</span><span class="err">类型</span><span class="o">]</span> <span class="o">[</span><span class="err">动作</span><span class="o">]</span> <span class="o">[</span><span class="n">arguments</span><span class="o">]</span>
+<span class="o">[</span><span class="err">类型</span><span class="o">]</span> <span class="err">用于寻找具体的业务实现类，对应模块</span>
+<span class="o">[</span><span class="err">动作</span><span class="o">]</span> <span class="err">用于定位具体的执行代码块或调用的函数，具体到功能</span>
+<span class="o">[</span><span class="n">arguments</span><span class="o">]</span> <span class="err">普通参数，依赖</span> <span class="o">[</span><span class="n">options</span><span class="o">]</span>
+
+<span class="err">↓</span> <span class="err">部分</span> <span class="n">MainApp</span><span class="o">.</span><span class="na">java</span> <span class="err">代码片段</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BaseCmdUtils</span><span class="o">&gt;&gt;</span> <span class="n">cmdUtilList</span> <span class="o">=</span>  <span class="n">CmdClassUtils</span><span class="o">.</span><span class="na">getAllSubClass</span><span class="o">(</span><span class="n">BaseCmdUtils</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// args = new String[] {  };</span>
+    <span class="c1">// args = new String[] { "-h" };</span>
+    <span class="c1">// args = new String[] { "-t","-f","now" };</span>
+    <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">args</span> <span class="o">||</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">" 请传入工具类型参数：-help | -h（帮助）！"</span><span class="o">);</span>
+        <span class="k">return</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">String</span> <span class="n">type</span> <span class="o">=</span> <span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="n">String</span> <span class="n">action</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="na">length</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="o">:</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">String</span><span class="o">[]</span> <span class="n">params</span> <span class="o">=</span> <span class="n">reGetParams</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+
+    <span class="c1">// excute cmd</span>
+    <span class="n">MainApp</span><span class="o">.</span><span class="na">excute</span><span class="o">(</span><span class="n">type</span><span class="o">,</span> <span class="n">action</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">excute</span><span class="o">(</span><span class="n">String</span> <span class="n">type</span><span class="o">,</span> <span class="n">String</span> <span class="n">action</span><span class="o">,</span> <span class="n">String</span><span class="o">[]</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">// help go excute</span>
+        <span class="k">if</span> <span class="o">(</span><span class="s">"-help"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">type</span><span class="o">)</span> <span class="o">||</span> <span class="s">"-h"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">type</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">MainApp</span><span class="o">.</span><span class="na">help</span><span class="o">();</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// util go excute</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BaseCmdUtils</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">:</span> <span class="n">MainApp</span><span class="o">.</span><span class="na">cmdUtilList</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">Boolean</span><span class="o">.</span><span class="na">TRUE</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">CmdClassUtils</span><span class="o">.</span><span class="na">invokeStaticMethod</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="s">"canDeal"</span><span class="o">,</span> <span class="n">type</span><span class="o">)))</span> <span class="o">{</span>
+                <span class="n">CmdClassUtils</span><span class="o">.</span><span class="na">invokeStaticMethod</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="s">"excute"</span><span class="o">,</span> <span class="n">action</span><span class="o">,</span> <span class="n">params</span><span class="o">);</span>
+                <span class="k">return</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="c1">// other go excute</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">" 未知工具类型："</span> <span class="o">+</span> <span class="n">type</span><span class="o">);</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">" 请运行：util -h 查看帮助"</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// exception go excute</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"----------------------------------!! 异常发生 !!--------------------------------"</span><span class="o">);</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"--------------------------------------------------------------------------------"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">help</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">" Terminal 命令行工具 V0.0.1"</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"------------------------------------------------------------------------------"</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">" util [工具类型] [动作类型] [参数。..（多个空格分隔，含空格的参数用 \" \" 括起来）]"</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">BaseCmdUtils</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">:</span> <span class="n">MainApp</span><span class="o">.</span><span class="na">cmdUtilList</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">CmdClassUtils</span><span class="o">.</span><span class="na">invokeStaticMethod</span><span class="o">(</span><span class="n">c</span><span class="o">,</span> <span class="s">"help"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="err">由此，可以看到，所有命令行工具类都实现了</span> <span class="n">BaseCmdUtils</span> <span class="err">这个基类，而且都实现了三个静态方法：</span>
+<span class="mi">1</span><span class="o">.</span> <span class="n">help</span><span class="err">（使用说明）</span>
+<span class="mi">2</span><span class="o">.</span> <span class="n">canDeal</span><span class="err">（是否支持类型参数判断）</span>
+<span class="mi">3</span><span class="o">.</span> <span class="n">excute</span><span class="err">（执行动作）</span>
+
+<span class="err">由于工具类的寻找和方法调用都用反射自动处理，</span><span class="n">MainApp</span><span class="o">.</span><span class="na">main</span> <span class="err">里面的代码已经成为了通用的预处理代码</span>
+<span class="err">所以，后续需要添加什么新的工具直接添加一个</span> <span class="n">BaseCmdUtils</span> <span class="err">扩展类并实现其中三个静态方法即可</span>
+</code></pre>
+</div>
+
+<p>PS：具体代码逻辑参见：<a href="https://github.com/petterobam/util-cmd">https://github.com/petterobam/util-cmd</a></p>
+
+<h2 id="heading-maven-打包">Maven 打包</h2>
+
+<p>那么问题来了，如何打出一个单文件的可执行 Jar 呢？</p>
+
+<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="c">&lt;!--打包方式 2，mvn package assembly:single，生成单个 jar--&gt;</span>
+<span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>maven-assembly-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.5.5<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;configuration&gt;</span>
+        <span class="nt">&lt;archive&gt;</span>
+            <span class="nt">&lt;manifest&gt;</span>
+                <span class="nt">&lt;mainClass&gt;</span>com.github.terminal.MainApp<span class="nt">&lt;/mainClass&gt;</span>
+            <span class="nt">&lt;/manifest&gt;</span>
+        <span class="nt">&lt;/archive&gt;</span>
+        <span class="nt">&lt;descriptorRefs&gt;</span>
+            <span class="nt">&lt;descriptorRef&gt;</span>jar-with-dependencies<span class="nt">&lt;/descriptorRef&gt;</span>
+        <span class="nt">&lt;/descriptorRefs&gt;</span>
+        <span class="c">&lt;!--不加 jar-with-dependencies 后缀--&gt;</span>
+        <span class="nt">&lt;appendAssemblyId&gt;</span>false<span class="nt">&lt;/appendAssemblyId&gt;</span>
+        <span class="c">&lt;!--包名用项目名--&gt;</span>
+        <span class="nt">&lt;finalName&gt;</span>${project.name}<span class="nt">&lt;/finalName&gt;</span>
+    <span class="nt">&lt;/configuration&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>make-assembly<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>single<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span>
+</code></pre>
+</div>
+
+<h1 id="heading-一键安装">一键安装</h1>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>shell 脚本自动安装
+cmd 批处理自动安装
+powershell 自动安装
+</code></pre>
+</div>
+
+<p>所谓自动安装就是将 <code class="highlighter-rouge">java -jar 包名。jar </code> 绑定某个快捷命令，比如 <code class="highlighter-rouge">util</code></p>
+
+<p>这个在 shell 里面就直接通过 <code class="highlighter-rouge">alias util=java -jar $PROJECT_PATH/target/util-cmd.jar</code> 指定了，其他里面同理。</p>
+
+<h2 id="heading-shell-脚本自动安装">shell 脚本自动安装</h2>
+
+<p>自动安装脚本如下：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># author:ouyangjie02</span>
+<span class="c"># Usage: util cmd util install</span>
+<span class="c"># shell path</span>
+<span class="nv">SHELL_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">cd</span> <span class="sb">`</span>dirname <span class="nv">$0</span><span class="sb">`</span>; <span class="nb">pwd</span><span class="k">)</span>
+<span class="nb">echo</span> <span class="s2">"-----&gt; shell current path"</span>
+<span class="nb">echo</span> <span class="s2">"cd </span><span class="nv">$SHELL_PATH</span><span class="s2">"</span>
+<span class="nb">cd</span> <span class="nv">$SHELL_PATH</span>
+<span class="nb">cd</span> ..
+<span class="nv">PROJECT_PATH</span><span class="o">=</span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>
+
+<span class="nb">echo</span> <span class="s2">"-----&gt; check util alias in profile is exit"</span>
+<span class="k">if </span>cat ~/.bash_profile | grep <span class="s2">"alias util=java -jar"</span>&gt;/dev/null
+<span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"-----&gt; exit util alias in profile then skip"</span>
+<span class="k">else
+  </span><span class="nb">echo</span> <span class="s2">"-----&gt; add util alias to profile"</span>
+  <span class="nb">echo</span> <span class="s2">"alias util=java -jar </span><span class="nv">$PROJECT_PATH</span><span class="s2">/target/util-cmd.jar"</span> &gt;&gt; ~/.bash_profile
+  <span class="nb">source</span> ~/.bash_profile
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="s2">"-----&gt; check util alias in zsh is exit"</span>
+<span class="k">if </span>cat ~/.zshrc | grep <span class="s2">"alias util=java -jar"</span>&gt;/dev/null
+<span class="k">then
+  </span><span class="nb">echo</span> <span class="s2">"-----&gt; exit util alias in zsh then skip"</span>
+<span class="k">else
+  </span><span class="nb">echo</span> <span class="s2">"-----&gt; add util alias to zsh"</span>
+  <span class="nb">echo</span> <span class="s2">"alias util=java -jar </span><span class="nv">$PROJECT_PATH</span><span class="s2">/target/util-cmd.jar"</span> &gt;&gt; ~/.zshrc
+  <span class="nb">source</span> ~/.zshrc
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="s2">"-----&gt; call mvn package"</span>
+mvn package
+<span class="nb">echo</span> <span class="s2">"if [util -help] not useful, please reopen terminal !"</span>
+</code></pre>
+</div>
+
+<h2 id="heading-cmd-批处理自动安装">cmd 批处理自动安装</h2>
+
+<p>Windows 的命令行窗口没办法使用 Alias，只能通过注册表预执行 doskey 命令的批处理文件，为当前窗口注入快捷命令</p>
+
+<ol>
+  <li>新建一个 cmd-alia.bat 批处理文件，添加 doskey 快捷命令指定
+    <pre><code class="language-bat"> :: util-cmd Terminal 常用小功能命令行工具 
+ @doskey util=java -jar ${projectPath}\util-cmd.jar $* 
+</code></pre>
+  </li>
+  <li>新建一个 cmd-alia.reg 文件
+    <div class="language-shell highlighter-rouge"><pre class="highlight"><code> Windows Registry Editor Version 5.00
+
+ <span class="o">[</span>HKEY_CURRENT_USER<span class="se">\S</span>oftware<span class="se">\M</span>icrosoft<span class="se">\C</span>ommand Processor]
+ <span class="s2">"AutoRun"</span><span class="o">=</span><span class="s2">"C:</span><span class="se">\\</span><span class="s2">cmd-alias.bat"</span>
+</code></pre>
+    </div>
+  </li>
+  <li>双击执行 cmd-alia.reg 文件，添加注册表</li>
+</ol>
+
+<p>cmd-alia.reg 提前建好，写成自动化脚本就是下面这个：</p>
+<pre><code class="language-bat">@Echo Off
+echo "----- utf-8 mode"
+chcp 65001
+@Title util-cmd-install@ouyangjie02
+echo "----- bat current path"
+Set curr_path=%~dp0
+echo "----- remove bin/"
+Set project_path=%curr_path:~0,-4%
+echo "----- cd %project_path%"
+cd %project_path%
+echo "----- call mvn package"
+call mvn package
+echo "----- check is exit util alias"
+find /I "@doskey util" C:\cmd-alias.bat
+IF ERRORLEVEL 1 goto 1
+IF ERRORLEVEL 0 goto 0
+:0
+echo "----- exit util alias then exit"
+echo "if [util -help] not useful, please reopen terminal !"
+pause
+goto exit
+:1
+:: add \r\n to end of C:\cmd-alias.bat
+echo "----- add util alias"
+echo :: util-cmd Terminal 常用小功能命令行工具 &gt;&gt; C:\cmd-alias.bat
+echo @doskey util=java -jar %project_path%target\util-cmd.jar $* &gt;&gt; C:\cmd-alias.bat
+:: echo @doskey util-update=cd %project_path% ^&amp;^&amp; git pull ^&amp;^&amp; mvn package  &gt;&gt; C:\cmd-alias.bat
+echo "----- register cmd-alias.bat"
+regedit /s cmd-alias.reg
+echo "if [util -help] not useful, please reopen terminal !"
+refreshenv
+pause
+goto exit
+</code></pre>
+
+<h2 id="heading-powershell-自动安装">powershell 自动安装</h2>
+
+<p>powershell 的配置文件和 Linux 类似，将预加载命令添加到 <code class="highlighter-rouge">notepad $PROFILE</code> 文件里面就能达到效果</p>
+
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="c"># 由于 powershell 的 Add-Alias 命令无法追随参数，所以用的 function 命令预加载指定快捷命令：</span>
+<span class="k">function </span>util <span class="o">{</span> java -jar <span class="nv">$project_path</span><span class="se">\t</span>arget<span class="se">\u</span>til-cmd.jar <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>0]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>1]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>2]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>3]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>4]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>5]<span class="o">)</span> <span class="o">}</span>
+</code></pre>
+</div>
+
+<p>自动安装脚本如下：</p>
+<div class="language-shell highlighter-rouge"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"-----&gt; utf-8 mode"</span>
+chcp 65001
+<span class="nb">echo</span> <span class="s2">"-----&gt; ps1 current path"</span>
+<span class="nv">$curr_path</span> <span class="o">=</span> Split-Path -Parent <span class="nv">$MyInvocation</span>.MyCommand.Definition
+<span class="nb">echo</span> <span class="s2">"-----&gt; remove bin/"</span>
+<span class="nv">$project_path</span><span class="o">=</span><span class="nv">$curr_path</span>.Substring<span class="o">(</span>0,<span class="nv">$curr_path</span>.Length-4<span class="o">)</span>
+<span class="nb">echo</span> <span class="s2">"-----&gt; cd </span><span class="nv">$project_path</span><span class="s2">"</span>
+<span class="nb">cd</span> <span class="nv">$project_path</span>
+<span class="nb">echo</span> <span class="s2">"-----&gt; call mvn package"</span>
+mvn package
+<span class="nb">echo</span> <span class="s2">"-----&gt; add util alias to powershell"</span>
+Add-Content <span class="nv">$PROFILE</span> -Encoding utf8 -Value <span class="s2">"# util-cmd utils "</span>
+Add-Content <span class="nv">$PROFILE</span> -Encoding utf8 -Value <span class="s2">"function util { java -jar </span><span class="nv">$project_path</span><span class="se">\t</span><span class="s2">arget</span><span class="se">\u</span><span class="s2">til-cmd.jar </span><span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>0]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>1]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>2]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>3]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>4]<span class="o">)</span> <span class="sb">`</span><span class="k">$(</span><span class="sb">`</span><span class="nv">$args</span><span class="o">[</span>5]<span class="o">)</span> <span class="o">}</span><span class="s2">"
+Add-Content </span><span class="nv">$PROFILE</span><span class="s2"> -Encoding utf8 -Value "</span><span class="k">function </span>util-update <span class="o">{</span> <span class="nb">cd</span> <span class="nv">$project_path</span>; git pull; mvn package; <span class="o">}</span><span class="s2">"
+echo "</span><span class="k">if</span> <span class="o">[</span>util -help] not useful, please reopen terminal !<span class="s2">"
+</span></code></pre>
+</div>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2020/10/11/think-iteration-without-distortion-from-io/" title="上一篇 '装饰模式深入和非重构型迭代范式讨论'"> ← 装饰模式深入和非重构型迭代范式讨论</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2020/12/03/git-first-commit-code-review-and-think/" title="下一篇 'Git 源码·LinusTorvalds 第一次提交 CR 和启发'">Git 源码·LinusTorvalds 第一次提交 CR 和启发 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-term="pathname"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

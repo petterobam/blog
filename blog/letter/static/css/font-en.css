@@ -1,0 +1,13 @@
+@font-face {
+  /* 英文手写体 */
+  font-family: "Hanshand";
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/en/hanshand/hanshand.eot");
+  src: url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/en/hanshand/hanshand.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/en/hanshand/hanshand.woff")
+      format("woff"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/en/hanshand/hanshand.ttf")
+      format("truetype"),
+    url("https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/fonts/en/hanshand/hanshand.svg")
+      format("svg");
+}

@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="zh">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+<!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Access 封装之与 Sqlite 封装的差异 | 欧阳Boy_Petter&#39;s Blog</title>
+<meta name="generator" content="Jekyll v3.5.2" />
+<meta property="og:title" content="Access 封装之与 Sqlite 封装的差异" />
+<meta name="author" content="petterobam" />
+<meta property="og:locale" content="zh" />
+<meta name="description" content="Access 封装之与 Sqlite 封装的差异" />
+<meta property="og:description" content="Access 封装之与 Sqlite 封装的差异" />
+<meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-06-02T00:00:00+00:00" />
+<script type="application/ld+json">
+{"author":{"@type":"Person","name":"petterobam"},"description":"Access 封装之与 Sqlite 封装的差异","@type":"BlogPosting","url":"/blog/2018/06/02/access-oop-diff-sqlite/","headline":"Access 封装之与 Sqlite 封装的差异","dateModified":"2018-06-02T00:00:00+00:00","datePublished":"2018-06-02T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2018/06/02/access-oop-diff-sqlite/"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<meta name="keywords" content="Access,差异" />
+
+
+
+
+
+<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
+    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+</script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+<script>
+    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+</script>
+
+
+</head>
+
+<body>
+    <!--[if IE]>
+    <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
+<![endif]-->
+<noscript>
+    <p class="site-notice">本网站需要 JavaScript。请查阅指南来<a href="http://www.enable-javascript.com/" target="_blank">给您的浏览器开启 JavaScript 功能</a>。</p>
+</noscript>
+
+    <div class="nav-wrapper overlay-wrapper">
+    <div class="nav-form overlay-form">
+        <span class="overlay-header menu">菜单</span>
+        <a class="btn-close">关闭</a>
+        <div class="results">
+            <ul>
+                <li><a href="/blog/">文章</a></li>
+                <li><a href="/blog/categories/">分类</a></li>
+                <li><a href="/blog/tags/">标签</a></li>
+
+                <li><a href="/blog/reader/">读书</a></li>
+                <li><a href="/blog/movie/">影音</a></li>
+                <li><a href="/blog/book+movie/">书&影</a></li>
+
+                <li><a href="/blog/learner/">笔记</a></li>
+                <li><a href="/blog/life/">动态</a></li>
+                <li><a href="/blog/letter/">信</a></li>
+                <li><a href="/blog/song/">歌</a></li>
+                <li><a href="/blog/story/">文</a></li>
+                <li><a href="/blog/plan/">业</a></li>
+                <li><a href="/blog/family/">家</a></li>
+                <li><a href="/blog/other/">杂</a></li>
+                <li><a href="/">关于</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="search-wrapper overlay-wrapper">
+    <div class="search-form overlay-form">
+        <input type="text" class="overlay-header search-field" placeholder="搜索...">
+        <a class="btn-close">关闭</a>
+        <ul class="results"></ul>
+    </div>
+</div>
+
+
+    <div id="page" class="hentry">
+        <header class="the-header">
+    <div class="unit-head">
+        <div class="unit-inner unit-head-inner">
+            <nav class="nav-global">
+                <ul>
+                    <li class="logo">
+                        <button class="btn-menu" title="菜单"></button>
+                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <!--[if !IE]> -->
+                        <button class="btn-search" title="搜索"></button>
+                        <!-- <![endif]-->
+                    </li>
+                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    
+                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <!--[if !IE]> -->
+                    <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
+                    <!-- <![endif]-->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+
+        <div class="body animated fadeInDown" role="main">
+            <div class="unit-body">
+                <div class="unit-inner unit-body-inner">
+                    <div class="entry-content">
+                        <article id="article-content" class="unit-article layout-post">
+    <div class="unit-inner unit-article-inner">
+        <div itemscope itemtype="http://schema.org/Article" class="content">
+            <header>
+                <div class="unit-head">
+                    <div class="unit-inner unit-head-inner">
+                        <h1 class="entry-title" itemprop="name">Access 封装之与 Sqlite 封装的差异</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="bd article-content">
+                <div class="entry-content">
+                    <div class="meta">
+                        <p class="date-publish">
+                            发表信息:
+                            <time itemprop="datePublished" class="date-pub updated"
+                                title="2018-06-02T00:00:00+00:00" datetime="2018-06-02T00:00:00+00:00">June 02, 2018 </time>
+                            by
+                            <a class="author" href="/" rel="author" title="显示作者">
+                                <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+                                    <span itemprop="name">petterobam</span>
+                                </span>
+                            </a>
+                            
+                                <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                </a>
+                            
+                            
+                        </p>
+                        
+
+
+<p style="margin-top: 0px;margin-bottom: 0px;">
+  字数：1832 字，&nbsp;预计阅读时间：18 分钟
+</p>
+                        
+                        <ul class="list-category list-linear">
+                            <li class="list-head">分类: </li>
+                             
+     
+        <li>
+            <a href="/blog/categories/#Access" title="Access">
+            Access <span>1</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#Java" title="Java">
+            Java <span>5</span></a>
+        </li>
+     
+        <li>
+            <a href="/blog/categories/#面向对象封装" title="面向对象封装">
+            面向对象封装 <span>4</span></a>
+        </li>
+    
+
+
+
+                        </ul>
+                        
+                        
+                        <ul class="list-tag list-linear">
+                            <li class="list-head">标签: </li>
+                             
+    
+        
+        <li>
+            <a href="/blog/tags/#Access" title="Access">Access <span>1</span></a>
+        </li>
+    
+        
+        <li>
+            <a href="/blog/tags/#差异" title="差异">差异 <span>1</span></a>
+        </li>
+    
+
+
+
+
+                        </ul>
+                        
+                    </div>
+                    <div id="articleBody" itemprop="articleBody">
+                        <h2 id="heading-前情提要">前情提要</h2>
+
+<p><a href="https://baike.baidu.com/item/Microsoft%20Office%20Access/7748166?fromtitle=ACCESS%E6%95%B0%E6%8D%AE%E5%BA%93&amp;fromid=7894751&amp;fr=aladdin">Microsoft Office Access</a> 是一个关系数据库管理系统，因为出自 Microsoft Office 家族，所以除了数据库属性外，还自带 Office 属性，也就是有对应的图形界面软件。但是，我更倾向于她文件数据库的功能，简直和 Sqlite 太像了，一个文件就能存储很多关系数据。因此，本人就打算抄袭之前我对 Sqlite 封装思路，对 Access 进行一个快速的封装。不过，照搬还是有很多问题的，毕竟名字不同，还是会有很多差异的，这里我将一一介绍其中的差异。</p>
+
+<h2 id="heading-功能清单">功能清单</h2>
+
+<ol>
+  <li><del>自动建库</del></li>
+  <li><del>自动建表</del></li>
+  <li><del>增删查改等基本功能</del></li>
+  <li><del>数量查询功能</del></li>
+  <li><del>分表分库</del></li>
+  <li><del>自定义配置加载</del></li>
+  <li><del><strong>批量操作（事务）</strong></del></li>
+  <li><strong>缓存库基础功能类实现</strong></li>
+  <li>缓存库和文件库混用实现</li>
+  <li><del><strong>连接池实现</strong></del></li>
+  <li>查询分页功能实现</li>
+  <li>备份工具实现</li>
+  <li>密码连接实现</li>
+  <li>带密码数据库生成实现</li>
+</ol>
+
+<p>由于 Access 没有什么控制台命令，这里去掉 Access 封装中 [控制台功能类]。相比 Sqlite 其优势更多的是在 图形界面软件上，就算完全不懂编程（非编程人员开发利器），也能 <a href="http://www.accessoft.com/announce.asp?Id=23">开发一套管理软件</a>，不过貌似仅限于 <a href="http://www.accessoft.com/accsoft.asp">单击版 Window 软件</a>。Access 自带强大的数据处理、统计分析能力，利用 Access 的查询功能，可以方便地进行各类汇总、平均等统计，并可灵活设置统计的条件。管理人员貌似可以借助 Access 实现开发出软件的 “梦想” ，从而转型为 “懂管理+会编程” 的复合型人才。</p>
+
+<p>不过这些都跟本封装没有半毛钱关系，这里只对 Access 库文件做操作。比如，有需要从其他类型数据库导出 Access 库文件，然后给那些管理人员自己去统计分析的类似需求，借助该封装功能还是很容易实现的，不用几分钟就能轻松完成编码；需要用 Java 开发小型网站的，而且自己会用 Access 分析的管理人才的类似需求，可以借助该封装完成。如果没有场景需要借助 Access 软件做数据分析，又只需要非服务式的文件库的存在，请选择 Sqlite 数据库，性能和存储量方面， Sqlite 关系数据库绝对更加优秀。</p>
+
+<h2 id="heading-access-jdbc">Access JDBC</h2>
+
+<p>由于封装原则是尽量减少框架类的 Maven 依赖，所以是基于 JDBC 的基础上进行的。可是， Access 这种数据库的 JDBC 貌似挺难找，。</p>
+
+<ol>
+  <li><code class="highlighter-rouge">sun.jdbc.odbc.JdbcOdbcDriver</code>，直接连接
+    <ul>
+      <li><code class="highlighter-rouge">jdbc:odbc:driver={Microsoft Access Driver (*.mdb)};DBQ=D:\Access\XXX.mdb</code></li>
+      <li>Window 平台限制，不满足要求</li>
+      <li>这种 Office2003 以下的用户不用特殊驱动，默认都有的，Office2007 以上的用户则组要下载对应的驱动（ODBC 驱动程序管理器）进行安装，例如 64 位系统则安装：AccessDatabaseEngine_X64.exe，故弃用。</li>
+    </ul>
+  </li>
+  <li>JDBC ODBC 桥连接
+    <ul>
+      <li><code class="highlighter-rouge">jdbc:odbc:XXX</code>，<code class="highlighter-rouge">XXX</code> 为添加的数据源</li>
+      <li>Window 平台限制，不满足要求</li>
+      <li>这种方式就必须安装 ODBC 驱动程序管理器，而且还要把 mdb 这类 Access 文件路径注册成为数据源才行，完全变麻烦了有没有，弃用。</li>
+    </ul>
+  </li>
+  <li>驱动文件连接
+    <ul>
+      <li><code class="highlighter-rouge">jdbc:Access:///C:\Access\XXX.mdb</code></li>
+      <li>需要下载 <a href="http://www.hxtt.com/access.zip">驱动文件</a>，而且试用版的，有使用次数限制，正式版要付费，弃用。</li>
+    </ul>
+  </li>
+  <li>UCanAccess
+    <ul>
+      <li><code class="highlighter-rouge">jdbc:ucanaccess:///D:/Access/XXX.mdb</code>，一种开源 Java JDBC 驱动程序实现，它允许 Java 开发人员和 JDBC 客户端程序读取/写入 Microsoft Access 数据库</li>
+      <li>有 Maven ，跨平台，可以在 Windows 和非 Windows 操作系统上运行，不需要 ODBC</li>
+      <li><a href="http://ucanaccess.sourceforge.net/site.html">UCanAccess</a> 使用 <a href="http ://jackcess.sourceforge.net">Jackcess</a> （建库和连接作用，支持带密码的）作为 Access 输入/输出库； 使用 <a href="http：//hsqldb.org">HSQLDB</a> 同步 DBMS</li>
+      <li>还有各种比较完善的特征，详情请访问 <a href="http://ucanaccess.sourceforge.net/site.html">http://ucanaccess.sourceforge.net/site.html</a></li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="heading-多种文件格式">多种文件格式</h2>
+
+<p>Microsoft Access 库文件有很多种，所以需要在连接的时候对应上版本，这里是与 Sqlite 不同的。版本决定着数据库的连接方式，优先根据使用者配置的 <code class="highlighter-rouge">access.file.format</code> ，如果没有配置，一般会根据文件后缀默认选择对应的版本，如若在没有找上，默认用 Office 2003 的版本。</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>V1997(".mdb")，貌似只支持读的功能
+GENERIC_JET4(".mdb")
+V2000(".mdb")
+V2003(".mdb")，这种后缀默认的版本
+V2007(".accdb")
+V2010(".accdb")，这种后缀默认的版本
+V2016(".accdb")
+MSISAM(".mny")，带密码的版本
+</code></pre>
+</div>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 获取 库版本格式
+ *
+ * @param dbPath 库文件地址
+ * @return
+ */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span> <span class="nf">getAccessFormat</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">accessFormat</span> <span class="o">=</span> <span class="n">AccessConfig</span><span class="o">.</span><span class="na">getAccessFormat</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">AccessUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">accessFormat</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">AccessFormatEnum</span><span class="o">.</span><span class="na">getFileFormatByName</span><span class="o">(</span><span class="n">accessFormat</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(!</span><span class="n">AccessUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">dbPath</span><span class="o">))</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">extIndex</span> <span class="o">=</span> <span class="n">dbPath</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">"."</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">extIndex</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span><span class="o">.</span><span class="na">V2003</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">String</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">dbPath</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">extIndex</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="s">".mdb"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">ext</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span><span class="o">.</span><span class="na">V2003</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="s">".accdb"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">ext</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span><span class="o">.</span><span class="na">V2010</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="s">".mny"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">ext</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span><span class="o">.</span><span class="na">MSISAM</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span><span class="o">.</span><span class="na">V2003</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span><span class="o">.</span><span class="na">V2003</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-字段类型">字段类型</h2>
+
+<p>几乎大部分数据库都对通用的 SQL 支持，要说 SQL 本地方言的体现的话，主要一点就是存储数据的字段类型，当然 Access 也有自己的方言字段。</p>
+
+<div class="language-sql highlighter-rouge"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="err">测试表</span> <span class="p">(</span>
+    <span class="err">文本</span> <span class="mi">255</span> <span class="n">VARCHAR</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="err">文本</span> <span class="mi">20</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="err">日期时间</span> <span class="n">DATETIME</span><span class="p">,</span>
+    <span class="err">数字</span> <span class="mi">1</span> <span class="n">BYTE</span><span class="p">,</span>
+    <span class="err">数字</span> <span class="mi">2</span> <span class="n">SMALLINT</span><span class="p">,</span>
+    <span class="err">数字</span> <span class="mi">4</span> <span class="n">INTEGER</span><span class="p">,</span>
+    <span class="err">布尔</span> <span class="n">BIT</span><span class="p">,</span>
+    <span class="err">自动编号</span> <span class="n">COUNTER</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="k">CONSTRAINT</span> <span class="n">PK_TVIPLevel26</span> <span class="k">PRIMARY</span> <span class="k">KEY</span><span class="p">,</span>
+    <span class="err">小数</span> <span class="n">NUMERIC</span><span class="p">,</span>
+    <span class="err">单精度</span> <span class="n">REAL</span><span class="p">,</span>
+    <span class="err">双精度</span> <span class="n">FLOAT</span> <span class="k">DEFAULT</span> <span class="mi">0</span> <span class="k">NOT</span> <span class="k">NULL</span><span class="p">,</span>
+    <span class="err">备注</span> <span class="n">MEMO</span><span class="p">,</span>
+    <span class="err">货币</span> <span class="n">CURRENCY</span><span class="p">,</span>
+    <span class="n">OLE</span> <span class="err">对象</span> <span class="n">IMAGE</span>
+<span class="p">)</span>
+
+<span class="err">在</span> <span class="k">Access</span> <span class="err">的查询设计器中，该语句不能执行</span> <span class="k">DEFAULT</span> <span class="mi">0</span><span class="err">；</span>
+<span class="err">其中：</span><span class="n">COUNTER</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="err">表明初始值从</span> <span class="mi">10</span> <span class="err">开始，每次递增</span> <span class="mi">5</span><span class="err">，如果没有</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span><span class="err">，则是从</span> <span class="mi">1</span> <span class="err">开始，每次递增</span> <span class="mi">1</span><span class="err">；</span>
+<span class="n">NUMERIC</span> <span class="err">表示小数，可以用</span> <span class="n">NUMERIC</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="err">指定有</span> <span class="mi">2</span> <span class="err">位小数；</span>
+</code></pre>
+</div>
+
+<h3 id="heading-常用类型">常用类型</h3>
+
+<ol>
+  <li>char、varchar、text 和 nchar、nvarchar、ntext
+    <ul>
+      <li>char 和 varchar 的长度都在 1 到 8000 之间，它们的区别在于 char 是定长字符数据，而 varchar 是变长字符数据。所谓定长就是长度固定的，当输入的数据长度没有达到指定的长度时将自动以英文空格在其后面填充，使长度达到相应的长度；而变长字符数据则不会以空格填充。</li>
+      <li>text 存储可变长度的非 Unicode 数据，最大长度为 2^31-1(2,147,483,647) 个字符。</li>
+      <li>后面三种数据类型和前面的相比，从名称上看只是多了个字母"n"，它表示存储的是 Unicode 数据类型的字符。写过程序的朋友对 Unicode 应该很了解。字符中，英文字符只需要一个字节存储就足够了，但汉字众多，需要两个字节存储，英文与汉字同时存在时容易造成混乱，Unicode 字符集就是为了解决字符集这种不兼容的问题而产生的，它所有的字符都用两个字节表示，即英文字符也是用两个字节表示。</li>
+    </ul>
+    <ul>
+      <li>nchar、nvarchar 的长度是在 1 到 4000 之间，不论是英文还是汉字</li>
+      <li>char、varchar 最多能存储 8000 个英文，4000 个汉字。</li>
+    </ul>
+  </li>
+  <li>datetime 和 smalldatetime
+    <ul>
+      <li>datetime：从 1753 年 1 月 1 日到 9999 年 12 月 31 日的日期和时间数据，精确到百分之三秒。</li>
+      <li>smalldatetime：从 1900 年 1 月 1 日到 2079 年 6 月 6 日的日期和时间数据，精确到分钟。</li>
+    </ul>
+  </li>
+  <li>bitint、int、smallint、tinyint 和 bit
+    <ul>
+      <li>bigint：从-2^63(-9223372036854775808) 到 2^63-1(9223372036854775807) 的整型数据。</li>
+      <li>int：从-2^31(-2,147,483,648) 到 2^31-1(2,147,483,647) 的整型数据。</li>
+      <li>smallint：从-2^15(-32,768) 到 2^15-1(32,767) 的整数数据。</li>
+      <li>tinyint：从 0 到 255 的整数数据。</li>
+      <li>bit：1 或 0 的整数数据。</li>
+    </ul>
+  </li>
+  <li>decimal 和 numeric
+    <ul>
+      <li>这两种数据类型是等效的。都有两个参数：p（精度）和 s（小数位数）。</li>
+    </ul>
+    <ul>
+      <li>p 指定小数点左边和右边可以存储的十进制数字的最大个数，p 必须是从 1 到 38 之间的值。</li>
+      <li>s 指定小数点右边可以存储的十进制数字的最大个数，s 必须是从 0 到 p 之间的值，默认小数位数是 0。</li>
+    </ul>
+  </li>
+  <li>float 和 real
+    <ul>
+      <li>float：从-1.79^308 到 1.79^308 之间的浮点数字数据。</li>
+      <li>real：从-3.40^38 到 3.40^38 之间的浮点数字数据。在 SQL Server 中，real 的同义词为 float(24)。</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="heading-9-大类型">9 大类型</h3>
+
+<ol>
+  <li>
+    <p>文本（Text(n)）
+这种类型允许最大 255 个字符或数字，Access 默认的大小是 50 个字符，而且系统只保存输入到字段中的字符，而不保存文本字段中未用位置上的空字符。可以设置“字段大小”属性控制可输入的最大字符长度。</p>
+  </li>
+  <li>
+    <p>备注（Memo）
+这种类型用来保存长度较长的文本及数字，它允许字段能够存储长达 64000 个字符的内容。但 Access 不能对备注字段进行排序或索引，却可以对文本字段进行排序和索引。在备注字段中虽然可以搜索文本，但却不如在有索引的文本字段中搜索得快。</p>
+  </li>
+  <li>
+    <p>数字
+这种字段类型可以用来存储进行算术计算的数字数据，用户还可以设置“字段大小”属性定义一个特定的数字类型，任何指定为数字数据类型的字型可以设置成“字节”、“整数”、“长整数”、“单精度数”、“双精度数”、“同步复制 ID”、“小数”五种类型。在 Access 中通常默认为“双精度数”。</p>
+  </li>
+  <li>
+    <p>日期/时间 (Time)
+这种类型是用来存储日期、时间或日期时间一起的，每个日期/时间字段需要 8 个字节来存储空间。
+货币：这种类型是数字数据类型的特殊类型，等价于具有双精度属性的数字字段类型。向货币字段输入数据时，不必键入人民币符号和千位处的逗号，Access 会自动显示人民币符号和逗号，并添加两位小数到货币字段。当小数部分多于两位时，Access 会对数据进行四舍五入。精确度为小数点左方 15 位数及右方 4 位数。</p>
+  </li>
+  <li>
+    <p>自动编号 (Counter)
+这种类型较为特殊，每次向表格添加新记录时，Access 会自动插入唯一顺序或者随机编号，即在自动编号字段中指定某一数值。自动编号一旦被指定，就会永久地与记录连接。如果删除了表格中含有自动编号字段的一个记录后，Access 并不会为表格自动编号字段重新编号。当添加某一记录时，Access 不再使用已被删除的自动编号字段的数值，而是重新按递增的规律重新赋值。</p>
+  </li>
+  <li>
+    <p>是/否
+这种字段是针对于某一字段中只包含两个不同的可选值而设立的字段，通过是/否数据类型的格式特性，用户可以对是/否字段进行选择。</p>
+  </li>
+  <li>
+    <p>OLE 对象
+这个字段是指字段允许单独地“链接”或“嵌入”OLE 对象。添加数据到 OLE 对象字段时，可以链接或嵌入 Access 表中的 OLE 对象是指在其他使用 OLE 协议程序创建的对象，例如 WORD 文档、EXCEL 电子表格、图像、声音或其他二进制数据。OLE 对象字段最大可为 1GB，它主要受磁盘空间限制。</p>
+  </li>
+  <li>
+    <p>超级链接
+这个字段主要是用来保存超级链接的，包含作为超级链接地址的文本或以文本形式存储的字符与数字的组合。当单击一个超级链接时，WEB 浏览器或 Access 将根据超级链接地址到达指定的目标。超级链接最多可包含三部分：一是在字段或控件中显示的文本；二是到文件或页面的路径；三是在文件或页面中的地址。在这个字段或控件中插入超级链接地址最简单的方法就是在“插入”菜单中单击“超级链接”命令。</p>
+  </li>
+  <li>
+    <p>查阅向导
+这个字段类型为用户提供了一个建立字段内容的列表，可以在列表中选择所列内容作为添入字段的内容。</p>
+  </li>
+</ol>
+
+<h2 id="heading-库文件">库文件</h2>
+
+<p>与 Sqlite 的 JDBC 不同，这里的库文件不会自动生成，需要手动的去控制库文件的生成，而且如果涉及到多库文件（分库功能），还需要记录下来，免去一些耗时的判断。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * Access 数据库工具类
+ *
+ * @author 欧阳洁
+ * @since 2018-05-31 9:52
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessDatabaseUtils</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 记录以及创建了的数据库链接
+     */</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">EXIST_DB_PATHS</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+    <span class="cm">/**
+     * 创建 Access 库文件
+     *
+     * @param dbPath
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">createDatabaseFile</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">createDatabaseFile</span><span class="o">(</span><span class="n">dbPath</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 创建带密码的 Access 库文件
+     *
+     * @param dbPath
+     * @param password
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">createDatabaseFile</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">AccessDatabaseUtils</span><span class="o">.</span><span class="na">isExistDbPath</span><span class="o">(</span><span class="n">dbPath</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">file</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">Database</span> <span class="n">db</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span> <span class="n">fileFormat</span> <span class="o">=</span> <span class="n">AccessDatabaseUtils</span><span class="o">.</span><span class="na">getAccessFormat</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+                <span class="n">DatabaseBuilder</span> <span class="n">dbd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatabaseBuilder</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+                <span class="n">dbd</span><span class="o">.</span><span class="na">setAutoSync</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+                <span class="n">dbd</span><span class="o">.</span><span class="na">setFileFormat</span><span class="o">(</span><span class="n">fileFormat</span><span class="o">);</span>
+                <span class="n">dbd</span><span class="o">.</span><span class="na">setReadOnly</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="n">AccessUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">password</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="n">dbd</span><span class="o">.</span><span class="na">setCodecProvider</span><span class="o">(</span><span class="k">new</span> <span class="n">CryptCodecProvider</span><span class="o">(</span><span class="n">password</span><span class="o">));</span>
+                <span class="o">}</span>
+                <span class="n">db</span> <span class="o">=</span> <span class="n">dbd</span><span class="o">.</span><span class="na">create</span><span class="o">();</span>
+                <span class="n">AccessDatabaseUtils</span><span class="o">.</span><span class="na">addExistDbPath</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">db</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">try</span> <span class="o">{</span>
+                        <span class="n">db</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">AccessDatabaseUtils</span><span class="o">.</span><span class="na">addExistDbPath</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 是否已经存在了
+     * @param dbPath
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isExistDbPath</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">EXIST_DB_PATHS</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="n">dbPath</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 判断库中表是否存在
+     * @param dbPath
+     * @param tableName
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isTableExist</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">tableName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">AccessDatabaseUtils</span><span class="o">.</span><span class="na">isTableExist</span><span class="o">(</span><span class="n">dbPath</span><span class="o">,</span><span class="n">tableName</span><span class="o">,</span><span class="kc">null</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 添加已经存在的数据库
+     *
+     * @param dbPath
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">addExistDbPath</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">EXIST_DB_PATHS</span> <span class="o">=</span> <span class="n">EXIST_DB_PATHS</span> <span class="o">+</span> <span class="s">"|"</span> <span class="o">+</span> <span class="n">dbPath</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="heading-密码库生成">密码库生成</h3>
+
+<p>通过上面的语句，想必看到 Jackcess 对 Access 库支持密码建库（PS：Sqlite 传说中好像也支持密码连接，但是目前我还没找到相关资料，所以那个功能至今不知道怎么划掉）。密码连接的时候，只用对连接 uri 中附上对 JackcessOpenerInterface 类的实现类路径即可。</p>
+
+<blockquote>
+  <p>jdbc:ucanaccess:///D/Access/XXX.mny;jackcessOpener=oop.access.opener.AccessCryptCodecOpener</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 加密文件开启
+ *
+ * @author 欧阳洁
+ * @since 2018-05-31 10:21
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccessCryptCodecOpener</span> <span class="kd">implements</span> <span class="n">JackcessOpenerInterface</span> <span class="o">{</span>
+    <span class="cm">/**
+     * 打开有密码的连接
+     * @param fl
+     * @param pwd
+     * @return
+     * @throws IOException
+     */</span>
+    <span class="kd">public</span> <span class="n">Database</span> <span class="nf">open</span><span class="o">(</span><span class="n">File</span> <span class="n">fl</span><span class="o">,</span> <span class="n">String</span> <span class="n">pwd</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">IOException</span> <span class="o">{</span>
+        <span class="n">DatabaseBuilder</span> <span class="n">dbd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatabaseBuilder</span><span class="o">(</span><span class="n">fl</span><span class="o">);</span>
+        <span class="n">dbd</span><span class="o">.</span><span class="na">setAutoSync</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+        <span class="n">dbd</span><span class="o">.</span><span class="na">setCodecProvider</span><span class="o">(</span><span class="k">new</span> <span class="n">CryptCodecProvider</span><span class="o">(</span><span class="n">pwd</span><span class="o">));</span>
+        <span class="n">dbd</span><span class="o">.</span><span class="na">setReadOnly</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">dbd</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-表存在判断">表存在判断</h2>
+
+<p>一般情况下，服务启动会将可以确定的表建好，然后标记一下即可，但是如果是动态表的话（分表功能），就需要在做插入操作之前建表。 Sqlite 自动建表的时候，我们可以方便的 <code class="highlighter-rouge">create table if not exists ...</code> 做到检查的同时做保证有表，然而 Access 数据库貌似没有 <code class="highlighter-rouge">if</code> 语法支持，就是说，这个方法不能用了，所以需要手动判断是否存在该表先，然后才能进行 <code class="highlighter-rouge">create table ...</code>，达到自动建表的功能。
+当然，分库功能也会涉及动态建表，于是分库分表双动态，自然不能通过 <code class="highlighter-rouge">try catch</code> 创建表格（ <code class="highlighter-rouge">create table</code> ) 的语句来逃避这个问题，这里根据 Jackcess 暂时解决这个问题。</p>
+
+<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+ * 判断库中表是否存在
+ * @param dbPath
+ * @param tableName
+ * @param password
+ * @return
+ */</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">isTableExist</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">,</span> <span class="n">String</span> <span class="n">tableName</span><span class="o">,</span> <span class="n">String</span> <span class="n">password</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">AccessUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">tableName</span><span class="o">)</span> <span class="o">||</span> <span class="n">AccessUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">dbPath</span><span class="o">)){</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="n">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">Database</span> <span class="n">db</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">Database</span><span class="o">.</span><span class="na">FileFormat</span> <span class="n">fileFormat</span> <span class="o">=</span> <span class="n">AccessDatabaseUtils</span><span class="o">.</span><span class="na">getAccessFormat</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+            <span class="n">DatabaseBuilder</span> <span class="n">dbd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatabaseBuilder</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+            <span class="n">dbd</span><span class="o">.</span><span class="na">setAutoSync</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+            <span class="n">dbd</span><span class="o">.</span><span class="na">setFileFormat</span><span class="o">(</span><span class="n">fileFormat</span><span class="o">);</span>
+            <span class="n">dbd</span><span class="o">.</span><span class="na">setReadOnly</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(!</span><span class="n">AccessUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">password</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">dbd</span><span class="o">.</span><span class="na">setCodecProvider</span><span class="o">(</span><span class="k">new</span> <span class="n">CryptCodecProvider</span><span class="o">(</span><span class="n">password</span><span class="o">));</span>
+            <span class="o">}</span>
+            <span class="n">db</span> <span class="o">=</span> <span class="n">dbd</span><span class="o">.</span><span class="na">open</span><span class="o">();</span>
+            <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="na">getTable</span><span class="o">(</span><span class="n">tableName</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">!=</span> <span class="n">db</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">try</span> <span class="o">{</span>
+                    <span class="n">db</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre>
+</div>
+
+<h2 id="heading-后记">后记</h2>
+
+<p>Access 数据库作为微软的收费产品，自然有其独到特性，暂时还没有发现其他的，感兴趣的可以去学习深入，这里就不做扩展。后续如果有其他的封装和扩展，会持续记录。</p>
+
+                    </div>
+                </div>
+            </div>
+            <footer class="unit-foot">
+                <div class="unit-inner unit-foot-inner">
+                    <div class="post-buttons">
+                        <a class="internal gotop" href="#page" title="返回顶部">返回顶部</a>
+                        
+                    </div>
+                    <nav class="pagination">
+                        
+                            <a class="internal" rel="prev" href="/blog/2018/05/18/sqlite-connection-pool-and-batch/" title="上一篇 'Sqlite 连接池和批量操作实现'"> ← Sqlite 连接池和批量操作实现</a>
+                        
+                        
+                            <a class="internal" rel="next" href="/blog/2019/02/09/java-annotation/" title="下一篇 'JAVA WEB 注解相关规范速查表'">JAVA WEB 注解相关规范速查表 → </a>
+                        
+                    </nav>
+                </div>
+            </footer>
+        </div>
+    </div>
+</article>
+<!-- 评论组件 -->
+<!-- 聚合所有评论组件 -->
+
+<div class="misc-content">
+
+<!-- emaction -->
+
+<div style="margin-top: 10px;color: coral;border-top: 1px solid;border-bottom: 1px solid;">
+<div style="float:left;">邀请标记你的阅读体验😉 ｜ → &nbsp;</div>
+<emoji-reaction></emoji-reaction>
+<div style="clear:both;"></div>
+</div>
+<script type="module" src="https://cdn.jsdelivr.net/gh/emaction/frontend.dist@1.0.7/bundle.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $($("emoji-reaction")[0].shadowRoot).find("div.container").css("align-items","center");
+    });
+</script>
+
+<!-- gitment -->
+
+<!-- utterances -->
+
+<script src="https://utteranc.es/client.js"
+    repo="petterobam/blog"
+    
+    issue-number="12"
+    
+    theme=""
+    crossorigin="anonymous"
+    async></script>
+
+
+</div>
+<!-- 悬浮目录组件 -->
+
+
+<style type="text/css">
+.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content.initial{opacity:0}
+.directory-content.pinned{opacity:1}
+.directory-content.unpinned{opacity:1}
+.directory-content.headroom--top{opacity:0}
+.directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
+#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory li,#directory ul{margin:0;padding-left:0;list-style:none}
+#directory>ul{position:relative;border-left:1px solid #ddd}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
+#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
+#directory a:hover{color:#eb5055}
+@media (max-width: 768px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+@media (max-width: 480px) {
+    #directory p,ul {
+        display: none;
+    }
+}
+</style>
+<div id="directory-content" class="directory-content">
+    <div id="directory"></div>
+</div>
+<script type="text/javascript">
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    var postDirectoryBuild = function() {
+        $("#openHiddenLinkId").click(function(){
+            var isopen = $(this).attr("isopen");
+            if(isopen == "1"){
+              $('#directory').find("p,ul").show(200);
+              $(this).attr("isopen","0").html("↗");
+            }else{
+              $('#directory').find("p,ul").hide(200);
+              $(this).attr("isopen","1").html("↙");
+            }
+        });
+        var postChildren = function children(childNodes, reg) {
+                var result = [],
+                    isReg = typeof reg === 'object',
+                    isStr = typeof reg === 'string',
+                    node, i, len;
+                for (i = 0, len = childNodes.length; i < len; i++) {
+                    node = childNodes[i];
+                    if ((node.nodeType === 1 || node.nodeType === 9) &&
+                        (!reg ||
+                        isReg && reg.test(node.tagName.toLowerCase()) ||
+                        isStr && node.tagName.toLowerCase() === reg)) {
+                        result.push(node);
+                    }
+                }
+                return result;
+            },
+            createPostDirectory = function(article, directory, isDirNum) {
+                var contentArr = [],
+                    titleId = [],
+                    levelArr, root, level,
+                    currentList, list, li, link, i, len;
+                levelArr = (function(article, contentArr, titleId) {
+                    var titleElem = postChildren(article.childNodes, /^h\d$/),
+                        levelArr = [],
+                        lastNum = 1,
+                        lastRevNum = 1,
+                        count = 0,
+                        guid = 1,
+                        id = 'directory' + (Math.random() + '').replace(/\D/, ''),
+                        lastRevNum, num, elem;
+                    while (titleElem.length) {
+                        elem = titleElem.shift();
+                        contentArr.push(elem.innerHTML);
+                        num = +elem.tagName.match(/\d/)[0];
+                        if (num > lastNum) {
+                            levelArr.push(1);
+                            lastRevNum += 1;
+                        } else if (num === lastRevNum ||
+                            num > lastRevNum && num <= lastNum) {
+                            levelArr.push(0);
+                            lastRevNum = lastRevNum;
+                        } else if (num < lastRevNum) {
+                            levelArr.push(num - lastRevNum);
+                            lastRevNum = num;
+                        }
+                        count += levelArr[levelArr.length - 1];
+                        lastNum = num;
+                        elem.id = elem.id || (id + guid++);
+                        titleId.push(elem.id);
+                    }
+                    if (count !== 0 && levelArr[0] === 1) levelArr[0] = 0;
+
+                    return levelArr;
+                })(article, contentArr, titleId);
+                currentList = root = document.createElement('ul');
+                dirNum = [0];
+                for (i = 0, len = levelArr.length; i < len; i++) {
+                    level = levelArr[i];
+                    if (level === 1) {
+                        list = document.createElement('ul');
+                        if (!currentList.lastElementChild) {
+                            currentList.appendChild(document.createElement('li'));
+                        }
+                        currentList.lastElementChild.appendChild(list);
+                        currentList = list;
+                        dirNum.push(0);
+                    } else if (level < 0) {
+                        level *= 2;
+                        while (level++) {
+                            if (level % 2) dirNum.pop();
+                            currentList = currentList.parentNode;
+                        }
+                    }
+                    dirNum[dirNum.length - 1]++;
+                    li = document.createElement('li');
+                    link = document.createElement('a');
+                    link.href = '#' + titleId[i];
+                    link.innerHTML = !isDirNum ? contentArr[i] :
+                        dirNum.join('.') + ' ' + contentArr[i] ;
+                    li.appendChild(link);
+                    currentList.appendChild(li);
+                }
+                directory.appendChild(root);
+            };
+        createPostDirectory(document.getElementById('articleBody'),document.getElementById('directory'), true);
+    };
+    postDirectoryBuild();
+</script>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="the-footer">
+    <div class="unit-foot">
+        <div class="unit-inner unit-foot-inner">
+            <div class="misc vcard">
+                <div class="about">
+                    <h4>
+                        <a href="/blog/other/about/">关于</a>
+                        
+                    </h4>
+                </div>
+                <div class="social-links">
+                    
+                        <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
+                    
+                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    
+                        
+                    
+                        
+                            <a class="ico-github" href="https://github.com/petterobam" rel="me" target="_blank" title="github"></a>
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                        
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="internal back-to-top">返回顶部</a>
+</footer>
+
+
+    </div>
+
+    <script>
+$(document).ready(function () {
+    var offset = 50,
+        duration = 500,
+        width = 960;
+    var dirOldTop = 37;
+    $(window).scroll(function () {
+    	var scrollTop = $(this).scrollTop();
+        if (scrollTop > width) {
+            if (scrollTop > offset) {
+                $('footer').css('top', '20px');
+                $('footer .back-to-top').fadeIn(duration);
+            } else {
+                $('footer').css('top', 'auto');
+                $('footer .back-to-top').fadeOut(duration);
+            }
+        }
+        var directory = $("#directory");
+        if(null != directory && directory.length > 0){
+        	var top;
+        	if(scrollTop > dirOldTop){
+        		top = (scrollTop - dirOldTop) + "px";
+        	}else{
+        		top = dirOldTop + "px";
+        	}
+        	directory.css("top",top);
+        }
+    });
+    $(window).resize(function () {
+        if ($(window).width() < width) {
+            $('footer').css('top', 'auto');
+            $('footer .back-to-top').fadeOut(duration);
+        }
+        if ($(window).width() >= width && $(this).scrollTop() > offset) {
+            $('footer').css('top', '20px');
+            $('footer .back-to-top').fadeIn(duration);
+        }
+    });
+
+    $('footer .back-to-top, .gotop').on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0
+        }, duration);
+        return false;
+    });
+
+    $('.show-hidden').on('click', function () {
+        $(this).parent().next().toggleClass("hidden");
+        $(this).toggleClass("hidden");
+    });
+});
+</script>
+
+<!-- Google Analytics Event tracking -->
+
+
+<!-- Show menu overlay + Jekyll Simple Search option -->
+<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script>
+$(document).ready(function () {
+    $('.search-field').simpleJekyllSearch({
+      jsonFile: '/search.json',
+      template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
+      searchResults: '.search-wrapper .results',
+      searchResultsTitle: '<h4>搜索结果</h4>',
+      noResults: '<p>啊哈<br/><small>什么也没找到 :(</small></p>'
+    });
+});
+
+(function ($, window, undefined) {
+    var closeOverlay = function () {
+        $('.nav-wrapper, .search-wrapper').removeAttr('style');
+        $(".nav-form, .search-form").removeClass('active');
+        $("body").removeClass('nav-overlay search-overlay');
+    };
+
+    $('.nav-global .btn-init-live2dgirl').on('click', function () {
+        initLive2dGirl();
+    });
+
+    $('.nav-global .btn-search').on('click', function () {
+        $('.search-wrapper').css({display: "block"});
+        $(".search-form").addClass('active');
+        $(".search-form").find('input').focus();
+        $("body").addClass('search-overlay');
+    });
+
+    $('.nav-global .btn-menu').on('click', function () {
+        $('.nav-wrapper').css({display: "block"});
+        $(".nav-form").addClass('active');
+        $(".nav-form .search-field").prop('disabled', true);
+        $("body").addClass('nav-overlay');
+    });
+
+    $('.nav-wrapper .btn-close, .search-wrapper .btn-close').on('click', function () {
+        closeOverlay();
+    });
+
+    $(document).on('keyup', function (e) {
+        if (e.keyCode === 27) {
+            closeOverlay();
+        }
+    });
+})(jQuery, window);
+</script>
+
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
+<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+
+<script>
+    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+</script>
+
+<script>
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $(".post-image").fancybox({
+        prevEffect: 'none',
+        nextEffect: 'none',
+        closeBtn: true,
+        helpers: {
+            title: {
+                type: 'float'
+            }
+        }
+    });
+    $(document).ready(function () {
+        $(".post-image > img").unveil(450);
+        $(".nav-global a[label='']").css("background-color", "orange")
+    });
+</script>
+
+<!-- LaTeX 语法支持 -->
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+<!-- 动态隐藏 post 的 js -->
+<style type="text/css">
+  ul.post-list li.post2hide {
+    display: none;
+  }
+</style>
+
+<script text="text/javascript">
+  $(document).ready(function() {
+    // 获取URL参数
+    const urlParams = new URLSearchParams(window.location.search);
+    // 检查是否有action参数，并且其值为all
+    if(urlParams.get('action') === 'all' || '' === 'all') {
+      // 找到所有不可见的<li>元素并将其显示出来
+      $('li.post2hide').show();
+    }
+  });
+</script>
+<!-- 折叠 post 列表 的 js -->
+
+
+<!-- 图片点击预览 -->
+<div id="imgEnlargeDiv" style="display: none; text-align: center;position: fixed;z-index: 1000;top: 0;left: 0;
+    width: 100%;height: 100%;background-color: rgba(255,255,255,.9);overflow: hidden;">
+    <img id="bigimg-random-12312" style="height: auto;width: 90%;
+    position: absolute;margin:auto;top:0;bottom:0;left: 0;right: 0;" title="单击关闭图层" src="" />
+</div>
+<script type="text/javascript">
+    // 图片放大  
+    $(function () {
+        $("#imgEnlargeDiv").click(function () {
+            // 再次点击淡出消失弹出层    
+            $(this).fadeOut("fast");
+        });
+        imgEnlarge();
+    });
+
+    function imgShow(outerdiv, bigimg, _this) {
+        var src = _this.attr("src");// 获取当前点击的pimg元素中的src属性    
+        $(bigimg).attr("src", src);// 设置#bigimg元素的src属性    
+        $(outerdiv).fadeIn("fast");  // 图片放大的div快速淡入显示层
+        var imgWidth = $(bigimg).width();
+        var imgHeight = $(bigimg).height();
+        if (imgHeight > imgWidth) {
+            $(bigimg).css("height", "90%").css("width", "auto");
+        } else {
+            $(bigimg).css("height", "auto").css("width", "90%");
+        }
+    }
+
+    var img2ShowExit = true;
+    function imgEnlarge() {
+        $(".entry-content img").mouseover(function () {
+            $(this).css("cursor", "pointer");//鼠标移动到图片，鼠标箭头变为手势
+        });
+        $(".entry-content img").click(function () {
+            var _this = $(this);// 将当前的pimg元素作为_this传入函数    
+            imgShow("#imgEnlargeDiv", "#bigimg-random-12312", _this);
+        });
+    }
+</script>
+<!-- gist 引用折叠 -->
+<script type="text/javascript">
+$(function () {
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        // 是移动设备
+        $(".gist-file").click(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 单击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+      } else {
+        $(".gist-file").dblclick(function() {
+            if ($(this).attr("pack-up") == "1") {
+                $(this).find(".gist-data").css({
+                    "overflow": "auto",
+                    "height": "auto",
+                    "border-bottom": "1px solid #ddd"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击收起 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "0");
+            } else {
+                $(this).find(".gist-data").css({
+                    "overflow": "hidden",
+                    "height": "75px",
+                    "border-bottom": "3px solid red"
+                });
+                $(this).find(".gist-meta span").html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑ &nbsp;&nbsp;&nbsp;');
+                $(this).attr("pack-up", "1");
+            }
+        });
+    }
+
+    $(".gist-file").find(".gist-data").css({
+        "overflow": "hidden",
+        "height": "75px",
+        "border-bottom": "3px solid red"
+    });
+    $(".gist-file").attr("pack-up", "1");
+    $(".gist-file").find(".gist-data").css({"cursor":"pointer"});
+    $(".gist-file").find(".gist-meta").append('<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ↑↑ 双击展开 ↑↑</span>');
+});
+</script>
+
+
+<!-- live2dgirl加载 -->
+
+<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<div class="waifu">
+    <div class="waifu-tips"></div>
+    <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+    <div class="waifu-tool">
+        <span class="fui-home"></span>
+        <span class="fui-chat"></span>
+        <span class="fui-eye"></span>
+        <span class="fui-user"></span>
+        <span class="fui-photo"></span>
+        <span class="fui-info-circle"></span>
+        <span class="fui-cross"></span>
+    </div>
+</div>
+<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script type="text/javascript">
+function initLive2dGirl() {
+    $(".waifu").css('display', 'block');
+    initModel("/assets/javascripts/live2dgirl/");
+}
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1186 @@
+[
+  {
+    "title"      : "文章列表",
+    "url"        : "/blog/"
+  },
+  {
+    "title"      : "生活动态",
+    "url"        : "/blog/life/"
+  },
+  {
+    "title"      : "读书手札",
+    "url"        : "/blog/reader/"
+  },
+  {
+    "title"      : "书&影",
+    "url"        : "/blog/book+movie/"
+  },
+  {
+    "title"      : "学习笔记",
+    "url"        : "/blog/learner/"
+  },
+  {
+    "title"      : "GitHub",
+    "url"        : "https://github.com/petterobam"
+  } 
+  
+    ,{
+      "title"      : "【转】哈里·布朗的17条金融安全黄金法则",
+      "url"        : "/blog/2023/09/11/wealth-rule/",
+      "date"       : "2023-09-11 00:00:00 +0000",
+      "shortdate"  : "September 11, 2023"
+    } 
+  
+    ,{
+      "title"      : "ChatGPT的Prompt模板总结",
+      "url"        : "/blog/2023/05/07/gpt-prompt/",
+      "date"       : "2023-05-07 00:00:00 +0000",
+      "shortdate"  : "May 07, 2023"
+    } 
+  
+    ,{
+      "title"      : "【专利】一种自我调控的众包审核装置",
+      "url"        : "/blog/2022/11/28/patent-2/",
+      "date"       : "2022-11-28 00:00:00 +0000",
+      "shortdate"  : "November 28, 2022"
+    } 
+  
+    ,{
+      "title"      : "【专利】音乐与创作之物联笔的分析与应用",
+      "url"        : "/blog/2022/10/27/patent-1/",
+      "date"       : "2022-10-27 00:00:00 +0000",
+      "shortdate"  : "October 27, 2022"
+    } 
+  
+    ,{
+      "title"      : "【经验】日志框架冲突排查与常规日志依赖梳理",
+      "url"        : "/blog/2022/03/08/problems-of-logs-conflict-in-maven-project/",
+      "date"       : "2022-03-08 00:00:00 +0000",
+      "shortdate"  : "March 08, 2022"
+    } 
+  
+    ,{
+      "title"      : "仿TensorFlow懒执行编程和注解自编排",
+      "url"        : "/blog/2021/12/27/java-like-tensor-flow-to-run/",
+      "date"       : "2021-12-27 00:00:00 +0000",
+      "shortdate"  : "December 27, 2021"
+    } 
+  
+    ,{
+      "title"      : "【专题】应用计数案例归纳和总结",
+      "url"        : "/blog/2021/12/20/some-app-scene-count/",
+      "date"       : "2021-12-20 00:00:00 +0000",
+      "shortdate"  : "December 20, 2021"
+    } 
+  
+    ,{
+      "title"      : "【专利】视频流消费区块超链分析与应用",
+      "url"        : "/blog/2021/05/24/patent/",
+      "date"       : "2021-05-24 00:00:00 +0000",
+      "shortdate"  : "May 24, 2021"
+    } 
+  
+    ,{
+      "title"      : "【领域】视频 UGC 领域思考和归纳",
+      "url"        : "/blog/2021/01/01/video-ddd-think/",
+      "date"       : "2021-01-01 00:00:00 +0000",
+      "shortdate"  : "January 01, 2021"
+    } 
+  
+    ,{
+      "title"      : "Git 源码·LinusTorvalds 第一次提交 CR 和启发",
+      "url"        : "/blog/2020/12/03/git-first-commit-code-review-and-think/",
+      "date"       : "2020-12-03 00:00:00 +0000",
+      "shortdate"  : "December 03, 2020"
+    } 
+  
+    ,{
+      "title"      : "用 Java 制作命令行工具并提供自动安装脚本",
+      "url"        : "/blog/2020/10/31/use-java-make-cmd-util-and-install-script/",
+      "date"       : "2020-10-31 00:00:00 +0000",
+      "shortdate"  : "October 31, 2020"
+    } 
+  
+    ,{
+      "title"      : "装饰模式深入和非重构型迭代范式讨论",
+      "url"        : "/blog/2020/10/11/think-iteration-without-distortion-from-io/",
+      "date"       : "2020-10-11 00:00:00 +0000",
+      "shortdate"  : "October 11, 2020"
+    } 
+  
+    ,{
+      "title"      : "案例思考-Switch 语句实现职责链模式",
+      "url"        : "/blog/2020/09/17/think-switch-of-response-link-mode/",
+      "date"       : "2020-09-17 00:00:00 +0000",
+      "shortdate"  : "September 17, 2020"
+    } 
+  
+    ,{
+      "title"      : "【Windows 命令】SCHTASKS 计划任务日常使用技巧",
+      "url"        : "/blog/2020/09/05/windows-schtasks-skilt/",
+      "date"       : "2020-09-05 00:00:00 +0000",
+      "shortdate"  : "September 05, 2020"
+    } 
+  
+    ,{
+      "title"      : "公网 CDN 污染如何愉快上网冲浪",
+      "url"        : "/blog/2020/08/28/about-cdn-and-enjoy-the-internet/",
+      "date"       : "2020-08-28 00:00:00 +0000",
+      "shortdate"  : "August 28, 2020"
+    } 
+  
+    ,{
+      "title"      : "Stream 深入分析到 Lambda 扩展使用",
+      "url"        : "/blog/2020/08/09/stream-design-and-lambda-extension/",
+      "date"       : "2020-08-09 00:00:00 +0000",
+      "shortdate"  : "August 09, 2020"
+    } 
+  
+    ,{
+      "title"      : "项目依赖冲突解决技巧和经验",
+      "url"        : "/blog/2020/07/23/maven-conflict-resolves/",
+      "date"       : "2020-07-23 00:00:00 +0000",
+      "shortdate"  : "July 23, 2020"
+    } 
+  
+    ,{
+      "title"      : "【转】中国程序员容易发音错误的单词",
+      "url"        : "/blog/2019/09/06/word-right-voice-for-it/",
+      "date"       : "2019-09-06 00:00:00 +0000",
+      "shortdate"  : "September 06, 2019"
+    } 
+  
+    ,{
+      "title"      : "一次实践：Hadoop + Pig + Jython + AmMap + ElasticSearch",
+      "url"        : "/blog/2019/08/10/Hadoop-Pig-Jython-AmMap-ElasticSearch/",
+      "date"       : "2019-08-10 00:00:00 +0000",
+      "shortdate"  : "August 10, 2019"
+    } 
+  
+    ,{
+      "title"      : "Fastjson 的使用研究",
+      "url"        : "/blog/2019/06/14/fastjson-enjoy/",
+      "date"       : "2019-06-14 00:00:00 +0000",
+      "shortdate"  : "June 14, 2019"
+    } 
+  
+    ,{
+      "title"      : "一次提速百倍的 SQL 优化记录",
+      "url"        : "/blog/2019/03/11/sql-optimization-enjoy/",
+      "date"       : "2019-03-11 00:00:00 +0000",
+      "shortdate"  : "March 11, 2019"
+    } 
+  
+    ,{
+      "title"      : "JAVA WEB 注解相关规范速查表",
+      "url"        : "/blog/2019/02/09/java-annotation/",
+      "date"       : "2019-02-09 00:00:00 +0000",
+      "shortdate"  : "February 09, 2019"
+    } 
+  
+    ,{
+      "title"      : "Access 封装之与 Sqlite 封装的差异",
+      "url"        : "/blog/2018/06/02/access-oop-diff-sqlite/",
+      "date"       : "2018-06-02 00:00:00 +0000",
+      "shortdate"  : "June 02, 2018"
+    } 
+  
+    ,{
+      "title"      : "Sqlite 连接池和批量操作实现",
+      "url"        : "/blog/2018/05/18/sqlite-connection-pool-and-batch/",
+      "date"       : "2018-05-18 00:00:00 +0000",
+      "shortdate"  : "May 18, 2018"
+    } 
+  
+    ,{
+      "title"      : "速读《遇见未知的自己》",
+      "url"        : "/blog/2018/04/22/meet-unknowed-self/",
+      "date"       : "2018-04-22 00:00:00 +0000",
+      "shortdate"  : "April 22, 2018"
+    } 
+  
+    ,{
+      "title"      : "ElasticSearch 面向对象封装之注解分析",
+      "url"        : "/blog/2018/04/21/es-annotation-analysis/",
+      "date"       : "2018-04-21 00:00:00 +0000",
+      "shortdate"  : "April 21, 2018"
+    } 
+  
+    ,{
+      "title"      : "Sqlite 封装之分库与分表",
+      "url"        : "/blog/2018/04/01/sqlite-split-db-table/",
+      "date"       : "2018-04-01 00:00:00 +0000",
+      "shortdate"  : "April 01, 2018"
+    } 
+  
+    ,{
+      "title"      : "数据库面向对象封装【干货】",
+      "url"        : "/blog/2018/02/21/sqlite-db-oop/",
+      "date"       : "2018-02-21 00:00:00 +0000",
+      "shortdate"  : "February 21, 2018"
+    } 
+  
+    ,{
+      "title"      : "关于代码提交、定版合并和打单包总结",
+      "url"        : "/blog/2017/12/10/svn-merge-packge/",
+      "date"       : "2017-12-10 00:00:00 +0000",
+      "shortdate"  : "December 10, 2017"
+    } 
+  
+    ,{
+      "title"      : "Word、PDF 解析项目（二）",
+      "url"        : "/blog/2017/11/06/Word-PDF-Parse-2/",
+      "date"       : "2017-11-06 00:00:00 +0000",
+      "shortdate"  : "November 06, 2017"
+    } 
+  
+    ,{
+      "title"      : "Word、PDF 解析项目（一）",
+      "url"        : "/blog/2017/10/25/Word-PDF-Parse-1/",
+      "date"       : "2017-10-25 00:00:00 +0000",
+      "shortdate"  : "October 25, 2017"
+    } 
+  
+    ,{
+      "title"      : "初体验·项目管控心得",
+      "url"        : "/blog/2017/09/22/first-project-manage/",
+      "date"       : "2017-09-22 00:00:00 +0000",
+      "shortdate"  : "September 22, 2017"
+    } 
+  
+    ,{
+      "title"      : "CentOS 自动发邮件",
+      "url"        : "/blog/2017/09/17/CentOs-auto-mail/",
+      "date"       : "2017-09-17 00:00:00 +0000",
+      "shortdate"  : "September 17, 2017"
+    } 
+  
+    ,{
+      "title"      : "Tale 博客部署",
+      "url"        : "/blog/2017/09/10/Tale-blog-install/",
+      "date"       : "2017-09-10 00:00:00 +0000",
+      "shortdate"  : "September 10, 2017"
+    } 
+  
+  
+    ,{
+      "title"      : "【新工作】Netease, I&#39;m comming!",
+      "url"        : "/life_posts/2020/2020-07-01-life/",
+      "date"       : "2020-07-01 00:00:00 +0000",
+      "shortdate"  : "July 01, 2020"
+    } 
+  
+    ,{
+      "title"      : "【房东的猫】来访，签名鼠标垫Get~",
+      "url"        : "/life_posts/2020/2020-11-17-life/",
+      "date"       : "2020-11-17 00:00:00 +0000",
+      "shortdate"  : "November 17, 2020"
+    } 
+  
+    ,{
+      "title"      : "【蛋壳维权】朕亲临，给个号！",
+      "url"        : "/life_posts/2020/2020-11-21-life/",
+      "date"       : "2020-11-21 00:00:00 +0000",
+      "shortdate"  : "November 21, 2020"
+    } 
+  
+    ,{
+      "title"      : "【搬家】蛋壳，耗子尾汁！",
+      "url"        : "/life_posts/2020/2020-11-29-life/",
+      "date"       : "2020-11-29 00:00:00 +0000",
+      "shortdate"  : "November 29, 2020"
+    } 
+  
+    ,{
+      "title"      : "【脆皮黑芝麻面包】高筋面粉可以这么玩！，味道还行，容易饱腹~ 以后一定要买个大烤箱...",
+      "url"        : "/life_posts/2020/2020-12-27-life/",
+      "date"       : "2020-12-27 00:00:00 +0000",
+      "shortdate"  : "December 27, 2020"
+    } 
+  
+    ,{
+      "title"      : "【云音乐年度报告】你的专属报告~",
+      "url"        : "/life_posts/2020/2020-12-28-life/",
+      "date"       : "2020-12-28 00:00:00 +0000",
+      "shortdate"  : "December 28, 2020"
+    } 
+  
+    ,{
+      "title"      : "【跨年聚餐】今天除了吃，还是吃~",
+      "url"        : "/life_posts/2020/2020-12-31-life/",
+      "date"       : "2020-12-31 00:00:00 +0000",
+      "shortdate"  : "December 31, 2020"
+    } 
+  
+    ,{
+      "title"      : "Bilibili年度",
+      "url"        : "/life_posts/2021/Q1/2021-01-01-life/",
+      "date"       : "2021-01-01 00:00:00 +0000",
+      "shortdate"  : "January 01, 2021"
+    } 
+  
+    ,{
+      "title"      : "【读书】《文心》&amp;《投资中最简单的事》~",
+      "url"        : "/life_posts/2021/Q1/2021-01-02-life/",
+      "date"       : "2021-01-02 00:00:00 +0000",
+      "shortdate"  : "January 02, 2021"
+    } 
+  
+    ,{
+      "title"      : "【脆皮黑芝麻面包2】因为用料比较少，烤的时间长了，一般下火 15 分钟内就可以了...",
+      "url"        : "/life_posts/2021/Q1/2021-01-03-life/",
+      "date"       : "2021-01-03 00:00:00 +0000",
+      "shortdate"  : "January 03, 2021"
+    } 
+  
+    ,{
+      "title"      : "Todoist 年终报告",
+      "url"        : "/life_posts/2021/Q1/2021-01-08-life/",
+      "date"       : "2021-01-08 00:00:00 +0000",
+      "shortdate"  : "January 08, 2021"
+    } 
+  
+    ,{
+      "title"      : "烤肠配鸡蛋液，不容易烤焦~",
+      "url"        : "/life_posts/2021/Q1/2021-01-22-life/",
+      "date"       : "2021-01-22 00:00:00 +0000",
+      "shortdate"  : "January 22, 2021"
+    } 
+  
+    ,{
+      "title"      : "欲往招商钱庄去开户，未果归途骑行钱塘江",
+      "url"        : "/life_posts/2021/Q1/2021-01-31-life/",
+      "date"       : "2021-01-31 00:00:00 +0000",
+      "shortdate"  : "January 31, 2021"
+    } 
+  
+    ,{
+      "title"      : "跳房子，是游戏，也是生活...",
+      "url"        : "/life_posts/2021/Q1/2021-02-07-life/",
+      "date"       : "2021-02-07 00:00:00 +0000",
+      "shortdate"  : "February 07, 2021"
+    } 
+  
+    ,{
+      "title"      : "斗地主...",
+      "url"        : "/life_posts/2021/Q1/2021-02-09-life/",
+      "date"       : "2021-02-09 00:00:00 +0000",
+      "shortdate"  : "February 09, 2021"
+    } 
+  
+    ,{
+      "title"      : "新年问候",
+      "url"        : "/life_posts/2021/Q1/2021-02-12-life/",
+      "date"       : "2021-02-12 00:00:00 +0000",
+      "shortdate"  : "February 12, 2021"
+    } 
+  
+    ,{
+      "title"      : "烟花爆竹从昨晚 12 点到今早十点没停过，生活水平上升渐渐的把浮躁传染给了乡村。",
+      "url"        : "/life_posts/2021/Q1/2021-02-14-life/",
+      "date"       : "2021-02-14 00:00:00 +0000",
+      "shortdate"  : "February 14, 2021"
+    } 
+  
+    ,{
+      "title"      : "与胜彬聚，峡谷相逢，战绩不佳；后怀古念今，谈论思维哲理，颇多感悟",
+      "url"        : "/life_posts/2021/Q1/2021-02-15-life/",
+      "date"       : "2021-02-15 00:00:00 +0000",
+      "shortdate"  : "February 15, 2021"
+    } 
+  
+    ,{
+      "title"      : "植物VS僵尸终极版，搞了几个小时僵尸就没赢过，植物设定太强了...",
+      "url"        : "/life_posts/2021/Q1/2021-02-17-life/",
+      "date"       : "2021-02-17 00:00:00 +0000",
+      "shortdate"  : "February 17, 2021"
+    } 
+  
+    ,{
+      "title"      : "钓鱼...无愿者上钩",
+      "url"        : "/life_posts/2021/Q1/2021-02-18-life/",
+      "date"       : "2021-02-18 00:00:00 +0000",
+      "shortdate"  : "February 18, 2021"
+    } 
+  
+    ,{
+      "title"      : "慢慢来会更快 &amp; 知行合一",
+      "url"        : "/life_posts/2021/Q1/2021-02-24-life/",
+      "date"       : "2021-02-24 00:00:00 +0000",
+      "shortdate"  : "February 24, 2021"
+    } 
+  
+    ,{
+      "title"      : "做一道不会翻车的食物 &amp; 《超脱》电影",
+      "url"        : "/life_posts/2021/Q1/2021-03-07-life/",
+      "date"       : "2021-03-07 00:00:00 +0000",
+      "shortdate"  : "March 07, 2021"
+    } 
+  
+    ,{
+      "title"      : "平底锅可以多用...",
+      "url"        : "/life_posts/2021/Q1/2021-03-14-life/",
+      "date"       : "2021-03-14 00:00:00 +0000",
+      "shortdate"  : "March 14, 2021"
+    } 
+  
+    ,{
+      "title"      : "蒸腊肠、烤红薯、煮茴香豆...",
+      "url"        : "/life_posts/2021/Q1/2021-03-21-life/",
+      "date"       : "2021-03-21 00:00:00 +0000",
+      "shortdate"  : "March 21, 2021"
+    } 
+  
+    ,{
+      "title"      : "打完球后需要犒劳下自己...",
+      "url"        : "/life_posts/2021/Q1/2021-03-27-life/",
+      "date"       : "2021-03-27 00:00:00 +0000",
+      "shortdate"  : "March 27, 2021"
+    } 
+  
+    ,{
+      "title"      : "捡起滑板，累了来份自制的锅贴盖饭和孜然土豆片。",
+      "url"        : "/life_posts/2021/Q1/2021-03-28-life/",
+      "date"       : "2021-03-28 00:00:00 +0000",
+      "shortdate"  : "March 28, 2021"
+    } 
+  
+    ,{
+      "title"      : "西湖佛系爬山，江山风景如画",
+      "url"        : "/life_posts/2021/Q2/2021-04-03-life/",
+      "date"       : "2021-04-03 00:00:00 +0000",
+      "shortdate"  : "April 03, 2021"
+    } 
+  
+    ,{
+      "title"      : "咋感觉，老夫的炸鸡已经超越肯德基了",
+      "url"        : "/life_posts/2021/Q2/2021-04-04-life/",
+      "date"       : "2021-04-04 00:00:00 +0000",
+      "shortdate"  : "April 04, 2021"
+    } 
+  
+    ,{
+      "title"      : "健身&amp;羽毛球",
+      "url"        : "/life_posts/2021/Q2/2021-04-17-life/",
+      "date"       : "2021-04-17 00:00:00 +0000",
+      "shortdate"  : "April 17, 2021"
+    } 
+  
+    ,{
+      "title"      : "忍不住又做了一次炸鸡，这次用的是鸡里脊",
+      "url"        : "/life_posts/2021/Q2/2021-04-18-life/",
+      "date"       : "2021-04-18 00:00:00 +0000",
+      "shortdate"  : "April 18, 2021"
+    } 
+  
+    ,{
+      "title"      : "速食简餐",
+      "url"        : "/life_posts/2021/Q2/2021-04-24-life/",
+      "date"       : "2021-04-24 00:00:00 +0000",
+      "shortdate"  : "April 24, 2021"
+    } 
+  
+    ,{
+      "title"      : "带鱼翻车，从简",
+      "url"        : "/life_posts/2021/Q2/2021-05-03-life/",
+      "date"       : "2021-05-03 00:00:00 +0000",
+      "shortdate"  : "May 03, 2021"
+    } 
+  
+    ,{
+      "title"      : "带鱼二刷",
+      "url"        : "/life_posts/2021/Q2/2021-05-04-life/",
+      "date"       : "2021-05-04 00:00:00 +0000",
+      "shortdate"  : "May 04, 2021"
+    } 
+  
+    ,{
+      "title"      : "烤蚕豆，简餐",
+      "url"        : "/life_posts/2021/Q2/2021-05-05-life/",
+      "date"       : "2021-05-05 00:00:00 +0000",
+      "shortdate"  : "May 05, 2021"
+    } 
+  
+    ,{
+      "title"      : "淘到优质耳塞~",
+      "url"        : "/life_posts/2021/Q2/2021-05-07-life/",
+      "date"       : "2021-05-07 00:00:00 +0000",
+      "shortdate"  : "May 07, 2021"
+    } 
+  
+    ,{
+      "title"      : "5分钟速食面",
+      "url"        : "/life_posts/2021/Q2/2021-05-22-life/",
+      "date"       : "2021-05-22 00:00:00 +0000",
+      "shortdate"  : "May 22, 2021"
+    } 
+  
+    ,{
+      "title"      : "面+，吃法探索",
+      "url"        : "/life_posts/2021/Q2/2021-06-06-life/",
+      "date"       : "2021-06-06 00:00:00 +0000",
+      "shortdate"  : "June 06, 2021"
+    } 
+  
+    ,{
+      "title"      : "烤红薯~",
+      "url"        : "/life_posts/2021/Q2/2021-06-07-life/",
+      "date"       : "2021-06-07 00:00:00 +0000",
+      "shortdate"  : "June 07, 2021"
+    } 
+  
+    ,{
+      "title"      : "小龙虾尝试，结论：不要速冻~",
+      "url"        : "/life_posts/2021/Q2/2021-06-13-life/",
+      "date"       : "2021-06-13 00:00:00 +0000",
+      "shortdate"  : "June 13, 2021"
+    } 
+  
+    ,{
+      "title"      : "杂食，配 3min 面",
+      "url"        : "/life_posts/2021/Q2/2021-06-26-life/",
+      "date"       : "2021-06-26 00:00:00 +0000",
+      "shortdate"  : "June 26, 2021"
+    } 
+  
+    ,{
+      "title"      : "近况简记",
+      "url"        : "/life_posts/2021/Q3/2021-08-01-life/",
+      "date"       : "2021-08-01 00:00:00 +0000",
+      "shortdate"  : "August 01, 2021"
+    } 
+  
+    ,{
+      "title"      : "罗克奇价值观调查表",
+      "url"        : "/life_posts/2021/Q3/2021-09-11-life/",
+      "date"       : "2021-09-11 00:00:00 +0000",
+      "shortdate"  : "September 11, 2021"
+    } 
+  
+    ,{
+      "title"      : "白蛇2：青蛇劫起",
+      "url"        : "/life_posts/2021/Q3/2021-09-12-life/",
+      "date"       : "2021-09-12 00:00:00 +0000",
+      "shortdate"  : "September 12, 2021"
+    } 
+  
+    ,{
+      "title"      : "晒一下我的桌面全明星阵容，做了两个眼神效果很棒！",
+      "url"        : "/life_posts/2021/Q3/2021-09-29-life/",
+      "date"       : "2021-09-29 00:00:00 +0000",
+      "shortdate"  : "September 29, 2021"
+    } 
+  
+    ,{
+      "title"      : "今日是善财童子，朋友婚礼，我负责背一书包的红包～",
+      "url"        : "/life_posts/2021/Q4/2021-10-02-life/",
+      "date"       : "2021-10-02 00:00:00 +0000",
+      "shortdate"  : "October 02, 2021"
+    } 
+  
+    ,{
+      "title"      : "和大学同学在武汉多逗留了一个白天，看了部好电影。",
+      "url"        : "/life_posts/2021/Q4/2021-10-03-life/",
+      "date"       : "2021-10-03 00:00:00 +0000",
+      "shortdate"  : "October 03, 2021"
+    } 
+  
+    ,{
+      "title"      : "妹妹作业太多，我也来试试，我觉得我又行了～",
+      "url"        : "/life_posts/2021/Q4/2021-10-04-life/",
+      "date"       : "2021-10-04 00:00:00 +0000",
+      "shortdate"  : "October 04, 2021"
+    } 
+  
+    ,{
+      "title"      : "和家人一起看《长津湖》，虽然我是二刷，但是感觉还不错～",
+      "url"        : "/life_posts/2021/Q4/2021-10-05-life/",
+      "date"       : "2021-10-05 00:00:00 +0000",
+      "shortdate"  : "October 05, 2021"
+    } 
+  
+    ,{
+      "title"      : "今天和昨天都采了桂花，心境变化中升起诸多趣事，略受启发",
+      "url"        : "/life_posts/2021/Q4/2021-10-31-life/",
+      "date"       : "2021-10-31 00:00:00 +0000",
+      "shortdate"  : "October 31, 2021"
+    } 
+  
+    ,{
+      "title"      : "意料之外获得了颁奖，开心一下～",
+      "url"        : "/life_posts/2021/Q4/2021-11-02-life/",
+      "date"       : "2021-11-02 00:00:00 +0000",
+      "shortdate"  : "November 02, 2021"
+    } 
+  
+    ,{
+      "title"      : "换了个新住处，有点大...",
+      "url"        : "/life_posts/2021/Q4/2021-11-27-life/",
+      "date"       : "2021-11-27 00:00:00 +0000",
+      "shortdate"  : "November 27, 2021"
+    } 
+  
+    ,{
+      "title"      : "云音乐上市~",
+      "url"        : "/life_posts/2021/Q4/2021-12-02-life/",
+      "date"       : "2021-12-02 00:00:00 +0000",
+      "shortdate"  : "December 02, 2021"
+    } 
+  
+    ,{
+      "title"      : "老和云起到九溪新村，17公里、7小时徒步！！！",
+      "url"        : "/life_posts/2022/Q1/2022-01-09-life/",
+      "date"       : "2022-01-09 00:00:00 +0000",
+      "shortdate"  : "January 09, 2022"
+    } 
+  
+    ,{
+      "title"      : "Todolist 年度报告，继续～",
+      "url"        : "/life_posts/2022/Q1/2022-01-11-life/",
+      "date"       : "2022-01-11 00:00:00 +0000",
+      "shortdate"  : "January 11, 2022"
+    } 
+  
+    ,{
+      "title"      : "年货进货，砂糖橘管够～",
+      "url"        : "/life_posts/2022/Q1/2022-01-27-life/",
+      "date"       : "2022-01-27 00:00:00 +0000",
+      "shortdate"  : "January 27, 2022"
+    } 
+  
+    ,{
+      "title"      : "回家才两天，红码了...",
+      "url"        : "/life_posts/2022/Q1/2022-01-28-life/",
+      "date"       : "2022-01-28 00:00:00 +0000",
+      "shortdate"  : "January 28, 2022"
+    } 
+  
+    ,{
+      "title"      : "居家锻炼...",
+      "url"        : "/life_posts/2022/Q1/2022-01-29-life/",
+      "date"       : "2022-01-29 00:00:00 +0000",
+      "shortdate"  : "January 29, 2022"
+    } 
+  
+    ,{
+      "title"      : "看漫画、练字、帮妹妹画手抄报、放烟花～",
+      "url"        : "/life_posts/2022/Q1/2022-01-30-life/",
+      "date"       : "2022-01-30 00:00:00 +0000",
+      "shortdate"  : "January 30, 2022"
+    } 
+  
+    ,{
+      "title"      : "不可能系列拼图...",
+      "url"        : "/life_posts/2022/Q1/2022-01-31-life/",
+      "date"       : "2022-01-31 00:00:00 +0000",
+      "shortdate"  : "January 31, 2022"
+    } 
+  
+    ,{
+      "title"      : "午后小吃，安排～",
+      "url"        : "/life_posts/2022/Q1/2022-02-01-life/",
+      "date"       : "2022-02-01 00:00:00 +0000",
+      "shortdate"  : "February 01, 2022"
+    } 
+  
+    ,{
+      "title"      : "丛林探险、寻春",
+      "url"        : "/life_posts/2022/Q1/2022-02-04-life/",
+      "date"       : "2022-02-04 00:00:00 +0000",
+      "shortdate"  : "February 04, 2022"
+    } 
+  
+    ,{
+      "title"      : "卧槽，下雪了！！！",
+      "url"        : "/life_posts/2022/Q1/2022-02-07-life/",
+      "date"       : "2022-02-07 00:00:00 +0000",
+      "shortdate"  : "February 07, 2022"
+    } 
+  
+    ,{
+      "title"      : "画画捡起来～ 打卡1",
+      "url"        : "/life_posts/2022/Q1/2022-02-20-life/",
+      "date"       : "2022-02-20 00:00:00 +0000",
+      "shortdate"  : "February 20, 2022"
+    } 
+  
+    ,{
+      "title"      : "画画捡起来～ 打卡2",
+      "url"        : "/life_posts/2022/Q1/2022-02-26-life/",
+      "date"       : "2022-02-26 00:00:00 +0000",
+      "shortdate"  : "February 26, 2022"
+    } 
+  
+    ,{
+      "title"      : "驾车前往西溪，与好友踏青",
+      "url"        : "/life_posts/2022/Q1/2022-03-05-life/",
+      "date"       : "2022-03-05 00:00:00 +0000",
+      "shortdate"  : "March 05, 2022"
+    } 
+  
+    ,{
+      "title"      : "画画捡起来～打卡3",
+      "url"        : "/life_posts/2022/Q1/2022-03-06-life/",
+      "date"       : "2022-03-06 00:00:00 +0000",
+      "shortdate"  : "March 06, 2022"
+    } 
+  
+    ,{
+      "title"      : "上午阅读，有感而发；下午继续画画～打卡4",
+      "url"        : "/life_posts/2022/Q1/2022-03-13-life/",
+      "date"       : "2022-03-13 00:00:00 +0000",
+      "shortdate"  : "March 13, 2022"
+    } 
+  
+    ,{
+      "title"      : "绘画练习与散步",
+      "url"        : "/life_posts/2022/Q1/2022-03-27-life/",
+      "date"       : "2022-03-27 00:00:00 +0000",
+      "shortdate"  : "March 27, 2022"
+    } 
+  
+    ,{
+      "title"      : "与高中好友野钓",
+      "url"        : "/life_posts/2022/Q2/2022-04-04-life/",
+      "date"       : "2022-04-04 00:00:00 +0000",
+      "shortdate"  : "April 04, 2022"
+    } 
+  
+    ,{
+      "title"      : "与老爸野钓",
+      "url"        : "/life_posts/2022/Q2/2022-04-09-life/",
+      "date"       : "2022-04-09 00:00:00 +0000",
+      "shortdate"  : "April 09, 2022"
+    } 
+  
+    ,{
+      "title"      : "前往一期打球，遇见救护车出公司。。",
+      "url"        : "/life_posts/2022/Q2/2022-04-15-life/",
+      "date"       : "2022-04-15 00:00:00 +0000",
+      "shortdate"  : "April 15, 2022"
+    } 
+  
+    ,{
+      "title"      : "继续练习（换个思路）",
+      "url"        : "/life_posts/2022/Q2/2022-04-16-life/",
+      "date"       : "2022-04-16 00:00:00 +0000",
+      "shortdate"  : "April 16, 2022"
+    } 
+  
+    ,{
+      "title"      : "体验做蛋糕",
+      "url"        : "/life_posts/2022/Q2/2022-04-30-life/",
+      "date"       : "2022-04-30 00:00:00 +0000",
+      "shortdate"  : "April 30, 2022"
+    } 
+  
+    ,{
+      "title"      : "书法练习体验",
+      "url"        : "/life_posts/2022/Q2/2022-05-02-life/",
+      "date"       : "2022-05-02 00:00:00 +0000",
+      "shortdate"  : "May 02, 2022"
+    } 
+  
+    ,{
+      "title"      : "与公司球友去水库钓鱼",
+      "url"        : "/life_posts/2022/Q2/2022-05-03-life/",
+      "date"       : "2022-05-03 00:00:00 +0000",
+      "shortdate"  : "May 03, 2022"
+    } 
+  
+    ,{
+      "title"      : "临时起意，户外跑",
+      "url"        : "/life_posts/2022/Q2/2022-05-21-life/",
+      "date"       : "2022-05-21 00:00:00 +0000",
+      "shortdate"  : "May 21, 2022"
+    } 
+  
+    ,{
+      "title"      : "天渐渐热了，去给车贴个好的隔热膜",
+      "url"        : "/life_posts/2022/Q2/2022-05-22-life/",
+      "date"       : "2022-05-22 00:00:00 +0000",
+      "shortdate"  : "May 22, 2022"
+    } 
+  
+    ,{
+      "title"      : "端午快来了～",
+      "url"        : "/life_posts/2022/Q2/2022-05-26-life/",
+      "date"       : "2022-05-26 00:00:00 +0000",
+      "shortdate"  : "May 26, 2022"
+    } 
+  
+    ,{
+      "title"      : "最近在跳操！",
+      "url"        : "/life_posts/2022/Q2/2022-05-30-life/",
+      "date"       : "2022-05-30 00:00:00 +0000",
+      "shortdate"  : "May 30, 2022"
+    } 
+  
+    ,{
+      "title"      : "给球拍拉线，拖了很久了。。",
+      "url"        : "/life_posts/2022/Q2/2022-06-03-life/",
+      "date"       : "2022-06-03 00:00:00 +0000",
+      "shortdate"  : "June 03, 2022"
+    } 
+  
+  
+    ,{
+      "title"      : "Github 个人博客部署",
+      "url"        : "/learner_posts/skill/Github-blog/",
+      "date"       : "2016-09-22 00:00:00 +0000",
+      "shortdate"  : "September 22, 2016"
+    } 
+  
+    ,{
+      "title"      : "各种语言的 &quot;Hello World&quot; ",
+      "url"        : "/learner_posts/programming/HelloWorld/",
+      "date"       : "2017-05-22 00:00:00 +0000",
+      "shortdate"  : "May 22, 2017"
+    } 
+  
+    ,{
+      "title"      : "Grunt 学习笔记",
+      "url"        : "/learner_posts/skill/grunt/",
+      "date"       : "2018-06-02 00:00:00 +0000",
+      "shortdate"  : "June 02, 2018"
+    } 
+  
+    ,{
+      "title"      : "SpringBoot 学习笔记",
+      "url"        : "/learner_posts/programming/SpringBoot/",
+      "date"       : "2018-07-22 00:00:00 +0000",
+      "shortdate"  : "July 22, 2018"
+    } 
+  
+    ,{
+      "title"      : "Git 学习笔记",
+      "url"        : "/learner_posts/skill/Git/",
+      "date"       : "2018-09-02 00:00:00 +0000",
+      "shortdate"  : "September 02, 2018"
+    } 
+  
+    ,{
+      "title"      : "Maven 学习笔记",
+      "url"        : "/learner_posts/programming/Maven/",
+      "date"       : "2019-03-22 00:00:00 +0000",
+      "shortdate"  : "March 22, 2019"
+    } 
+  
+    ,{
+      "title"      : "Thymeleaf 学习笔记",
+      "url"        : "/learner_posts/programming/thymeleaf/",
+      "date"       : "2020-05-22 00:00:00 +0000",
+      "shortdate"  : "May 22, 2020"
+    } 
+  
+    ,{
+      "title"      : "Jekyll 中的配置和模板语法",
+      "url"        : "/learner_posts/skill/jekyll-guide/",
+      "date"       : "2020-06-22 00:00:00 +0000",
+      "shortdate"  : "June 22, 2020"
+    } 
+  
+    ,{
+      "title"      : "JVM 工具学习笔记",
+      "url"        : "/learner_posts/programming/JVM-tool/",
+      "date"       : "2021-01-22 00:00:00 +0000",
+      "shortdate"  : "January 22, 2021"
+    } 
+  
+    ,{
+      "title"      : "Docker 学习笔记",
+      "url"        : "/learner_posts/skill/Docker/",
+      "date"       : "2021-06-22 00:00:00 +0000",
+      "shortdate"  : "June 22, 2021"
+    } 
+  
+    ,{
+      "title"      : "Apache Poi Word 学习笔记",
+      "url"        : "/learner_posts/programming/ApachePoiWord/",
+      "date"       : "2021-09-22 00:00:00 +0000",
+      "shortdate"  : "September 22, 2021"
+    } 
+  
+    ,{
+      "title"      : "3D Max 学习笔记",
+      "url"        : "/learner_posts/skill/3DMax/",
+      "date"       : "2022-09-22 00:00:00 +0000",
+      "shortdate"  : "September 22, 2022"
+    } 
+  
+    ,{
+      "title"      : "ChatGPT 的 Prompt 学习笔记",
+      "url"        : "/learner_posts/skill/chat-gpt-prompt/",
+      "date"       : "2023-05-07 00:00:00 +0000",
+      "shortdate"  : "May 07, 2023"
+    } 
+  
+    ,{
+      "title"      : "我想维维的记忆碎片",
+      "url"        : "/learner_posts/other/miss-weiwei/",
+      "date"       : "2023-05-22 00:00:00 +0000",
+      "shortdate"  : "May 22, 2023"
+    } 
+  
+    ,{
+      "title"      : "心理学课程笔记（持续更新）",
+      "url"        : "/learner_posts/psychology/psychology/",
+      "date"       : "2023-08-29 00:00:00 +0000",
+      "shortdate"  : "August 29, 2023"
+    } 
+  
+    ,{
+      "title"      : "PET 考试个性化学习笔记",
+      "url"        : "/learner_posts/skill/PET/",
+      "date"       : "2023-09-01 00:00:00 +0000",
+      "shortdate"  : "September 01, 2023"
+    } 
+  
+    ,{
+      "title"      : "心理学课程错题笔记（持续更新）",
+      "url"        : "/learner_posts/psychology/psy-error-book/",
+      "date"       : "2023-09-02 00:00:00 +0000",
+      "shortdate"  : "September 02, 2023"
+    } 
+  
+    ,{
+      "title"      : "About Learning English",
+      "url"        : "/learner_posts/skill/learn-english/",
+      "date"       : "2023-09-06 00:00:00 +0000",
+      "shortdate"  : "September 06, 2023"
+    } 
+  
+    ,{
+      "title"      : "【转】AIGC Tutorials",
+      "url"        : "/learner_posts/skill/learn-AIGC/",
+      "date"       : "2023-09-09 00:00:00 +0000",
+      "shortdate"  : "September 09, 2023"
+    } 
+  
+    ,{
+      "title"      : "专精特新相关知识阅读和总结",
+      "url"        : "/learner_posts/other/srui/",
+      "date"       : "2023-09-11 00:00:00 +0000",
+      "shortdate"  : "September 11, 2023"
+    } 
+  
+    ,{
+      "title"      : "《庄子》学习笔记",
+      "url"        : "/learner_posts/philosophy/zhouzhuang/",
+      "date"       : "2023-09-12 00:00:00 +0000",
+      "shortdate"  : "September 12, 2023"
+    } 
+  
+    ,{
+      "title"      : "《老子》学习笔记",
+      "url"        : "/learner_posts/philosophy/laozi/",
+      "date"       : "2023-09-14 00:00:00 +0000",
+      "shortdate"  : "September 14, 2023"
+    } 
+  
+    ,{
+      "title"      : "【转】写作只能塑造真实的自己",
+      "url"        : "/learner_posts/other/%E5%86%99%E4%BD%9C%E5%8F%AA%E8%83%BD%E5%A1%91%E9%80%A0%E7%9C%9F%E5%AE%9E%E7%9A%84%E8%87%AA%E5%B7%B1/",
+      "date"       : "2023-09-20 00:00:00 +0000",
+      "shortdate"  : "September 20, 2023"
+    } 
+  
+    ,{
+      "title"      : "Mac使用技巧",
+      "url"        : "/learner_posts/skill/Mac/",
+      "date"       : "2023-09-23 00:00:00 +0000",
+      "shortdate"  : "September 23, 2023"
+    } 
+  
+    ,{
+      "title"      : "Swift 编程笔记",
+      "url"        : "/learner_posts/programming/Swift/",
+      "date"       : "2023-10-07 00:00:00 +0000",
+      "shortdate"  : "October 07, 2023"
+    } 
+  
+    ,{
+      "title"      : "一些好的行事规则",
+      "url"        : "/learner_posts/other/Rules/",
+      "date"       : "2023-10-19 00:00:00 +0000",
+      "shortdate"  : "October 19, 2023"
+    } 
+  
+  
+    ,{
+      "title"      : "愿迷茫的你能找到一丝方向",
+      "url"        : "/letter_posts/2021-01-20-try-think-more/",
+      "date"       : "2021-01-20 00:00:00 +0000",
+      "shortdate"  : "January 20, 2021"
+    }
+  
+    ,{
+      "title"      : "天之道损有余而补不足",
+      "url"        : "/letter_posts/2021-02-08-more-to-less-or-else/",
+      "date"       : "2021-02-08 00:00:00 +0000",
+      "shortdate"  : "February 08, 2021"
+    }
+  
+    ,{
+      "title"      : "做你需要做的事情",
+      "url"        : "/letter_posts/2021-02-24-do-what-you-need-to-do/",
+      "date"       : "2021-02-24 00:00:00 +0000",
+      "shortdate"  : "February 24, 2021"
+    }
+  
+    ,{
+      "title"      : "选择你喜欢的还是喜欢你的",
+      "url"        : "/letter_posts/2021-03-05-you-love-or-love-you/",
+      "date"       : "2021-03-05 00:00:00 +0000",
+      "shortdate"  : "March 05, 2021"
+    }
+  
+    ,{
+      "title"      : "欧阳家族需要有家训",
+      "url"        : "/letter_posts/2021-03-12-oys-need-family-instructions/",
+      "date"       : "2021-03-12 00:00:00 +0000",
+      "shortdate"  : "March 12, 2021"
+    }
+  
+    ,{
+      "title"      : "爱生活而不是生活的意义",
+      "url"        : "/letter_posts/2021-03-25-love-your-life-not-the-meaning-of-life/",
+      "date"       : "2021-03-25 00:00:00 +0000",
+      "shortdate"  : "March 25, 2021"
+    }
+  
+    ,{
+      "title"      : "放下你的心理优势",
+      "url"        : "/letter_posts/2021-05-13-put-down-psychological-advantage/",
+      "date"       : "2021-05-13 00:00:00 +0000",
+      "shortdate"  : "May 13, 2021"
+    }
+  
+    ,{
+      "title"      : "做一个温良的人",
+      "url"        : "/letter_posts/2021-07-11-be-gentle-and-kindhearted/",
+      "date"       : "2021-07-11 00:00:00 +0000",
+      "shortdate"  : "July 11, 2021"
+    }
+  
+    ,{
+      "title"      : "致家妹的第一封信",
+      "url"        : "/letter_posts/2021-07-11-to-my-cute-sister/",
+      "date"       : "2021-07-11 00:00:00 +0000",
+      "shortdate"  : "July 11, 2021"
+    }
+  
+    ,{
+      "title"      : "为什么开始写信？被问&amp;自答",
+      "url"        : "/letter_posts/2021-10-15-why-write-a-letter/",
+      "date"       : "2021-10-15 00:00:00 +0000",
+      "shortdate"  : "October 15, 2021"
+    }
+  
+    ,{
+      "title"      : "一封情书和陌路信",
+      "url"        : "/letter_posts/2021-11-06-a-love-and-bye-bye-letter/",
+      "date"       : "2021-11-06 00:00:00 +0000",
+      "shortdate"  : "November 06, 2021"
+    }
+  
+    ,{
+      "title"      : "阅读你喜欢的书，直到你喜欢阅读",
+      "url"        : "/letter_posts/2021-11-30-do-what-you-love-until-you-love-to-do/",
+      "date"       : "2021-11-30 00:00:00 +0000",
+      "shortdate"  : "November 30, 2021"
+    }
+  
+    ,{
+      "title"      : "心外无物，有则自省",
+      "url"        : "/letter_posts/2022-07-27-nothing-out-of-heart/",
+      "date"       : "2022-07-27 00:00:00 +0000",
+      "shortdate"  : "July 27, 2022"
+    }
+  
+    ,{
+      "title"      : "致皓雅同学一封信",
+      "url"        : "/letter_posts/2023-04-23-to-my-friend-rhy/",
+      "date"       : "2023-04-23 00:00:00 +0000",
+      "shortdate"  : "April 23, 2023"
+    }
+  
+    ,{
+      "title"      : "一封信的示例",
+      "url"        : "/letter_posts/2023-05-05-letter-ex/",
+      "date"       : "2023-05-05 00:00:00 +0000",
+      "shortdate"  : "May 05, 2023"
+    }
+  
+    ,{
+      "title"      : "致皓雅同学一封信（二）",
+      "url"        : "/letter_posts/2023-05-09-to-my-friend-rhy-2/",
+      "date"       : "2023-05-09 00:00:00 +0000",
+      "shortdate"  : "May 09, 2023"
+    }
+  
+    ,{
+      "title"      : "致我的女孩的一封信",
+      "url"        : "/letter_posts/2023-06-15-to-my-girl-weiwei/",
+      "date"       : "2023-06-15 00:00:00 +0000",
+      "shortdate"  : "June 15, 2023"
+    }
+  
+    ,{
+      "title"      : "致堆堆的一封信",
+      "url"        : "/letter_posts/2023-07-06-to-my-friend-duidui/",
+      "date"       : "2023-07-06 00:00:00 +0000",
+      "shortdate"  : "July 06, 2023"
+    }
+  
+    ,{
+      "title"      : "致胜彬的一封信",
+      "url"        : "/letter_posts/2023-08-02-to-my-friend-oysb/",
+      "date"       : "2023-08-02 00:00:00 +0000",
+      "shortdate"  : "August 02, 2023"
+    }
+  
+    ,{
+      "title"      : "致唐宾德的一封信",
+      "url"        : "/letter_posts/2023-08-05-to-the-girl-tbd/",
+      "date"       : "2023-08-05 00:00:00 +0000",
+      "shortdate"  : "August 05, 2023"
+    }
+  
+  
+    ,{
+      "title"      : "《相思》- 西游记后传片尾曲",
+      "url"        : "/song_posts/2021-03-14-miss/",
+      "date"       : "2021-03-14 00:00:00 +0000",
+      "shortdate"  : "March 14, 2021"
+    } 
+  
+    ,{
+      "title"      : "《枕刀歌》- 枕刀歌片头曲",
+      "url"        : "/song_posts/2021-05-04-pillow-knife/",
+      "date"       : "2021-05-04 00:00:00 +0000",
+      "shortdate"  : "May 04, 2021"
+    } 
+  
+    ,{
+      "title"      : "《起风了》- 青春之歌",
+      "url"        : "/song_posts/2021-06-17-song-of-wind/",
+      "date"       : "2021-06-17 00:00:00 +0000",
+      "shortdate"  : "June 17, 2021"
+    } 
+  
+    ,{
+      "title"      : "《中华人民共和国国歌》",
+      "url"        : "/song_posts/2021-06-23-national-song/",
+      "date"       : "2021-06-23 00:00:00 +0000",
+      "shortdate"  : "June 23, 2021"
+    } 
+  
+    ,{
+      "title"      : "《公主恋歌》- 自创",
+      "url"        : "/song_posts/2023-01-02-princess-love/",
+      "date"       : "2023-01-02 00:00:00 +0000",
+      "shortdate"  : "January 02, 2023"
+    } 
+  
+]
