@@ -12,19 +12,22 @@
 <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>Sqlite 连接池和批量操作实现 | 欧阳Boy_Petter&#39;s Blog</title>
-<meta name="generator" content="Jekyll v3.5.2" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Sqlite 连接池和批量操作实现" />
 <meta name="author" content="petterobam" />
 <meta property="og:locale" content="zh" />
 <meta name="description" content="Sqlite 连接池和批量操作实现" />
-<meta property="og:description" content="Sqlite 连接池和批量操作实现" />
+<meta name="twitter:description" property="og:description" content="Sqlite 连接池和批量操作实现" />
 <meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-05-18T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-05-18T00:00:00+08:00" />
+<meta property="article:modified_time" content="2018-05-18T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Sqlite 连接池和批量操作实现" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"petterobam"},"description":"Sqlite 连接池和批量操作实现","@type":"BlogPosting","url":"/blog/2018/05/18/sqlite-connection-pool-and-batch/","headline":"Sqlite 连接池和批量操作实现","dateModified":"2018-05-18T00:00:00+00:00","datePublished":"2018-05-18T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2018/05/18/sqlite-connection-pool-and-batch/"},"@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"petterobam"},"dateModified":"2018-05-18T00:00:00+08:00","datePublished":"2018-05-18T00:00:00+08:00","description":"Sqlite 连接池和批量操作实现","headline":"Sqlite 连接池和批量操作实现","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2018/05/18/sqlite-connection-pool-and-batch/"},"url":"/blog/2018/05/18/sqlite-connection-pool-and-batch/"}</script>
 <!-- End Jekyll SEO tag -->
 
 <meta name="keywords" content="Sqlite,连接池,批量" />
@@ -33,19 +36,20 @@
 
 
 
-<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
-    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+<link type="application/atom+xml" rel="alternate" href="../../../../../feed.xml" title="欧阳Boy_Petter&#39;s Blog">
+
+    <link href='../../../../../assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+<script>window.Modernizr || document.write('<script src="../../../../../assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+    window.jQuery || document.write('<script src="../../../../../assets/javascripts/jquery-3.2.1.min.js"><\/script>')
 </script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 <script>
-    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+    window.Pace || document.write('<script src="../../../../../assets/javascripts/pace.min.js"><\/script>')
 </script>
 
 
@@ -65,23 +69,23 @@
         <a class="btn-close">关闭</a>
         <div class="results">
             <ul>
-                <li><a href="/blog/">文章</a></li>
-                <li><a href="/blog/categories/">分类</a></li>
-                <li><a href="/blog/tags/">标签</a></li>
+                <li><a href="../../../../">文章</a></li>
+                <li><a href="../../../../categories/">分类</a></li>
+                <li><a href="../../../../tags/">标签</a></li>
 
-                <li><a href="/blog/reader/">读书</a></li>
-                <li><a href="/blog/movie/">影音</a></li>
-                <li><a href="/blog/book+movie/">书&影</a></li>
+                <li><a href="../../../../reader/">读书</a></li>
+                <li><a href="../../../../movie/">影音</a></li>
+                <li><a href="../../../../book+movie/">书&影</a></li>
 
-                <li><a href="/blog/learner/">笔记</a></li>
-                <li><a href="/blog/life/">动态</a></li>
-                <li><a href="/blog/letter/">信</a></li>
-                <li><a href="/blog/song/">歌</a></li>
-                <li><a href="/blog/story/">文</a></li>
-                <li><a href="/blog/plan/">业</a></li>
-                <li><a href="/blog/family/">家</a></li>
-                <li><a href="/blog/other/">杂</a></li>
-                <li><a href="/">关于</a></li>
+                <li><a href="../../../../learner/">笔记</a></li>
+                <li><a href="../../../../life/">动态</a></li>
+                <li><a href="../../../../letter/">信</a></li>
+                <li><a href="../../../../song/">歌</a></li>
+                <li><a href="../../../../story/">文</a></li>
+                <li><a href="../../../../plan/">业</a></li>
+                <li><a href="../../../../family/">家</a></li>
+                <li><a href="../../../../other/">杂</a></li>
+                <li><a href="../../../../../">关于</a></li>
             </ul>
         </div>
     </div>
@@ -104,25 +108,25 @@
                 <ul>
                     <li class="logo">
                         <button class="btn-menu" title="菜单"></button>
-                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <a href="../../../../">欧阳Boy_Petter's Blog</a>
                         <!--[if !IE]> -->
                         <button class="btn-search" title="搜索"></button>
                         <!-- <![endif]-->
                     </li>
-                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+                    <li class="nav-link"><a label="article" title="文章" href="../../../../">文章</a></li>
 
-                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
-                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
-                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="../../../../reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="../../../../movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="../../../../book+movie/">书&影</a></li>
                     
-                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
-                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
-                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
-                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
-                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
-                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
-                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
-                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <li class="nav-link"><a label="learn" title="笔记" href="../../../../learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="../../../../life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="../../../../letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="../../../../song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="../../../../story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="../../../../plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="../../../../family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="../../../../other/">杂</a></li>
                     <!--[if !IE]> -->
                     <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
                     <!-- <![endif]-->
@@ -153,16 +157,16 @@
                         <p class="date-publish">
                             发表信息:
                             <time itemprop="datePublished" class="date-pub updated"
-                                title="2018-05-18T00:00:00+00:00" datetime="2018-05-18T00:00:00+00:00">May 18, 2018 </time>
+                                title="2018-05-18T00:00:00+08:00" datetime="2018-05-18T00:00:00+08:00">May 18, 2018 </time>
                             by
-                            <a class="author" href="/" rel="author" title="显示作者">
+                            <a class="author" href="../../../../../" rel="author" title="显示作者">
                                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
                                     <span itemprop="name">petterobam</span>
                                 </span>
                             </a>
                             
                                 <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
-                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="../../../../../assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
                                 </a>
                             
                             
@@ -171,7 +175,7 @@
 
 
 <p style="margin-top: 0px;margin-bottom: 0px;">
-  字数：4940 字，&nbsp;预计阅读时间：49 分钟
+  字数：4956 字，&nbsp;预计阅读时间：49 分钟
 </p>
                         
                         <ul class="list-category list-linear">
@@ -179,17 +183,17 @@
                              
      
         <li>
-            <a href="/blog/categories/#Java" title="Java">
+            <a href="../../../../categories/#Java" title="Java">
             Java <span>5</span></a>
         </li>
      
         <li>
-            <a href="/blog/categories/#Sqlite" title="Sqlite">
+            <a href="../../../../categories/#Sqlite" title="Sqlite">
             Sqlite <span>2</span></a>
         </li>
      
         <li>
-            <a href="/blog/categories/#面向对象封装" title="面向对象封装">
+            <a href="../../../../categories/#面向对象封装" title="面向对象封装">
             面向对象封装 <span>4</span></a>
         </li>
     
@@ -205,17 +209,17 @@
     
         
         <li>
-            <a href="/blog/tags/#Sqlite" title="Sqlite">Sqlite <span>2</span></a>
+            <a href="../../../../tags/#Sqlite" title="Sqlite">Sqlite <span>2</span></a>
         </li>
     
         
         <li>
-            <a href="/blog/tags/#批量" title="批量">批量 <span>1</span></a>
+            <a href="../../../../tags/#批量" title="批量">批量 <span>1</span></a>
         </li>
     
         
         <li>
-            <a href="/blog/tags/#连接池" title="连接池">连接池 <span>1</span></a>
+            <a href="../../../../tags/#连接池" title="连接池">连接池 <span>1</span></a>
         </li>
     
 
@@ -257,32 +261,32 @@
 
 <p>为了便于管理，需要在容纳原生连接对象的同时记录连接建立时的一些额外信息，以便于连接的管理。至于为什么不用继承，那是为了后期扩展能够更方便、灵活。连接池的实现可以想象成连接对象的生产和消费的市场，每个连接像是一个产品，预先生产出来后，用于应用中不同的地方去消费。而市场的良好状态就是供需平衡，不能频繁出现供不应求和供应过剩的情况。</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * Sqlite 连接自定义封装类
  * @author 欧阳洁
  * @since 2018-05-02 13:26
  */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteBaseConnection</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">uri</span><span class="o">;</span><span class="c1">//数据库连接</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">uri</span><span class="o">;</span><span class="c1">//数据库连接</span>
     <span class="kd">private</span> <span class="kt">long</span> <span class="n">createTime</span><span class="o">;</span><span class="c1">// 时间戳</span>
-    <span class="kd">private</span> <span class="n">Connection</span> <span class="n">connection</span><span class="o">;</span><span class="c1">// 链接对象</span>
+    <span class="kd">private</span> <span class="nc">Connection</span> <span class="n">connection</span><span class="o">;</span><span class="c1">// 链接对象</span>
 
     <span class="cm">/**
      * 重置连接 uri，并且同时会刷新连接对象
      * @param uri
      */</span>
-    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">resetUri</span><span class="o">(</span><span class="n">String</span> <span class="n">uri</span><span class="o">){</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">resetUri</span><span class="o">(</span><span class="nc">String</span> <span class="n">uri</span><span class="o">){</span>
         <span class="k">try</span> <span class="o">{</span>
             <span class="k">this</span><span class="o">.</span><span class="na">uri</span> <span class="o">=</span> <span class="n">uri</span><span class="o">;</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">createTime</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getNowStamp</span><span class="o">();</span>
-            <span class="k">if</span><span class="o">(</span><span class="n">SqliteBaseConnectionFactory</span><span class="o">.</span><span class="na">USE_SELF_INNER_CONFIG</span><span class="o">){</span>
-                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getConfig</span><span class="o">().</span><span class="na">toProperties</span><span class="o">());</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">createTime</span> <span class="o">=</span> <span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getNowStamp</span><span class="o">();</span>
+            <span class="k">if</span><span class="o">(</span><span class="nc">SqliteBaseConnectionFactory</span><span class="o">.</span><span class="na">USE_SELF_INNER_CONFIG</span><span class="o">){</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getConfig</span><span class="o">().</span><span class="na">toProperties</span><span class="o">());</span>
             <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
             <span class="o">}</span>
             <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[resetUri] 重置连接对象失败！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[resetUri] 重置连接对象失败！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span>
@@ -294,15 +298,15 @@
      */</span>
     <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">refreshConnection</span><span class="o">(){</span>
         <span class="k">try</span> <span class="o">{</span>
-            <span class="k">this</span><span class="o">.</span><span class="na">createTime</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getNowStamp</span><span class="o">();</span>
-            <span class="k">if</span><span class="o">(</span><span class="n">SqliteBaseConnectionFactory</span><span class="o">.</span><span class="na">USE_SELF_INNER_CONFIG</span><span class="o">){</span>
-                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getConfig</span><span class="o">().</span><span class="na">toProperties</span><span class="o">());</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">createTime</span> <span class="o">=</span> <span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getNowStamp</span><span class="o">();</span>
+            <span class="k">if</span><span class="o">(</span><span class="nc">SqliteBaseConnectionFactory</span><span class="o">.</span><span class="na">USE_SELF_INNER_CONFIG</span><span class="o">){</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getConfig</span><span class="o">().</span><span class="na">toProperties</span><span class="o">());</span>
             <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
-                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
+                <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
             <span class="o">}</span>
             <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[refreshConnection] 重新建立连接对象失败！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[refreshConnection] 重新建立连接对象失败！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
         <span class="o">}</span>
@@ -312,16 +316,16 @@
      * 获取连接
      * @return
      */</span>
-    <span class="kd">public</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nc">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">if</span><span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="k">this</span><span class="o">.</span><span class="na">connection</span><span class="o">){</span>
             <span class="k">try</span> <span class="o">{</span>
-                <span class="k">if</span><span class="o">(</span><span class="n">SqliteBaseConnectionFactory</span><span class="o">.</span><span class="na">USE_SELF_INNER_CONFIG</span><span class="o">){</span>
-                    <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getConfig</span><span class="o">().</span><span class="na">toProperties</span><span class="o">());</span>
+                <span class="k">if</span><span class="o">(</span><span class="nc">SqliteBaseConnectionFactory</span><span class="o">.</span><span class="na">USE_SELF_INNER_CONFIG</span><span class="o">){</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getConfig</span><span class="o">().</span><span class="na">toProperties</span><span class="o">());</span>
                 <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
-                    <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="n">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
+                    <span class="k">this</span><span class="o">.</span><span class="na">connection</span> <span class="o">=</span> <span class="nc">DriverManager</span><span class="o">.</span><span class="na">getConnection</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
                 <span class="o">}</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"连接建立失败！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"连接建立失败！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
         <span class="o">}</span>
@@ -330,35 +334,34 @@
 
     <span class="o">...</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="heading-连接工厂功能车间">连接工厂功能车间</h3>
 
 <p>连接工厂用于提供连接池连接的生产、质检、发放的功能，让连接池公司能够正常的运作的功能车间组。</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * Sqlite 连接工厂
  * @author 欧阳洁
  * @since 2018-05-02 13:30
  */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteBaseConnectionFactory</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="n">DEFAULT_DB_PATH</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getUri</span><span class="o">();</span><span class="c1">//默认库</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">CON_MAX</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionMax</span><span class="o">();</span><span class="c1">// 最大池链接</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">CON_MIN</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionMin</span><span class="o">();</span><span class="c1">// 初始池链接</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">CON_STEP</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionStep</span><span class="o">();</span><span class="c1">// 每次最大补充线程数量</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">REFRESH_CON_POOL</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">USE_CONNECT_POOL</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">isConnectionPoolEnable</span><span class="o">();</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">long</span> <span class="n">CON_TIMEOUT</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionTimeout</span><span class="o">();</span><span class="c1">// 超时线程回收</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">USE_SELF_INNER_CONFIG</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">isConnectionWithCofig</span><span class="o">();</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">SqliteBaseConnection</span><span class="o">&gt;</span> <span class="n">idleConList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">SqliteBaseConnection</span><span class="o">&gt;();</span><span class="c1">// 闲置连接</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">SqliteBaseConnection</span><span class="o">&gt;</span> <span class="n">runConList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Vector</span><span class="o">&lt;</span><span class="n">SqliteBaseConnection</span><span class="o">&gt;();</span><span class="c1">// 已分配的连接</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="no">DEFAULT_DB_PATH</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getUri</span><span class="o">();</span><span class="c1">//默认库</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">CON_MAX</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionMax</span><span class="o">();</span><span class="c1">// 最大池链接</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">CON_MIN</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionMin</span><span class="o">();</span><span class="c1">// 初始池链接</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">CON_STEP</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionStep</span><span class="o">();</span><span class="c1">// 每次最大补充线程数量</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="no">REFRESH_CON_POOL</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="no">USE_CONNECT_POOL</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">isConnectionPoolEnable</span><span class="o">();</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">long</span> <span class="no">CON_TIMEOUT</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getPoolConnectionTimeout</span><span class="o">();</span><span class="c1">// 超时线程回收</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="no">USE_SELF_INNER_CONFIG</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">isConnectionWithCofig</span><span class="o">();</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="nc">Vector</span><span class="o">&lt;</span><span class="nc">SqliteBaseConnection</span><span class="o">&gt;</span> <span class="n">idleConList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">&lt;</span><span class="nc">SqliteBaseConnection</span><span class="o">&gt;();</span><span class="c1">// 闲置连接</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="nc">Vector</span><span class="o">&lt;</span><span class="nc">SqliteBaseConnection</span><span class="o">&gt;</span> <span class="n">runConList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Vector</span><span class="o">&lt;</span><span class="nc">SqliteBaseConnection</span><span class="o">&gt;();</span><span class="c1">// 已分配的连接</span>
 
     <span class="kd">static</span> <span class="o">{</span>
         <span class="n">init</span><span class="o">();</span>
         <span class="c1">// 是否启用线程池</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">USE_CONNECT_POOL</span><span class="o">){</span>
-            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">initConnectPoolThreads</span><span class="o">();</span>
+        <span class="k">if</span><span class="o">(</span><span class="no">USE_CONNECT_POOL</span><span class="o">){</span>
+            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">initConnectPoolThreads</span><span class="o">();</span>
         <span class="o">}</span>
     <span class="o">}</span>
 
@@ -367,14 +370,14 @@
      */</span>
     <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
         <span class="k">try</span> <span class="o">{</span>
-            <span class="k">if</span><span class="o">(</span><span class="n">SqliteConfig</span><span class="o">.</span><span class="na">isPathBaseClasspath</span><span class="o">()){</span>
-                <span class="n">DEFAULT_DB_PATH</span> <span class="o">=</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getClassRootPath</span><span class="o">(</span><span class="n">DEFAULT_DB_PATH</span><span class="o">);</span>
+            <span class="k">if</span><span class="o">(</span><span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">isPathBaseClasspath</span><span class="o">()){</span>
+                <span class="no">DEFAULT_DB_PATH</span> <span class="o">=</span> <span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getClassRootPath</span><span class="o">(</span><span class="no">DEFAULT_DB_PATH</span><span class="o">);</span>
             <span class="o">}</span>
             <span class="n">loadSqliteJdbcClass</span><span class="o">();</span><span class="c1">//加载 org.sqlite.JDBC</span>
-            <span class="n">addConnection</span><span class="o">(</span><span class="n">DEFAULT_DB_PATH</span><span class="o">,</span> <span class="n">CON_MIN</span><span class="o">);</span><span class="c1">//默认预先建立一些连接到链接对象</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">addConnection</span><span class="o">(</span><span class="no">DEFAULT_DB_PATH</span><span class="o">,</span> <span class="no">CON_MIN</span><span class="o">);</span><span class="c1">//默认预先建立一些连接到链接对象</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">idleConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
-            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池初始化失败][池容器已清空]"</span><span class="o">);</span>
+            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池初始化失败][池容器已清空]"</span><span class="o">);</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="o">}</span>
     <span class="o">}</span>
@@ -384,8 +387,8 @@
      *
      * @return 返回结果
      */</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loadSqliteJdbcClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
-        <span class="n">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"org.sqlite.JDBC"</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loadSqliteJdbcClass</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">ClassNotFoundException</span> <span class="o">{</span>
+        <span class="nc">Class</span><span class="o">.</span><span class="na">forName</span><span class="o">(</span><span class="s">"org.sqlite.JDBC"</span><span class="o">);</span>
     <span class="o">}</span>
 
     <span class="cm">/**
@@ -393,12 +396,12 @@
      * @return
      * @throws SQLException
      */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Connection</span> <span class="nf">getConnection</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">SQLException</span> <span class="o">{</span>
         <span class="c1">// 先进先出原则</span>
-        <span class="n">SqliteBaseConnection</span> <span class="n">currCon</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="nc">SqliteBaseConnection</span> <span class="n">currCon</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         <span class="kd">synchronized</span> <span class="o">(</span><span class="n">idleConList</span><span class="o">)</span> <span class="o">{</span>
             <span class="c1">// 当可用连接池不为空时候</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">idleConList</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">idleConList</span><span class="o">))</span> <span class="o">{</span>
                 <span class="n">currCon</span> <span class="o">=</span> <span class="n">idleConList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
                 <span class="n">idleConList</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
                 <span class="n">addRunningConnection</span><span class="o">(</span><span class="n">currCon</span><span class="o">);</span>
@@ -418,11 +421,11 @@
      * @throws Exception
      * @throws SQLException
      */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">Connection</span> <span class="nf">getConnection</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">SQLException</span> <span class="o">{</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">DEFAULT_DB_PATH</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">dbPath</span><span class="o">)){</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">Connection</span> <span class="nf">getConnection</span><span class="o">(</span><span class="nc">String</span> <span class="n">dbPath</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">SQLException</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="no">DEFAULT_DB_PATH</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">dbPath</span><span class="o">)){</span>
             <span class="k">return</span> <span class="nf">getConnection</span><span class="o">();</span>
         <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
-            <span class="n">SqliteBaseConnection</span> <span class="n">currCon</span> <span class="o">=</span> <span class="n">createBaseConnection</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
+            <span class="nc">SqliteBaseConnection</span> <span class="n">currCon</span> <span class="o">=</span> <span class="n">createBaseConnection</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
             <span class="n">addRunningConnection</span><span class="o">(</span><span class="n">currCon</span><span class="o">);</span>
             <span class="k">return</span> <span class="n">currCon</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
         <span class="o">}</span>
@@ -433,12 +436,12 @@
      * @param running
      * @return
      */</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">addRunningConnection</span><span class="o">(</span><span class="n">SqliteBaseConnection</span> <span class="n">running</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">CON_MAX</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">addRunningConnection</span><span class="o">(</span><span class="nc">SqliteBaseConnection</span> <span class="n">running</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="no">CON_MAX</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">runConList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">running</span><span class="o">);</span>
             <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
         <span class="o">}</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"当前连接数量大于自定义的最大连接数量！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"当前连接数量大于自定义的最大连接数量！"</span><span class="o">);</span>
         <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
     <span class="o">}</span>
 
@@ -446,27 +449,27 @@
      * 检查容器是否满足使用需求
      * @return
      */</span>
-    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">checkConnectionBox</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">){</span>
+    <span class="kd">protected</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="nf">checkConnectionBox</span><span class="o">(</span><span class="nc">String</span> <span class="n">dbPath</span><span class="o">){</span>
         <span class="c1">// 如果连接池里闲置的连接没有</span>
         <span class="kt">int</span> <span class="n">addNum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
             <span class="c1">// 超过最大线程数</span>
-            <span class="n">addNum</span> <span class="o">=</span> <span class="n">CON_MAX</span> <span class="o">-</span> <span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+            <span class="n">addNum</span> <span class="o">=</span> <span class="no">CON_MAX</span> <span class="o">-</span> <span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">addNum</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"当前使用的连接数量大于自定义的最大连接 [{}] 限制！"</span><span class="o">,</span> <span class="n">CON_MAX</span><span class="o">);</span>
+                <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"当前使用的连接数量大于自定义的最大连接 [{}] 限制！"</span><span class="o">,</span> <span class="no">CON_MAX</span><span class="o">);</span>
                 <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
-        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">CON_MIN</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">addNum</span> <span class="o">=</span> <span class="n">CON_MAX</span> <span class="o">-</span> <span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">-</span> <span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&lt;</span> <span class="no">CON_MIN</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">addNum</span> <span class="o">=</span> <span class="no">CON_MAX</span> <span class="o">-</span> <span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">-</span> <span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">addNum</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"连接池中当前使用的连接数量太多，闲置连接数量小于自定义的最小 [{}] 闲置连接！"</span><span class="o">,</span> <span class="n">CON_MIN</span><span class="o">);</span>
+                <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">warn</span><span class="o">(</span><span class="s">"连接池中当前使用的连接数量太多，闲置连接数量小于自定义的最小 [{}] 闲置连接！"</span><span class="o">,</span> <span class="no">CON_MIN</span><span class="o">);</span>
                 <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
         <span class="o">}</span>
         <span class="c1">// 剩余可增加连接对象数，默认每次最多增加 CON_STEP 个</span>
-        <span class="n">addNum</span> <span class="o">=</span> <span class="n">addNum</span> <span class="o">&gt;</span> <span class="n">CON_STEP</span> <span class="o">?</span> <span class="n">CON_STEP</span> <span class="o">:</span> <span class="n">addNum</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">dbPath</span><span class="o">))</span> <span class="o">{</span>
-            <span class="n">addConnection</span><span class="o">(</span><span class="n">DEFAULT_DB_PATH</span><span class="o">,</span> <span class="n">addNum</span><span class="o">);</span>
+        <span class="n">addNum</span> <span class="o">=</span> <span class="n">addNum</span> <span class="o">&gt;</span> <span class="no">CON_STEP</span> <span class="o">?</span> <span class="no">CON_STEP</span> <span class="o">:</span> <span class="n">addNum</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">dbPath</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">addConnection</span><span class="o">(</span><span class="no">DEFAULT_DB_PATH</span><span class="o">,</span> <span class="n">addNum</span><span class="o">);</span>
         <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
             <span class="n">addConnection</span><span class="o">(</span><span class="n">dbPath</span><span class="o">,</span> <span class="n">addNum</span><span class="o">);</span>
         <span class="o">}</span>
@@ -480,22 +483,22 @@
      */</span>
     <span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkAllIdleConnection</span><span class="o">()</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">idleRefreshCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"INFO:[可用链接数：{}]，[已用连接数：{}]"</span><span class="o">,</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span><span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"INFO:[可用链接数：{}]，[已用连接数：{}]"</span><span class="o">,</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span><span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
         <span class="k">try</span> <span class="o">{</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">REFRESH_CON_POOL</span><span class="o">)</span> <span class="o">{</span><span class="c1">//是否刷新闲置连接池里面的连接</span>
-                <span class="k">for</span> <span class="o">(</span><span class="n">SqliteBaseConnection</span> <span class="n">con</span> <span class="o">:</span> <span class="n">idleConList</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="no">REFRESH_CON_POOL</span><span class="o">)</span> <span class="o">{</span><span class="c1">//是否刷新闲置连接池里面的连接</span>
+                <span class="k">for</span> <span class="o">(</span><span class="nc">SqliteBaseConnection</span> <span class="n">con</span> <span class="o">:</span> <span class="n">idleConList</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">if</span> <span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">con</span><span class="o">.</span><span class="na">getConnection</span><span class="o">()</span> <span class="o">||</span> <span class="n">con</span><span class="o">.</span><span class="na">getConnection</span><span class="o">().</span><span class="na">isClosed</span><span class="o">())</span> <span class="o">{</span>
                         <span class="n">con</span><span class="o">.</span><span class="na">refreshConnection</span><span class="o">();</span>
                         <span class="n">idleRefreshCount</span><span class="o">++;</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
-                <span class="n">REFRESH_CON_POOL</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="no">REFRESH_CON_POOL</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
             <span class="o">}</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[新日期检查更新失败][池容器已清空]"</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[新日期检查更新失败][池容器已清空]"</span><span class="o">);</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="o">}</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"检测到闲置连接池中无效连接并重置的数量：{}"</span><span class="o">,</span><span class="n">idleRefreshCount</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"检测到闲置连接池中无效连接并重置的数量：{}"</span><span class="o">,</span><span class="n">idleRefreshCount</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">idleRefreshCount</span><span class="o">;</span>
     <span class="o">}</span>
 
@@ -506,21 +509,21 @@
      */</span>
     <span class="kd">protected</span> <span class="kd">synchronized</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">checkAllRunningConnection</span><span class="o">()</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">runningRemoveCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"INFO:[可用链接数：{}]，[已用连接数：{}]"</span><span class="o">,</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span><span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
-        <span class="n">SqliteBaseConnection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"INFO:[可用链接数：{}]，[已用连接数：{}]"</span><span class="o">,</span><span class="n">idleConList</span><span class="o">.</span><span class="na">size</span><span class="o">(),</span><span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">());</span>
+        <span class="nc">SqliteBaseConnection</span> <span class="n">con</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
         <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">runConList</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
             <span class="n">con</span> <span class="o">=</span> <span class="n">runConList</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
             <span class="k">try</span> <span class="o">{</span>
-                <span class="k">if</span><span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">con</span> <span class="o">||</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">con</span><span class="o">.</span><span class="na">getConnection</span><span class="o">()</span> <span class="o">||</span> <span class="n">con</span><span class="o">.</span><span class="na">getConnection</span><span class="o">().</span><span class="na">isClosed</span><span class="o">()</span> <span class="o">||</span> <span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getNowStamp</span><span class="o">()</span> <span class="o">-</span> <span class="n">con</span><span class="o">.</span><span class="na">getCreateTime</span><span class="o">()</span> <span class="o">&gt;</span> <span class="n">CON_TIMEOUT</span><span class="o">){</span>
+                <span class="k">if</span><span class="o">(</span><span class="kc">null</span> <span class="o">==</span> <span class="n">con</span> <span class="o">||</span> <span class="kc">null</span> <span class="o">==</span> <span class="n">con</span><span class="o">.</span><span class="na">getConnection</span><span class="o">()</span> <span class="o">||</span> <span class="n">con</span><span class="o">.</span><span class="na">getConnection</span><span class="o">().</span><span class="na">isClosed</span><span class="o">()</span> <span class="o">||</span> <span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getNowStamp</span><span class="o">()</span> <span class="o">-</span> <span class="n">con</span><span class="o">.</span><span class="na">getCreateTime</span><span class="o">()</span> <span class="o">&gt;</span> <span class="no">CON_TIMEOUT</span><span class="o">){</span>
                     <span class="n">runConList</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">i</span><span class="o">--);</span>
                     <span class="n">runningRemoveCount</span><span class="o">++;</span>
                 <span class="o">}</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"检查已分配的连接出现异常！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"检查已分配的连接出现异常！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
         <span class="o">}</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"定时清除已分配的废弃或超时连接，清除数量：{}"</span><span class="o">,</span><span class="n">runningRemoveCount</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"定时清除已分配的废弃或超时连接，清除数量：{}"</span><span class="o">,</span><span class="n">runningRemoveCount</span><span class="o">);</span>
         <span class="k">return</span> <span class="n">runningRemoveCount</span><span class="o">;</span>
     <span class="o">}</span>
 
@@ -531,16 +534,16 @@
      * @param num    添加的数量
      * @throws SQLException
      */</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">addConnection</span><span class="o">(</span><span class="n">String</span> <span class="n">dbPath</span><span class="o">,</span> <span class="kt">int</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">addConnection</span><span class="o">(</span><span class="nc">String</span> <span class="n">dbPath</span><span class="o">,</span> <span class="kt">int</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
             <span class="c1">// 添加前检查连接池里面所有连接对象</span>
             <span class="c1">// checkAllIdleConnection();</span>
             <span class="c1">// 创建新的连接对象</span>
-            <span class="n">SqliteBaseConnection</span> <span class="n">newSqliteConnection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="nc">SqliteBaseConnection</span> <span class="n">newSqliteConnection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="k">try</span> <span class="o">{</span>
                 <span class="n">newSqliteConnection</span> <span class="o">=</span> <span class="n">createBaseConnection</span><span class="o">(</span><span class="n">dbPath</span><span class="o">);</span>
-            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-                <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[addConnection] 添加新连接异常！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"[addConnection] 添加新连接异常！"</span><span class="o">,</span><span class="n">e</span><span class="o">);</span>
                 <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
             <span class="o">}</span>
             <span class="n">idleConList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">newSqliteConnection</span><span class="o">);</span>
@@ -548,58 +551,57 @@
     <span class="o">}</span>
     <span class="o">...</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="heading-连接池工厂员工">连接池工厂员工</h3>
 
 <p>此前连接池的基本解决方案就是预先建好一堆连接屯在那里，等到想用的时候拿一个出来直接用。因此这个预先不能在主进程里面去干。当然，上面功能车间已经有了，我们只需要在每个这间里安排相应的员工就行，每个员工负责自己的那部分，工厂就能按部就班的运作了。而这些员工的特性就像一个个线程，各尽其责，互不干扰。</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * 池回收线程
  *
  * @author 欧阳洁
  * @since 2018-05-02 13:41
  */</span>
-<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteConnectionPool</span> <span class="kd">extends</span> <span class="n">SqliteBaseConnectionFactory</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">SLEEP</span> <span class="o">=</span> <span class="n">SqliteConfig</span><span class="o">.</span><span class="na">getPoolThreadSleep</span><span class="o">();</span><span class="c1">// 线程每次 SLEEP 时长</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">CHECK_RUN_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="c1">// 检查 ClearRunConnectionThread 线程是否在</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">CHECK_IDLE_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="c1">// 检查 RefreshIdleConnectionThread 线程是否在</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="n">CHECK_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="c1">// 检查 MonitorConnectionPoolThread 线程是否在</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">COUNT_RUN_ACTIVE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="c1">// 检查 ClearRunConnectionThread 线程活跃数量</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">COUNT_IDLE_ACTIVE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="c1">// 检查 RefreshIdleConnectionThread 线程活跃数量</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">COUNT_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="c1">// 检查 MonitorConnectionPoolThread 线程活跃数量</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteConnectionPool</span> <span class="kd">extends</span> <span class="nc">SqliteBaseConnectionFactory</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">SLEEP</span> <span class="o">=</span> <span class="nc">SqliteConfig</span><span class="o">.</span><span class="na">getPoolThreadSleep</span><span class="o">();</span><span class="c1">// 线程每次 SLEEP 时长</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="no">CHECK_RUN_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="c1">// 检查 ClearRunConnectionThread 线程是否在</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="no">CHECK_IDLE_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="c1">// 检查 RefreshIdleConnectionThread 线程是否在</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">boolean</span> <span class="no">CHECK_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span><span class="c1">// 检查 MonitorConnectionPoolThread 线程是否在</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">COUNT_RUN_ACTIVE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="c1">// 检查 ClearRunConnectionThread 线程活跃数量</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">COUNT_IDLE_ACTIVE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="c1">// 检查 RefreshIdleConnectionThread 线程活跃数量</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="no">COUNT_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="c1">// 检查 MonitorConnectionPoolThread 线程活跃数量</span>
 
     <span class="cm">/**
      * LINK 线程池
      */</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ExecutorService</span> <span class="n">CONNECTION_POOL_EXETHREAD</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ThreadPoolExecutor</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span>
-            <span class="mi">0L</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">,</span>
-            <span class="k">new</span> <span class="n">LinkedBlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;(</span><span class="mi">2000</span><span class="o">),</span>
-            <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">buildJobFactory</span><span class="o">(</span><span class="s">"Sqlite 连接池 监控系统 线程池"</span><span class="o">),</span> <span class="k">new</span> <span class="n">ThreadPoolExecutor</span><span class="o">.</span><span class="na">AbortPolicy</span><span class="o">());</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">ExecutorService</span> <span class="no">CONNECTION_POOL_EXETHREAD</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadPoolExecutor</span><span class="o">(</span><span class="mi">3</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span>
+            <span class="mi">0L</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">MILLISECONDS</span><span class="o">,</span>
+            <span class="k">new</span> <span class="nc">LinkedBlockingQueue</span><span class="o">&lt;</span><span class="nc">Runnable</span><span class="o">&gt;(</span><span class="mi">2000</span><span class="o">),</span>
+            <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">buildJobFactory</span><span class="o">(</span><span class="s">"Sqlite 连接池 监控系统 线程池"</span><span class="o">),</span> <span class="k">new</span> <span class="nc">ThreadPoolExecutor</span><span class="o">.</span><span class="na">AbortPolicy</span><span class="o">());</span>
 
     <span class="cm">/**
      * 获取用于 Sqlite 连接池监控用的线程池服务
      * @return
      */</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ExecutorService</span> <span class="nf">getExethread</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="n">CONNECTION_POOL_EXETHREAD</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">ExecutorService</span> <span class="nf">getExethread</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="no">CONNECTION_POOL_EXETHREAD</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="cm">/**
      * 开启连接池的线程检查，一次性
      */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkTreadActiveStatus</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_RUN_ACTIVE</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_IDLE_ACTIVE</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_RUN_ACTIVE</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_IDLE_ACTIVE</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
     <span class="o">}</span>
 
     <span class="cm">/**
      * 开启或关闭连接池线程
      */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">switchPool</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">on_off</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span> <span class="o">=</span> <span class="n">on_off</span><span class="o">;</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span> <span class="o">=</span> <span class="n">on_off</span><span class="o">;</span>
         <span class="k">if</span> <span class="o">(!</span><span class="n">on_off</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">idleConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
             <span class="n">runConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
@@ -610,44 +612,44 @@
      * 初始化连接池线程
      */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">initConnectPoolThreads</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
         <span class="c1">// 添加 池监控并适时生产新连接对象的 线程</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">addMonitorConnectionPoolThread</span><span class="o">();</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">addMonitorConnectionPoolThread</span><span class="o">();</span>
         <span class="c1">// 添加 池回收无效或久置超时的连接对象的 线程</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">addClearRunConnectionThread</span><span class="o">();</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">addClearRunConnectionThread</span><span class="o">();</span>
         <span class="c1">// 添加 池检查刷新闲置连接对象的 线程</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">addRefreshIdleConnectionThread</span><span class="o">();</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">addRefreshIdleConnectionThread</span><span class="o">();</span>
     <span class="o">}</span>
 
     <span class="cm">/**
      * 监控连接池中已分配的连接对象，定时收取没用的连接对象
      */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">addClearRunConnectionThread</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">CONNECTION_POOL_EXETHREAD</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="no">CONNECTION_POOL_EXETHREAD</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
             <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-                <span class="n">COUNT_RUN_ACTIVE</span><span class="o">++;</span>
+                <span class="no">COUNT_RUN_ACTIVE</span><span class="o">++;</span>
                 <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">try</span> <span class="o">{</span>
-                        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_RUN_ACTIVE</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池回收无效或久置超时的连接对象的 线程运行中。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="n">COUNT_RUN_ACTIVE</span><span class="o">);</span>
-                            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_RUN_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_RUN_ACTIVE</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池回收无效或久置超时的连接对象的 线程运行中。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="no">COUNT_RUN_ACTIVE</span><span class="o">);</span>
+                            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_RUN_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                         <span class="o">}</span>
-                        <span class="k">if</span> <span class="o">(!</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池回收无效或久置超时的连接对象的 线程结束。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="n">COUNT_RUN_ACTIVE</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(!</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池回收无效或久置超时的连接对象的 线程结束。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="no">COUNT_RUN_ACTIVE</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
                             <span class="k">break</span><span class="o">;</span><span class="c1">// 如果配置不使用连接池，结束线程</span>
                         <span class="o">}</span>
-                        <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">SLEEP</span><span class="o">);</span>
+                        <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="no">SLEEP</span><span class="o">);</span>
                         <span class="n">checkAllRunningConnection</span><span class="o">();</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
                         <span class="n">idleConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
                         <span class="n">runConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
                         <span class="n">addClearRunConnectionThread</span><span class="o">();</span>
-                        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池回收无效或久置超时的连接对象的 线程死掉，重新添加新线程！]"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+                        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池回收无效或久置超时的连接对象的 线程死掉，重新添加新线程！]"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
                         <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
                         <span class="k">break</span><span class="o">;</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
-                <span class="n">COUNT_RUN_ACTIVE</span><span class="o">--;</span>
+                <span class="no">COUNT_RUN_ACTIVE</span><span class="o">--;</span>
             <span class="o">}</span>
         <span class="o">});</span>
     <span class="o">}</span>
@@ -656,32 +658,32 @@
      * 监控连接池中闲置的连接对象，定时收取没用的连接对象
      */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">addRefreshIdleConnectionThread</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">CONNECTION_POOL_EXETHREAD</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="no">CONNECTION_POOL_EXETHREAD</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
             <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-                <span class="n">COUNT_IDLE_ACTIVE</span><span class="o">++;</span>
+                <span class="no">COUNT_IDLE_ACTIVE</span><span class="o">++;</span>
                 <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">try</span> <span class="o">{</span>
-                        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_MONITOR_ACTIVE</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池检查刷新闲置连接对象的 线程运行中。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="n">COUNT_IDLE_ACTIVE</span><span class="o">);</span>
-                            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_MONITOR_ACTIVE</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池检查刷新闲置连接对象的 线程运行中。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="no">COUNT_IDLE_ACTIVE</span><span class="o">);</span>
+                            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_MONITOR_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                         <span class="o">}</span>
-                        <span class="k">if</span> <span class="o">(!</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池检查刷新闲置连接对象的 线程结束。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="n">COUNT_IDLE_ACTIVE</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(!</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池检查刷新闲置连接对象的 线程结束。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="no">COUNT_IDLE_ACTIVE</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
                             <span class="k">break</span><span class="o">;</span><span class="c1">// 如果配置不使用连接池，结束线程</span>
                         <span class="o">}</span>
-                        <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">SLEEP</span><span class="o">);</span>
-                        <span class="n">REFRESH_CON_POOL</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                        <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="no">SLEEP</span><span class="o">);</span>
+                        <span class="no">REFRESH_CON_POOL</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
                         <span class="n">checkAllIdleConnection</span><span class="o">();</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
                         <span class="n">idleConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
                         <span class="n">runConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
                         <span class="n">addRefreshIdleConnectionThread</span><span class="o">();</span>
-                        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池检查刷新闲置连接对象的 线程死掉，重新添加新线程！]"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+                        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池检查刷新闲置连接对象的 线程死掉，重新添加新线程！]"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
                         <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
                         <span class="k">break</span><span class="o">;</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
-                <span class="n">COUNT_IDLE_ACTIVE</span><span class="o">--;</span>
+                <span class="no">COUNT_IDLE_ACTIVE</span><span class="o">--;</span>
             <span class="o">}</span>
         <span class="o">});</span>
     <span class="o">}</span>
@@ -690,95 +692,93 @@
      * 监控连接池中闲置的连接对象，定时收取没用的连接对象
      */</span>
     <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">addMonitorConnectionPoolThread</span><span class="o">()</span> <span class="o">{</span>
-        <span class="n">CONNECTION_POOL_EXETHREAD</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+        <span class="no">CONNECTION_POOL_EXETHREAD</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="k">new</span> <span class="nc">Runnable</span><span class="o">()</span> <span class="o">{</span>
             <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-                <span class="n">COUNT_MONITOR_ACTIVE</span><span class="o">++;</span>
+                <span class="no">COUNT_MONITOR_ACTIVE</span><span class="o">++;</span>
                 <span class="k">while</span> <span class="o">(</span><span class="kc">true</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">try</span> <span class="o">{</span>
-                        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_IDLE_ACTIVE</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池监控并适时生产新连接对象的 线程运行中。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="n">COUNT_MONITOR_ACTIVE</span><span class="o">);</span>
-                            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_IDLE_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_IDLE_ACTIVE</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池监控并适时生产新连接对象的 线程运行中。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="no">COUNT_MONITOR_ACTIVE</span><span class="o">);</span>
+                            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">CHECK_IDLE_ACTIVE</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
                         <span class="o">}</span>
-                        <span class="k">if</span> <span class="o">(!</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span><span class="o">)</span> <span class="o">{</span>
-                            <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池监控并适时生产新连接对象的 线程结束。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="n">COUNT_MONITOR_ACTIVE</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(!</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">USE_CONNECT_POOL</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"池监控并适时生产新连接对象的 线程结束。.. 当前该类线程数量：{}"</span><span class="o">,</span> <span class="no">COUNT_MONITOR_ACTIVE</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
                             <span class="k">break</span><span class="o">;</span><span class="c1">// 如果配置不使用连接池，结束线程</span>
                         <span class="o">}</span>
-                        <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">SLEEP</span><span class="o">);</span>
+                        <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="no">SLEEP</span><span class="o">);</span>
                         <span class="n">checkConnectionBox</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
-                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
                         <span class="n">idleConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
                         <span class="n">runConList</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
                         <span class="n">addMonitorConnectionPoolThread</span><span class="o">();</span>
-                        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池监控并适时生产新连接对象的 线程死掉，重新添加新线程！]"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+                        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"ERROR:[池监控并适时生产新连接对象的 线程死掉，重新添加新线程！]"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
                         <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
                         <span class="k">break</span><span class="o">;</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
-                <span class="n">COUNT_MONITOR_ACTIVE</span><span class="o">--;</span>
+                <span class="no">COUNT_MONITOR_ACTIVE</span><span class="o">--;</span>
             <span class="o">}</span>
         <span class="o">});</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h3 id="heading-默认配置">默认配置</h3>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="err">#</span> <span class="err">自定义属性配置</span>
-<span class="err">#</span> <span class="err">默认路径从</span> <span class="kd">class</span> <span class="err">路径，此时</span> <span class="nc">sqlite</span><span class="o">.</span><span class="na">uri</span> <span class="err">可以写相对路径</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">#</span> <span class="n">自定义属性配置</span>
+<span class="err">#</span> <span class="n">默认路径从</span> <span class="kd">class</span> <span class="nc">路径</span><span class="err">，</span><span class="n">此时</span> <span class="n">sqlite</span><span class="o">.</span><span class="na">uri</span> <span class="n">可以写相对路径</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">path</span><span class="o">.</span><span class="na">classpath</span><span class="o">=</span><span class="kc">true</span>
-<span class="err">#</span> <span class="err">数据库路径</span>
+<span class="err">#</span> <span class="n">数据库路径</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">uri</span><span class="o">=</span><span class="n">database</span><span class="o">/</span><span class="n">sqlite</span><span class="o">.</span><span class="na">db</span>
 
-<span class="err">#</span> <span class="err">自定义连接池配置</span>
-<span class="err">#</span> <span class="err">是否开启连接池，如果不用配置开启可以手动代码开启：</span><span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">initConnectPoolThreads</span><span class="o">();</span>
+<span class="err">#</span> <span class="n">自定义连接池配置</span>
+<span class="err">#</span> <span class="n">是否开启连接池</span><span class="err">，</span><span class="n">如果不用配置开启可以手动代码开启</span><span class="err">：</span><span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">initConnectPoolThreads</span><span class="o">();</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">connection</span><span class="o">.</span><span class="na">pool</span><span class="o">.</span><span class="na">enable</span><span class="o">=</span><span class="kc">false</span>
-<span class="err">#</span> <span class="err">最大连接数</span>
+<span class="err">#</span> <span class="n">最大连接数</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">connection</span><span class="o">.</span><span class="na">max</span><span class="o">=</span><span class="mi">20</span>
-<span class="err">#</span> <span class="err">最少连接数</span>
+<span class="err">#</span> <span class="n">最少连接数</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">connection</span><span class="o">.</span><span class="na">min</span><span class="o">=</span><span class="mi">10</span>
-<span class="err">#</span> <span class="err">每次最大添加数</span>
+<span class="err">#</span> <span class="n">每次最大添加数</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">connection</span><span class="o">.</span><span class="na">step</span><span class="o">=</span><span class="mi">5</span>
-<span class="err">#</span> <span class="err">已分配连接的超时设置，超时会被回收</span>
+<span class="err">#</span> <span class="n">已分配连接的超时设置</span><span class="err">，</span><span class="n">超时会被回收</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">connection</span><span class="o">.</span><span class="na">timeout</span><span class="o">=</span><span class="mi">5000</span>
-<span class="err">#</span> <span class="err">连接池线程轮询间隔</span>
+<span class="err">#</span> <span class="n">连接池线程轮询间隔</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">pool</span><span class="o">.</span><span class="na">thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">=</span><span class="mi">2000</span>
 
-<span class="err">#</span> <span class="err">用户名密码登陆支持</span>
+<span class="err">#</span> <span class="n">用户名密码登陆支持</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">username</span><span class="o">=</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">password</span><span class="o">=</span>
 
-<span class="err">#</span> <span class="err">是否启用非自定义属性的自定义，下面这些属性是</span> <span class="n">Sqlite</span> <span class="err">或</span> <span class="n">JDBC</span> <span class="err">自带属性，一般有默认值，自定义请在专业选手陪同下，默认不启用</span>
+<span class="err">#</span> <span class="n">是否启用非自定义属性的自定义</span><span class="err">，</span><span class="n">下面这些属性是</span> <span class="nc">Sqlite</span> <span class="n">或</span> <span class="no">JDBC</span> <span class="n">自带属性</span><span class="err">，</span><span class="n">一般有默认值</span><span class="err">，</span><span class="n">自定义请在专业选手陪同下</span><span class="err">，</span><span class="n">默认不启用</span>
 <span class="n">sqlite</span><span class="o">.</span><span class="na">config</span><span class="o">.</span><span class="na">enable</span><span class="o">=</span><span class="kc">false</span>
-<span class="err">#</span> <span class="err">内置属性配置</span> <span class="err">详细请见：</span><span class="nl">https:</span><span class="c1">//github.com/petterobam/database-oop/blob/master/sqlite-oop/src/main/resources/config/sqlite.properties</span>
+<span class="err">#</span> <span class="n">内置属性配置</span> <span class="n">详细请见</span><span class="err">：</span><span class="nl">https:</span><span class="c1">//github.com/petterobam/database-oop/blob/master/sqlite-oop/src/main/resources/config/sqlite.properties</span>
 <span class="o">...</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="heading-批量操作">批量操作</h2>
 
 <p>数据库的增、删、改语句都是独立的句子，每个句子都能独立的表达各自的意思，而不会因为上一句没有，下一句不能独立执行。JDBC 默认执行每个非查询 SQL 语句都会自动提交，完成一个原子操作。然而，每次提交就意味着一次对库的修改操作，这对于常规沟通是没有问题的，也是值得肯定的，但是如果是一个批量修改，一个个提交就太耗时了，而且提交还可能导致连接关闭。所以像这种作文题要把所有的句子组成文章才能交卷，否则时间不够只能交白卷了。</p>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * 非查询语句批量执行 Sql 语句
  * @param sqlList
  * @param batchCount
  * @return
  */</span>
-<span class="kd">public</span> <span class="kt">int</span> <span class="nf">batchExecuteSql</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">sqlList</span><span class="o">,</span> <span class="kt">int</span> <span class="n">batchCount</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">batchExecuteSql</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">sqlList</span><span class="o">,</span> <span class="kt">int</span> <span class="n">batchCount</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
     <span class="k">try</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">sqlList</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">sqlList</span><span class="o">))</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">batchCount</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span><span class="c1">//默认批量提交粒度 100 条</span>
-                <span class="n">batchCount</span> <span class="o">=</span> <span class="n">SqliteConstant</span><span class="o">.</span><span class="na">DEFAULT_BATCH_COUNT</span><span class="o">;</span>
+                <span class="n">batchCount</span> <span class="o">=</span> <span class="nc">SqliteConstant</span><span class="o">.</span><span class="na">DEFAULT_BATCH_COUNT</span><span class="o">;</span>
             <span class="o">}</span>
             <span class="c1">// create a database connection</span>
             <span class="n">connection</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
             <span class="n">connection</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span><span class="c1">//单次执行不自动提交</span>
-            <span class="n">Statement</span> <span class="n">statement</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">sql</span> <span class="o">:</span> <span class="n">sqlList</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(!</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">sql</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">Statement</span> <span class="n">statement</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">createStatement</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">sql</span> <span class="o">:</span> <span class="n">sqlList</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">sql</span><span class="o">))</span> <span class="o">{</span>
                     <span class="n">statement</span><span class="o">.</span><span class="na">addBatch</span><span class="o">(</span><span class="n">sql</span><span class="o">);</span>
                     <span class="n">result</span><span class="o">++;</span>
                 <span class="o">}</span>
@@ -799,13 +799,13 @@
             <span class="n">connection</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
     <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
         <span class="k">try</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">connection</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">connection</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="o">}</span>
     <span class="o">}</span>
@@ -818,25 +818,25 @@
  * @param batchCount
  * @return
  */</span>
-<span class="kd">public</span> <span class="kt">int</span> <span class="nf">batchExecute</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">sqlWithParamList</span><span class="o">,</span> <span class="kt">int</span> <span class="n">batchCount</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">batchExecute</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">sqlWithParamList</span><span class="o">,</span> <span class="kt">int</span> <span class="n">batchCount</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Connection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
     <span class="k">try</span> <span class="o">{</span>
         <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-        <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">sqlWithParamList</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">sqlWithParamList</span><span class="o">))</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">batchCount</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span><span class="c1">//默认批量提交粒度 100 条</span>
-                <span class="n">batchCount</span> <span class="o">=</span> <span class="n">SqliteConstant</span><span class="o">.</span><span class="na">DEFAULT_BATCH_COUNT</span><span class="o">;</span>
+                <span class="n">batchCount</span> <span class="o">=</span> <span class="nc">SqliteConstant</span><span class="o">.</span><span class="na">DEFAULT_BATCH_COUNT</span><span class="o">;</span>
             <span class="o">}</span>
             <span class="c1">// create a database connection</span>
             <span class="n">connection</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
             <span class="n">connection</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span><span class="c1">//单次执行不自动提交</span>
-            <span class="n">PreparedStatement</span> <span class="n">prep</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-            <span class="n">String</span> <span class="n">preSql</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="nc">PreparedStatement</span> <span class="n">prep</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="nc">String</span> <span class="n">preSql</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
             <span class="kt">int</span> <span class="n">currCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-            <span class="k">for</span> <span class="o">(</span><span class="n">T</span> <span class="n">sqlAndParam</span> <span class="o">:</span> <span class="n">sqlWithParamList</span><span class="o">)</span> <span class="o">{</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentSql</span><span class="o">()))</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="no">T</span> <span class="n">sqlAndParam</span> <span class="o">:</span> <span class="n">sqlWithParamList</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isBlank</span><span class="o">(</span><span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentSql</span><span class="o">()))</span> <span class="o">{</span>
                     <span class="k">continue</span><span class="o">;</span>
                 <span class="o">}</span>
-                <span class="k">if</span> <span class="o">(!</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">preSql</span><span class="o">,</span> <span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentSql</span><span class="o">())</span> <span class="o">||</span> <span class="n">currCount</span> <span class="o">%</span> <span class="n">batchCount</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(!</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">preSql</span><span class="o">,</span> <span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentSql</span><span class="o">())</span> <span class="o">||</span> <span class="n">currCount</span> <span class="o">%</span> <span class="n">batchCount</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
                     <span class="k">if</span><span class="o">(</span><span class="n">currCount</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
                         <span class="n">currCount</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
                         <span class="n">prep</span><span class="o">.</span><span class="na">executeBatch</span><span class="o">();</span>
@@ -849,9 +849,9 @@
                     <span class="o">}</span>
                     <span class="n">prep</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">prepareStatement</span><span class="o">(</span><span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentSql</span><span class="o">());</span>
                 <span class="o">}</span>
-                <span class="k">if</span> <span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentParam</span><span class="o">()))</span> <span class="o">{</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentParam</span><span class="o">()))</span> <span class="o">{</span>
                     <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
-                    <span class="k">for</span> <span class="o">(</span><span class="n">Object</span> <span class="n">o</span> <span class="o">:</span> <span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentParam</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="k">for</span> <span class="o">(</span><span class="nc">Object</span> <span class="n">o</span> <span class="o">:</span> <span class="n">sqlAndParam</span><span class="o">.</span><span class="na">getCurrentParam</span><span class="o">())</span> <span class="o">{</span>
                         <span class="n">prep</span><span class="o">.</span><span class="na">setObject</span><span class="o">(</span><span class="n">count</span><span class="o">++,</span> <span class="n">o</span><span class="o">);</span>
                     <span class="o">}</span>
                 <span class="o">}</span>
@@ -865,56 +865,54 @@
             <span class="n">connection</span><span class="o">.</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
     <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
         <span class="k">try</span> <span class="o">{</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">connection</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">connection</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
 <span class="o">...</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="heading-测试">测试</h2>
 
 <h3 id="heading-连接池测试">连接池测试</h3>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * Sqlite 线程连接池测试
  * @author 欧阳洁
  * @since 2018-05-03 18:27
  */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteConnectionPoolTest</span> <span class="o">{</span>
     <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">ClassNotFoundException</span> <span class="o">{</span>
         <span class="c1">// 初始化连接池线程</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">initConnectPoolThreads</span><span class="o">();</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">initConnectPoolThreads</span><span class="o">();</span>
         <span class="c1">// 检查连接池线程</span>
-        <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">checkTreadActiveStatus</span><span class="o">();</span>
+        <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">checkTreadActiveStatus</span><span class="o">();</span>
         <span class="k">try</span> <span class="o">{</span>
             <span class="c1">// 取两个连接，观察十秒看线程执行打印日志</span>
-            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
-            <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
+            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+            <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
             <span class="c1">// 取三个连接，观察十秒看线程执行打印日志</span>
-            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
-            <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
+            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+            <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
             <span class="c1">// 关闭所有连接池线程，观察十秒看线程执行打印日志</span>
-            <span class="n">SqliteConnectionPool</span><span class="o">.</span><span class="na">switchPool</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
-            <span class="n">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">SqliteConnectionPool</span><span class="o">.</span><span class="na">switchPool</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+            <span class="nc">SqliteThreadUtils</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
         <span class="o">}</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>测试结果：</p>
 
@@ -969,72 +967,71 @@
 
 <h3 id="heading-批量操作测试">批量操作测试</h3>
 
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="cm">/**
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * Sqlite 批量操作测试
  * @author 欧阳洁
  * @since 2018-05-14 16:47
  */</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SqliteBatchTest</span> <span class="o">{</span>
     <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">ClassNotFoundException</span> <span class="o">{</span>
-        <span class="n">TestTableService</span> <span class="n">sqliteService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTableService</span><span class="o">();</span><span class="c1">//没有使用 spring 注入，暂时自己构建</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">ClassNotFoundException</span> <span class="o">{</span>
+        <span class="nc">TestTableService</span> <span class="n">sqliteService</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TestTableService</span><span class="o">();</span><span class="c1">//没有使用 spring 注入，暂时自己构建</span>
 
         <span class="n">sqliteService</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="s">"delete from t_test_table"</span><span class="o">);</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="n">TestTable</span><span class="o">()));</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestTable</span><span class="o">()));</span>
 
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="n">batchList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;();</span>
-        <span class="n">TestTable</span> <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTable</span><span class="o">();</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">TestTable</span><span class="o">&gt;</span> <span class="n">batchList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">TestTable</span><span class="o">&gt;();</span>
+        <span class="nc">TestTable</span> <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TestTable</span><span class="o">();</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"test1"</span><span class="o">);</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setAuthor</span><span class="o">(</span><span class="s">"petter"</span><span class="o">);</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setArticle</span><span class="o">(</span><span class="s">"article1"</span><span class="o">);</span>
-        <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
+        <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
         <span class="n">batchList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
 
-        <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTable</span><span class="o">();</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TestTable</span><span class="o">();</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"test2"</span><span class="o">);</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setAuthor</span><span class="o">(</span><span class="s">"petter"</span><span class="o">);</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setArticle</span><span class="o">(</span><span class="s">"article1"</span><span class="o">);</span>
-        <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
+        <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
         <span class="n">batchList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
 
-        <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TestTable</span><span class="o">();</span>
+        <span class="n">entity</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">TestTable</span><span class="o">();</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"title4"</span><span class="o">);</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setAuthor</span><span class="o">(</span><span class="s">"bob"</span><span class="o">);</span>
         <span class="n">entity</span><span class="o">.</span><span class="na">setArticle</span><span class="o">(</span><span class="s">"article2"</span><span class="o">);</span>
-        <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
+        <span class="n">entity</span><span class="o">.</span><span class="na">setCreateTime</span><span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">getStringDate</span><span class="o">());</span>
         <span class="n">batchList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
 
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--开始执行批量插入操作！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--开始执行批量插入操作！"</span><span class="o">);</span>
         <span class="n">sqliteService</span><span class="o">.</span><span class="na">batchInsert</span><span class="o">(</span><span class="n">batchList</span><span class="o">);</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--结束执行批量插入操作！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--结束执行批量插入操作！"</span><span class="o">);</span>
 
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="n">TestTable</span><span class="o">()));</span>
-        <span class="n">List</span><span class="o">&lt;</span><span class="n">TestTable</span><span class="o">&gt;</span> <span class="n">tableList</span> <span class="o">=</span> <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="k">new</span> <span class="n">TestTable</span><span class="o">());</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestTable</span><span class="o">()));</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">TestTable</span><span class="o">&gt;</span> <span class="n">tableList</span> <span class="o">=</span> <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestTable</span><span class="o">());</span>
 
-        <span class="k">if</span><span class="o">(</span><span class="n">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">tableList</span><span class="o">)){</span>
+        <span class="k">if</span><span class="o">(</span><span class="nc">SqliteUtils</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">tableList</span><span class="o">)){</span>
             <span class="n">tableList</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
         <span class="o">}</span>
 
-        <span class="k">for</span> <span class="o">(</span><span class="n">TestTable</span> <span class="n">testTable</span> <span class="o">:</span> <span class="n">tableList</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">TestTable</span> <span class="n">testTable</span> <span class="o">:</span> <span class="n">tableList</span><span class="o">)</span> <span class="o">{</span>
             <span class="n">testTable</span><span class="o">.</span><span class="na">setName</span><span class="o">(</span><span class="s">"Update"</span><span class="o">);</span>
         <span class="o">}</span>
 
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--开始执行批量修改操作！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--开始执行批量修改操作！"</span><span class="o">);</span>
         <span class="n">sqliteService</span><span class="o">.</span><span class="na">batchUpdate</span><span class="o">(</span><span class="n">tableList</span><span class="o">);</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--结束执行批量修改操作！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--结束执行批量修改操作！"</span><span class="o">);</span>
 
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="n">TestTable</span><span class="o">()));</span>
-        <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="k">new</span> <span class="n">TestTable</span><span class="o">());</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestTable</span><span class="o">()));</span>
+        <span class="n">sqliteService</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestTable</span><span class="o">());</span>
 
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--开始执行批量删除操作！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--开始执行批量删除操作！"</span><span class="o">);</span>
         <span class="n">sqliteService</span><span class="o">.</span><span class="na">batchDelete</span><span class="o">(</span><span class="n">tableList</span><span class="o">);</span>
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--结束执行批量删除操作！"</span><span class="o">);</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"--结束执行批量删除操作！"</span><span class="o">);</span>
 
-        <span class="n">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="n">TestTable</span><span class="o">()));</span>
+        <span class="nc">SqliteLogUtils</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="s">"===数据总条数：{}"</span><span class="o">,</span><span class="n">sqliteService</span><span class="o">.</span><span class="na">count</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestTable</span><span class="o">()));</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>测试结果：</p>
 
@@ -1081,10 +1078,10 @@
                     </div>
                     <nav class="pagination">
                         
-                            <a class="internal" rel="prev" href="/blog/2018/04/22/meet-unknowed-self/" title="上一篇 '速读《遇见未知的自己》'"> ← 速读《遇见未知的自己》</a>
+                            <a class="internal" rel="prev" href="../../../04/22/meet-unknowed-self/" title="上一篇 '速读《遇见未知的自己》'"> ← 速读《遇见未知的自己》</a>
                         
                         
-                            <a class="internal" rel="next" href="/blog/2018/06/02/access-oop-diff-sqlite/" title="下一篇 'Access 封装之与 Sqlite 封装的差异'">Access 封装之与 Sqlite 封装的差异 → </a>
+                            <a class="internal" rel="next" href="../../../06/02/access-oop-diff-sqlite/" title="下一篇 'Access 封装之与 Sqlite 封装的差异'">Access 封装之与 Sqlite 封装的差异 → </a>
                         
                     </nav>
                 </div>
@@ -1274,7 +1271,7 @@
             <div class="misc vcard">
                 <div class="about">
                     <h4>
-                        <a href="/blog/other/about/">关于</a>
+                        <a href="../../../../other/about/">关于</a>
                         
                     </h4>
                 </div>
@@ -1282,7 +1279,7 @@
                     
                         <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
                     
-                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    <a class="ico-rss" href="../../../../../feed.xml" rel="me" target="_blank" title="feed"></a>
                     
                         
                     
@@ -1368,11 +1365,11 @@ $(document).ready(function () {
 
 
 <!-- Show menu overlay + Jekyll Simple Search option -->
-<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script src="../../../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
 $(document).ready(function () {
     $('.search-field').simpleJekyllSearch({
-      jsonFile: '/search.json',
+      jsonFile: '../../../../../search.json',
       template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
       searchResults: '.search-wrapper .results',
       searchResultsTitle: '<h4>搜索结果</h4>',
@@ -1419,16 +1416,16 @@ $(document).ready(function () {
 
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
-<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+<script src="../../../../../assets/javascripts/unveil/jquery.unveil.min.js"></script>
 
 <script>
-    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
-    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+    window.jQuery.fancybox || document.write('<script src="../../../../../assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="../../../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
 </script>
 
 <script>
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../../../assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
     $(".post-image").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -1571,8 +1568,8 @@ $(function () {
 
 <!-- live2dgirl加载 -->
 
-<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
-<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="../../../../../assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="../../../../../assets/javascripts/live2dgirl/jquery.min.js"></script> -->
 <div class="waifu">
     <div class="waifu-tips"></div>
     <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
@@ -1586,12 +1583,12 @@ $(function () {
         <span class="fui-cross"></span>
     </div>
 </div>
-<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
-<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script sync src="../../../../../assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="../../../../../assets/javascripts/live2dgirl/live2d.js"></script>
 <script type="text/javascript">
 function initLive2dGirl() {
     $(".waifu").css('display', 'block');
-    initModel("/assets/javascripts/live2dgirl/");
+    initModel("../../../../../assets/javascripts/live2dgirl/");
 }
 </script>
 

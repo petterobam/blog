@@ -9,11 +9,24 @@
             noResults           : '<p>Oh shucks<br/><small>Nothing found :(</small></p>'
         }, options);
 
+        var jsonUrl = new URL(settings.jsonFile, window.location.href);
+        var siteRootUrl = new URL('./', jsonUrl);
+
         var jsonData = [],
             origThis = this,
             searchResults = $(settings.searchResults);
 
         var matches = [];
+
+        function resolveSiteUrl(url) {
+            if (!url || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#|\?)/i.test(url)) {
+                return url;
+            }
+            if (url.charAt(0) !== '/') {
+                return url;
+            }
+            return new URL(url.slice(1), siteRootUrl).href;
+        }
 
         if(settings.jsonFile.length && searchResults.length){
             $.ajax({
@@ -37,8 +50,8 @@
         function registerEvent(){
             origThis.keyup(function(e){
                 if(e.which === 13){
-                    if(matches)
-                        window.location = matches[0].url;
+                    if(matches && matches.length)
+                        window.location = resolveSiteUrl(matches[0].url);
                         
                     //follow the first link
                     // if(searchResults.children().length)
@@ -84,9 +97,12 @@
             if(m && m.length){
                 for (var i = 0; i < m.length && i < settings.limit; i++) {
                     var obj = m[i];
-                    output = settings.template;
+                    var output = settings.template;
                     output = output.replace(/\{(.*?)\}/g, function(match, property) {
                         var ret = obj[property];
+                        if (property === 'url') {
+                            ret = resolveSiteUrl(ret);
+                        }
                         return ret == undefined ? ' ' : ret;
                     });
                     searchResults.append($(output));

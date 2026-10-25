@@ -1,1 +1,1 @@
-# [欧阳Boy_Petter's Blog](https://www.petterobam.cn) | snapshot
+# [欧阳Boy_Petter's Blog](https://petterobam.github.io/blog/) | snapshot

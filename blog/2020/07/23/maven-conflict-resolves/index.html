@@ -12,19 +12,22 @@
 <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>项目依赖冲突解决技巧和经验 | 欧阳Boy_Petter&#39;s Blog</title>
-<meta name="generator" content="Jekyll v3.5.2" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="项目依赖冲突解决技巧和经验" />
 <meta name="author" content="欧阳Boy_Petter" />
 <meta property="og:locale" content="zh" />
 <meta name="description" content="【2020-07-23】项目依赖冲突解决技巧和经验" />
-<meta property="og:description" content="【2020-07-23】项目依赖冲突解决技巧和经验" />
+<meta name="twitter:description" property="og:description" content="【2020-07-23】项目依赖冲突解决技巧和经验" />
 <meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2020-07-23T00:00:00+00:00" />
+<meta property="article:published_time" content="2020-07-23T00:00:00+08:00" />
+<meta property="article:modified_time" content="2020-07-23T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="项目依赖冲突解决技巧和经验" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"【2020-07-23】项目依赖冲突解决技巧和经验","@type":"BlogPosting","url":"/blog/2020/07/23/maven-conflict-resolves/","headline":"项目依赖冲突解决技巧和经验","dateModified":"2020-07-23T00:00:00+00:00","datePublished":"2020-07-23T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2020/07/23/maven-conflict-resolves/"},"@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"欧阳Boy_Petter"},"dateModified":"2020-07-23T00:00:00+08:00","datePublished":"2020-07-23T00:00:00+08:00","description":"【2020-07-23】项目依赖冲突解决技巧和经验","headline":"项目依赖冲突解决技巧和经验","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2020/07/23/maven-conflict-resolves/"},"url":"/blog/2020/07/23/maven-conflict-resolves/"}</script>
 <!-- End Jekyll SEO tag -->
 
 <meta name="keywords" content="Maven,冲突" />
@@ -33,19 +36,20 @@
 
 
 
-<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
-    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+<link type="application/atom+xml" rel="alternate" href="../../../../../feed.xml" title="欧阳Boy_Petter&#39;s Blog">
+
+    <link href='../../../../../assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+<script>window.Modernizr || document.write('<script src="../../../../../assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+    window.jQuery || document.write('<script src="../../../../../assets/javascripts/jquery-3.2.1.min.js"><\/script>')
 </script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 <script>
-    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+    window.Pace || document.write('<script src="../../../../../assets/javascripts/pace.min.js"><\/script>')
 </script>
 
 
@@ -65,23 +69,23 @@
         <a class="btn-close">关闭</a>
         <div class="results">
             <ul>
-                <li><a href="/blog/">文章</a></li>
-                <li><a href="/blog/categories/">分类</a></li>
-                <li><a href="/blog/tags/">标签</a></li>
+                <li><a href="../../../../">文章</a></li>
+                <li><a href="../../../../categories/">分类</a></li>
+                <li><a href="../../../../tags/">标签</a></li>
 
-                <li><a href="/blog/reader/">读书</a></li>
-                <li><a href="/blog/movie/">影音</a></li>
-                <li><a href="/blog/book+movie/">书&影</a></li>
+                <li><a href="../../../../reader/">读书</a></li>
+                <li><a href="../../../../movie/">影音</a></li>
+                <li><a href="../../../../book+movie/">书&影</a></li>
 
-                <li><a href="/blog/learner/">笔记</a></li>
-                <li><a href="/blog/life/">动态</a></li>
-                <li><a href="/blog/letter/">信</a></li>
-                <li><a href="/blog/song/">歌</a></li>
-                <li><a href="/blog/story/">文</a></li>
-                <li><a href="/blog/plan/">业</a></li>
-                <li><a href="/blog/family/">家</a></li>
-                <li><a href="/blog/other/">杂</a></li>
-                <li><a href="/">关于</a></li>
+                <li><a href="../../../../learner/">笔记</a></li>
+                <li><a href="../../../../life/">动态</a></li>
+                <li><a href="../../../../letter/">信</a></li>
+                <li><a href="../../../../song/">歌</a></li>
+                <li><a href="../../../../story/">文</a></li>
+                <li><a href="../../../../plan/">业</a></li>
+                <li><a href="../../../../family/">家</a></li>
+                <li><a href="../../../../other/">杂</a></li>
+                <li><a href="../../../../../">关于</a></li>
             </ul>
         </div>
     </div>
@@ -104,25 +108,25 @@
                 <ul>
                     <li class="logo">
                         <button class="btn-menu" title="菜单"></button>
-                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <a href="../../../../">欧阳Boy_Petter's Blog</a>
                         <!--[if !IE]> -->
                         <button class="btn-search" title="搜索"></button>
                         <!-- <![endif]-->
                     </li>
-                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+                    <li class="nav-link"><a label="article" title="文章" href="../../../../">文章</a></li>
 
-                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
-                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
-                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="../../../../reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="../../../../movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="../../../../book+movie/">书&影</a></li>
                     
-                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
-                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
-                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
-                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
-                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
-                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
-                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
-                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <li class="nav-link"><a label="learn" title="笔记" href="../../../../learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="../../../../life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="../../../../letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="../../../../song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="../../../../story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="../../../../plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="../../../../family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="../../../../other/">杂</a></li>
                     <!--[if !IE]> -->
                     <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
                     <!-- <![endif]-->
@@ -153,16 +157,16 @@
                         <p class="date-publish">
                             发表信息:
                             <time itemprop="datePublished" class="date-pub updated"
-                                title="2020-07-23T00:00:00+00:00" datetime="2020-07-23T00:00:00+00:00">July 23, 2020 </time>
+                                title="2020-07-23T00:00:00+08:00" datetime="2020-07-23T00:00:00+08:00">July 23, 2020 </time>
                             by
-                            <a class="author" href="/" rel="author" title="显示作者">
+                            <a class="author" href="../../../../../" rel="author" title="显示作者">
                                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
                                     <span itemprop="name">欧阳Boy_Petter</span>
                                 </span>
                             </a>
                             
                                 <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
-                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="../../../../../assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
                                 </a>
                             
                             
@@ -171,7 +175,7 @@
 
 
 <p style="margin-top: 0px;margin-bottom: 0px;">
-  字数：1051 字，&nbsp;预计阅读时间：10 分钟
+  字数：1113 字，&nbsp;预计阅读时间：11 分钟
 </p>
                         
                         <ul class="list-category list-linear">
@@ -179,12 +183,12 @@
                              
      
         <li>
-            <a href="/blog/categories/#Maven" title="Maven">
+            <a href="../../../../categories/#Maven" title="Maven">
             Maven <span>1</span></a>
         </li>
      
         <li>
-            <a href="/blog/categories/#整理" title="整理">
+            <a href="../../../../categories/#整理" title="整理">
             整理 <span>22</span></a>
         </li>
     
@@ -200,12 +204,12 @@
     
         
         <li>
-            <a href="/blog/tags/#Maven" title="Maven">Maven <span>1</span></a>
+            <a href="../../../../tags/#Maven" title="Maven">Maven <span>1</span></a>
         </li>
     
         
         <li>
-            <a href="/blog/tags/#冲突" title="冲突">冲突 <span>1</span></a>
+            <a href="../../../../tags/#冲突" title="冲突">冲突 <span>1</span></a>
         </li>
     
 
@@ -226,20 +230,18 @@
 
 <ol>
   <li>包冲突（The diffrent in conflict: [groupId]:[artifactId]）
-    <div class="highlighter-rouge"><pre class="highlight"><code> 1、相同包不同版本，多数情况下不影响使用，系统默认选择加载其一。
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1、相同包不同版本，多数情况下不影响使用，系统默认选择加载其一。
  2、Maven 命令表现：([groupId]:[artifactId]:[conflict version] compile -  omitted for conflict with [used version])
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>类冲突（duplicate classes）
-    <div class="highlighter-rouge"><pre class="highlight"><code> 1、相同类路径且相同类名，可能包名不相同。
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1、相同类路径且相同类名，可能包名不相同。
  2、如果类内容不一样，会增加应用不确定性。
  3、关键类需要处理，非关键类可以选择忽视。
  4、Maven 命令表现：
   1) 同 jar ([groupId]:[artifactId]:[version] - version managed from [conflit version]; omitted for duplicate)
   2) 不同 jar ([groupId]:[artifactId]:[version]:runtime - scope managed from compile; omitted for duplicate)
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
 </ol>
 
@@ -248,17 +250,16 @@
 <p>方法一：通过 idea Maven Help 插件，排除冲突包</p>
 
 <p>方法二：通过 Maven 命令，找出依赖清单，exclusion 排除冲突包</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖</span>
-mvn clear install -Dmaven.test.skip<span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖</span>
+mvn clear <span class="nb">install</span> <span class="nt">-Dmaven</span>.test.skip<span class="o">=</span><span class="nb">true</span>
 <span class="c"># 冲突依赖清单</span>
-mvn dependency:tree -Dverbose
+mvn dependency:tree <span class="nt">-Dverbose</span>
 <span class="c"># 指定查看某个包的冲突依赖清单</span>
-mvn denpendency:tree -Dverbose -Dincludes<span class="o">=[</span>groupId]:[artifactId]
-</code></pre>
-</div>
+mvn denpendency:tree <span class="nt">-Dverbose</span> <span class="nt">-Dincludes</span><span class="o">=[</span>groupId]:[artifactId]
+</code></pre></div></div>
 
 <p>方法三：dependencyManagement 强制指定版本（推荐）</p>
-<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;dependencyManagement&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencyManagement&gt;</span>
     <span class="nt">&lt;dependencies&gt;</span>
         <span class="nt">&lt;dependency&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
@@ -267,27 +268,25 @@ mvn denpendency:tree -Dverbose -Dincludes<span class="o">=[</span>groupId]:[arti
         <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;/dependencies&gt;</span>
 <span class="nt">&lt;/dependencyManagement&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h2 id="heading-类冲突处理步骤">类冲突处理步骤</h2>
 
 <p>类冲突无法精准通过 -Dverbose 筛选出来，需要通过指定工具处理。</p>
 
 <p>方法一：通过公司系统识别的 指定冲突，确定要排除的 jar 包，从依赖树里面排除（推荐）</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖</span>
-mvn clear install -Dmaven.test.skip<span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖</span>
+mvn clear <span class="nb">install</span> <span class="nt">-Dmaven</span>.test.skip<span class="o">=</span><span class="nb">true</span>
 <span class="c"># 依赖清单</span>
-mvn dependency:tree &gt; mvn.txt
+mvn dependency:tree <span class="o">&gt;</span> mvn.txt
 <span class="c"># 去 mvn.txt 里面 find 冲突包最近可见父依赖，exclusion 冲突包</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>方法二：runtime debug 查看类源头</p>
-<div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="c1">// Jdk 自带</span>
-<span class="o">&lt;</span><span class="err">类名</span><span class="o">&gt;.</span><span class="na">class</span><span class="o">.</span><span class="na">getProtectionDomain</span><span class="o">().</span><span class="na">getCodeSource</span><span class="o">().</span><span class="na">toString</span><span class="o">()</span>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Jdk 自带</span>
+<span class="o">&lt;</span><span class="n">类名</span><span class="o">&gt;.</span><span class="na">class</span><span class="o">.</span><span class="na">getProtectionDomain</span><span class="o">().</span><span class="na">getCodeSource</span><span class="o">().</span><span class="na">toString</span><span class="o">()</span>
 <span class="c1">// 或者使用工具类</span>
-<span class="n">ClassLoaderUtils</span><span class="o">.</span><span class="na">where</span><span class="o">(&lt;</span><span class="err">类名</span><span class="o">&gt;.</span><span class="na">class</span><span class="o">)</span>  
+<span class="nc">ClassLoaderUtils</span><span class="o">.</span><span class="na">where</span><span class="o">(&lt;</span><span class="n">类名</span><span class="o">&gt;.</span><span class="na">class</span><span class="o">)</span>  
 
 <span class="c1">// 保存下面类到项目，debug 时候，idea 按 Alt+F8，弹出 Evluate Expression 对话框，在 Expression 处输入：ClassLoaderUtils.where(&lt;类名&gt;.class)</span>
 <span class="kn">import</span> <span class="nn">java.io.File</span><span class="o">;</span>
@@ -297,15 +296,15 @@ mvn dependency:tree &gt; mvn.txt
 <span class="kn">import</span> <span class="nn">java.security.ProtectionDomain</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ClassLoaderUtils</span> <span class="o">{</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">where</span><span class="o">(</span><span class="kd">final</span> <span class="n">Class</span> <span class="n">cls</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">where</span><span class="o">(</span><span class="kd">final</span> <span class="nc">Class</span> <span class="n">cls</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">cls</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"null input: cls"</span><span class="o">);</span>
         <span class="o">}</span>
-        <span class="n">URL</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="kd">final</span> <span class="n">String</span> <span class="n">clsAsResource</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">replace</span><span class="o">(</span><span class="sc">'.'</span><span class="o">,</span> <span class="sc">'/'</span><span class="o">).</span><span class="na">concat</span><span class="o">(</span><span class="s">".class"</span><span class="o">);</span>
-        <span class="kd">final</span> <span class="n">ProtectionDomain</span> <span class="n">pd</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getProtectionDomain</span><span class="o">();</span>
+        <span class="no">URL</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="kd">final</span> <span class="nc">String</span> <span class="n">clsAsResource</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">replace</span><span class="o">(</span><span class="sc">'.'</span><span class="o">,</span> <span class="sc">'/'</span><span class="o">).</span><span class="na">concat</span><span class="o">(</span><span class="s">".class"</span><span class="o">);</span>
+        <span class="kd">final</span> <span class="nc">ProtectionDomain</span> <span class="n">pd</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getProtectionDomain</span><span class="o">();</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">pd</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">final</span> <span class="n">CodeSource</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="na">getCodeSource</span><span class="o">();</span>
+            <span class="kd">final</span> <span class="nc">CodeSource</span> <span class="n">cs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="na">getCodeSource</span><span class="o">();</span>
             <span class="k">if</span> <span class="o">(</span><span class="n">cs</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
                 <span class="n">result</span> <span class="o">=</span> <span class="n">cs</span><span class="o">.</span><span class="na">getLocation</span><span class="o">();</span>
             <span class="o">}</span>
@@ -313,27 +312,26 @@ mvn dependency:tree &gt; mvn.txt
                 <span class="k">try</span> <span class="o">{</span>
                     <span class="k">if</span> <span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">toExternalForm</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">".jar"</span><span class="o">)</span> <span class="o">||</span>
                             <span class="n">result</span><span class="o">.</span><span class="na">toExternalForm</span><span class="o">().</span><span class="na">endsWith</span><span class="o">(</span><span class="s">".zip"</span><span class="o">))</span> <span class="o">{</span>
-                        <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="s">"jar:"</span><span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">toExternalForm</span><span class="o">())</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="s">"jar:"</span><span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">toExternalForm</span><span class="o">())</span>
                                 <span class="o">.</span><span class="na">concat</span><span class="o">(</span><span class="s">"!/"</span><span class="o">).</span><span class="na">concat</span><span class="o">(</span><span class="n">clsAsResource</span><span class="o">));</span>
-                    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getFile</span><span class="o">()).</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
-                        <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">clsAsResource</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">result</span><span class="o">.</span><span class="na">getFile</span><span class="o">()).</span><span class="na">isDirectory</span><span class="o">())</span> <span class="o">{</span>
+                        <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="no">URL</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">clsAsResource</span><span class="o">);</span>
                     <span class="o">}</span>
-                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{</span>
+                <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">MalformedURLException</span> <span class="n">ignore</span><span class="o">)</span> <span class="o">{</span>
                 <span class="o">}</span>
 
             <span class="o">}</span>
         <span class="o">}</span>
         <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-            <span class="kd">final</span> <span class="n">ClassLoader</span> <span class="n">clsLoader</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">();</span>
+            <span class="kd">final</span> <span class="nc">ClassLoader</span> <span class="n">clsLoader</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">();</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">clsLoader</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span>
                     <span class="n">clsLoader</span><span class="o">.</span><span class="na">getResource</span><span class="o">(</span><span class="n">clsAsResource</span><span class="o">)</span> <span class="o">:</span>
-                    <span class="n">ClassLoader</span><span class="o">.</span><span class="na">getSystemResource</span><span class="o">(</span><span class="n">clsAsResource</span><span class="o">);</span>
+                    <span class="nc">ClassLoader</span><span class="o">.</span><span class="na">getSystemResource</span><span class="o">(</span><span class="n">clsAsResource</span><span class="o">);</span>
         <span class="o">}</span>
         <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
     <span class="o">}</span>
 <span class="o">}</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <h1 id="heading-jar-包版本检测卡点">Jar 包版本检测卡点</h1>
 
@@ -342,7 +340,7 @@ mvn dependency:tree &gt; mvn.txt
 <h2 id="heading-局部处理快速解决-推荐">局部处理（快速解决-推荐）</h2>
 
 <p>方法一：dependencyManagement 强制指定版本（推荐）</p>
-<div class="language-xml highlighter-rouge"><pre class="highlight"><code><span class="nt">&lt;dependencyManagement&gt;</span>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencyManagement&gt;</span>
     <span class="nt">&lt;dependencies&gt;</span>
         <span class="nt">&lt;dependency&gt;</span>
             <span class="nt">&lt;groupId&gt;</span>com.alibaba<span class="nt">&lt;/groupId&gt;</span>
@@ -351,16 +349,14 @@ mvn dependency:tree &gt; mvn.txt
         <span class="nt">&lt;/dependency&gt;</span>
     <span class="nt">&lt;/dependencies&gt;</span>
 <span class="nt">&lt;/dependencyManagement&gt;</span>
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>方法二：修改高版本或引入高版本包且 exclusion 低版本的依赖。</p>
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖</span>
-mvn clear install -Dmaven.test.skip<span class="o">=</span><span class="nb">true</span>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># 多 Maven 应用需要执行，install 子项目，保证 dependency:tree 时候找不到子项目依赖</span>
+mvn clear <span class="nb">install</span> <span class="nt">-Dmaven</span>.test.skip<span class="o">=</span><span class="nb">true</span>
 <span class="c"># 指定包的依赖清单</span>
-mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
-</code></pre>
-</div>
+mvn denpendency:tree <span class="nt">-Dincludes</span><span class="o">=[</span>groupId]:[artifactId]
+</code></pre></div></div>
 
 <h2 id="heading-脚手架升级风险">脚手架升级（风险）</h2>
 
@@ -379,54 +375,51 @@ mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
 
 <ol>
   <li>日志框架问题（日志框架初始化失败，JVM 启动失败）
-    <div class="language-java highlighter-rouge"><pre class="highlight"><code> <span class="err">日志相关类找不到，导致</span> <span class="n">JVM</span> <span class="err">启动异常</span>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="n">日志相关类找不到</span><span class="err">，</span><span class="n">导致</span> <span class="no">JVM</span> <span class="n">启动异常</span>
 
- <span class="err">启动情况：必现</span> 
+ <span class="n">启动情况</span><span class="err">：</span><span class="n">必现</span> 
 
- <span class="err">问题分析：</span>
- <span class="mi">1</span><span class="err">、</span><span class="kd">static</span> <span class="err">方法（里面调用日志）在</span> <span class="n">WebApplication</span> <span class="err">类中调用。</span>
- <span class="mi">2</span><span class="err">、根据依赖就近选择原则（需要什么加载什么），</span><span class="n">WebApplication</span> <span class="err">作为入口类加载时候执行了该方法，导致内部有调用</span> <span class="n">logger</span><span class="o">.</span><span class="na">info</span> <span class="err">时候，自定义实现的</span> <span class="n">LogFactory</span> <span class="err">调用</span> <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="err">，循环逻辑导致异常。</span>
- <span class="mi">3</span><span class="err">、总结：日志组件未初始化时候日志组件内部使用日志工具输出日志异常</span>
+ <span class="n">问题分析</span><span class="err">：</span>
+ <span class="mi">1</span><span class="err">、</span><span class="kd">static</span> <span class="n">方法</span><span class="err">（</span><span class="n">里面调用日志</span><span class="err">）</span><span class="n">在</span> <span class="nc">WebApplication</span> <span class="n">类中调用</span><span class="err">。</span>
+ <span class="mi">2</span><span class="err">、</span><span class="n">根据依赖就近选择原则</span><span class="err">（</span><span class="n">需要什么加载什么</span><span class="err">），</span><span class="nc">WebApplication</span> <span class="n">作为入口类加载时候执行了该方法</span><span class="err">，</span><span class="n">导致内部有调用</span> <span class="n">logger</span><span class="o">.</span><span class="na">info</span> <span class="n">时候</span><span class="err">，</span><span class="n">自定义实现的</span> <span class="nc">LogFactory</span> <span class="n">调用</span> <span class="n">logger</span><span class="o">.</span><span class="na">info</span><span class="err">，</span><span class="n">循环逻辑导致异常</span><span class="err">。</span>
+ <span class="mi">3</span><span class="err">、</span><span class="n">总结</span><span class="err">：</span><span class="n">日志组件未初始化时候日志组件内部使用日志工具输出日志异常</span>
 
- <span class="err">解决办法：</span>
- <span class="mi">1</span><span class="err">、</span><span class="o">[</span><span class="err">延迟加载</span><span class="o">]</span> <span class="kd">static</span> <span class="err">方法调用放到其他</span> <span class="n">SpringBean</span> <span class="err">类中执行。（</span><span class="n">Spring</span> <span class="n">Context</span> <span class="err">先于</span> <span class="n">SpringBean</span> <span class="err">加载）</span> <span class="err">——</span> <span class="err">如果其他</span> <span class="n">Context</span> <span class="err">类型的加载类中使用了</span> <span class="n">logger</span> <span class="err">则又会出现该问题</span>
- <span class="mi">2</span><span class="err">、</span><span class="o">[</span><span class="err">日志降级</span><span class="o">]</span> <span class="err">添加指定</span> <span class="n">LogFactory</span> <span class="err">类日志级别过滤配置</span> <span class="o">&lt;</span><span class="n">Logger</span> <span class="n">name</span><span class="o">=</span><span class="s">"com.xxx.xxx.LogFactory"</span> <span class="n">level</span><span class="o">=</span><span class="s">"warn"</span><span class="o">/&gt;</span>
-</code></pre>
-    </div>
+ <span class="n">解决办法</span><span class="err">：</span>
+ <span class="mi">1</span><span class="err">、</span><span class="o">[</span><span class="n">延迟加载</span><span class="o">]</span> <span class="kd">static</span> <span class="n">方法调用放到其他</span> <span class="nc">SpringBean</span> <span class="n">类中执行</span><span class="err">。（</span><span class="nc">Spring</span> <span class="nc">Context</span> <span class="n">先于</span> <span class="nc">SpringBean</span> <span class="n">加载</span><span class="err">）</span> <span class="err">——</span> <span class="n">如果其他</span> <span class="nc">Context</span> <span class="n">类型的加载类中使用了</span> <span class="n">logger</span> <span class="n">则又会出现该问题</span>
+ <span class="mi">2</span><span class="err">、</span><span class="o">[</span><span class="n">日志降级</span><span class="o">]</span> <span class="n">添加指定</span> <span class="nc">LogFactory</span> <span class="n">类日志级别过滤配置</span> <span class="o">&lt;</span><span class="nc">Logger</span> <span class="n">name</span><span class="o">=</span><span class="s">"com.xxx.xxx.LogFactory"</span> <span class="n">level</span><span class="o">=</span><span class="s">"warn"</span><span class="o">/&gt;</span>
+</code></pre></div>    </div>
   </li>
   <li>数据源重复问题
-    <div class="language-java highlighter-rouge"><pre class="highlight"><code> <span class="o">***************************</span>
- <span class="n">APPLICATION</span> <span class="n">FAILED</span> <span class="n">TO</span> <span class="n">START</span>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="o">***************************</span>
+ <span class="no">APPLICATION</span> <span class="no">FAILED</span> <span class="no">TO</span> <span class="no">START</span>
  <span class="o">***************************</span>
 
  <span class="nl">Description:</span>
 
- <span class="n">Cannot</span> <span class="n">determine</span> <span class="n">embedded</span> <span class="n">database</span> <span class="n">driver</span> <span class="kd">class</span> <span class="nc">for</span> <span class="n">database</span> <span class="n">type</span> <span class="n">NONE</span>
+ <span class="nc">Cannot</span> <span class="n">determine</span> <span class="n">embedded</span> <span class="n">database</span> <span class="n">driver</span> <span class="kd">class</span> <span class="nc">for</span> <span class="n">database</span> <span class="n">type</span> <span class="no">NONE</span>
 
  <span class="nl">Action:</span>
  <span class="o">....</span>
  <span class="o">------------------------------------------------------</span>
 
- <span class="err">启动情况：必现</span>
+ <span class="n">启动情况</span><span class="err">：</span><span class="n">必现</span>
 
- <span class="err">问题分析：</span>
- <span class="mi">1</span><span class="err">、征兆：</span><span class="n">Cannot</span> <span class="n">determine</span> <span class="n">embedded</span> <span class="n">database</span> <span class="n">driver</span> <span class="kd">class</span> <span class="nc">for</span> <span class="n">database</span> <span class="n">type</span> <span class="n">NONE</span>
- <span class="mi">2</span><span class="err">、脚手架自动注入，导致多个数据源，无法选择使用哪个</span>
- <span class="mi">3</span><span class="err">、自动注入的类可到对应</span> <span class="n">starter</span> <span class="err">包或自动注入包下面的</span> <span class="n">resources</span><span class="o">/</span><span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">spring</span><span class="o">.</span><span class="na">factories</span> <span class="err">找到。</span>
+ <span class="n">问题分析</span><span class="err">：</span>
+ <span class="mi">1</span><span class="err">、</span><span class="n">征兆</span><span class="err">：</span><span class="nc">Cannot</span> <span class="n">determine</span> <span class="n">embedded</span> <span class="n">database</span> <span class="n">driver</span> <span class="kd">class</span> <span class="nc">for</span> <span class="n">database</span> <span class="n">type</span> <span class="no">NONE</span>
+ <span class="mi">2</span><span class="err">、</span><span class="n">脚手架自动注入</span><span class="err">，</span><span class="n">导致多个数据源</span><span class="err">，</span><span class="n">无法选择使用哪个</span>
+ <span class="mi">3</span><span class="err">、</span><span class="n">自动注入的类可到对应</span> <span class="n">starter</span> <span class="n">包或自动注入包下面的</span> <span class="n">resources</span><span class="o">/</span><span class="no">META</span><span class="o">-</span><span class="no">INF</span><span class="o">/</span><span class="n">spring</span><span class="o">.</span><span class="na">factories</span> <span class="n">找到</span><span class="err">。</span>
 
- <span class="err">解决方法：启动类上添加排除自动注入注解</span>
+ <span class="n">解决方法</span><span class="err">：</span><span class="n">启动类上添加排除自动注入注解</span>
  <span class="nd">@EnableAutoConfiguration</span><span class="o">(</span><span class="n">exclude</span> <span class="o">=</span> <span class="o">{</span>
-     <span class="n">KafkaAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-     <span class="n">DataSourceAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
-     <span class="n">RedisAutoConfiguration</span><span class="o">.</span><span class="na">class</span>
+     <span class="nc">KafkaAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+     <span class="nc">DataSourceAutoConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+     <span class="nc">RedisAutoConfiguration</span><span class="o">.</span><span class="na">class</span>
  <span class="o">})</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>脚手架升级后需要关注风险
-    <div class="highlighter-rouge"><pre class="highlight"><code> 升级后的代码改造
-</code></pre>
-    </div>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 升级后的代码改造
+</code></pre></div>    </div>
   </li>
 </ol>
 
@@ -434,13 +427,12 @@ mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
 
 <ol>
   <li>新脚手架 Maven 各个 pom 文件 parent 依赖关系
-    <div class="highlighter-rouge"><pre class="highlight"><code> 多 Maven 子项目互相依赖关系要弄清楚才能很好排包
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 多 Maven 子项目互相依赖关系要弄清楚才能很好排包
  略
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
   <li>以下情况会导致目标 Maven 依赖无法加载
-    <div class="language-xml highlighter-rouge"><pre class="highlight"><code> 1、[远程仓库] 无法查到
+    <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 1、[远程仓库] 无法查到
      联系相关人员发包，然后再拉
 
  2、Failure to find [groupId]:[artifactId]:pom:[version] in 远程仓库地址 was cached in local repository，resolution will not be reattempted until the update interval of 仓库名 has elapsed or updates are forced.
@@ -463,8 +455,7 @@ mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
                      <span class="nt">&lt;/snapshots&gt;</span>
              <span class="nt">&lt;/repository&gt;</span>
          <span class="nt">&lt;/repositories&gt;</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
 </ol>
 
@@ -479,10 +470,10 @@ mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
                     </div>
                     <nav class="pagination">
                         
-                            <a class="internal" rel="prev" href="/blog/2019/09/06/word-right-voice-for-it/" title="上一篇 '【转】中国程序员容易发音错误的单词'"> ← 【转】中国程序员容易发音错误的单词</a>
+                            <a class="internal" rel="prev" href="../../../../2019/09/06/word-right-voice-for-it/" title="上一篇 '【转】中国程序员容易发音错误的单词'"> ← 【转】中国程序员容易发音错误的单词</a>
                         
                         
-                            <a class="internal" rel="next" href="/blog/2020/08/09/stream-design-and-lambda-extension/" title="下一篇 'Stream 深入分析到 Lambda 扩展使用'">Stream 深入分析到 Lambda 扩展使用 → </a>
+                            <a class="internal" rel="next" href="../../../08/09/stream-design-and-lambda-extension/" title="下一篇 'Stream 深入分析到 Lambda 扩展使用'">Stream 深入分析到 Lambda 扩展使用 → </a>
                         
                     </nav>
                 </div>
@@ -672,7 +663,7 @@ mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
             <div class="misc vcard">
                 <div class="about">
                     <h4>
-                        <a href="/blog/other/about/">关于</a>
+                        <a href="../../../../other/about/">关于</a>
                         
                     </h4>
                 </div>
@@ -680,7 +671,7 @@ mvn denpendency:tree -Dincludes<span class="o">=[</span>groupId]:[artifactId]
                     
                         <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
                     
-                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    <a class="ico-rss" href="../../../../../feed.xml" rel="me" target="_blank" title="feed"></a>
                     
                         
                     
@@ -766,11 +757,11 @@ $(document).ready(function () {
 
 
 <!-- Show menu overlay + Jekyll Simple Search option -->
-<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script src="../../../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
 $(document).ready(function () {
     $('.search-field').simpleJekyllSearch({
-      jsonFile: '/search.json',
+      jsonFile: '../../../../../search.json',
       template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
       searchResults: '.search-wrapper .results',
       searchResultsTitle: '<h4>搜索结果</h4>',
@@ -817,16 +808,16 @@ $(document).ready(function () {
 
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
-<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+<script src="../../../../../assets/javascripts/unveil/jquery.unveil.min.js"></script>
 
 <script>
-    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
-    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+    window.jQuery.fancybox || document.write('<script src="../../../../../assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="../../../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
 </script>
 
 <script>
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../../../assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
     $(".post-image").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -969,8 +960,8 @@ $(function () {
 
 <!-- live2dgirl加载 -->
 
-<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
-<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="../../../../../assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="../../../../../assets/javascripts/live2dgirl/jquery.min.js"></script> -->
 <div class="waifu">
     <div class="waifu-tips"></div>
     <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
@@ -984,12 +975,12 @@ $(function () {
         <span class="fui-cross"></span>
     </div>
 </div>
-<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
-<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script sync src="../../../../../assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="../../../../../assets/javascripts/live2dgirl/live2d.js"></script>
 <script type="text/javascript">
 function initLive2dGirl() {
     $(".waifu").css('display', 'block');
-    initModel("/assets/javascripts/live2dgirl/");
+    initModel("../../../../../assets/javascripts/live2dgirl/");
 }
 </script>
 

@@ -12,19 +12,22 @@
 <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>ElasticSearch 面向对象封装之注解分析 | 欧阳Boy_Petter&#39;s Blog</title>
-<meta name="generator" content="Jekyll v3.5.2" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="ElasticSearch 面向对象封装之注解分析" />
 <meta name="author" content="petterobam" />
 <meta property="og:locale" content="zh" />
 <meta name="description" content="ElasticSearch 面向对象封装之注解分析" />
-<meta property="og:description" content="ElasticSearch 面向对象封装之注解分析" />
+<meta name="twitter:description" property="og:description" content="ElasticSearch 面向对象封装之注解分析" />
 <meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2018-04-21T00:00:00+00:00" />
+<meta property="article:published_time" content="2018-04-21T00:00:00+08:00" />
+<meta property="article:modified_time" content="2018-04-21T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="ElasticSearch 面向对象封装之注解分析" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"petterobam"},"description":"ElasticSearch 面向对象封装之注解分析","@type":"BlogPosting","url":"/blog/2018/04/21/es-annotation-analysis/","headline":"ElasticSearch 面向对象封装之注解分析","dateModified":"2018-04-21T00:00:00+00:00","datePublished":"2018-04-21T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2018/04/21/es-annotation-analysis/"},"@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"petterobam"},"dateModified":"2018-04-21T00:00:00+08:00","datePublished":"2018-04-21T00:00:00+08:00","description":"ElasticSearch 面向对象封装之注解分析","headline":"ElasticSearch 面向对象封装之注解分析","mainEntityOfPage":{"@type":"WebPage","@id":"/blog/2018/04/21/es-annotation-analysis/"},"url":"/blog/2018/04/21/es-annotation-analysis/"}</script>
 <!-- End Jekyll SEO tag -->
 
 <meta name="keywords" content="ElasticSearch,实现思路" />
@@ -33,19 +36,20 @@
 
 
 
-<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
-    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
+<link type="application/atom+xml" rel="alternate" href="../../../../../feed.xml" title="欧阳Boy_Petter&#39;s Blog">
+
+    <link href='../../../../../assets/stylesheets/blog.css' rel="stylesheet" type="text/css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+<script>window.Modernizr || document.write('<script src="../../../../../assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+    window.jQuery || document.write('<script src="../../../../../assets/javascripts/jquery-3.2.1.min.js"><\/script>')
 </script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 <script>
-    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+    window.Pace || document.write('<script src="../../../../../assets/javascripts/pace.min.js"><\/script>')
 </script>
 
 
@@ -65,23 +69,23 @@
         <a class="btn-close">关闭</a>
         <div class="results">
             <ul>
-                <li><a href="/blog/">文章</a></li>
-                <li><a href="/blog/categories/">分类</a></li>
-                <li><a href="/blog/tags/">标签</a></li>
+                <li><a href="../../../../">文章</a></li>
+                <li><a href="../../../../categories/">分类</a></li>
+                <li><a href="../../../../tags/">标签</a></li>
 
-                <li><a href="/blog/reader/">读书</a></li>
-                <li><a href="/blog/movie/">影音</a></li>
-                <li><a href="/blog/book+movie/">书&影</a></li>
+                <li><a href="../../../../reader/">读书</a></li>
+                <li><a href="../../../../movie/">影音</a></li>
+                <li><a href="../../../../book+movie/">书&影</a></li>
 
-                <li><a href="/blog/learner/">笔记</a></li>
-                <li><a href="/blog/life/">动态</a></li>
-                <li><a href="/blog/letter/">信</a></li>
-                <li><a href="/blog/song/">歌</a></li>
-                <li><a href="/blog/story/">文</a></li>
-                <li><a href="/blog/plan/">业</a></li>
-                <li><a href="/blog/family/">家</a></li>
-                <li><a href="/blog/other/">杂</a></li>
-                <li><a href="/">关于</a></li>
+                <li><a href="../../../../learner/">笔记</a></li>
+                <li><a href="../../../../life/">动态</a></li>
+                <li><a href="../../../../letter/">信</a></li>
+                <li><a href="../../../../song/">歌</a></li>
+                <li><a href="../../../../story/">文</a></li>
+                <li><a href="../../../../plan/">业</a></li>
+                <li><a href="../../../../family/">家</a></li>
+                <li><a href="../../../../other/">杂</a></li>
+                <li><a href="../../../../../">关于</a></li>
             </ul>
         </div>
     </div>
@@ -104,25 +108,25 @@
                 <ul>
                     <li class="logo">
                         <button class="btn-menu" title="菜单"></button>
-                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <a href="../../../../">欧阳Boy_Petter's Blog</a>
                         <!--[if !IE]> -->
                         <button class="btn-search" title="搜索"></button>
                         <!-- <![endif]-->
                     </li>
-                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+                    <li class="nav-link"><a label="article" title="文章" href="../../../../">文章</a></li>
 
-                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
-                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
-                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="../../../../reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="../../../../movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="../../../../book+movie/">书&影</a></li>
                     
-                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
-                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
-                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
-                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
-                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
-                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
-                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
-                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <li class="nav-link"><a label="learn" title="笔记" href="../../../../learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="../../../../life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="../../../../letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="../../../../song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="../../../../story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="../../../../plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="../../../../family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="../../../../other/">杂</a></li>
                     <!--[if !IE]> -->
                     <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
                     <!-- <![endif]-->
@@ -153,16 +157,16 @@
                         <p class="date-publish">
                             发表信息:
                             <time itemprop="datePublished" class="date-pub updated"
-                                title="2018-04-21T00:00:00+00:00" datetime="2018-04-21T00:00:00+00:00">April 21, 2018 </time>
+                                title="2018-04-21T00:00:00+08:00" datetime="2018-04-21T00:00:00+08:00">April 21, 2018 </time>
                             by
-                            <a class="author" href="/" rel="author" title="显示作者">
+                            <a class="author" href="../../../../../" rel="author" title="显示作者">
                                 <span itemprop="author" itemscope itemtype="http://schema.org/Person">
                                     <span itemprop="name">petterobam</span>
                                 </span>
                             </a>
                             
                                 <a class="license-icon" rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="显示许可证">
-                                    <img alt="Creative Commons Licence" style="border-width:0" src="/assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
+                                    <img alt="Creative Commons Licence" style="border-width:0" src="../../../../../assets/images/theme/cc-by-sa.png"  height="16" width="80"/>
                                 </a>
                             
                             
@@ -171,7 +175,7 @@
 
 
 <p style="margin-top: 0px;margin-bottom: 0px;">
-  字数：701 字，&nbsp;预计阅读时间：7 分钟
+  字数：845 字，&nbsp;预计阅读时间：8 分钟
 </p>
                         
                         <ul class="list-category list-linear">
@@ -179,17 +183,17 @@
                              
      
         <li>
-            <a href="/blog/categories/#ElasticSearch" title="ElasticSearch">
+            <a href="../../../../categories/#ElasticSearch" title="ElasticSearch">
             ElasticSearch <span>1</span></a>
         </li>
      
         <li>
-            <a href="/blog/categories/#Java" title="Java">
+            <a href="../../../../categories/#Java" title="Java">
             Java <span>5</span></a>
         </li>
      
         <li>
-            <a href="/blog/categories/#面向对象封装" title="面向对象封装">
+            <a href="../../../../categories/#面向对象封装" title="面向对象封装">
             面向对象封装 <span>4</span></a>
         </li>
     
@@ -205,12 +209,12 @@
     
         
         <li>
-            <a href="/blog/tags/#ElasticSearch" title="ElasticSearch">ElasticSearch <span>2</span></a>
+            <a href="../../../../tags/#ElasticSearch" title="ElasticSearch">ElasticSearch <span>2</span></a>
         </li>
     
         
         <li>
-            <a href="/blog/tags/#实现思路" title="实现思路">实现思路 <span>1</span></a>
+            <a href="../../../../tags/#实现思路" title="实现思路">实现思路 <span>1</span></a>
         </li>
     
 
@@ -231,7 +235,7 @@
 
 <ol>
   <li>
-    <p>定义 Index、Type，为空的话，实体类中元字段 <code class="highlighter-rouge">_index</code>、<code class="highlighter-rouge">_type</code>要定义</p>
+    <p>定义 Index、Type，为空的话，实体类中元字段 <code class="language-plaintext highlighter-rouge">_index</code>、<code class="language-plaintext highlighter-rouge">_type</code>要定义</p>
   </li>
   <li>
     <p>扩展定义 动态 Index 生成规则、动态 Type 生成规则</p>
@@ -252,17 +256,17 @@
 <ul>
   <li>动态参数
     <ul>
-      <li><code class="highlighter-rouge">date_detection</code>：<code class="highlighter-rouge">true/false</code>，日期检测</li>
-      <li><code class="highlighter-rouge">dynamic_date_formats</code>：日期格式定义，例如 <code class="highlighter-rouge">["MM/dd/yyyy"]</code></li>
-      <li><code class="highlighter-rouge">numeric_detection</code>：<code class="highlighter-rouge">true/false</code>，数字检测</li>
+      <li><code class="language-plaintext highlighter-rouge">date_detection</code>：<code class="language-plaintext highlighter-rouge">true/false</code>，日期检测</li>
+      <li><code class="language-plaintext highlighter-rouge">dynamic_date_formats</code>：日期格式定义，例如 <code class="language-plaintext highlighter-rouge">["MM/dd/yyyy"]</code></li>
+      <li><code class="language-plaintext highlighter-rouge">numeric_detection</code>：<code class="language-plaintext highlighter-rouge">true/false</code>，数字检测</li>
     </ul>
   </li>
   <li>动态模板
     <ul>
-      <li><code class="highlighter-rouge">dynamic_templates</code>，存 json 对象数组或 json 对象数组对应的文件路径。例如：</li>
+      <li><code class="language-plaintext highlighter-rouge">dynamic_templates</code>，存 json 对象数组或 json 对象数组对应的文件路径。例如：</li>
     </ul>
 
-    <div class="language-java highlighter-rouge"><pre class="highlight"><code><span class="o">[</span>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>
   <span class="o">{</span>
     <span class="s">"named_analyzers"</span><span class="o">:</span> <span class="o">{</span>
       <span class="s">"match_mapping_type"</span><span class="o">:</span> <span class="s">"string"</span><span class="o">,</span>
@@ -283,8 +287,7 @@
     <span class="o">}</span>
   <span class="o">}</span>
 <span class="o">]</span>
-</code></pre>
-    </div>
+</code></pre></div>    </div>
   </li>
 </ul>
 
@@ -324,30 +327,30 @@
 <ul>
   <li>简单域类型
     <ul>
-      <li>字符串：<code class="highlighter-rouge">string</code>, <code class="highlighter-rouge">text</code>, <code class="highlighter-rouge">keyword</code></li>
-      <li>整数 : <code class="highlighter-rouge">byte</code>, <code class="highlighter-rouge">short</code>, <code class="highlighter-rouge">integer</code>, <code class="highlighter-rouge">long</code>, <code class="highlighter-rouge">alf_float</code>，<code class="highlighter-rouge">scaled_float</code></li>
-      <li>浮点数：<code class="highlighter-rouge">float</code>, <code class="highlighter-rouge">double</code></li>
-      <li>布尔型：<code class="highlighter-rouge">boolean</code></li>
-      <li>日期：<code class="highlighter-rouge">date</code></li>
+      <li>字符串：<code class="language-plaintext highlighter-rouge">string</code>, <code class="language-plaintext highlighter-rouge">text</code>, <code class="language-plaintext highlighter-rouge">keyword</code></li>
+      <li>整数 : <code class="language-plaintext highlighter-rouge">byte</code>, <code class="language-plaintext highlighter-rouge">short</code>, <code class="language-plaintext highlighter-rouge">integer</code>, <code class="language-plaintext highlighter-rouge">long</code>, <code class="language-plaintext highlighter-rouge">alf_float</code>，<code class="language-plaintext highlighter-rouge">scaled_float</code></li>
+      <li>浮点数：<code class="language-plaintext highlighter-rouge">float</code>, <code class="language-plaintext highlighter-rouge">double</code></li>
+      <li>布尔型：<code class="language-plaintext highlighter-rouge">boolean</code></li>
+      <li>日期：<code class="language-plaintext highlighter-rouge">date</code></li>
     </ul>
   </li>
   <li>复杂域类型
     <ul>
-      <li>数组：<code class="highlighter-rouge">array</code>, 普通数据数组</li>
-      <li>对象：<code class="highlighter-rouge">object</code>, json 格式对象</li>
-      <li>对象数组：<code class="highlighter-rouge">nested</code>, json 对象数组</li>
+      <li>数组：<code class="language-plaintext highlighter-rouge">array</code>, 普通数据数组</li>
+      <li>对象：<code class="language-plaintext highlighter-rouge">object</code>, json 格式对象</li>
+      <li>对象数组：<code class="language-plaintext highlighter-rouge">nested</code>, json 对象数组</li>
     </ul>
   </li>
   <li>其他数据类型
     <ul>
-      <li>经纬度点类型：<code class="highlighter-rouge">geo_point</code></li>
-      <li>地理形状类型：<code class="highlighter-rouge">geo_shape</code></li>
-      <li>IP 数据类型：<code class="highlighter-rouge">ip</code>, 用于 IPv4 和 IPv6 地址</li>
-      <li>完成数据类型：<code class="highlighter-rouge">completion</code> 提供自动完成的建议</li>
-      <li>令牌计数数据类型：<code class="highlighter-rouge">token_count</code> 计算字符串中的令牌数量</li>
-      <li>mapper-murmur3：<code class="highlighter-rouge">murmur3</code> 在索引时计算值的哈希值并将它们存储在索引中</li>
-      <li>渗滤器类型：<code class="highlighter-rouge">percolator</code>, 接受来自<code class="highlighter-rouge">query-dsl</code>的查询</li>
-      <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/parent-join.html"><code class="highlighter-rouge">join</code> 数据类型</a>：<code class="highlighter-rouge">join</code>, 为相同索引内的文档定义父/子关系</li>
+      <li>经纬度点类型：<code class="language-plaintext highlighter-rouge">geo_point</code></li>
+      <li>地理形状类型：<code class="language-plaintext highlighter-rouge">geo_shape</code></li>
+      <li>IP 数据类型：<code class="language-plaintext highlighter-rouge">ip</code>, 用于 IPv4 和 IPv6 地址</li>
+      <li>完成数据类型：<code class="language-plaintext highlighter-rouge">completion</code> 提供自动完成的建议</li>
+      <li>令牌计数数据类型：<code class="language-plaintext highlighter-rouge">token_count</code> 计算字符串中的令牌数量</li>
+      <li>mapper-murmur3：<code class="language-plaintext highlighter-rouge">murmur3</code> 在索引时计算值的哈希值并将它们存储在索引中</li>
+      <li>渗滤器类型：<code class="language-plaintext highlighter-rouge">percolator</code>, 接受来自<code class="language-plaintext highlighter-rouge">query-dsl</code>的查询</li>
+      <li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/parent-join.html"><code class="language-plaintext highlighter-rouge">join</code> 数据类型</a>：<code class="language-plaintext highlighter-rouge">join</code>, 为相同索引内的文档定义父/子关系</li>
     </ul>
   </li>
 </ul>
@@ -355,150 +358,150 @@
 <h4 id="heading-额外属性定义">额外属性定义</h4>
 
 <ul>
-  <li><code class="highlighter-rouge">index</code> ，定义索引类型 ， 空则不定义，默认 <code class="highlighter-rouge">analyzed</code>
+  <li><code class="language-plaintext highlighter-rouge">index</code> ，定义索引类型 ， 空则不定义，默认 <code class="language-plaintext highlighter-rouge">analyzed</code>
     <ul>
-      <li><code class="highlighter-rouge">analyzed</code> 首先分析字符串，然后索引它。换句话说，以全文索引这个域。<code class="highlighter-rouge">@字符串类型专用</code></li>
-      <li><code class="highlighter-rouge">not_analyzed</code> 索引这个域，所以它能够被搜索，但索引的是精确值。不会对它进行分析。<code class="highlighter-rouge">@字符串类型专用</code></li>
-      <li><code class="highlighter-rouge">no</code> 不索引这个域。这个域不会被搜索到。<code class="highlighter-rouge">@字符串类型专用</code></li>
-      <li><code class="highlighter-rouge">true/false</code> 是否编入索引</li>
+      <li><code class="language-plaintext highlighter-rouge">analyzed</code> 首先分析字符串，然后索引它。换句话说，以全文索引这个域。<code class="language-plaintext highlighter-rouge">@字符串类型专用</code></li>
+      <li><code class="language-plaintext highlighter-rouge">not_analyzed</code> 索引这个域，所以它能够被搜索，但索引的是精确值。不会对它进行分析。<code class="language-plaintext highlighter-rouge">@字符串类型专用</code></li>
+      <li><code class="language-plaintext highlighter-rouge">no</code> 不索引这个域。这个域不会被搜索到。<code class="language-plaintext highlighter-rouge">@字符串类型专用</code></li>
+      <li><code class="language-plaintext highlighter-rouge">true/false</code> 是否编入索引</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">analyzer</code> ，分析器语言类型 ， 空则不定义，默认 <code class="highlighter-rouge">standard</code>
+  <li><code class="language-plaintext highlighter-rouge">analyzer</code> ，分析器语言类型 ， 空则不定义，默认 <code class="language-plaintext highlighter-rouge">standard</code>
     <ul>
-      <li>内含的还有<code class="highlighter-rouge">whitespace</code> 、 <code class="highlighter-rouge">simple</code> 、 <code class="highlighter-rouge">english</code></li>
+      <li>内含的还有<code class="language-plaintext highlighter-rouge">whitespace</code> 、 <code class="language-plaintext highlighter-rouge">simple</code> 、 <code class="language-plaintext highlighter-rouge">english</code></li>
       <li>自定义请参考 API</li>
     </ul>
   </li>
   <li>
-    <p><code class="highlighter-rouge">format</code> ， 一般用于日期用字符串格式存储，定义日期格式</p>
+    <p><code class="language-plaintext highlighter-rouge">format</code> ， 一般用于日期用字符串格式存储，定义日期格式</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">normalizer</code> ， 空则不定义，跟随 elasticsearch 默认值</p>
+    <p><code class="language-plaintext highlighter-rouge">normalizer</code> ， 空则不定义，跟随 elasticsearch 默认值</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">boost</code> ， 相关性查询权重设置，默认<code class="highlighter-rouge">1.0</code></p>
+    <p><code class="language-plaintext highlighter-rouge">boost</code> ， 相关性查询权重设置，默认<code class="language-plaintext highlighter-rouge">1.0</code></p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">coerce</code> ， 设置为<code class="highlighter-rouge">true</code>强制将数字型数据转化为对应类型，而避免出现字符串或定义为整形文档存储为浮点型</p>
+    <p><code class="language-plaintext highlighter-rouge">coerce</code> ， 设置为<code class="language-plaintext highlighter-rouge">true</code>强制将数字型数据转化为对应类型，而避免出现字符串或定义为整形文档存储为浮点型</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">copy_to</code> ，定义的组字段名， 将多个字段的值复制到组字段中，然后可以将其作为单个字段进行查询</p>
+    <p><code class="language-plaintext highlighter-rouge">copy_to</code> ，定义的组字段名， 将多个字段的值复制到组字段中，然后可以将其作为单个字段进行查询</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">doc_values</code> ， 默认<code class="highlighter-rouge">true</code>，false 则查询的结果集中没有该字段</p>
+    <p><code class="language-plaintext highlighter-rouge">doc_values</code> ， 默认<code class="language-plaintext highlighter-rouge">true</code>，false 则查询的结果集中没有该字段</p>
   </li>
-  <li><code class="highlighter-rouge">dynamic</code> ， 默认<code class="highlighter-rouge">true</code>，多用于<code class="highlighter-rouge">object</code>类型字段
+  <li><code class="language-plaintext highlighter-rouge">dynamic</code> ， 默认<code class="language-plaintext highlighter-rouge">true</code>，多用于<code class="language-plaintext highlighter-rouge">object</code>类型字段
     <ul>
-      <li><code class="highlighter-rouge">true</code>：新检测到的字段被添加到映射中。（默认）</li>
-      <li><code class="highlighter-rouge">false</code>：新检测的字段被忽略。这些字段不会被编入索引，因此不会被搜索到，但仍会出现在<code class="highlighter-rouge">_source</code>返回的匹配字段中。这些字段不会添加到映射中，必须明确添加新字段。</li>
-      <li><code class="highlighter-rouge">strict</code>：如果检测到新字段，则抛出异常并拒绝该文档。必须将新字段明确添加到映射中。</li>
+      <li><code class="language-plaintext highlighter-rouge">true</code>：新检测到的字段被添加到映射中。（默认）</li>
+      <li><code class="language-plaintext highlighter-rouge">false</code>：新检测的字段被忽略。这些字段不会被编入索引，因此不会被搜索到，但仍会出现在<code class="language-plaintext highlighter-rouge">_source</code>返回的匹配字段中。这些字段不会添加到映射中，必须明确添加新字段。</li>
+      <li><code class="language-plaintext highlighter-rouge">strict</code>：如果检测到新字段，则抛出异常并拒绝该文档。必须将新字段明确添加到映射中。</li>
     </ul>
   </li>
   <li>
-    <p><code class="highlighter-rouge">enabled</code> ， 默认<code class="highlighter-rouge">true</code>，用于开启关闭某些字段的索引建立，<code class="highlighter-rouge">false</code>则不做查询字段</p>
+    <p><code class="language-plaintext highlighter-rouge">enabled</code> ， 默认<code class="language-plaintext highlighter-rouge">true</code>，用于开启关闭某些字段的索引建立，<code class="language-plaintext highlighter-rouge">false</code>则不做查询字段</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">eager_global_ordinals</code> ，提高聚合查询速度，聚合字段可以设置为<code class="highlighter-rouge">true</code></p>
+    <p><code class="language-plaintext highlighter-rouge">eager_global_ordinals</code> ，提高聚合查询速度，聚合字段可以设置为<code class="language-plaintext highlighter-rouge">true</code></p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">fielddata</code> ， 空则不定义，跟随 elasticsearch 默认值</p>
+    <p><code class="language-plaintext highlighter-rouge">fielddata</code> ， 空则不定义，跟随 elasticsearch 默认值</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">ignore_above</code> ， 属性值为整数，针对字符类型数据，长度比设定值长的将不被索引和存储</p>
+    <p><code class="language-plaintext highlighter-rouge">ignore_above</code> ， 属性值为整数，针对字符类型数据，长度比设定值长的将不被索引和存储</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">ignore_malformed</code> ， 定义为<code class="highlighter-rouge">true</code>的话，就算类型不对也不影响存储，默认为<code class="highlighter-rouge">false</code></p>
+    <p><code class="language-plaintext highlighter-rouge">ignore_malformed</code> ， 定义为<code class="language-plaintext highlighter-rouge">true</code>的话，就算类型不对也不影响存储，默认为<code class="language-plaintext highlighter-rouge">false</code></p>
   </li>
-  <li><code class="highlighter-rouge">index_options</code> ， 被编入索引的项目定义
+  <li><code class="language-plaintext highlighter-rouge">index_options</code> ， 被编入索引的项目定义
     <ul>
-      <li><code class="highlighter-rouge">docs</code>：只有文档编号被索引。</li>
-      <li><code class="highlighter-rouge">freqs</code>：文件编号和术语频率被编入索引。</li>
-      <li><code class="highlighter-rouge">positions</code>：文档编号，术语频率和术语位置（或顺序）被编入索引。</li>
-      <li><code class="highlighter-rouge">offsets</code>：文档编号，术语频率，位置以及开始和结束字符偏移（将术语映射回原始字符串）进行索引。</li>
+      <li><code class="language-plaintext highlighter-rouge">docs</code>：只有文档编号被索引。</li>
+      <li><code class="language-plaintext highlighter-rouge">freqs</code>：文件编号和术语频率被编入索引。</li>
+      <li><code class="language-plaintext highlighter-rouge">positions</code>：文档编号，术语频率和术语位置（或顺序）被编入索引。</li>
+      <li><code class="language-plaintext highlighter-rouge">offsets</code>：文档编号，术语频率，位置以及开始和结束字符偏移（将术语映射回原始字符串）进行索引。</li>
     </ul>
   </li>
   <li>
-    <p><code class="highlighter-rouge">fields</code> ， 多领域定义，详情查看 API</p>
+    <p><code class="language-plaintext highlighter-rouge">fields</code> ， 多领域定义，详情查看 API</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">norms</code> ， 用于开启或禁用规范，用于查询评分，详情见 API</p>
+    <p><code class="language-plaintext highlighter-rouge">norms</code> ， 用于开启或禁用规范，用于查询评分，详情见 API</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">null_value</code> ， 当传入<code class="highlighter-rouge">null</code>时候，用该属性的值替代<code class="highlighter-rouge">null</code>存储</p>
+    <p><code class="language-plaintext highlighter-rouge">null_value</code> ， 当传入<code class="language-plaintext highlighter-rouge">null</code>时候，用该属性的值替代<code class="language-plaintext highlighter-rouge">null</code>存储</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">position_increment_gap</code> ， 值为数字，定义匹配间隙，越大越模糊</p>
+    <p><code class="language-plaintext highlighter-rouge">position_increment_gap</code> ， 值为数字，定义匹配间隙，越大越模糊</p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">search_analyzer</code> ， 定义搜索时的分析器，用于覆盖默认建立索引的分析器，通常不设定</p>
+    <p><code class="language-plaintext highlighter-rouge">search_analyzer</code> ， 定义搜索时的分析器，用于覆盖默认建立索引的分析器，通常不设定</p>
   </li>
-  <li><code class="highlighter-rouge">similarity</code> ， 定义评分算法
+  <li><code class="language-plaintext highlighter-rouge">similarity</code> ， 定义评分算法
     <ul>
-      <li><code class="highlighter-rouge">BM25</code>：<code class="highlighter-rouge">Okapi BM25</code>算法。请参阅 [] 可插入相似性算法。](https://www.elastic.co/guide/en/elasticsearch/guide/master/pluggable-similarites.html)</li>
-      <li><code class="highlighter-rouge">classic</code>：<code class="highlighter-rouge">TF/IDF</code>算法。请参阅 <a href="https://www.elastic.co/guide/en/elasticsearch/guide/master/practical-scoring-function.html">Lucene 的实用评分函数</a>。</li>
-      <li><code class="highlighter-rouge">boolean</code>：一种简单的布尔相似性，在不需要全文排名时使用，分数只应基于查询条件是否匹配而使用。布尔相似度给出了一个等于他们的查询提升的分数。</li>
+      <li><code class="language-plaintext highlighter-rouge">BM25</code>：<code class="language-plaintext highlighter-rouge">Okapi BM25</code>算法。请参阅 [] 可插入相似性算法。](https://www.elastic.co/guide/en/elasticsearch/guide/master/pluggable-similarites.html)</li>
+      <li><code class="language-plaintext highlighter-rouge">classic</code>：<code class="language-plaintext highlighter-rouge">TF/IDF</code>算法。请参阅 <a href="https://www.elastic.co/guide/en/elasticsearch/guide/master/practical-scoring-function.html">Lucene 的实用评分函数</a>。</li>
+      <li><code class="language-plaintext highlighter-rouge">boolean</code>：一种简单的布尔相似性，在不需要全文排名时使用，分数只应基于查询条件是否匹配而使用。布尔相似度给出了一个等于他们的查询提升的分数。</li>
     </ul>
   </li>
   <li>
-    <p><code class="highlighter-rouge">store</code> ，<code class="highlighter-rouge">true/false</code> 通常查询是对编入的索引进行查询，不必从<code class="highlighter-rouge">_source</code>字段中提取这些字段 k 可以设置为 <code class="highlighter-rouge">false</code>。</p>
+    <p><code class="language-plaintext highlighter-rouge">store</code> ，<code class="language-plaintext highlighter-rouge">true/false</code> 通常查询是对编入的索引进行查询，不必从<code class="language-plaintext highlighter-rouge">_source</code>字段中提取这些字段 k 可以设置为 <code class="language-plaintext highlighter-rouge">false</code>。</p>
   </li>
-  <li><code class="highlighter-rouge">term_vector</code> ， 定义术语，用于特定文档搜索
+  <li><code class="language-plaintext highlighter-rouge">term_vector</code> ， 定义术语，用于特定文档搜索
     <ul>
-      <li><code class="highlighter-rouge">no</code>：没有任何术语向量被存储。（默认）</li>
-      <li><code class="highlighter-rouge">yes</code>：只是在该领域的条款存储。</li>
-      <li><code class="highlighter-rouge">with_positions</code>：条款和职位被存储。</li>
-      <li><code class="highlighter-rouge">with_offsets</code>：条款和字符偏移被存储。</li>
-      <li><code class="highlighter-rouge">with_positions_offsets</code>：术语，位置和字符偏移被存储。</li>
+      <li><code class="language-plaintext highlighter-rouge">no</code>：没有任何术语向量被存储。（默认）</li>
+      <li><code class="language-plaintext highlighter-rouge">yes</code>：只是在该领域的条款存储。</li>
+      <li><code class="language-plaintext highlighter-rouge">with_positions</code>：条款和职位被存储。</li>
+      <li><code class="language-plaintext highlighter-rouge">with_offsets</code>：条款和字符偏移被存储。</li>
+      <li><code class="language-plaintext highlighter-rouge">with_positions_offsets</code>：术语，位置和字符偏移被存储。</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">properties</code> ， <code class="highlighter-rouge">object</code>、<code class="highlighter-rouge">nested</code>字段里面定义字段，一般用于<code class="highlighter-rouge">List</code>或<code class="highlighter-rouge">Map</code>这种弱类型字段定义</li>
+  <li><code class="language-plaintext highlighter-rouge">properties</code> ， <code class="language-plaintext highlighter-rouge">object</code>、<code class="language-plaintext highlighter-rouge">nested</code>字段里面定义字段，一般用于<code class="language-plaintext highlighter-rouge">List</code>或<code class="language-plaintext highlighter-rouge">Map</code>这种弱类型字段定义</li>
 </ul>
 
 <h4 id="heading-元字段定义的属性">元字段定义的属性</h4>
 
-<p>类中定义元字段，而这些元字段不属于文档本身，但是可以丰富扩展 ES 的功能，只有如下的元字段才可以定义的属性一般为<code class="highlighter-rouge">enabled</code>，启用或禁用。</p>
+<p>类中定义元字段，而这些元字段不属于文档本身，但是可以丰富扩展 ES 的功能，只有如下的元字段才可以定义的属性一般为<code class="language-plaintext highlighter-rouge">enabled</code>，启用或禁用。</p>
 
 <ul>
   <li>身份元字段编辑
     <ul>
-      <li><code class="highlighter-rouge">_index</code>：文档所属的索引，可以扩展为<strong>相同数据类型的分索引存储</strong>，垂直分储</li>
-      <li><code class="highlighter-rouge">_uid</code>：由<code class="highlighter-rouge">_type</code>和和组成的复合字段<code class="highlighter-rouge">_id</code></li>
-      <li><code class="highlighter-rouge">_type</code>：文档的映射类型，可以扩展为<strong>相同数据类型的分类型存储</strong>，水平分储</li>
-      <li><code class="highlighter-rouge">_id</code>：文件的 ID</li>
+      <li><code class="language-plaintext highlighter-rouge">_index</code>：文档所属的索引，可以扩展为<strong>相同数据类型的分索引存储</strong>，垂直分储</li>
+      <li><code class="language-plaintext highlighter-rouge">_uid</code>：由<code class="language-plaintext highlighter-rouge">_type</code>和和组成的复合字段<code class="language-plaintext highlighter-rouge">_id</code></li>
+      <li><code class="language-plaintext highlighter-rouge">_type</code>：文档的映射类型，可以扩展为<strong>相同数据类型的分类型存储</strong>，水平分储</li>
+      <li><code class="language-plaintext highlighter-rouge">_id</code>：文件的 ID</li>
     </ul>
   </li>
   <li>文档源元数据字段编辑
     <ul>
-      <li><code class="highlighter-rouge">_source</code>：代表文档正文的原始 JSON，禁用该字段会失去很多功能，不建议，如有需要请参考 API
+      <li><code class="language-plaintext highlighter-rouge">_source</code>：代表文档正文的原始 JSON，禁用该字段会失去很多功能，不建议，如有需要请参考 API
         <ul>
-          <li><code class="highlighter-rouge">enabled</code>：<code class="highlighter-rouge">true</code>、<code class="highlighter-rouge">false</code>两种</li>
+          <li><code class="language-plaintext highlighter-rouge">enabled</code>：<code class="language-plaintext highlighter-rouge">true</code>、<code class="language-plaintext highlighter-rouge">false</code>两种</li>
         </ul>
       </li>
-      <li><code class="highlighter-rouge">_size</code>：<code class="highlighter-rouge">_source</code>字段 的大小，由<code class="highlighter-rouge">mapper-size</code>插件提供</li>
+      <li><code class="language-plaintext highlighter-rouge">_size</code>：<code class="language-plaintext highlighter-rouge">_source</code>字段 的大小，由<code class="language-plaintext highlighter-rouge">mapper-size</code>插件提供</li>
     </ul>
   </li>
   <li>索引元字段编辑
     <ul>
-      <li><code class="highlighter-rouge">_all</code>：一个包罗万象的字段，索引的所有其他字段的值，默认情况下禁用，启用请定义该元字段并配置属性<code class="highlighter-rouge">enabled</code>为<code class="highlighter-rouge">true</code>。
+      <li><code class="language-plaintext highlighter-rouge">_all</code>：一个包罗万象的字段，索引的所有其他字段的值，默认情况下禁用，启用请定义该元字段并配置属性<code class="language-plaintext highlighter-rouge">enabled</code>为<code class="language-plaintext highlighter-rouge">true</code>。
         <ul>
-          <li><code class="highlighter-rouge">enabled</code>: <code class="highlighter-rouge">true</code>、<code class="highlighter-rouge">false</code>两种</li>
+          <li><code class="language-plaintext highlighter-rouge">enabled</code>: <code class="language-plaintext highlighter-rouge">true</code>、<code class="language-plaintext highlighter-rouge">false</code>两种</li>
         </ul>
       </li>
-      <li><code class="highlighter-rouge">_field_names</code>：文档中包含非空值的所有字段，如果要优化索引速度并且不需要<code class="highlighter-rouge">exists</code>查询，则可能需要禁用此字段
+      <li><code class="language-plaintext highlighter-rouge">_field_names</code>：文档中包含非空值的所有字段，如果要优化索引速度并且不需要<code class="language-plaintext highlighter-rouge">exists</code>查询，则可能需要禁用此字段
         <ul>
-          <li><code class="highlighter-rouge">enabled</code>: <code class="highlighter-rouge">true</code>、<code class="highlighter-rouge">false</code>两种</li>
+          <li><code class="language-plaintext highlighter-rouge">enabled</code>: <code class="language-plaintext highlighter-rouge">true</code>、<code class="language-plaintext highlighter-rouge">false</code>两种</li>
         </ul>
       </li>
     </ul>
   </li>
   <li>路由元字段编辑
     <ul>
-      <li><code class="highlighter-rouge">_routing</code>：将文档路由到特定分片的自定义路由值</li>
+      <li><code class="language-plaintext highlighter-rouge">_routing</code>：将文档路由到特定分片的自定义路由值</li>
     </ul>
   </li>
   <li>其他元字段编辑
     <ul>
-      <li><code class="highlighter-rouge">_meta</code>：特定于应用的元数，自定义属性</li>
+      <li><code class="language-plaintext highlighter-rouge">_meta</code>：特定于应用的元数，自定义属性</li>
     </ul>
   </li>
 </ul>
@@ -512,20 +515,20 @@
     <p>对 SQL 语句的支持，通过 SQL 转化器，转化为 ES 查询体查询</p>
   </li>
   <li>
-    <p>定义 <code class="highlighter-rouge">sql</code>、<code class="highlighter-rouge">params</code>，实现自定义 SQL 转 ES 查询</p>
+    <p>定义 <code class="language-plaintext highlighter-rouge">sql</code>、<code class="language-plaintext highlighter-rouge">params</code>，实现自定义 SQL 转 ES 查询</p>
   </li>
 </ol>
 
 <h3 id="heading-esqueryparams">@EsQueryParams(…)</h3>
 
 <ol>
-  <li>定义 <code class="highlighter-rouge">value</code>，Params 字符串方式自定义查询，占位符用 <code class="highlighter-rouge">#param#</code> 或 <code class="highlighter-rouge">#1#</code>，param 对应实体类字段名或普通参数传入顺序</li>
+  <li>定义 <code class="language-plaintext highlighter-rouge">value</code>，Params 字符串方式自定义查询，占位符用 <code class="language-plaintext highlighter-rouge">#param#</code> 或 <code class="language-plaintext highlighter-rouge">#1#</code>，param 对应实体类字段名或普通参数传入顺序</li>
 </ol>
 
 <h3 id="heading-esqueryjson">@EsQueryJson(…)</h3>
 
 <ol>
-  <li>定义 <code class="highlighter-rouge">value</code>，Json 请求体方式自定义查询，占用符用 <code class="highlighter-rouge">#param#</code> 或 <code class="highlighter-rouge">#1#</code>，param 对应实体类字段名或普通参数传入顺序</li>
+  <li>定义 <code class="language-plaintext highlighter-rouge">value</code>，Json 请求体方式自定义查询，占用符用 <code class="language-plaintext highlighter-rouge">#param#</code> 或 <code class="language-plaintext highlighter-rouge">#1#</code>，param 对应实体类字段名或普通参数传入顺序</li>
 </ol>
 
 <h2 id="heading-后记">后记</h2>
@@ -543,10 +546,10 @@
                     </div>
                     <nav class="pagination">
                         
-                            <a class="internal" rel="prev" href="/blog/2018/04/01/sqlite-split-db-table/" title="上一篇 'Sqlite 封装之分库与分表'"> ← Sqlite 封装之分库与分表</a>
+                            <a class="internal" rel="prev" href="../../01/sqlite-split-db-table/" title="上一篇 'Sqlite 封装之分库与分表'"> ← Sqlite 封装之分库与分表</a>
                         
                         
-                            <a class="internal" rel="next" href="/blog/2018/04/22/meet-unknowed-self/" title="下一篇 '速读《遇见未知的自己》'">速读《遇见未知的自己》 → </a>
+                            <a class="internal" rel="next" href="../../22/meet-unknowed-self/" title="下一篇 '速读《遇见未知的自己》'">速读《遇见未知的自己》 → </a>
                         
                     </nav>
                 </div>
@@ -736,7 +739,7 @@
             <div class="misc vcard">
                 <div class="about">
                     <h4>
-                        <a href="/blog/other/about/">关于</a>
+                        <a href="../../../../other/about/">关于</a>
                         
                     </h4>
                 </div>
@@ -744,7 +747,7 @@
                     
                         <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
                     
-                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    <a class="ico-rss" href="../../../../../feed.xml" rel="me" target="_blank" title="feed"></a>
                     
                         
                     
@@ -830,11 +833,11 @@ $(document).ready(function () {
 
 
 <!-- Show menu overlay + Jekyll Simple Search option -->
-<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script src="../../../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
 $(document).ready(function () {
     $('.search-field').simpleJekyllSearch({
-      jsonFile: '/search.json',
+      jsonFile: '../../../../../search.json',
       template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
       searchResults: '.search-wrapper .results',
       searchResultsTitle: '<h4>搜索结果</h4>',
@@ -881,16 +884,16 @@ $(document).ready(function () {
 
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
-<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+<script src="../../../../../assets/javascripts/unveil/jquery.unveil.min.js"></script>
 
 <script>
-    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
-    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+    window.jQuery.fancybox || document.write('<script src="../../../../../assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="../../../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
 </script>
 
 <script>
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../../../assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
     $(".post-image").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -1033,8 +1036,8 @@ $(function () {
 
 <!-- live2dgirl加载 -->
 
-<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
-<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="../../../../../assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="../../../../../assets/javascripts/live2dgirl/jquery.min.js"></script> -->
 <div class="waifu">
     <div class="waifu-tips"></div>
     <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
@@ -1048,12 +1051,12 @@ $(function () {
         <span class="fui-cross"></span>
     </div>
 </div>
-<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
-<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script sync src="../../../../../assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="../../../../../assets/javascripts/live2dgirl/live2d.js"></script>
 <script type="text/javascript">
 function initLive2dGirl() {
     $(".waifu").css('display', 'block');
-    initModel("/assets/javascripts/live2dgirl/");
+    initModel("../../../../../assets/javascripts/live2dgirl/");
 }
 </script>
 

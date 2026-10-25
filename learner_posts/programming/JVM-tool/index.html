@@ -12,19 +12,22 @@
 <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.9.1 -->
 <title>JVM 工具学习笔记 | 欧阳Boy_Petter&#39;s Blog</title>
-<meta name="generator" content="Jekyll v3.5.2" />
+<meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="JVM 工具学习笔记" />
 <meta name="author" content="欧阳Boy_Petter" />
 <meta property="og:locale" content="zh" />
 <meta name="description" content="jconsole" />
-<meta property="og:description" content="jconsole" />
+<meta name="twitter:description" property="og:description" content="jconsole" />
 <meta property="og:site_name" content="欧阳Boy_Petter&#39;s Blog" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-01-22T00:00:00+00:00" />
+<meta property="article:published_time" content="2021-01-22T00:00:00+08:00" />
+<meta property="article:modified_time" content="2021-01-22T00:00:00+08:00" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="JVM 工具学习笔记" />
 <script type="application/ld+json">
-{"author":{"@type":"Person","name":"欧阳Boy_Petter"},"description":"jconsole","@type":"BlogPosting","url":"/learner_posts/programming/JVM-tool/","headline":"JVM 工具学习笔记","dateModified":"2021-01-22T00:00:00+00:00","datePublished":"2021-01-22T00:00:00+00:00","mainEntityOfPage":{"@type":"WebPage","@id":"/learner_posts/programming/JVM-tool/"},"@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"欧阳Boy_Petter"},"dateModified":"2021-01-22T00:00:00+08:00","datePublished":"2021-01-22T00:00:00+08:00","description":"jconsole","headline":"JVM 工具学习笔记","mainEntityOfPage":{"@type":"WebPage","@id":"/learner_posts/programming/JVM-tool/"},"url":"/learner_posts/programming/JVM-tool/"}</script>
 <!-- End Jekyll SEO tag -->
 
 <meta name="keywords" content="" />
@@ -33,21 +36,22 @@
 
 
 
-<link type="application/atom+xml" rel="alternate" href="/feed.xml" title="欧阳Boy_Petter's Blog" />
-    <link href='/assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="/blog/learner/static/css/learn.css" type="text/css"/>
-    <link rel="stylesheet" href="/assets/stylesheets/prism.css"/>
+<link type="application/atom+xml" rel="alternate" href="../../../feed.xml" title="欧阳Boy_Petter&#39;s Blog">
+
+    <link href='../../../assets/stylesheets/blog.css' rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="../../../blog/learner/static/css/learn.css" type="text/css"/>
+    <link rel="stylesheet" href="../../../assets/stylesheets/prism.css"/>
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
-<script>window.Modernizr || document.write('<script src="/assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
+<script>window.Modernizr || document.write('<script src="../../../assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    window.jQuery || document.write('<script src="/assets/javascripts/jquery-3.2.1.min.js"><\/script>')
+    window.jQuery || document.write('<script src="../../../assets/javascripts/jquery-3.2.1.min.js"><\/script>')
 </script>
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
 <script>
-    window.Pace || document.write('<script src="/assets/javascripts/pace.min.js"><\/script>')
+    window.Pace || document.write('<script src="../../../assets/javascripts/pace.min.js"><\/script>')
 </script>
 
 
@@ -67,23 +71,23 @@
         <a class="btn-close">关闭</a>
         <div class="results">
             <ul>
-                <li><a href="/blog/">文章</a></li>
-                <li><a href="/blog/categories/">分类</a></li>
-                <li><a href="/blog/tags/">标签</a></li>
+                <li><a href="../../../blog/">文章</a></li>
+                <li><a href="../../../blog/categories/">分类</a></li>
+                <li><a href="../../../blog/tags/">标签</a></li>
 
-                <li><a href="/blog/reader/">读书</a></li>
-                <li><a href="/blog/movie/">影音</a></li>
-                <li><a href="/blog/book+movie/">书&影</a></li>
+                <li><a href="../../../blog/reader/">读书</a></li>
+                <li><a href="../../../blog/movie/">影音</a></li>
+                <li><a href="../../../blog/book+movie/">书&影</a></li>
 
-                <li><a href="/blog/learner/">笔记</a></li>
-                <li><a href="/blog/life/">动态</a></li>
-                <li><a href="/blog/letter/">信</a></li>
-                <li><a href="/blog/song/">歌</a></li>
-                <li><a href="/blog/story/">文</a></li>
-                <li><a href="/blog/plan/">业</a></li>
-                <li><a href="/blog/family/">家</a></li>
-                <li><a href="/blog/other/">杂</a></li>
-                <li><a href="/">关于</a></li>
+                <li><a href="../../../blog/learner/">笔记</a></li>
+                <li><a href="../../../blog/life/">动态</a></li>
+                <li><a href="../../../blog/letter/">信</a></li>
+                <li><a href="../../../blog/song/">歌</a></li>
+                <li><a href="../../../blog/story/">文</a></li>
+                <li><a href="../../../blog/plan/">业</a></li>
+                <li><a href="../../../blog/family/">家</a></li>
+                <li><a href="../../../blog/other/">杂</a></li>
+                <li><a href="../../../">关于</a></li>
             </ul>
         </div>
     </div>
@@ -106,25 +110,25 @@
                 <ul>
                     <li class="logo">
                         <button class="btn-menu" title="菜单"></button>
-                        <a href="/blog/">欧阳Boy_Petter's Blog</a>
+                        <a href="../../../blog/">欧阳Boy_Petter's Blog</a>
                         <!--[if !IE]> -->
                         <button class="btn-search" title="搜索"></button>
                         <!-- <![endif]-->
                     </li>
-                    <li class="nav-link"><a label="article" title="文章" href="/blog/">文章</a></li>
+                    <li class="nav-link"><a label="article" title="文章" href="../../../blog/">文章</a></li>
 
-                    <!-- <li class="nav-link"><a label="book" title="读书" href="/blog/reader/">读书</a></li> -->
-                    <!-- <li class="nav-link"><a label="movie" title="影音" href="/blog/movie/">影音</a></li> -->
-                    <li class="nav-link"><a label="book+movie" title="书&影" href="/blog/book+movie/">书&影</a></li>
+                    <!-- <li class="nav-link"><a label="book" title="读书" href="../../../blog/reader/">读书</a></li> -->
+                    <!-- <li class="nav-link"><a label="movie" title="影音" href="../../../blog/movie/">影音</a></li> -->
+                    <li class="nav-link"><a label="book+movie" title="书&影" href="../../../blog/book+movie/">书&影</a></li>
                     
-                    <li class="nav-link"><a label="learn" title="笔记" href="/blog/learner/">笔记</a></li>
-                    <li class="nav-link"><a label="life" title="动态" href="/blog/life/">动态</a></li>
-                    <li class="nav-link"><a label="letter" title="信" href="/blog/letter/">信</a></li>
-                    <li class="nav-link"><a label="song" title="歌" href="/blog/song/">歌</a></li>
-                    <li class="nav-link"><a label="story" title="文" href="/blog/story/">文</a></li>
-                    <li class="nav-link"><a label="plan" title="业" href="/blog/plan/">业</a></li>
-                    <li class="nav-link"><a label="family" title="家" href="/blog/family/">家</a></li>
-                    <li class="nav-link"><a label="other" title="杂" href="/blog/other/">杂</a></li>
+                    <li class="nav-link"><a label="learn" title="笔记" href="../../../blog/learner/">笔记</a></li>
+                    <li class="nav-link"><a label="life" title="动态" href="../../../blog/life/">动态</a></li>
+                    <li class="nav-link"><a label="letter" title="信" href="../../../blog/letter/">信</a></li>
+                    <li class="nav-link"><a label="song" title="歌" href="../../../blog/song/">歌</a></li>
+                    <li class="nav-link"><a label="story" title="文" href="../../../blog/story/">文</a></li>
+                    <li class="nav-link"><a label="plan" title="业" href="../../../blog/plan/">业</a></li>
+                    <li class="nav-link"><a label="family" title="家" href="../../../blog/family/">家</a></li>
+                    <li class="nav-link"><a label="other" title="杂" href="../../../blog/other/">杂</a></li>
                     <!--[if !IE]> -->
                     <li class="nav-link"><a title="搜索" class="btn-search" href="#">搜索</a></li>
                     <!-- <![endif]-->
@@ -145,7 +149,7 @@
                         <div class="main-content">
                             <!-- 新增导航目录 -->
                             
-<link rel="stylesheet" href="/assets/stylesheets/nav.css" type="text/css"/>
+<link rel="stylesheet" href="../../../assets/stylesheets/nav.css" type="text/css"/>
 <div class="nav-container">
     <nav>
         <div class="menubar expand button_active" id="mediaMenubar">
@@ -155,14 +159,14 @@
         <div id="js-nav-directory"></div>
     </nav>
 </div>
-<script defer type="text/javascript" src="/assets/javascripts/plugin/nav.js"></script>
+<script defer type="text/javascript" src="../../../assets/javascripts/plugin/nav.js"></script>
 
                             <div id="article-container" class="article-container" style=''>
                                 <article id="article-content">
                                     <h2 id="heading-jconsole">jconsole</h2>
 
 <blockquote>
-  <p>Cmd控制台： <code class="highlighter-rouge">jconsole</code> 回车，可以直接打开 java 监视管理控制台</p>
+  <p>Cmd控制台： <code class="language-plaintext highlighter-rouge">jconsole</code> 回车，可以直接打开 java 监视管理控制台</p>
 </blockquote>
 
 <p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/learner/jvm-debug/1.png" alt="jconsole监控" /></p>
@@ -170,7 +174,7 @@
 <h2 id="heading-jsp">jsp</h2>
 
 <blockquote>
-  <p>Cmd控制台 <code class="highlighter-rouge">jsp</code> ，查看运行中的java进程pid</p>
+  <p>Cmd控制台 <code class="language-plaintext highlighter-rouge">jsp</code> ，查看运行中的java进程pid</p>
 </blockquote>
 
 <p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/learner/jvm-debug/2.png" alt="jsp命令" /></p>
@@ -186,7 +190,7 @@
 <h2 id="heading-jstack">jstack</h2>
 
 <blockquote>
-  <p>Cmd控制台：<code class="highlighter-rouge">jstack pid</code> ，查看进程堆栈信息</p>
+  <p>Cmd控制台：<code class="language-plaintext highlighter-rouge">jstack pid</code> ，查看进程堆栈信息</p>
 </blockquote>
 
 <p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/learner/jvm-debug/4.png" alt="jstack" /></p>
@@ -198,8 +202,8 @@
 </blockquote>
 
 <ul>
-  <li>Cmd控制台: <code class="highlighter-rouge">jmap -dump:live,file=xxx.map [正在运行java的进程PID]</code>，可以导出进程JAVA相关信息，例如：<code class="highlighter-rouge">jmap -dump:live,file=visa-asms-link.map 16664</code></li>
-  <li>Cmd控制台: <code class="highlighter-rouge">jhat -J-Xmx512m -port 7000 visa-asms-link.map</code> ，可以启动简单预览的WEB服务</li>
+  <li>Cmd控制台: <code class="language-plaintext highlighter-rouge">jmap -dump:live,file=xxx.map [正在运行java的进程PID]</code>，可以导出进程JAVA相关信息，例如：<code class="language-plaintext highlighter-rouge">jmap -dump:live,file=visa-asms-link.map 16664</code></li>
+  <li>Cmd控制台: <code class="language-plaintext highlighter-rouge">jhat -J-Xmx512m -port 7000 visa-asms-link.map</code> ，可以启动简单预览的WEB服务</li>
 </ul>
 
 <p>http://localhost:7000/  这里看到所有的类；
@@ -228,7 +232,7 @@ Z  boolean
 <h2 id="heading-jstat">jstat</h2>
 
 <blockquote>
-  <p>Cmd命令: <code class="highlighter-rouge">jstat</code>（JVM统计监测工具）</p>
+  <p>Cmd命令: <code class="language-plaintext highlighter-rouge">jstat</code>（JVM统计监测工具）</p>
 </blockquote>
 
 <p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/learner/jvm-debug/7.png" alt="jstat1" /></p>
@@ -247,7 +251,7 @@ GCT：GC总耗时
 <h2 id="heading-jcmd">jcmd</h2>
 
 <blockquote>
-  <p>Cmd命令：<code class="highlighter-rouge">jcmd</code></p>
+  <p>Cmd命令：<code class="language-plaintext highlighter-rouge">jcmd</code></p>
 </blockquote>
 
 <p><img src="https://cdn.jsdelivr.net/gh/petterobam/picture-bucket@main/blog/learner/jvm-debug/9.png" alt="jcmd" /></p>
@@ -310,7 +314,7 @@ jcmd 31275 PerfCounter.print #查看性能统计
             <div class="misc vcard">
                 <div class="about">
                     <h4>
-                        <a href="/blog/other/about/">关于</a>
+                        <a href="../../../blog/other/about/">关于</a>
                         
                     </h4>
                 </div>
@@ -318,7 +322,7 @@ jcmd 31275 PerfCounter.print #查看性能统计
                     
                         <a class="ico-gmail" href="mailto:1460300366@qq.com" rel="me" target="_blank" title="email"></a>
                     
-                    <a class="ico-rss" href="/feed.xml" rel="me" target="_blank" title="feed"></a>
+                    <a class="ico-rss" href="../../../feed.xml" rel="me" target="_blank" title="feed"></a>
                     
                         
                     
@@ -403,11 +407,11 @@ $(document).ready(function () {
 
 
 <!-- Show menu overlay + Jekyll Simple Search option -->
-<script src="/assets/javascripts/jekyll-search.jquery.js"></script>
+<script src="../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
 $(document).ready(function () {
     $('.search-field').simpleJekyllSearch({
-      jsonFile: '/search.json',
+      jsonFile: '../../../search.json',
       template: '<li><a href="{url}">{title} <span class="entry-date"><time datetime="{date}">{shortdate}</time></span></a></li>',
       searchResults: '.search-wrapper .results',
       searchResultsTitle: '<h4>搜索结果</h4>',
@@ -454,16 +458,16 @@ $(document).ready(function () {
 
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.js'></script>
 <script src='//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-buttons.min.js'></script>
-<script src="/assets/javascripts/unveil/jquery.unveil.min.js"></script>
+<script src="../../../assets/javascripts/unveil/jquery.unveil.min.js"></script>
 
 <script>
-    window.jQuery.fancybox || document.write('<script src="/assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
-    window.jQuery.fancybox.helpers.buttons || document.write('<script src="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
+    window.jQuery.fancybox || document.write('<script src="../../../assets/javascripts/fancybox/jquery.fancybox.pack.js?v=2.1.4"><\/script>')
+    window.jQuery.fancybox.helpers.buttons || document.write('<script src="../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.js?v=1.0.5"><\/script>')
 </script>
 
 <script>
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
-    $("head").append('<link rel="stylesheet" href="/assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../assets/javascripts/fancybox/jquery.fancybox.css?v=2.1.4" type="text/css" />');
+    $("head").append('<link rel="stylesheet" href="../../../assets/javascripts/fancybox/helpers/jquery.fancybox-buttons.css?v=1.0.5" type="text/css" />');
     $(".post-image").fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -606,8 +610,8 @@ $(function () {
 
 <!-- live2dgirl加载 -->
 
-<link rel="stylesheet" type="text/css" href="/assets/javascripts/live2dgirl/waifu.css"/>
-<!-- <script src="/assets/javascripts/live2dgirl/jquery.min.js"></script> -->
+<link rel="stylesheet" type="text/css" href="../../../assets/javascripts/live2dgirl/waifu.css"/>
+<!-- <script src="../../../assets/javascripts/live2dgirl/jquery.min.js"></script> -->
 <div class="waifu">
     <div class="waifu-tips"></div>
     <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
@@ -621,19 +625,19 @@ $(function () {
         <span class="fui-cross"></span>
     </div>
 </div>
-<script sync src="/assets/javascripts/live2dgirl/waifu-tips.js"></script>
-<script sync src="/assets/javascripts/live2dgirl/live2d.js"></script>
+<script sync src="../../../assets/javascripts/live2dgirl/waifu-tips.js"></script>
+<script sync src="../../../assets/javascripts/live2dgirl/live2d.js"></script>
 <script type="text/javascript">
 function initLive2dGirl() {
     $(".waifu").css('display', 'block');
-    initModel("/assets/javascripts/live2dgirl/");
+    initModel("../../../assets/javascripts/live2dgirl/");
 }
 </script>
 
 
     
     
-    <script src="/assets/javascripts/prism.js"></script>
+    <script src="../../../assets/javascripts/prism.js"></script>
 </body>
 
 </html>
