@@ -2,7 +2,7 @@
 
 
 #content article .entry-content p a {
-    color: #087f77;
+    color: #8f2f1b;
 }
 .point-time {
     content: "";
@@ -11,30 +11,30 @@
     height: 13px;
     top: 9px;
     left: 40px;
-    background: #0bb7a7;
+    background: #c54a2b;
     margin-left: -4px;
     border-radius: 50%;
-    box-shadow: 0 0 0 5px #f7fbfa;
+    box-shadow: 0 0 0 5px #f4efe6;
 }
 
 .point1 {
-    background-color: #0bb7a7;
+    background-color: #c54a2b;
 }
 
 .point2 {
-    background-color: #3c7cf4;
+    background-color: #31574d;
 }
 
 .point3 {
-    background-color: #7c6cf2;
+    background-color: #b28b2e;
 }
 
 .point4 {
-    background-color: #d99a3d;
+    background-color: #6d4f67;
 }
 
 .point5 {
-    background-color: #2d8f8a;
+    background-color: #43586b;
 }
 
 .archive {
@@ -44,11 +44,11 @@
 .archive a {
     font-size: 18px;
 
-    color: #17212b;
+    color: #211f1a;
 }
 
 .archive a:hover {
-    color: #087f77;
+    color: #8f2f1b;
 }
 
 .archive span {
@@ -64,9 +64,9 @@
     line-height: 30px;
     text-align: left;
     font-size: 1.4em;
-    color: #17212b;
+    color: #211f1a;
     padding: 10px;
-    border-bottom: 2px solid #17212b;
+    border-bottom: 2px solid #211f1a;
 }
 
 .archive section {
@@ -80,7 +80,7 @@
     top: 17px;
     bottom: -35px;
     left: 40px;
-    background: #d5e1e3;
+    background: #d4c9ba;
     position: absolute;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .archive section aside {
-    color: #3b4a56;
+    color: #514b43;
     margin-left: 60px;
 
 }
@@ -117,8 +117,8 @@
     object-fit: cover;
     vertical-align: middle;
 
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(19, 42, 52, .1);
+    border-radius: 2px;
+    box-shadow: 4px 4px 0 rgba(33, 31, 26, .08);
 }
 
 .life-news-body pre {
@@ -127,10 +127,10 @@
     margin: 14px 0;
     padding: 16px 18px;
 
-    color: #dcebea;
-    border: 1px solid rgba(11, 183, 167, .24);
-    border-radius: 12px;
-    background: linear-gradient(135deg, #0c1621, #122538);
+    color: #f1e8dc;
+    border: 1px solid rgba(197, 74, 43, .26);
+    border-radius: 2px;
+    background: #1b211f;
     white-space: pre-wrap;
     font-family: 'Ubuntu Condensed', 'PingFang SC', sans-serif;
     font-size: .92rem;
@@ -139,7 +139,7 @@
 
 .archive section aside > span:first-of-type,
 .archive section time span {
-    color: #8795a1;
+    color: #8d8377;
     font-family: 'Ubuntu Condensed', 'PingFang SC', sans-serif;
     letter-spacing: .04em;
 }

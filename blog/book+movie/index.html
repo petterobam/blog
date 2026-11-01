@@ -62,17 +62,17 @@
             padding: 10px !important;
 
             border: 1px solid var(--line) !important;
-            border-radius: 16px !important;
-            background: #fff !important;
+            border-radius: 2px !important;
+            background: var(--surface) !important;
             break-inside: auto !important;
-            box-shadow: 0 14px 40px rgba(19, 42, 52, .07);
+            box-shadow: 6px 6px 0 rgba(197, 74, 43, .08);
             transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
         }
 
         .book-thumbnail:hover {
-            border-color: rgba(11, 183, 167, .5) !important;
-            background: #fff !important;
-            box-shadow: 0 18px 48px rgba(19, 42, 52, .12);
+            border-color: var(--accent) !important;
+            background: var(--surface) !important;
+            box-shadow: 8px 8px 0 rgba(197, 74, 43, .1);
             transform: translateY(-3px);
         }
 
@@ -83,7 +83,7 @@
             max-height: 330px;
 
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 2px;
         }
 
         .book-thumbnail h3 {
@@ -142,7 +142,7 @@
 
 </head>
 
-<body>
+<body class="editorial-page">
     <!--[if IE]>
     <p class="site-notice">您正在使用一个过时的网页浏览器。请<a href="http://browsehappy.com/" target="_blank">升级您的浏览器</a>或<a href="http://www.google.com/chromeframe/?redirect=true" target="_blank">开启 Google Chrome Frame</a> 来提高用户体验。</p>
 <![endif]-->
