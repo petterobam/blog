@@ -1,8 +1,8 @@
 /* timeline */
 
 
-#content article .entry-content p a{
-    color: #2080df;
+#content article .entry-content p a {
+    color: #087f77;
 }
 .point-time {
     content: "";
@@ -11,30 +11,30 @@
     height: 13px;
     top: 9px;
     left: 40px;
-    background: #1c87bf;
+    background: #0bb7a7;
     margin-left: -4px;
     border-radius: 50%;
-    box-shadow: 0 0 0 5px #fff;
+    box-shadow: 0 0 0 5px #f7fbfa;
 }
 
 .point1 {
-    background-color: #f6393f;
+    background-color: #0bb7a7;
 }
 
 .point2 {
-    background-color: #1c87bf;
+    background-color: #3c7cf4;
 }
 
 .point3 {
-    background-color: #95c91e;
+    background-color: #7c6cf2;
 }
 
 .point4 {
-    background-color: #ffb902;
+    background-color: #d99a3d;
 }
 
 .point5 {
-    background-color: #d32d93;
+    background-color: #2d8f8a;
 }
 
 .archive {
@@ -43,6 +43,12 @@
 
 .archive a {
     font-size: 18px;
+
+    color: #17212b;
+}
+
+.archive a:hover {
+    color: #087f77;
 }
 
 .archive span {
@@ -58,9 +64,9 @@
     line-height: 30px;
     text-align: left;
     font-size: 1.4em;
-    color: #1d1d1d;
+    color: #17212b;
     padding: 10px;
-    border-bottom:#9f9f9f 1px solid;
+    border-bottom: 2px solid #17212b;
 }
 
 .archive section {
@@ -74,7 +80,7 @@
     top: 17px;
     bottom: -35px;
     left: 40px;
-    background: #e6e6e6;
+    background: #d5e1e3;
     position: absolute;
 }
 
@@ -93,7 +99,7 @@
 }
 
 .archive section aside {
-    color: #3a3a38;
+    color: #3b4a56;
     margin-left: 60px;
 
 }
@@ -103,5 +109,61 @@
 }
 
 .life-news-body img {
-    width: 20%;
+    width: auto;
+    max-width: min(100%, 280px);
+    max-height: 260px;
+    margin: 7px 8px 7px 0;
+
+    object-fit: cover;
+    vertical-align: middle;
+
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(19, 42, 52, .1);
+}
+
+.life-news-body pre {
+    overflow: auto;
+
+    margin: 14px 0;
+    padding: 16px 18px;
+
+    color: #dcebea;
+    border: 1px solid rgba(11, 183, 167, .24);
+    border-radius: 12px;
+    background: linear-gradient(135deg, #0c1621, #122538);
+    white-space: pre-wrap;
+    font-family: 'Ubuntu Condensed', 'PingFang SC', sans-serif;
+    font-size: .92rem;
+    line-height: 1.7;
+}
+
+.archive section aside > span:first-of-type,
+.archive section time span {
+    color: #8795a1;
+    font-family: 'Ubuntu Condensed', 'PingFang SC', sans-serif;
+    letter-spacing: .04em;
+}
+
+@media (max-width: 640px) {
+    .archive a {
+        font-size: 16px;
+    }
+
+    .archive section aside {
+        margin-left: 52px;
+    }
+
+    .archive section:before,
+    .point-time {
+        left: 28px;
+    }
+
+    .life-news-body img {
+        max-width: 42vw;
+        max-height: 180px;
+    }
+
+    .archive section aside > span:first-of-type {
+        display: none;
+    }
 }

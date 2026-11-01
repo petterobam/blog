@@ -128,10 +128,11 @@
             <nav class="nav-global">
                 <ul>
                     <li class="logo">
-                        <button class="btn-menu" title="菜单"></button>
-                        <a href="../../../blog/">欧阳Boy_Petter's Blog</a>
+                        <button class="btn-menu" title="菜单" aria-label="菜单"></button>
+                        <a href="../../../blog/">欧阳Boy_Petter</a>
+                        <a class="mobile-blog-shortcut" href="../../../blog/">文章</a>
                         <!--[if !IE]> -->
-                        <button class="btn-search" title="搜索"></button>
+                        <button class="btn-search" title="搜索" aria-label="搜索"></button>
                         <!-- <![endif]-->
                     </li>
                     <li class="nav-link"><a label="article" title="文章" href="../../../blog/">文章</a></li>
@@ -311,6 +312,33 @@ $(document).ready(function () {
 <!-- Google Analytics Event tracking -->
 
 
+<!-- 阅读进度 -->
+<script>
+(function () {
+    var article = document.querySelector('.layout-post .entry-content');
+    if (!article) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    bar.innerHTML = '<span></span>';
+    document.body.appendChild(bar);
+
+    var fill = bar.firstChild;
+    var update = function () {
+        var rect = article.getBoundingClientRect();
+        var start = window.scrollY + rect.top;
+        var distance = Math.max(article.offsetHeight - window.innerHeight, 1);
+        var progress = Math.min(Math.max((window.scrollY - start) / distance, 0), 1);
+        fill.style.transform = 'scaleX(' + progress + ')';
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+}());
+</script>
+
 <!-- Show menu overlay + Jekyll Simple Search option -->
 <script src="../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
@@ -385,7 +413,7 @@ $(document).ready(function () {
     });
     $(document).ready(function () {
         $(".post-image > img").unveil(450);
-        $(".nav-global a[label='story']").css("background-color", "orange")
+        $(".nav-global a[label='story']").addClass("is-active")
     });
 </script>
 
@@ -538,6 +566,7 @@ function initLive2dGirl() {
     initModel("../../../assets/javascripts/live2dgirl/");
 }
 </script>
+
 
 
     

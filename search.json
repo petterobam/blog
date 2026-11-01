@@ -25,50 +25,15 @@
   } 
   
     ,{
-      "title"      : "晚上立flag，早上就破防：我们真的需要一个不一样的产品",
-      "url"        : "/blog/2025/06/20/why-we-always-give-up/",
-      "date"       : "2025-06-20 00:00:00 +0800",
-      "shortdate"  : "June 20, 2025"
-    } 
-  
-    ,{
-      "title"      : "从阿里离职21天后，我重新定义了什么叫 &#39;有用的产品&#39;",
-      "url"        : "/blog/2025/06/20/redefine-useful-product/",
-      "date"       : "2025-06-20 00:00:00 +0800",
-      "shortdate"  : "June 20, 2025"
-    } 
-  
-    ,{
-      "title"      : "【知乎】阿里离职21天，一个血泪教训：我顿悟了“有用产品”的终极定义",
-      "url"        : "/blog/2025/06/20/redefine-useful-product-zhihu/",
-      "date"       : "2025-06-20 00:00:00 +0800",
-      "shortdate"  : "June 20, 2025"
-    } 
-  
-    ,{
-      "title"      : "【小红书】阿里离职21天，我终于懂了啥叫“真·有用”的产品！😭💡",
-      "url"        : "/blog/2025/06/20/redefine-useful-product-red-book/",
-      "date"       : "2025-06-20 00:00:00 +0800",
-      "shortdate"  : "June 20, 2025"
-    } 
-  
-    ,{
-      "title"      : "【微信】阿里离职21天，我砸掉了&#39;有趣&#39;的招牌：什么产品才配叫&#39;有用&#39;？",
-      "url"        : "/blog/2025/06/20/redefine-use-ful-product-weixin/",
-      "date"       : "2025-06-20 00:00:00 +0800",
-      "shortdate"  : "June 20, 2025"
-    } 
-  
-    ,{
-      "title"      : "成长型应用： 认知+工具 =&gt; 行动",
-      "url"        : "/blog/2025/06/20/growth-app/",
-      "date"       : "2025-06-20 00:00:00 +0800",
-      "shortdate"  : "June 20, 2025"
-    } 
-  
-    ,{
       "title"      : "成长型应用：认知+工具 =&gt; 行动的产品新思路",
       "url"        : "/blog/2025/06/20/growth-app-concept/",
+      "date"       : "2025-06-20 00:00:00 +0800",
+      "shortdate"  : "June 20, 2025"
+    } 
+  
+    ,{
+      "title"      : "从做工具到做改变：一次产品复盘",
+      "url"        : "/blog/2025/06/20/from-tools-to-behavior-change/",
       "date"       : "2025-06-20 00:00:00 +0800",
       "shortdate"  : "June 20, 2025"
     } 

@@ -40,6 +40,92 @@
     <meta charset="UTF-8">
     <title>我的博客·读书手札</title>
     <link rel="stylesheet" href="../reader/static/css/main.css" />
+    <style>
+        #book-list {
+            display: block !important;
+
+            padding: 0 !important;
+
+            background: transparent !important;
+        }
+
+        #book-list > .archive {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .book-thumbnail {
+            float: none !important;
+
+            margin: 0 !important;
+            padding: 10px !important;
+
+            border: 1px solid var(--line) !important;
+            border-radius: 16px !important;
+            background: #fff !important;
+            break-inside: auto !important;
+            box-shadow: 0 14px 40px rgba(19, 42, 52, .07);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+
+        .book-thumbnail:hover {
+            border-color: rgba(11, 183, 167, .5) !important;
+            background: #fff !important;
+            box-shadow: 0 18px 48px rgba(19, 42, 52, .12);
+            transform: translateY(-3px);
+        }
+
+        .book-thumbnail img {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: auto;
+            max-height: 330px;
+
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .book-thumbnail h3 {
+            font-family: var(--font-display);
+            text-transform: none;
+        }
+
+        .book-thumbnail .caption {
+            padding: 12px 4px 4px;
+        }
+
+        .book-content {
+            color: var(--muted);
+            font-size: .72rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1100px) {
+            #book-list > .archive {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 720px) {
+            #book-list > .archive {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 12px;
+            }
+
+            .book-thumbnail {
+                padding: 7px !important;
+            }
+
+            .book-thumbnail img {
+                max-height: 260px;
+            }
+
+            .book-thumbnail h3 {
+                font-size: .9rem;
+            }
+        }
+    </style>
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script>window.Modernizr || document.write('<script src="../../assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
 
@@ -108,10 +194,11 @@
             <nav class="nav-global">
                 <ul>
                     <li class="logo">
-                        <button class="btn-menu" title="菜单"></button>
-                        <a href="../">欧阳Boy_Petter's Blog</a>
+                        <button class="btn-menu" title="菜单" aria-label="菜单"></button>
+                        <a href="../">欧阳Boy_Petter</a>
+                        <a class="mobile-blog-shortcut" href="../">文章</a>
                         <!--[if !IE]> -->
-                        <button class="btn-search" title="搜索"></button>
+                        <button class="btn-search" title="搜索" aria-label="搜索"></button>
                         <!-- <![endif]-->
                     </li>
                     <li class="nav-link"><a label="article" title="文章" href="../">文章</a></li>
@@ -281,6 +368,33 @@ $(document).ready(function () {
 <!-- Google Analytics Event tracking -->
 
 
+<!-- 阅读进度 -->
+<script>
+(function () {
+    var article = document.querySelector('.layout-post .entry-content');
+    if (!article) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    bar.innerHTML = '<span></span>';
+    document.body.appendChild(bar);
+
+    var fill = bar.firstChild;
+    var update = function () {
+        var rect = article.getBoundingClientRect();
+        var start = window.scrollY + rect.top;
+        var distance = Math.max(article.offsetHeight - window.innerHeight, 1);
+        var progress = Math.min(Math.max((window.scrollY - start) / distance, 0), 1);
+        fill.style.transform = 'scaleX(' + progress + ')';
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+}());
+</script>
+
 <!-- Show menu overlay + Jekyll Simple Search option -->
 <script src="../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
@@ -355,7 +469,7 @@ $(document).ready(function () {
     });
     $(document).ready(function () {
         $(".post-image > img").unveil(450);
-        $(".nav-global a[label='movie']").css("background-color", "orange")
+        $(".nav-global a[label='movie']").addClass("is-active")
     });
 </script>
 
@@ -508,6 +622,7 @@ function initLive2dGirl() {
     initModel("../../assets/javascripts/live2dgirl/");
 }
 </script>
+
 
 
 </body>

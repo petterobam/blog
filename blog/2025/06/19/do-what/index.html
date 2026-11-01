@@ -107,10 +107,11 @@
             <nav class="nav-global">
                 <ul>
                     <li class="logo">
-                        <button class="btn-menu" title="菜单"></button>
-                        <a href="../../../../">欧阳Boy_Petter's Blog</a>
+                        <button class="btn-menu" title="菜单" aria-label="菜单"></button>
+                        <a href="../../../../">欧阳Boy_Petter</a>
+                        <a class="mobile-blog-shortcut" href="../../../../">文章</a>
                         <!--[if !IE]> -->
-                        <button class="btn-search" title="搜索"></button>
+                        <button class="btn-search" title="搜索" aria-label="搜索"></button>
                         <!-- <![endif]-->
                     </li>
                     <li class="nav-link"><a label="article" title="文章" href="../../../../">文章</a></li>
@@ -184,12 +185,12 @@
      
         <li>
             <a href="../../../../categories/#总结" title="总结">
-            总结 <span>9</span></a>
+            总结 <span>8</span></a>
         </li>
      
         <li>
             <a href="../../../../categories/#整理" title="整理">
-            整理 <span>22</span></a>
+            整理 <span>21</span></a>
         </li>
     
 
@@ -204,12 +205,12 @@
     
         
         <li>
-            <a href="../../../../tags/#应用开发" title="应用开发">应用开发 <span>3</span></a>
+            <a href="../../../../tags/#应用开发" title="应用开发">应用开发 <span>1</span></a>
         </li>
     
         
         <li>
-            <a href="../../../../tags/#成长" title="成长">成长 <span>2</span></a>
+            <a href="../../../../tags/#成长" title="成长">成长 <span>1</span></a>
         </li>
     
 
@@ -411,7 +412,7 @@
                             <a class="internal" rel="prev" href="../../../../2023/09/11/wealth-rule/" title="上一篇 '【转】哈里·布朗的17条金融安全黄金法则'"> ← 【转】哈里·布朗的17条金融安全黄金法则</a>
                         
                         
-                            <a class="internal" rel="next" href="../../20/growth-app-concept/" title="下一篇 '成长型应用：认知+工具 => 行动的产品新思路'">成长型应用：认知+工具 => 行动的产品新思路 → </a>
+                            <a class="internal" rel="next" href="../../20/from-tools-to-behavior-change/" title="下一篇 '从做工具到做改变：一次产品复盘'">从做工具到做改变：一次产品复盘 → </a>
                         
                     </nav>
                 </div>
@@ -458,36 +459,31 @@
 
 
 <style type="text/css">
-.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content{font-size:13px;line-height:24px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
 .directory-content.initial{opacity:0}
 .directory-content.pinned{opacity:1}
 .directory-content.unpinned{opacity:1}
 .directory-content.headroom--top{opacity:0}
 .directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
-#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory{position:fixed;z-index:900;top:92px;right:24px;display:inline-block;width:250px;max-height:66vh;overflow:auto;text-align:left;background:rgba(255,255,255,.92);padding:12px 18px;border:1px solid #d5e1e3;border-radius:14px;box-shadow:0 16px 50px rgba(19,42,52,.12);backdrop-filter:blur(14px);}
 #directory li,#directory ul{margin:0;padding-left:0;list-style:none}
-#directory>ul{position:relative;border-left:1px solid #ddd}
-#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory>ul{position:relative;border-left:1px solid #d5e1e3}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#0bb7a7}
 #directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
-#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
-#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
-#directory a:hover{color:#eb5055}
-@media (max-width: 768px) {
-    #directory p,ul {
-        display: none;
-    }
-}
-@media (max-width: 480px) {
-    #directory p,ul {
-        display: none;
-    }
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#697886}
+#directory ul li ul li ul li a{margin-left:30px;color:#697886}
+#directory a:hover{color:#087f77}
+@media (max-width: 900px) {
+    #directory{top:auto;right:14px;bottom:14px;left:14px;width:auto;max-height:58vh;padding:10px 16px;border-radius:16px;z-index:1001}
+    #directory p{display:block !important;text-align:left !important;margin:0 !important;padding-bottom:4px !important;color:#087f77 !important;font-family:'Ubuntu Condensed','PingFang SC',sans-serif;font-size:12px;letter-spacing:.08em}
+    #directory ul{display:none}
 }
 </style>
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
 <script type="text/javascript">
-    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;">目录</p>');
     var postDirectoryBuild = function() {
         $("#openHiddenLinkId").click(function(){
             var isopen = $(this).attr("isopen");
@@ -587,6 +583,7 @@
     };
     postDirectoryBuild();
 </script>
+
 
 
 
@@ -694,6 +691,33 @@ $(document).ready(function () {
 <!-- Google Analytics Event tracking -->
 
 
+<!-- 阅读进度 -->
+<script>
+(function () {
+    var article = document.querySelector('.layout-post .entry-content');
+    if (!article) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    bar.innerHTML = '<span></span>';
+    document.body.appendChild(bar);
+
+    var fill = bar.firstChild;
+    var update = function () {
+        var rect = article.getBoundingClientRect();
+        var start = window.scrollY + rect.top;
+        var distance = Math.max(article.offsetHeight - window.innerHeight, 1);
+        var progress = Math.min(Math.max((window.scrollY - start) / distance, 0), 1);
+        fill.style.transform = 'scaleX(' + progress + ')';
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+}());
+</script>
+
 <!-- Show menu overlay + Jekyll Simple Search option -->
 <script src="../../../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
@@ -768,7 +792,7 @@ $(document).ready(function () {
     });
     $(document).ready(function () {
         $(".post-image > img").unveil(450);
-        $(".nav-global a[label='']").css("background-color", "orange")
+        $(".nav-global a[label='']").addClass("is-active")
     });
 </script>
 
@@ -921,6 +945,7 @@ function initLive2dGirl() {
     initModel("../../../../../assets/javascripts/live2dgirl/");
 }
 </script>
+
 
 
 </body>

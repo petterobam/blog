@@ -107,10 +107,11 @@
             <nav class="nav-global">
                 <ul>
                     <li class="logo">
-                        <button class="btn-menu" title="菜单"></button>
-                        <a href="../../../../">欧阳Boy_Petter's Blog</a>
+                        <button class="btn-menu" title="菜单" aria-label="菜单"></button>
+                        <a href="../../../../">欧阳Boy_Petter</a>
+                        <a class="mobile-blog-shortcut" href="../../../../">文章</a>
                         <!--[if !IE]> -->
-                        <button class="btn-search" title="搜索"></button>
+                        <button class="btn-search" title="搜索" aria-label="搜索"></button>
                         <!-- <![endif]-->
                     </li>
                     <li class="nav-link"><a label="article" title="文章" href="../../../../">文章</a></li>
@@ -175,7 +176,7 @@
 
 
 <p style="margin-top: 0px;margin-bottom: 0px;">
-  字数：129 字，&nbsp;预计阅读时间：1 分钟
+  字数：434 字，&nbsp;预计阅读时间：4 分钟
 </p>
                         
                         <ul class="list-category list-linear">
@@ -189,7 +190,7 @@
      
         <li>
             <a href="../../../../categories/#创业" title="创业">
-            创业 <span>5</span></a>
+            创业 <span>1</span></a>
         </li>
     
 
@@ -214,7 +215,7 @@
     
         
         <li>
-            <a href="../../../../tags/#成长型应用" title="成长型应用">成长型应用 <span>5</span></a>
+            <a href="../../../../tags/#成长型应用" title="成长型应用">成长型应用 <span>1</span></a>
         </li>
     
 
@@ -232,6 +233,7 @@
 <p>经过深入思考，我提出了一个新的产品理念：<strong>成长型应用 = 认知 + 工具 =&gt; 行动</strong></p>
 
 <p>这不仅仅是一个应用，而是一套完整的解决方案：</p>
+
 <ul>
   <li><strong>认知</strong>：帮助用户理解问题本质，学习解决方法</li>
   <li><strong>工具</strong>：提供具体可操作的功能支持</li>
@@ -249,6 +251,7 @@
 <h3 id="heading-普遍存在的成长困境">普遍存在的成长困境</h3>
 
 <p>在重新思考产品方向时，我发现自己面临着一些反复出现的问题：</p>
+
 <ul>
   <li>想要早起，但总是睡不着</li>
   <li>想要锻炼，但总是没有动力</li>
@@ -265,28 +268,33 @@
 <h3 id="heading-核心理念解决问题而非提供功能">核心理念：解决问题，而非提供功能</h3>
 
 <p>传统应用开发思路：</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>发现功能需求 → 开发工具 → 用户下载使用
 </code></pre></div></div>
 
 <p>成长型应用思路：</p>
+
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>识别成长问题 → 分析问题本质 → 设计认知+工具的解决方案 → 引导用户持续行动
 </code></pre></div></div>
 
 <h3 id="heading-三个发展阶段">三个发展阶段</h3>
 
 <p><strong>初期：管理好自己的生活</strong></p>
+
 <ul>
   <li>作息调整、饮食管理、运动习惯</li>
   <li>重点：建立基础的生活节奏</li>
 </ul>
 
 <p><strong>中期：创造和分享价值</strong></p>
+
 <ul>
   <li>技能提升、知识管理、目标达成</li>
   <li>重点：提升个人能力和影响力</li>
 </ul>
 
 <p><strong>后期：帮助他人成长</strong></p>
+
 <ul>
   <li>社区建设、经验传授、共同进步</li>
   <li>重点：从个人成长到助人成长</li>
@@ -316,6 +324,7 @@
 <p><strong>我们不只是做工具，我们要做成长的伙伴。</strong></p>
 
 <p>通过"认知+工具 =&gt; 行动"的产品逻辑，帮助用户：</p>
+
 <ul>
   <li>理解问题的根本原因</li>
   <li>掌握科学的解决方法</li>
@@ -346,6 +355,130 @@
   <p>如果你对成长型应用感兴趣，或者想要一起探讨个人成长的话题，欢迎关注我的后续分享。我会记录自己用产品解决问题的全过程，也希望能帮助到有同样需求的朋友。</p>
 </blockquote>
 
+<h2 id="heading-附图文">附：图文</h2>
+
+<style>
+.iframe-container {
+    position: relative;
+    width: 100%;
+}
+.toggle-fullscreen {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 4px;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 99999999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+}
+.toggle-fullscreen svg {
+    width: 20px;
+    height: 20px;
+}
+.fullscreen-iframe {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 999999999;
+    background: white;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    max-height: none !important;
+    min-height: 100vh !important;
+}
+</style>
+
+<div class="iframe-container">
+    <button class="toggle-fullscreen" onclick="toggleFullscreen()" title="切换全屏">
+        <svg id="maximize-icon" viewBox="0 0 24 24" style="display: block;">
+            <path d="M3 3h7v7H3V3zm11 0h7v7h-7V3zm0 11h7v7h-7v-7zm-11 0h7v7H3v-7z" stroke="currentColor" fill="none" stroke-width="2" />
+        </svg>
+        <svg id="minimize-icon" viewBox="0 0 24 24" style="display: none;">
+            <path d="M3 11h7V4H3v7zm11 0h7V4h-7v7zm0 11h7v-7h-7v7zm-11 0h7v-7H3v7z" stroke="currentColor" fill="none" stroke-width="2" />
+        </svg>
+    </button>
+    <iframe id="content-frame" name="zone-content" frameborder="0" src="../../../../plan/growth-app/index.html" onload="if(!this.classList.contains(&quot;fullscreen-iframe&quot;)){this.style.height=Math.max(this.contentWindow.document.body.scrollHeight,this.contentWindow.document.documentElement.scrollHeight,1000) - 100 +&quot;px&quot;;}" style="width:100%;min-height: 700px;border:0px;padding:0px;margin:0px;">
+    </iframe>
+</div>
+<script>
+function toggleFullscreen() {
+    const frame = document.getElementById('content-frame');
+    const maximizeIcon = document.getElementById('maximize-icon');
+    const minimizeIcon = document.getElementById('minimize-icon');
+    
+    if (frame.classList.contains('fullscreen-iframe')) {
+        // 退出全屏
+        frame.classList.remove('fullscreen-iframe');
+        maximizeIcon.style.display = 'block';
+        minimizeIcon.style.display = 'none';
+        
+        // 恢复原来的高度
+        frame.style.height = Math.max(frame.contentWindow.document.body.scrollHeight, 
+                                     frame.contentWindow.document.documentElement.scrollHeight, 
+                                     1000) - 100 + "px";
+        document.body.style.overflow = 'auto'; // 恢复页面滚动
+        
+        // 恢复显示外部页面的header
+        try {
+            if (window.parent && window.parent.document) {
+                const parentHeaders = window.parent.document.querySelectorAll('header');
+                parentHeaders.forEach(header => {
+                    header.style.display = '';
+                });
+                
+                // 恢复父页面的布局和样式
+                const parentBody = window.parent.document.body;
+                if (parentBody) {
+                    parentBody.style.overflow = '';
+                    parentBody.style.paddingTop = '';
+                }
+            }
+        } catch (e) {
+            console.log('无法访问父页面元素', e);
+        }
+    } else {
+        // 进入全屏
+        frame.classList.add('fullscreen-iframe');
+        maximizeIcon.style.display = 'none';
+        minimizeIcon.style.display = 'block';
+        
+        // 强制设置高度为100vh
+        frame.style.height = '100vh';
+        document.body.style.overflow = 'hidden'; // 防止页面滚动
+        
+        // 隐藏外部页面的header
+        try {
+            if (window.parent && window.parent.document) {
+                const parentHeaders = window.parent.document.querySelectorAll('header');
+                parentHeaders.forEach(header => {
+                    header.style.display = 'none';
+                });
+                
+                // 调整父页面的布局，确保内容占满整个屏幕
+                const parentBody = window.parent.document.body;
+                if (parentBody) {
+                    parentBody.style.overflow = 'hidden';
+                    parentBody.style.paddingTop = '0';
+                }
+            }
+        } catch (e) {
+            console.log('无法访问父页面元素', e);
+        }
+    }
+}
+</script>
+
+
                     </div>
                 </div>
             </div>
@@ -357,10 +490,8 @@
                     </div>
                     <nav class="pagination">
                         
-                            <a class="internal" rel="prev" href="../../19/do-what/" title="上一篇 '寻找我的产品，探索新一代应用的可能性'"> ← 寻找我的产品，探索新一代应用的可能性</a>
+                            <a class="internal" rel="prev" href="../from-tools-to-behavior-change/" title="上一篇 '从做工具到做改变：一次产品复盘'"> ← 从做工具到做改变：一次产品复盘</a>
                         
-                        
-                            <a class="internal" rel="next" href="../growth-app/" title="下一篇 '成长型应用： 认知+工具 => 行动'">成长型应用： 认知+工具 => 行动 → </a>
                         
                     </nav>
                 </div>
@@ -407,36 +538,31 @@
 
 
 <style type="text/css">
-.directory-content{font-size:15px;line-height:28px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
+.directory-content{font-size:13px;line-height:24px;position:relative;z-index:20;max-width:1000px;margin-right:auto!important;margin-left:auto!important;text-align:right}
 .directory-content.initial{opacity:0}
 .directory-content.pinned{opacity:1}
 .directory-content.unpinned{opacity:1}
 .directory-content.headroom--top{opacity:0}
 .directory-content.headroom--not-top{-webkit-transition:opacity .5s ease-in-out;transition:opacity .5s ease-in-out;opacity:1}
-#directory{position:fixed;z-index:20;top:37px;right:45px;display:inline-block;text-align:left;background-color:#edeff2;padding:10px 20px;border-radius:3px;filter: alpha(Opacity=90);-moz-opacity: 0.9;opacity: 0.9;}
+#directory{position:fixed;z-index:900;top:92px;right:24px;display:inline-block;width:250px;max-height:66vh;overflow:auto;text-align:left;background:rgba(255,255,255,.92);padding:12px 18px;border:1px solid #d5e1e3;border-radius:14px;box-shadow:0 16px 50px rgba(19,42,52,.12);backdrop-filter:blur(14px);}
 #directory li,#directory ul{margin:0;padding-left:0;list-style:none}
-#directory>ul{position:relative;border-left:1px solid #ddd}
-#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#eb5055}
+#directory>ul{position:relative;border-left:1px solid #d5e1e3}
+#directory>ul>li::before{position:relative;top:0;left:-4px;display:inline-block;width:7px;height:7px;content:'';border-radius:50%;background-color:#0bb7a7}
 #directory ul li a{display:inline-table;margin-left:5px;white-space:nowrap}
-#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#5f5f5f}
-#directory ul li ul li ul li a{margin-left:30px;color:#5f5f5f}
-#directory a:hover{color:#eb5055}
-@media (max-width: 768px) {
-    #directory p,ul {
-        display: none;
-    }
-}
-@media (max-width: 480px) {
-    #directory p,ul {
-        display: none;
-    }
+#directory ul li ul li a{margin-left:20px;white-space:nowrap;color:#697886}
+#directory ul li ul li ul li a{margin-left:30px;color:#697886}
+#directory a:hover{color:#087f77}
+@media (max-width: 900px) {
+    #directory{top:auto;right:14px;bottom:14px;left:14px;width:auto;max-height:58vh;padding:10px 16px;border-radius:16px;z-index:1001}
+    #directory p{display:block !important;text-align:left !important;margin:0 !important;padding-bottom:4px !important;color:#087f77 !important;font-family:'Ubuntu Condensed','PingFang SC',sans-serif;font-size:12px;letter-spacing:.08em}
+    #directory ul{display:none}
 }
 </style>
 <div id="directory-content" class="directory-content">
     <div id="directory"></div>
 </div>
 <script type="text/javascript">
-    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;color: #08c;">目录</p>');
+    $('#directory').html('<a id="openHiddenLinkId" href="javascript:void(0)" isopen="0" style="display:block;float:right;z-index: 2000;">↗</a><p style="margin: 0;text-align: center;padding-bottom: 5px;">目录</p>');
     var postDirectoryBuild = function() {
         $("#openHiddenLinkId").click(function(){
             var isopen = $(this).attr("isopen");
@@ -536,6 +662,7 @@
     };
     postDirectoryBuild();
 </script>
+
 
 
 
@@ -643,6 +770,33 @@ $(document).ready(function () {
 <!-- Google Analytics Event tracking -->
 
 
+<!-- 阅读进度 -->
+<script>
+(function () {
+    var article = document.querySelector('.layout-post .entry-content');
+    if (!article) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    bar.innerHTML = '<span></span>';
+    document.body.appendChild(bar);
+
+    var fill = bar.firstChild;
+    var update = function () {
+        var rect = article.getBoundingClientRect();
+        var start = window.scrollY + rect.top;
+        var distance = Math.max(article.offsetHeight - window.innerHeight, 1);
+        var progress = Math.min(Math.max((window.scrollY - start) / distance, 0), 1);
+        fill.style.transform = 'scaleX(' + progress + ')';
+    };
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+}());
+</script>
+
 <!-- Show menu overlay + Jekyll Simple Search option -->
 <script src="../../../../../assets/javascripts/jekyll-search.jquery.js"></script>
 <script>
@@ -717,7 +871,7 @@ $(document).ready(function () {
     });
     $(document).ready(function () {
         $(".post-image > img").unveil(450);
-        $(".nav-global a[label='']").css("background-color", "orange")
+        $(".nav-global a[label='']").addClass("is-active")
     });
 </script>
 
@@ -870,6 +1024,7 @@ function initLive2dGirl() {
     initModel("../../../../../assets/javascripts/live2dgirl/");
 }
 </script>
+
 
 
 </body>
