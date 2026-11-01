@@ -44,6 +44,15 @@
         #book-list {
             display: block !important;
 
+            float: none !important;
+            width: 100% !important;
+            -webkit-column-count: auto !important;
+               -moz-column-count: auto !important;
+                    column-count: auto !important;
+            -webkit-column-width: auto !important;
+               -moz-column-width: auto !important;
+                    column-width: auto !important;
+
             padding: 0 !important;
 
             background: transparent !important;
@@ -52,12 +61,25 @@
         #book-list > .archive {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
+            align-items: stretch;
             gap: 18px;
+
+            -webkit-column-count: auto !important;
+               -moz-column-count: auto !important;
+                    column-count: auto !important;
+            -webkit-column-width: auto !important;
+               -moz-column-width: auto !important;
+                    column-width: auto !important;
         }
 
         .book-thumbnail {
+            display: flex;
+
+            flex-direction: column;
+
             float: none !important;
 
+            min-width: 0;
             margin: 0 !important;
             padding: 10px !important;
 
@@ -80,25 +102,38 @@
             width: 100% !important;
             max-width: 100% !important;
             height: auto;
-            max-height: 330px;
+            max-height: none;
 
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 2px;
+            background: #f4efe6;
         }
 
         .book-thumbnail h3 {
+            margin: 0 0 8px;
+
             font-family: var(--font-display);
+            font-size: 1.05rem;
+            line-height: 1.35;
             text-transform: none;
         }
 
         .book-thumbnail .caption {
+            flex: 1;
+
             padding: 12px 4px 4px;
         }
 
         .book-content {
+            display: -webkit-box;
+            overflow: hidden;
+
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+
             color: var(--muted);
             font-size: .72rem;
-            line-height: 1.6;
+            line-height: 1.65;
         }
 
         @media (max-width: 1100px) {
@@ -118,13 +153,14 @@
             }
 
             .book-thumbnail img {
-                max-height: 260px;
+                max-height: none;
             }
 
             .book-thumbnail h3 {
                 font-size: .9rem;
             }
         }
+
     </style>
     <script src="//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
 <script>window.Modernizr || document.write('<script src="../../assets/javascripts/modernizr-2.8.3.min.js"><\/script>')</script>
